@@ -845,15 +845,24 @@ public class DataFactory {
 			}
 		}
 
-		List<String> ddmStructureDefinitionList = new ArrayList<>();
+		List<String> definitionList = new ArrayList<>();
 
-		_readFiletoList(
-			"DDMStructure-definition.txt", ddmStructureDefinitionList);
+		_readFiletoList("DDMStructure-definition.txt", definitionList);
 
-		for (String line : ddmStructureDefinitionList) {
+		for (String line : definitionList) {
 			String[] items = line.split(StringPool.COMMA);
 
 			_ddmStructureDefinitionMap.put(items[0] + items[2], items[1]);
+		}
+
+		definitionList.clear();
+
+		_readFiletoList("DDMStructureLayout-definition.txt", definitionList);
+
+		for (String line : definitionList) {
+			String[] items = line.split(StringPool.COMMA);
+
+			_ddmStructureLayoutDefinitionMap.put(items[0] + items[2], items[1]);
 		}
 	}
 
@@ -3620,6 +3629,23 @@ public class DataFactory {
 			_defaultJournalDDMStructureVersionId);
 
 		return ddmStorageLinkModel;
+	}
+
+	public DDMStructureLayoutModel newDDMStructureLayoutModel(
+		DDMStructureModel ddmStructureModel,
+		DDMStructureVersionModel ddmStructureVersionModel) {
+
+		String ddmStructureKey = ddmStructureModel.getStructureKey();
+
+		String className = getClassName(ddmStructureModel.getClassNameId());
+
+		String definition = _ddmStructureLayoutDefinitionMap.get(
+			ddmStructureKey + className);
+
+		return newDDMStructureLayoutModel(
+			ddmStructureModel.getGroupId(), ddmStructureModel.getUserId(),
+			ddmStructureVersionModel.getStructureVersionId(), definition,
+			ddmStructureModel.getClassNameId(), ddmStructureKey);
 	}
 
 	public DDMStructureLinkModel newDDMStructureLinkModel(
@@ -8110,6 +8136,8 @@ public class DataFactory {
 	private final Map<String, String> _ddmStructureClassNameMap =
 		new HashMap<>();
 	private final Map<String, String> _ddmStructureDefinitionMap =
+		new HashMap<>();
+	private final Map<String, String> _ddmStructureLayoutDefinitionMap =
 		new HashMap<>();
 	private final List<SampleSQLBuilderDDMStructureModel>
 		_ddmStructureModelList = new ArrayList<>();

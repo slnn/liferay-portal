@@ -39,6 +39,8 @@
 		<#assign ddmStructureVersionModel = dataFactory.newDDMStructureVersionModel(ddmStructureModel) />
 
 		${dataFactory.toInsertSQL(ddmStructureVersionModel)}
+
+		${dataFactory.toInsertSQL(dataFactory.newDDMStructureLayoutModel(ddmStructureModel, ddmStructureVersionModel))}
 	</#list>
 
 	<#list dataFactory.newDDMTemplateModels() as ddmTemplateModel>
