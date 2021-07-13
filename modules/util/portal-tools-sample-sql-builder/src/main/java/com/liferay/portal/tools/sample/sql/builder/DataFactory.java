@@ -849,7 +849,7 @@ public class DataFactory {
 				new File(entry.getKey()));
 
 			List<Element> structureElements = _getDDMStructures(
-				inputStream, LocaleUtil.ENGLISH);
+				inputStream, new Locale("en", "US"));
 
 			for (Element structureElement : structureElements) {
 				_ddmStructureModelList.add(
@@ -3682,7 +3682,7 @@ public class DataFactory {
 			String structureKey = structureElement.elementText("name");
 
 			DDMForm ddmForm = _getDDMForm(
-				LocaleUtil.ENGLISH, structureElement,
+				new Locale("en", "US"), structureElement,
 				new DDMFormJSONDeserializer(), new DDMFormXSDDeserializer(),
 				new DDMImpl());
 
@@ -7778,8 +7778,8 @@ public class DataFactory {
 		String definition = structureElementRootElement.asXML();
 
 		DDMForm ddmForm = _deserialize(definition, xsdDDMFormDeserializer);
-		
-		ddmForm.setDefaultLocale(LocaleUtil.ENGLISH);
+
+		ddmForm.setDefaultLocale(new Locale("en", "US"));
 
 		ddmForm = ddm.updateDDMFormDefaultLocale(ddmForm, locale);
 
