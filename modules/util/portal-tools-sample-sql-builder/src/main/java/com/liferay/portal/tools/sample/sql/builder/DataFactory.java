@@ -7778,6 +7778,8 @@ public class DataFactory {
 		String definition = structureElementRootElement.asXML();
 
 		DDMForm ddmForm = _deserialize(definition, xsdDDMFormDeserializer);
+		
+		ddmForm.setDefaultLocale(LocaleUtil.ENGLISH);
 
 		ddmForm = ddm.updateDDMFormDefaultLocale(ddmForm, locale);
 
