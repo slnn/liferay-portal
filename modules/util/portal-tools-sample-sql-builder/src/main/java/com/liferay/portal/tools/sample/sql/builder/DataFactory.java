@@ -850,7 +850,7 @@ public class DataFactory {
 		_readFiletoList("DDMStructure-definition.txt", definitionList);
 
 		for (String line : definitionList) {
-			String[] items = line.split(StringPool.COMMA);
+			String[] items = line.split("@&&@");
 
 			_ddmStructureDefinitionMap.put(items[0] + items[2], items[1]);
 		}
@@ -860,7 +860,7 @@ public class DataFactory {
 		_readFiletoList("DDMStructureLayout-definition.txt", definitionList);
 
 		for (String line : definitionList) {
-			String[] items = line.split(StringPool.COMMA);
+			String[] items = line.split("@&&@");
 
 			_ddmStructureLayoutDefinitionMap.put(items[0] + items[2], items[1]);
 		}
