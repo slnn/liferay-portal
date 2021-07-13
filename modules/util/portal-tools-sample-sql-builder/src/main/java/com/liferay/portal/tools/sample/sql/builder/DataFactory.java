@@ -3707,6 +3707,10 @@ public class DataFactory {
 
 			String definition = _ddmStructureDefinitionMap.get(
 				structureKey + ddmStructureModel.getClassName());
+			
+			definition = definition.replaceAll(StringPool.QUOTE, "\\\\\"");
+
+			definition = definition.replaceAll(StringPool.APOSTROPHE, "\\\\\'");
 
 			ddmStructureModels.add(
 				newDDMStructureModel(
