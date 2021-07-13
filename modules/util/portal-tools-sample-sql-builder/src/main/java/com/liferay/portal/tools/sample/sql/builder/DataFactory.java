@@ -6726,6 +6726,13 @@ public class DataFactory {
 
 		ddmStructureModel.setDefinition(definition);
 		ddmStructureModel.setStorageType(StorageType.DEFAULT.toString());
+
+		if (structureKey.equals("DL_VIDEO_EXTERNAL_SHORTCUT") ||
+			structureKey.equals("GOOGLE_DOCS")) {
+
+			ddmStructureModel.setType(1);
+		}
+
 		ddmStructureModel.setLastPublishDate(nextFutureDate());
 
 		return ddmStructureModel;
