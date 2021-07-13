@@ -3702,7 +3702,8 @@ public class DataFactory {
 
 			Element structureElement = ddmStructureModel.getStructureElement();
 
-			String structureKey = structureElement.elementText("name");
+			String structureKey = StringUtil.toUpperCase(
+				structureElement.elementText("name"));
 
 			String definition = _ddmStructureDefinitionMap.get(
 				structureKey + ddmStructureModel.getClassName());
@@ -3711,8 +3712,7 @@ public class DataFactory {
 				newDDMStructureModel(
 					_globalGroupId, _defaultUserId,
 					getClassNameId(ddmStructureModel.getClassName()),
-					StringUtil.toUpperCase(structureKey), definition,
-					_counter.get()));
+					structureKey, definition, _counter.get()));
 		}
 
 		return ddmStructureModels;
