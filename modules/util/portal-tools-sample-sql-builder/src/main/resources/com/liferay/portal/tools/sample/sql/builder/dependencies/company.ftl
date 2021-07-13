@@ -33,6 +33,10 @@
 
 	<#list dataFactory.newDDMStructureModels() as ddmStructureModel>
 		${dataFactory.toInsertSQL(ddmStructureModel)}
+
+		<#assign ddmStructureVersionModel = dataFactory.newDDMStructureVersionModel(ddmStructureModel) />
+
+		${dataFactory.toInsertSQL(ddmStructureVersionModel)}
 	</#list>
 
 	<#list dataFactory.newDDMTemplateModels() as ddmTemplateModel>
