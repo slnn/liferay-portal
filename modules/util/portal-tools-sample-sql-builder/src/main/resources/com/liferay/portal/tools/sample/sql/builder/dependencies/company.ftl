@@ -46,4 +46,8 @@
 
 		${dataFactory.toInsertSQL(dataFactory.newDDMTemplateVersionModel(ddmTemplateModel))}
 	</#list>
+
+	<#list dataFactory.newKaleoDefinitionModels() as kaleoDefinitionModel>
+		${dataFactory.toInsertSQL(kaleoDefinitionModel)}
+	</#list>
 </#list>
