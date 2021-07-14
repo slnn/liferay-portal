@@ -205,6 +205,7 @@ import com.liferay.message.boards.model.impl.MBMailingListModelImpl;
 import com.liferay.message.boards.model.impl.MBMessageModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadModelImpl;
+import com.liferay.message.boards.moderation.internal.constants.MBModerationConstants;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -320,7 +321,10 @@ import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPort
 import com.liferay.portal.service.impl.LayoutLocalServiceImpl;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionModel;
+import com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionModelImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
@@ -4778,6 +4782,77 @@ public class DataFactory {
 		return journalContentSearchModel;
 	}
 
+	public List<KaleoDefinitionModel> newKaleoDefinitionModels()
+		throws Exception {
+
+		List<KaleoDefinitionModel> kaleoDefinitionModels = new ArrayList<>();
+
+		String rootModulePath = "";
+
+		Class<?> clazz = getClass();
+
+		String classLoaderStr = String.valueOf(clazz.getClassLoader());
+
+		String userDir = System.getProperty("user.dir");
+
+		if (classLoaderStr.contains("AppClassLoader")) {
+			rootModulePath = userDir.substring(0, userDir.indexOf("util"));
+		}
+		else {
+			rootModulePath =
+				userDir.substring(0, userDir.indexOf("benchmarks")) + "modules";
+		}
+
+		StringBundler sb1 = new StringBundler();
+
+		_getScriptAbsolutePath(
+			new File(rootModulePath),
+			"com/liferay/message/boards/moderation/internal/instance" +
+				"/lifecycle/dependencies" +
+					"/message-boards-moderation-definition.xml",
+			sb1);
+
+		String content = StringUtil.read(
+			new FileInputStream(new File(sb1.toString())));
+
+		content = content.replaceAll(StringPool.QUOTE, "\\\\\"");
+
+		content = content.replaceAll(StringPool.APOSTROPHE, "\\\\\'");
+
+		StringBundler sb2 = new StringBundler();
+
+		_processScript(content, sb2);
+
+		kaleoDefinitionModels.add(
+			newKaleoDefinitionModel(
+				MBModerationConstants.WORKFLOW_DEFINITION_NAME, sb2.toString(),
+				MBMessage.class.getName()));
+
+		StringBundler sb3 = new StringBundler();
+
+		_getScriptAbsolutePath(
+			new File(rootModulePath),
+			"META-INF/definitions/single-approver-definition.xml", sb3);
+
+		content = StringUtil.read(
+			new FileInputStream(new File(sb3.toString())));
+
+		content = content.replaceAll(StringPool.QUOTE, "\\\\\"");
+
+		content = content.replaceAll(StringPool.APOSTROPHE, "\\\\\'");
+
+		StringBundler sb4 = new StringBundler();
+
+		_processScript(content, sb4);
+
+		kaleoDefinitionModels.add(
+			newKaleoDefinitionModel(
+				"Single Approver", sb4.toString(),
+				WorkflowDefinitionConstants.SCOPE_ALL));
+
+		return kaleoDefinitionModels;
+	}
+
 	public LayoutClassedModelUsageModel newLayoutClassedModelUsageModel(
 		long groupId, long plid, String containerKey,
 		JournalArticleResourceModel journalArticleResourceModel) {
@@ -6978,6 +7053,47 @@ public class DataFactory {
 		groupModel.setActive(true);
 
 		return groupModel;
+	}
+
+	protected KaleoDefinitionModel newKaleoDefinitionModel(
+		String name, String content, String scope) {
+
+		KaleoDefinitionModel kaleoDefinitionModel =
+			new KaleoDefinitionModelImpl();
+
+		//  PK fields
+
+		kaleoDefinitionModel.setKaleoDefinitionId(_counter.get());
+
+		// Audit fields
+
+		kaleoDefinitionModel.setCompanyId(_companyId);
+		kaleoDefinitionModel.setUserId(_defaultUserId);
+		kaleoDefinitionModel.setUserName(_SAMPLE_USER_NAME);
+		kaleoDefinitionModel.setCreateDate(new Date());
+		kaleoDefinitionModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		kaleoDefinitionModel.setName(name);
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("<?xml version=\"1.0\"  encoding=\"UTF-8\"?>");
+		sb.append("<root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\">");
+		sb.append("<title language-id=\"en_US\">");
+		sb.append(name);
+		sb.append("</title></root>");
+
+		kaleoDefinitionModel.setTitle(sb.toString());
+
+		kaleoDefinitionModel.setContent(content);
+		kaleoDefinitionModel.setScope(scope);
+		kaleoDefinitionModel.setVersion(1);
+		kaleoDefinitionModel.setActive(true);
+
+		return kaleoDefinitionModel;
 	}
 
 	protected LayoutModel newLayoutModel(
