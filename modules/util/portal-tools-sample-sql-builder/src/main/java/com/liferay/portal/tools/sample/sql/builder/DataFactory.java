@@ -4858,6 +4858,38 @@ public class DataFactory {
 		return kaleoDefinitionVersionModel;
 	}
 
+	public List<KaleoNodeModel> newKaleoNodeModels(
+			KaleoDefinitionModel kaleoDefinitionModel,
+			KaleoDefinitionVersionModel kaleoDefinitionVersionModel)
+		throws Exception {
+
+		List<KaleoNodeModel> kaleoNodeModels = new ArrayList<>();
+
+		String content = _singleApproverKaleoDefinitionContent;
+
+		String name = kaleoDefinitionModel.getName();
+
+		if (name.equals(MBModerationConstants.WORKFLOW_DEFINITION_NAME)) {
+			content = _mbKaleoDefinitionContent;
+		}
+
+		kaleoNodeModels.add(
+			newKaleoNodeModel(
+				kaleoDefinitionModel.getKaleoDefinitionId(),
+				kaleoDefinitionVersionModel.getKaleoDefinitionVersionId(),
+				"review", _getMetaData(content, "task", "review"), "TASK",
+				false, false));
+
+		kaleoNodeModels.add(
+			newKaleoNodeModel(
+				kaleoDefinitionModel.getKaleoDefinitionId(),
+				kaleoDefinitionVersionModel.getKaleoDefinitionVersionId(),
+				"update", _getMetaData(content, "task", "update"), "TASK",
+				false, false));
+
+		return kaleoNodeModels;
+	}
+
 	public LayoutClassedModelUsageModel newLayoutClassedModelUsageModel(
 		long groupId, long plid, String containerKey,
 		JournalArticleResourceModel journalArticleResourceModel) {
@@ -6086,7 +6118,8 @@ public class DataFactory {
 
 		return newKaleoNodeModel(
 			kaleoDefinitionModel.getKaleoDefinitionId(), _counter.get(),
-			"created", _getMetaData(content), "STATE", true, false);
+			"created", _getMetaData(content, "state", "created"), "STATE", true,
+			false);
 	}
 
 	public SubscriptionModel newSubscriptionModel(
@@ -7983,20 +8016,23 @@ public class DataFactory {
 		return url.openStream();
 	}
 
-	private String _getMetaData(String content) throws Exception {
+	private String _getMetaData(
+			String content, String parentElementName, String elementName)
+		throws Exception {
+
 		String metaData = "";
 
 		Document document = UnsecureSAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 
-		List<Element> stateElements = rootElement.elements("state");
+		List<Element> elements = rootElement.elements(parentElementName);
 
-		for (Element stateElement : stateElements) {
-			String name = stateElement.elementTextTrim("name");
+		for (Element element : elements) {
+			String name = element.elementTextTrim("name");
 
-			if (name.equals("created")) {
-				metaData = stateElement.elementTextTrim("metadata");
+			if (name.equals(elementName)) {
+				metaData = element.elementTextTrim("metadata");
 
 				break;
 			}
