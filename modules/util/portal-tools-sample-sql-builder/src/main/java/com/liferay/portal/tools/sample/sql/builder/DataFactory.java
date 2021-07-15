@@ -4944,6 +4944,49 @@ public class DataFactory {
 		return kaleoNodeModels;
 	}
 
+	public List<KaleoTaskAssignmentModel> newKaleoTaskAssignmentModels(
+			KaleoTaskModel kaleoTaskModel,
+			KaleoDefinitionModel kaleoDefinitionModel)
+		throws Exception {
+
+		List<KaleoTaskAssignmentModel> kaleoTaskAssignmentModels =
+			new ArrayList<>();
+
+		String content = _singleApproverKaleoDefinitionContent;
+
+		String name = kaleoDefinitionModel.getName();
+
+		if (name.equals(MBModerationConstants.WORKFLOW_DEFINITION_NAME)) {
+			content = _mbKaleoDefinitionContent;
+		}
+
+		List<String> assignments = _getAssignmentsData(
+			content, "task", kaleoTaskModel.getName());
+
+		for (String assignment : assignments) {
+			String assigneeClassName = User.class.getName();
+
+			long assigneeClassPK = 0;
+
+			Set<String> roleNames = _kaleoTaskAssignmentRoleModels.keySet();
+
+			if (roleNames.contains(assignment)) {
+				assigneeClassName = Role.class.getName();
+
+				RoleModel roleModel = _kaleoTaskAssignmentRoleModels.get(
+					assignment);
+
+				assigneeClassPK = roleModel.getRoleId();
+			}
+
+			kaleoTaskAssignmentModels.add(
+				newKaleoTaskAssignmentModel(
+					kaleoTaskModel, assigneeClassName, assigneeClassPK));
+		}
+
+		return kaleoTaskAssignmentModels;
+	}
+
 	public KaleoTaskModel newKaleoTaskModel(KaleoNodeModel kaleoNodeModel) {
 		KaleoTaskModel kaleoTaskModel = new KaleoTaskModelImpl();
 
@@ -5959,6 +6002,9 @@ public class DataFactory {
 
 		roleModels.add(_administratorRoleModel);
 
+		_kaleoTaskAssignmentRoleModels.put(
+			"Administrator", _administratorRoleModel);
+
 		// Guest
 
 		_guestRoleModel = newRoleModel(
@@ -5968,17 +6014,24 @@ public class DataFactory {
 
 		// Organization Administrator
 
-		roleModels.add(
-			newRoleModel(
-				RoleConstants.ORGANIZATION_ADMINISTRATOR,
-				RoleConstants.TYPE_ORGANIZATION));
+		_organizationAdministratorRoleModel = newRoleModel(
+			RoleConstants.ORGANIZATION_ADMINISTRATOR,
+			RoleConstants.TYPE_ORGANIZATION);
+
+		roleModels.add(_organizationAdministratorRoleModel);
+
+		_kaleoTaskAssignmentRoleModels.put(
+			"Organization Administrator", _organizationAdministratorRoleModel);
 
 		// Organization Owner
 
-		roleModels.add(
-			newRoleModel(
-				RoleConstants.ORGANIZATION_OWNER,
-				RoleConstants.TYPE_ORGANIZATION));
+		_organizationOwnerRoleModel = newRoleModel(
+			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
+
+		roleModels.add(_organizationOwnerRoleModel);
+
+		_kaleoTaskAssignmentRoleModels.put(
+			"Organization Owner", _organizationOwnerRoleModel);
 
 		// Organization User
 
@@ -6003,9 +6056,13 @@ public class DataFactory {
 
 		// Site Administrator
 
-		roleModels.add(
-			newRoleModel(
-				RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE));
+		_siteAdministratorRoleModel = newRoleModel(
+			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
+
+		roleModels.add(_siteAdministratorRoleModel);
+
+		_kaleoTaskAssignmentRoleModels.put(
+			"Site Administrator", _siteAdministratorRoleModel);
 
 		// Site Member
 
@@ -6016,8 +6073,12 @@ public class DataFactory {
 
 		// Site Owner
 
-		roleModels.add(
-			newRoleModel(RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE));
+		_siteOwnerRoleModel = newRoleModel(
+			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
+
+		roleModels.add(_siteOwnerRoleModel);
+
+		_kaleoTaskAssignmentRoleModels.put("Site Owner", _siteOwnerRoleModel);
 
 		// User
 
@@ -6039,12 +6100,19 @@ public class DataFactory {
 
 		roleModels.add(_assetLibraryAdministratorRoleModel);
 
+		_kaleoTaskAssignmentRoleModels.put(
+			"Asset Library Administrator", _assetLibraryAdministratorRoleModel);
+
 		// Asset Library Content Reviewer
 
 		_assetLibraryContentReviewerRoleModel = newRoleModel(
 			"Asset Library Content Reviewer", RoleConstants.TYPE_DEPOT);
 
 		roleModels.add(_assetLibraryContentReviewerRoleModel);
+
+		_kaleoTaskAssignmentRoleModels.put(
+			"Asset Library Content Reviewer",
+			_assetLibraryContentReviewerRoleModel);
 
 		// Asset Library Owner
 
@@ -6053,12 +6121,18 @@ public class DataFactory {
 
 		roleModels.add(_assetLibraryOwnerRoleModel);
 
+		_kaleoTaskAssignmentRoleModels.put(
+			"Asset Library Owner", _assetLibraryOwnerRoleModel);
+
 		// Portal Content Reviewer
 
 		_portalContentReviewerRoleModel = newRoleModel(
 			"Portal Content Reviewer", RoleConstants.TYPE_REGULAR);
 
 		roleModels.add(_portalContentReviewerRoleModel);
+
+		_kaleoTaskAssignmentRoleModels.put(
+			"Portal Content Reviewer", _portalContentReviewerRoleModel);
 
 		// Organization Content Reviewer
 
@@ -6067,12 +6141,19 @@ public class DataFactory {
 
 		roleModels.add(_organizationContentReviewerRoleModel);
 
+		_kaleoTaskAssignmentRoleModels.put(
+			"Organization Content Reviewer",
+			_organizationContentReviewerRoleModel);
+
 		// Site Content Reviewer
 
 		_siteContentReviewerRoleModel = newRoleModel(
 			"Site Content Reviewer", RoleConstants.TYPE_SITE);
 
 		roleModels.add(_siteContentReviewerRoleModel);
+
+		_kaleoTaskAssignmentRoleModels.put(
+			"Site Content Reviewer", _siteContentReviewerRoleModel);
 
 		return roleModels;
 	}
@@ -8139,6 +8220,56 @@ public class DataFactory {
 		return data;
 	}
 
+	private List<String> _getAssignmentsData(
+			String content, String parentElementName, String elementName)
+		throws Exception {
+
+		List<String> assignmentsDatas = new ArrayList<>();
+
+		Document document = UnsecureSAXReaderUtil.read(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> elements = rootElement.elements(parentElementName);
+
+		for (Element element : elements) {
+			String name = element.elementTextTrim("name");
+
+			if (name.equals(elementName)) {
+				List<Element> assignmentsElements = element.elements(
+					"assignments");
+
+				for (Element assignmentElement : assignmentsElements) {
+					if (elementName.equals("review")) {
+						List<Element> rolesElements =
+							assignmentElement.elements("roles");
+
+						for (Element rolesElement : rolesElements) {
+							List<Element> roleElements = rolesElement.elements(
+								"role");
+
+							for (Element roleElement : roleElements) {
+								assignmentsDatas.add(
+									roleElement.elementTextTrim("name"));
+							}
+						}
+					}
+					else {
+						List<Element> userElements = assignmentElement.elements(
+							"user");
+
+						for (Element userElement : userElements) {
+							assignmentsDatas.add(
+								userElement.elementTextTrim("user"));
+						}
+					}
+				}
+			}
+		}
+
+		return assignmentsDatas;
+	}
+
 	private List<Element> _getDDMStructures(
 			InputStream inputStream, Locale locale)
 		throws Exception {
@@ -8630,6 +8761,8 @@ public class DataFactory {
 		new HashMap<>();
 	private final String _journalDDMStructureContent;
 	private final String _journalDDMStructureLayoutContent;
+	private final Map<String, RoleModel> _kaleoTaskAssignmentRoleModels =
+		new HashMap<>();
 	private List<String> _lastNames;
 	private final Map<String, SimpleCounter> _layoutIdCounters =
 		new HashMap<>();
@@ -8637,7 +8770,9 @@ public class DataFactory {
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
 	private String _mbKaleoDefinitionContent;
+	private RoleModel _organizationAdministratorRoleModel;
 	private RoleModel _organizationContentReviewerRoleModel;
+	private RoleModel _organizationOwnerRoleModel;
 	private RoleModel _ownerRoleModel;
 	private RoleModel _portalContentReviewerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
@@ -8651,8 +8786,10 @@ public class DataFactory {
 	private long _sampleUserId;
 	private final Format _simpleDateFormat;
 	private String _singleApproverKaleoDefinitionContent;
+	private RoleModel _siteAdministratorRoleModel;
 	private RoleModel _siteContentReviewerRoleModel;
 	private RoleModel _siteMemberRoleModel;
+	private RoleModel _siteOwnerRoleModel;
 	private final SimpleCounter _socialActivityIdCounter;
 	private final SimpleCounter _timeCounter;
 	private GroupModel _userPersonalSiteGroupModel;
