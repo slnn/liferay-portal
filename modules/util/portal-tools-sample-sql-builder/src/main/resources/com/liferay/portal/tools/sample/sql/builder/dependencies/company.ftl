@@ -50,10 +50,10 @@
 	<#list dataFactory.newKaleoDefinitionModels() as kaleoDefinitionModel>
 		${dataFactory.toInsertSQL(kaleoDefinitionModel)}
 
-		<#assign kaleoNodeModel = dataFactory.newKaleoNodeModel(kaleoDefinitionModel) />
+		<#assign startKaleoNodeModel = dataFactory.newStartKaleoNodeModel(kaleoDefinitionModel) />
 
-		${dataFactory.toInsertSQL(kaleoNodeModel)}
+		${dataFactory.toInsertSQL(startKaleoNodeModel)}
 
-		${dataFactory.toInsertSQL(dataFactory.newKaleoDefinitionVersionModel(kaleoDefinitionModel, kaleoNodeModel))}
+		${dataFactory.toInsertSQL(dataFactory.newKaleoDefinitionVersionModel(kaleoDefinitionModel, startKaleoNodeModel))}
 	</#list>
 </#list>
