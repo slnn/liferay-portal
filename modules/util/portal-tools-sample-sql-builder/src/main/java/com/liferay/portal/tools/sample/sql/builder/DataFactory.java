@@ -3914,15 +3914,8 @@ public class DataFactory {
 		String headingRenderNamespace = StringUtil.randomId();
 		String imageRenderNamespace = StringUtil.randomId();
 		String paragraphRenderNamespace = StringUtil.randomId();
-		String loginPortletNamespace = StringUtil.randomId();
 
 		for (LayoutModel layoutModel : layoutModels) {
-			fragmentEntryLinkModels.add(
-				newFragmentEntryLinkModel(
-					layoutModel, "", "", "", "",
-					_readFile("loginPortlet_editValue.json"), 0,
-					loginPortletNamespace));
-
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _HEADING_RENDER_KEY,
@@ -7169,15 +7162,9 @@ public class DataFactory {
 						String.valueOf(
 							fragmentEntryLinkModel.getFragmentEntryLinkId()));
 				}
-				else if (rendererKey.equals(_IMAGE_RENDER_KEY)) {
-					data = StringUtil.replace(
-						data, "${imageFragmentEntryLinkId}",
-						String.valueOf(
-							fragmentEntryLinkModel.getFragmentEntryLinkId()));
-				}
 				else {
 					data = StringUtil.replace(
-						data, "${loginPortletFragmentEntryLinkId}",
+						data, "${imageFragmentEntryLinkId}",
 						String.valueOf(
 							fragmentEntryLinkModel.getFragmentEntryLinkId()));
 				}
