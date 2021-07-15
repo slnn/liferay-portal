@@ -324,7 +324,9 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionModel;
+import com.liferay.portal.workflow.kaleo.model.KaleoNodeModel;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionModelImpl;
+import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeModelImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
@@ -4853,6 +4855,40 @@ public class DataFactory {
 		return kaleoDefinitionModels;
 	}
 
+	public KaleoNodeModel newKaleoNodeModel(
+			KaleoDefinitionModel kaleoDefinitionModel)
+		throws Exception {
+
+		KaleoNodeModel kaleoNodeModel = new KaleoNodeModelImpl();
+
+		// PK fields
+
+		kaleoNodeModel.setKaleoNodeId(_counter.get());
+
+		// Audit fields
+
+		kaleoNodeModel.setCompanyId(_companyId);
+		kaleoNodeModel.setUserId(_defaultUserId);
+		kaleoNodeModel.setUserName(_SAMPLE_USER_NAME);
+		kaleoNodeModel.setCreateDate(new Date());
+		kaleoNodeModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		kaleoNodeModel.setKaleoDefinitionId(
+			kaleoDefinitionModel.getKaleoDefinitionId());
+		kaleoNodeModel.setKaleoDefinitionVersionId(_counter.get());
+		kaleoNodeModel.setName("created");
+
+		kaleoNodeModel.setMetadata(
+			_getMetaData(kaleoDefinitionModel.getContent()));
+		kaleoNodeModel.setType("STATE");
+		kaleoNodeModel.setInitial(true);
+		kaleoNodeModel.setTerminal(false);
+
+		return kaleoNodeModel;
+	}
+
 	public LayoutClassedModelUsageModel newLayoutClassedModelUsageModel(
 		long groupId, long plid, String containerKey,
 		JournalArticleResourceModel journalArticleResourceModel) {
@@ -7965,6 +8001,28 @@ public class DataFactory {
 		return StringBundler.concat(
 			MBDiscussion.class.getName(), StringPool.UNDERLINE,
 			clazz.getName());
+	}
+
+	private String _getMetaData(String content) throws Exception {
+		String metaData = "";
+
+		Document document = UnsecureSAXReaderUtil.read(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> stateElements = rootElement.elements("state");
+
+		for (Element stateElement : stateElements) {
+			String name = stateElement.elementTextTrim("name");
+
+			if (name.equals("created")) {
+				metaData = stateElement.elementTextTrim("metadata");
+
+				break;
+			}
+		}
+
+		return metaData;
 	}
 
 	private List<DDMFormField> _getPopulateDDMFormFields(
