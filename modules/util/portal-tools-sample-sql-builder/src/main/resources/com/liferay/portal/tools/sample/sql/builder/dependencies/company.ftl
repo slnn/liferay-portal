@@ -49,5 +49,7 @@
 
 	<#list dataFactory.newKaleoDefinitionModels() as kaleoDefinitionModel>
 		${dataFactory.toInsertSQL(kaleoDefinitionModel)}
+
+		<#assign kaleoNodeModel = dataFactory.newKaleoNodeModel(kaleoDefinitionModel) />
 	</#list>
 </#list>
