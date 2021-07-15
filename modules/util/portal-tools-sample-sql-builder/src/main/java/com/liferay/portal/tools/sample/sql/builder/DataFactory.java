@@ -491,6 +491,8 @@ public class DataFactory {
 		initDDMTemplateModels();
 
 		initDDMStructureModels();
+
+		initKaleoDefinitionContents();
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -921,6 +923,45 @@ public class DataFactory {
 		}
 
 		_journalArticleContent = new String(chars);
+	}
+
+	public void initKaleoDefinitionContents() throws Exception {
+		String rootModulePath = "";
+
+		Class<?> clazz = getClass();
+
+		String classLoaderStr = String.valueOf(clazz.getClassLoader());
+
+		String userDir = System.getProperty("user.dir");
+
+		if (classLoaderStr.contains("AppClassLoader")) {
+			rootModulePath = userDir.substring(0, userDir.indexOf("util"));
+		}
+		else {
+			rootModulePath =
+				userDir.substring(0, userDir.indexOf("benchmarks")) + "modules";
+		}
+
+		StringBundler sb1 = new StringBundler();
+
+		_getScriptAbsolutePath(
+			new File(rootModulePath),
+			"com/liferay/message/boards/moderation/internal/instance" +
+				"/lifecycle/dependencies" +
+					"/message-boards-moderation-definition.xml",
+			sb1);
+
+		_mbKaleoDefinitionContent = StringUtil.read(
+			new FileInputStream(new File(sb1.toString())));
+
+		StringBundler sb2 = new StringBundler();
+
+		_getScriptAbsolutePath(
+			new File(rootModulePath),
+			"META-INF/definitions/single-approver-definition.xml", sb2);
+
+		_singleApproverKaleoDefinitionContent = StringUtil.read(
+			new FileInputStream(new File(sb2.toString())));
 	}
 
 	public void initPortletResourcePermissionModels() throws IOException {
@@ -4789,33 +4830,22 @@ public class DataFactory {
 
 		List<KaleoDefinitionModel> kaleoDefinitionModels = new ArrayList<>();
 
-		String rootModulePath = "";
+		String content = _mbKaleoDefinitionContent;
 
-		Class<?> clazz = getClass();
+		content = content.replaceAll(StringPool.QUOTE, "\\\\\"");
 
-		String classLoaderStr = String.valueOf(clazz.getClassLoader());
-
-		String userDir = System.getProperty("user.dir");
-
-		if (classLoaderStr.contains("AppClassLoader")) {
-			rootModulePath = userDir.substring(0, userDir.indexOf("util"));
-		}
-		else {
-			rootModulePath =
-				userDir.substring(0, userDir.indexOf("benchmarks")) + "modules";
-		}
+		content = content.replaceAll(StringPool.APOSTROPHE, "\\\\\'");
 
 		StringBundler sb1 = new StringBundler();
 
-		_getScriptAbsolutePath(
-			new File(rootModulePath),
-			"com/liferay/message/boards/moderation/internal/instance" +
-				"/lifecycle/dependencies" +
-					"/message-boards-moderation-definition.xml",
-			sb1);
+		_processScript(content, sb1);
 
-		String content = StringUtil.read(
-			new FileInputStream(new File(sb1.toString())));
+		kaleoDefinitionModels.add(
+			newKaleoDefinitionModel(
+				MBModerationConstants.WORKFLOW_DEFINITION_NAME, sb1.toString(),
+				MBMessage.class.getName()));
+
+		content = _singleApproverKaleoDefinitionContent;
 
 		content = content.replaceAll(StringPool.QUOTE, "\\\\\"");
 
@@ -4827,29 +4857,7 @@ public class DataFactory {
 
 		kaleoDefinitionModels.add(
 			newKaleoDefinitionModel(
-				MBModerationConstants.WORKFLOW_DEFINITION_NAME, sb2.toString(),
-				MBMessage.class.getName()));
-
-		StringBundler sb3 = new StringBundler();
-
-		_getScriptAbsolutePath(
-			new File(rootModulePath),
-			"META-INF/definitions/single-approver-definition.xml", sb3);
-
-		content = StringUtil.read(
-			new FileInputStream(new File(sb3.toString())));
-
-		content = content.replaceAll(StringPool.QUOTE, "\\\\\"");
-
-		content = content.replaceAll(StringPool.APOSTROPHE, "\\\\\'");
-
-		StringBundler sb4 = new StringBundler();
-
-		_processScript(content, sb4);
-
-		kaleoDefinitionModels.add(
-			newKaleoDefinitionModel(
-				"Single Approver", sb4.toString(),
+				"Single Approver", sb2.toString(),
 				WorkflowDefinitionConstants.SCOPE_ALL));
 
 		return kaleoDefinitionModels;
@@ -4880,8 +4888,15 @@ public class DataFactory {
 		kaleoNodeModel.setKaleoDefinitionVersionId(_counter.get());
 		kaleoNodeModel.setName("created");
 
-		kaleoNodeModel.setMetadata(
-			_getMetaData(kaleoDefinitionModel.getContent()));
+		String content = _singleApproverKaleoDefinitionContent;
+
+		String name = kaleoDefinitionModel.getName();
+
+		if (name.equals(MBModerationConstants.WORKFLOW_DEFINITION_NAME)) {
+			content = _mbKaleoDefinitionContent;
+		}
+
+		kaleoNodeModel.setMetadata(_getMetaData(content));
 		kaleoNodeModel.setType("STATE");
 		kaleoNodeModel.setInitial(true);
 		kaleoNodeModel.setTerminal(false);
@@ -8460,6 +8475,7 @@ public class DataFactory {
 	private final String _layoutPageTemplateStructureRelData;
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
+	private String _mbKaleoDefinitionContent;
 	private RoleModel _organizationContentReviewerRoleModel;
 	private RoleModel _ownerRoleModel;
 	private RoleModel _portalContentReviewerRoleModel;
@@ -8473,6 +8489,7 @@ public class DataFactory {
 	private final SimpleCounter _resourcePermissionIdCounter;
 	private long _sampleUserId;
 	private final Format _simpleDateFormat;
+	private String _singleApproverKaleoDefinitionContent;
 	private RoleModel _siteContentReviewerRoleModel;
 	private RoleModel _siteMemberRoleModel;
 	private final SimpleCounter _socialActivityIdCounter;
