@@ -4907,47 +4907,6 @@ public class DataFactory {
 		return kaleoDefinitionVersionModel;
 	}
 
-	public KaleoNodeModel newKaleoNodeModel(
-			KaleoDefinitionModel kaleoDefinitionModel)
-		throws Exception {
-
-		KaleoNodeModel kaleoNodeModel = new KaleoNodeModelImpl();
-
-		// PK fields
-
-		kaleoNodeModel.setKaleoNodeId(_counter.get());
-
-		// Audit fields
-
-		kaleoNodeModel.setCompanyId(_companyId);
-		kaleoNodeModel.setUserId(_defaultUserId);
-		kaleoNodeModel.setUserName(_SAMPLE_USER_NAME);
-		kaleoNodeModel.setCreateDate(new Date());
-		kaleoNodeModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		kaleoNodeModel.setKaleoDefinitionId(
-			kaleoDefinitionModel.getKaleoDefinitionId());
-		kaleoNodeModel.setKaleoDefinitionVersionId(_counter.get());
-		kaleoNodeModel.setName("created");
-
-		String content = _singleApproverKaleoDefinitionContent;
-
-		String name = kaleoDefinitionModel.getName();
-
-		if (name.equals(MBModerationConstants.WORKFLOW_DEFINITION_NAME)) {
-			content = _mbKaleoDefinitionContent;
-		}
-
-		kaleoNodeModel.setMetadata(_getMetaData(content));
-		kaleoNodeModel.setType("STATE");
-		kaleoNodeModel.setInitial(true);
-		kaleoNodeModel.setTerminal(false);
-
-		return kaleoNodeModel;
-	}
-
 	public LayoutClassedModelUsageModel newLayoutClassedModelUsageModel(
 		long groupId, long plid, String containerKey,
 		JournalArticleResourceModel journalArticleResourceModel) {
@@ -6196,6 +6155,23 @@ public class DataFactory {
 			mbMessageModel.getGroupId(), classNameId, classPK, type, extraData);
 	}
 
+	public KaleoNodeModel newStartKaleoNodeModel(
+			KaleoDefinitionModel kaleoDefinitionModel)
+		throws Exception {
+
+		String content = _singleApproverKaleoDefinitionContent;
+
+		String name = kaleoDefinitionModel.getName();
+
+		if (name.equals(MBModerationConstants.WORKFLOW_DEFINITION_NAME)) {
+			content = _mbKaleoDefinitionContent;
+		}
+
+		return newKaleoNodeModel(
+			kaleoDefinitionModel.getKaleoDefinitionId(), _counter.get(),
+			"created", _getMetaData(content), "STATE", true, false);
+	}
+
 	public SubscriptionModel newSubscriptionModel(
 		BlogsEntryModel blogsEntryModel) {
 
@@ -7189,6 +7165,39 @@ public class DataFactory {
 		kaleoDefinitionModel.setActive(true);
 
 		return kaleoDefinitionModel;
+	}
+
+	protected KaleoNodeModel newKaleoNodeModel(
+			long kaleoDefinitionId, long kaleoDefinitionVersionId, String name,
+			String metadata, String type, boolean initial, boolean terminal)
+		throws Exception {
+
+		KaleoNodeModel kaleoNodeModel = new KaleoNodeModelImpl();
+
+		// PK fields
+
+		kaleoNodeModel.setKaleoNodeId(_counter.get());
+
+		// Audit fields
+
+		kaleoNodeModel.setCompanyId(_companyId);
+		kaleoNodeModel.setUserId(_defaultUserId);
+		kaleoNodeModel.setUserName(_SAMPLE_USER_NAME);
+		kaleoNodeModel.setCreateDate(new Date());
+		kaleoNodeModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		kaleoNodeModel.setKaleoDefinitionId(kaleoDefinitionId);
+		kaleoNodeModel.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
+		kaleoNodeModel.setName(name);
+
+		kaleoNodeModel.setMetadata(metadata);
+		kaleoNodeModel.setType(type);
+		kaleoNodeModel.setInitial(initial);
+		kaleoNodeModel.setTerminal(terminal);
+
+		return kaleoNodeModel;
 	}
 
 	protected LayoutModel newLayoutModel(
