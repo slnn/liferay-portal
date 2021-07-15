@@ -12,28 +12,11 @@
 			"parentId": "",
 			"type": "root"
 		},
-		"10585e58-7fc7-618b-4e1e-71d603fd7d8e": {
-			"children": [
-				"5fb90589-6fde-887b-fda3-1c72ecf57fa4"
-			],
-			"config": {
-				"landscapeMobile": {
-				},
-				"portraitMobile": {
-				},
-				"size": 4,
-				"tablet": {
-				}
-			},
-			"itemId": "10585e58-7fc7-618b-4e1e-71d603fd7d8e",
-			"parentId": "205c3614-4c56-7289-4a27-02ad044cdcdc",
-			"type": "column"
-		},
+
 		"205c3614-4c56-7289-4a27-02ad044cdcdc": {
 			"children": [
 				"d6e2cf3a-f92b-194a-0cca-7c7bdcdf8939",
-				"d4209a43-31c9-4f39-392c-540c24696bc7",
-				"10585e58-7fc7-618b-4e1e-71d603fd7d8e"
+				"d4209a43-31c9-4f39-392c-540c24696bc7"
 			],
 			"config": {
 				"gutters": true,
