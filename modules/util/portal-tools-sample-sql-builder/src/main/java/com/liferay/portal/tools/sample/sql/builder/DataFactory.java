@@ -7375,6 +7375,10 @@ public class DataFactory {
 
 	private static final String _DEPENDENCIES_DIR =
 		"com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
+	
+	private static final String _WELCOME_SITE_PAGE_ELEMENT_FILE =
+		"com/liferay/site/welcome/site/initializer/internal/dependencies" +
+			"/page-element.json";
 
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
