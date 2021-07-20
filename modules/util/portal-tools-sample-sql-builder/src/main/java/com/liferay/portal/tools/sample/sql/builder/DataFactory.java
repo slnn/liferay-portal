@@ -7368,6 +7368,26 @@ public class DataFactory {
 		return StringUtil.replace(resource, "${paragraphValue}", sb.toString());
 	}
 
+	private String _getRootModulePath(){
+		String rootModulePath = "";
+
+		Class<?> clazz = getClass();
+
+		String classLoaderStr = String.valueOf(clazz.getClassLoader());
+
+		String userDir = System.getProperty("user.dir");
+
+		if (classLoaderStr.contains("AppClassLoader")) {
+			rootModulePath = userDir.substring(0, userDir.indexOf("util"));
+		}
+		else {
+			rootModulePath =
+				userDir.substring(0, userDir.indexOf("benchmarks")) + "modules";
+		}
+
+		return rootModulePath;
+	}
+
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
 	private static final long _DEFAULT_DL_FILE_ENTRY_TYPE_ID =
