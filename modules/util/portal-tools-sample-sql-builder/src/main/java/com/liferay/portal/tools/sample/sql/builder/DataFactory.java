@@ -345,6 +345,7 @@ import com.liferay.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -356,6 +357,12 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
 import java.net.URL;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.sql.Types;
 
@@ -7218,6 +7225,60 @@ public class DataFactory {
 		return sb.toString();
 	}
 
+	private void _getScriptAbsolutePath(
+		File baseDir, String ftlName, StringBundler sb) {
+
+		if (!baseDir.exists() || !baseDir.isDirectory()) {
+			return;
+		}
+
+		try {
+			Files.walkFileTree(
+				baseDir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						String fileName = String.valueOf(path.getFileName());
+
+						if (_isSkip(fileName) || fileName.contains("test")) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						if (path.endsWith(ftlName)) {
+							sb.append(path);
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+		catch (IOException ioException) {
+		}
+	}
+
+	private boolean _isSkip(String fileName) {
+		if (fileName.startsWith(".") ||
+			_skipModuleFileNames.contains(fileName)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private LayoutModel _newContentPageLayoutModel(
 		long groupId, String name, long classNameId, long classPK) {
 
@@ -7333,6 +7394,10 @@ public class DataFactory {
 
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
+	private static final List<String> _skipModuleFileNames = Arrays.asList(
+		"aspectj", "build", "classes", "core", "etl", "node_modules",
+		"node_modules_cache", "post-upgrade-fix", "sdk", "suites",
+		"third-party", "test");
 
 	private final long _accountId;
 	private RoleModel _administratorRoleModel;
