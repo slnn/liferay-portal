@@ -210,6 +210,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
@@ -263,6 +264,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -7225,6 +7227,26 @@ public class DataFactory {
 		return sb.toString();
 	}
 
+	private String _getRootModulePath() {
+		String rootModulePath = "";
+
+		Class<?> clazz = getClass();
+
+		String classLoaderStr = String.valueOf(clazz.getClassLoader());
+
+		String userDir = System.getProperty("user.dir");
+
+		if (classLoaderStr.contains("AppClassLoader")) {
+			rootModulePath = userDir.substring(0, userDir.indexOf("util"));
+		}
+		else {
+			rootModulePath =
+				userDir.substring(0, userDir.indexOf("benchmarks")) + "modules";
+		}
+
+		return rootModulePath;
+	}
+
 	private void _getScriptAbsolutePath(
 		File baseDir, String ftlName, StringBundler sb) {
 
@@ -7267,6 +7289,37 @@ public class DataFactory {
 		}
 		catch (IOException ioException) {
 		}
+	}
+
+	private String _getWelcomeSitePageElement() {
+		StringBundler sb1 = new StringBundler();
+
+		_getScriptAbsolutePath(
+			new File(_getRootModulePath()), _WELCOME_SITE_PAGE_ELEMENT_FILE,
+			sb1);
+
+		String pageElementJSON = StringUtil.replace(
+			sb1.toString(), "\"[£", "£]\"",
+			HashMapBuilder.put(
+				"WELCOME_TO_LIFERAY_I18N_JSON_VALUE",
+				() -> {
+					JSONObject jsonObject = JSONUtil.put(
+						"en_US", "Welcome to Liferay");
+
+					return jsonObject.toJSONString();
+				}
+			).build());
+
+		String releaseInfo = ReleaseInfo.getReleaseInfo();
+
+		releaseInfo = StringUtil.replace(
+			releaseInfo, CharPool.OPEN_PARENTHESIS, "<br>(");
+
+		return StringUtil.replace(
+			pageElementJSON, "[$", "$]",
+			HashMapBuilder.put(
+				"RELEASE_INFO", releaseInfo + "."
+			).build());
 	}
 
 	private boolean _isSkip(String fileName) {
@@ -7368,26 +7421,6 @@ public class DataFactory {
 		return StringUtil.replace(resource, "${paragraphValue}", sb.toString());
 	}
 
-	private String _getRootModulePath(){
-		String rootModulePath = "";
-
-		Class<?> clazz = getClass();
-
-		String classLoaderStr = String.valueOf(clazz.getClassLoader());
-
-		String userDir = System.getProperty("user.dir");
-
-		if (classLoaderStr.contains("AppClassLoader")) {
-			rootModulePath = userDir.substring(0, userDir.indexOf("util"));
-		}
-		else {
-			rootModulePath =
-				userDir.substring(0, userDir.indexOf("benchmarks")) + "modules";
-		}
-
-		return rootModulePath;
-	}
-
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
 	private static final long _DEFAULT_DL_FILE_ENTRY_TYPE_ID =
@@ -7395,10 +7428,6 @@ public class DataFactory {
 
 	private static final String _DEPENDENCIES_DIR =
 		"com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
-	
-	private static final String _WELCOME_SITE_PAGE_ELEMENT_FILE =
-		"com/liferay/site/welcome/site/initializer/internal/dependencies" +
-			"/page-element.json";
 
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
@@ -7413,6 +7442,10 @@ public class DataFactory {
 		"BASIC_COMPONENT-paragraph";
 
 	private static final String _SAMPLE_USER_NAME = "Sample";
+
+	private static final String _WELCOME_SITE_PAGE_ELEMENT_FILE =
+		"com/liferay/site/welcome/site/initializer/internal/dependencies" +
+			"/page-element.json";
 
 	private static final Log _log = LogFactoryUtil.getLog(DataFactory.class);
 
