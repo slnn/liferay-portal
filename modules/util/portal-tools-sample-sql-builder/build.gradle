@@ -59,6 +59,7 @@ dependencies {
 	compileInclude project(":apps:fragment:fragment-service")
 	compileInclude project(":apps:friendly-url:friendly-url-api")
 	compileInclude project(":apps:friendly-url:friendly-url-service")
+	compileInclude project(":apps:headless:headless-delivery:headless-delivery-api")
 	compileInclude project(":apps:journal:journal-api")
 	compileInclude project(":apps:journal:journal-service")
 	compileInclude project(":apps:layout:layout-api")
@@ -81,6 +82,8 @@ dependencies {
 	compileInclude project(":apps:wiki:wiki-api")
 	compileInclude project(":apps:wiki:wiki-service")
 
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
+	compileOnly group: "com.liferay", name: "com.fasterxml.jackson.databind", version: "2.10.3.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

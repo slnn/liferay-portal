@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.model.AccountEntryUserRelModel;
@@ -161,6 +163,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntryModel;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl;
+import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.journal.constants.JournalActivityKeys;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
@@ -181,11 +184,15 @@ import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.FragmentLayoutStructureItemImporter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.RowLayoutStructureItemImporter;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureModel;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelModel;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureModelImpl;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelModelImpl;
+import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUtil;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
@@ -279,6 +286,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.AccountModelImpl;
@@ -289,6 +297,7 @@ import com.liferay.portal.model.impl.ContactModelImpl;
 import com.liferay.portal.model.impl.CountryModelImpl;
 import com.liferay.portal.model.impl.GroupModelImpl;
 import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
+import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
@@ -313,6 +322,7 @@ import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPort
 import com.liferay.portal.service.impl.LayoutLocalServiceImpl;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.uuid.PortalUUIDImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
@@ -353,6 +363,7 @@ import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -381,6 +392,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -457,17 +469,6 @@ public class DataFactory {
 		initJournalArticleContent();
 
 		initUserNames();
-	}
-
-	public void initLayoutStructureItemImporters() {
-		_layoutStructureItemImporters.put(
-			"Column", new ColumnLayoutStructureItemImporter());
-		_layoutStructureItemImporters.put(
-			"Fragment", new FragmentLayoutStructureItemImporter());
-		_layoutStructureItemImporters.put(
-			"Row", new RowLayoutStructureItemImporter());
-		_layoutStructureItemImporters.put(
-			"Section", new ContainerLayoutStructureItemImporter());
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -787,6 +788,17 @@ public class DataFactory {
 		}
 
 		_journalArticleContent = new String(chars);
+	}
+
+	public void initLayoutStructureItemImporters() {
+		_layoutStructureItemImporters.put(
+			"Column", new ColumnLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			"Fragment", new FragmentLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			"Row", new RowLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			"Section", new ContainerLayoutStructureItemImporter());
 	}
 
 	public void initUserNames() throws IOException {
@@ -4591,11 +4603,12 @@ public class DataFactory {
 	}
 
 	public LayoutPageTemplateStructureRelModel
-		newLayoutPageTemplateStructureRelModel(
-			LayoutModel layoutModel,
-			LayoutPageTemplateStructureModel layoutPageTemplateStructureModel,
-			List<FragmentEntryLinkModel> fragmentEntryLinkModels,
-			String templateFileName) {
+			newLayoutPageTemplateStructureRelModel(
+				LayoutModel layoutModel,
+				LayoutPageTemplateStructureModel
+					layoutPageTemplateStructureModel,
+				List<FragmentEntryLinkModel> fragmentEntryLinkModels)
+		throws Exception {
 
 		List<FragmentEntryLinkModel> targetFragmentEntryLinkModels =
 			new ArrayList<>();
@@ -4639,8 +4652,24 @@ public class DataFactory {
 				getLayoutPageTemplateStructureId());
 		layoutPageTemplateStructureRelModel.setSegmentsExperienceId(0L);
 
+		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
+
+		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
+
+		JSONObject originJSONObject =
+			LayoutPageTemplateStructureHelperUtil.
+				generateContentLayoutStructure(
+					new ArrayList<>(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+
+		LayoutStructure originLayoutStructure = LayoutStructure.of(
+			originJSONObject.toString());
+
 		layoutPageTemplateStructureRelModel.setData(
-			_generateJsonData(targetFragmentEntryLinkModels, templateFileName));
+			_importPageElement(
+				_getLayoyt(layoutModel), originLayoutStructure,
+				originLayoutStructure.getMainItemId(),
+				_getWelcomeSitePageElement(), 0));
 
 		return layoutPageTemplateStructureRelModel;
 	}
@@ -6402,7 +6431,6 @@ public class DataFactory {
 		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
 		fragmentEntryLinkModel.setPlid(layoutModel.getPlid());
 		fragmentEntryLinkModel.setRendererKey(renderKey);
-		fragmentEntryLinkModel.setConfiguration(configuration);
 		fragmentEntryLinkModel.setCss(css);
 		fragmentEntryLinkModel.setHtml(html);
 		fragmentEntryLinkModel.setConfiguration(configuration);
@@ -7163,47 +7191,6 @@ public class DataFactory {
 		}
 	}
 
-	private String _generateJsonData(
-		List<FragmentEntryLinkModel> fragmentEntryLinkModels,
-		String templateFileName) {
-
-		String data = null;
-
-		try {
-			data = _readFile(templateFileName);
-
-			for (FragmentEntryLinkModel fragmentEntryLinkModel :
-					fragmentEntryLinkModels) {
-
-				String rendererKey = fragmentEntryLinkModel.getRendererKey();
-
-				if (rendererKey.equals(_HEADING_RENDER_KEY)) {
-					data = StringUtil.replace(
-						data, "${headingFragmentEntryLinkId}",
-						String.valueOf(
-							fragmentEntryLinkModel.getFragmentEntryLinkId()));
-				}
-				else if (rendererKey.equals(_PARAGRAPH_RENDER_KEY)) {
-					data = StringUtil.replace(
-						data, "${paragraphFragmentEntryLinkId}",
-						String.valueOf(
-							fragmentEntryLinkModel.getFragmentEntryLinkId()));
-				}
-				else {
-					data = StringUtil.replace(
-						data, "${imageFragmentEntryLinkId}",
-						String.valueOf(
-							fragmentEntryLinkModel.getFragmentEntryLinkId()));
-				}
-			}
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-
-		return data;
-	}
-
 	private InputStream _getFragmentComponentInputStream(
 			String fragmentName, String suffix)
 		throws Exception {
@@ -7218,6 +7205,46 @@ public class DataFactory {
 				"/dependencies/", fragmentName, "/index.", suffix));
 
 		return url.openStream();
+	}
+
+	private Layout _getLayoyt(LayoutModel layoutModel) {
+		Layout layout = new LayoutImpl();
+
+		// UUID
+
+		layout.setUuid(layoutModel.getUuid());
+
+		// PK fields
+
+		layout.setPlid(layoutModel.getPlid());
+
+		// Group instance
+
+		layout.setGroupId(layoutModel.getGroupId());
+
+		// Audit fields
+
+		layout.setCompanyId(layoutModel.getCompanyId());
+		layout.setUserId(layoutModel.getUserId());
+		layout.setUserName(layoutModel.getUserName());
+		layout.setCreateDate(layoutModel.getCreateDate());
+		layout.setModifiedDate(layoutModel.getModifiedDate());
+
+		// Other fields
+
+		layout.setPrivateLayout(layoutModel.getPrivateLayout());
+		layout.setLayoutId(layoutModel.getLayoutId());
+		layout.setParentLayoutId(layoutModel.getParentLayoutId());
+		layout.setName(layoutModel.getName());
+		layout.setType(layoutModel.getType());
+		layout.setTypeSettings(layoutModel.getTypeSettings());
+		layout.setHidden(layoutModel.getHidden());
+
+		layout.setFriendlyURL(layoutModel.getFriendlyURL());
+
+		layout.setLastPublishDate(layoutModel.getLastPublishDate());
+
+		return layout;
 	}
 
 	private String _getMBDiscussionCombinedClassName(Class<?> clazz) {
@@ -7309,15 +7336,17 @@ public class DataFactory {
 		}
 	}
 
-	private String _getWelcomeSitePageElement() {
+	private String _getWelcomeSitePageElement() throws Exception {
 		StringBundler sb1 = new StringBundler();
 
 		_getScriptAbsolutePath(
 			new File(_getRootModulePath()), _WELCOME_SITE_PAGE_ELEMENT_FILE,
 			sb1);
 
+		InputStream inputStream = new FileInputStream(new File(sb1.toString()));
+
 		String pageElementJSON = StringUtil.replace(
-			sb1.toString(), "\"[£", "£]\"",
+			StringUtil.read(inputStream), "\"[£", "£]\"",
 			HashMapBuilder.put(
 				"WELCOME_TO_LIFERAY_I18N_JSON_VALUE",
 				() -> {
@@ -7338,6 +7367,25 @@ public class DataFactory {
 			HashMapBuilder.put(
 				"RELEASE_INFO", releaseInfo + "."
 			).build());
+	}
+
+	private String _importPageElement(
+			Layout layout, LayoutStructure layoutStructure, String parentItemId,
+			String pageElementJSON, int position)
+		throws Exception {
+
+		PageElement pageElement = _objectMapper.readValue(
+			pageElementJSON, PageElement.class);
+
+		Set<String> warningMessages = new HashSet<>();
+
+		_processPageElement(
+			layout, layoutStructure, pageElement, parentItemId, position,
+			warningMessages);
+
+		JSONObject jsonObject = layoutStructure.toJSONObject();
+
+		return jsonObject.toString();
 	}
 
 	private boolean _isSkip(String fileName) {
@@ -7417,6 +7465,39 @@ public class DataFactory {
 		return counterModel;
 	}
 
+	private boolean _processPageElement(
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, String parentItemId, int position,
+			Set<String> warningMessages)
+		throws Exception {
+
+		LayoutStructureItemImporter layoutStructureItemImporter =
+			_layoutStructureItemImporters.get(pageElement.getTypeAsString());
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructureItemImporter.addLayoutStructureItem(
+				layout, layoutStructure, pageElement, parentItemId, position,
+				warningMessages);
+
+		if (pageElement.getPageElements() == null) {
+			return true;
+		}
+
+		int childPosition = 0;
+
+		for (PageElement childPageElement : pageElement.getPageElements()) {
+			if (_processPageElement(
+					layout, layoutStructure, childPageElement,
+					layoutStructureItem.getItemId(), childPosition,
+					warningMessages)) {
+
+				childPosition++;
+			}
+		}
+
+		return true;
+	}
+
 	private String _readFile(InputStream inputStream) throws Exception {
 		List<String> lines = new ArrayList<>();
 
@@ -7467,6 +7548,7 @@ public class DataFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(DataFactory.class);
 
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 	private static final List<String> _skipModuleFileNames = Arrays.asList(
