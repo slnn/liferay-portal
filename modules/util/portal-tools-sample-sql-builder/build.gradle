@@ -62,6 +62,7 @@ dependencies {
 	compileInclude project(":apps:journal:journal-api")
 	compileInclude project(":apps:journal:journal-service")
 	compileInclude project(":apps:layout:layout-api")
+	compileInclude project(":apps:layout:layout-page-template-admin-web")
 	compileInclude project(":apps:layout:layout-page-template-api")
 	compileInclude project(":apps:layout:layout-page-template-service")
 	compileInclude project(":apps:layout:layout-service")

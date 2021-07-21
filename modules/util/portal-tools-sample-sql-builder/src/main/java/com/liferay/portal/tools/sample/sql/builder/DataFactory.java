@@ -176,6 +176,11 @@ import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.layout.model.LayoutClassedModelUsageModel;
 import com.liferay.layout.model.impl.LayoutClassedModelUsageModelImpl;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.ColumnLayoutStructureItemImporter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.ContainerLayoutStructureItemImporter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.FragmentLayoutStructureItemImporter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.RowLayoutStructureItemImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureModel;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelModel;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureModelImpl;
@@ -447,9 +452,22 @@ public class DataFactory {
 			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
 				_readFile("default_asset_publisher_preference.xml"));
 
+		initLayoutStructureItemImporters();
+
 		initJournalArticleContent();
 
 		initUserNames();
+	}
+
+	public void initLayoutStructureItemImporters() {
+		_layoutStructureItemImporters.put(
+			"Column", new ColumnLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			"Fragment", new FragmentLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			"Row", new RowLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			"Section", new ContainerLayoutStructureItemImporter());
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -7504,6 +7522,8 @@ public class DataFactory {
 	private final String _layoutPageTemplateStructureRelData;
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
+	private final Map<String, LayoutStructureItemImporter>
+		_layoutStructureItemImporters = new HashMap<>();
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
