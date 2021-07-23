@@ -3988,7 +3988,7 @@ public class DataFactory {
 						_HEADING_RENDER_KEY, "htmlPath", "index.html"),
 					_getFragmentEntryLinkValue(
 						_HEADING_RENDER_KEY, "configurationPath", "index.json"),
-					_readFile("heading_editValue.json"), 0,
+					"", 0,
 					headingRenderNamespace));
 
 			fragmentEntryLinkModels.add(
@@ -4001,7 +4001,7 @@ public class DataFactory {
 					_getFragmentEntryLinkValue(
 						_PARAGRAPH_RENDER_KEY, "configurationPath",
 						"index.json"),
-					_replaceReleaseInfo(_readFile("paragraph_editValue.json")),
+					"",
 					0, paragraphRenderNamespace));
 
 			fragmentEntryLinkModels.add(
@@ -4011,7 +4011,7 @@ public class DataFactory {
 						_IMAGE_RENDER_KEY, "htmlPath", "index.html"),
 					_getFragmentEntryLinkValue(
 						_IMAGE_RENDER_KEY, "configurationPath", "index.json"),
-					_readFile("image_editValue.json"), 0,
+					"", 0,
 					imageRenderNamespace));
 		}
 
