@@ -469,6 +469,8 @@ public class DataFactory {
 		initJournalArticleContent();
 
 		initUserNames();
+
+		initFragmentEntryJsonFilePath();
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -771,6 +773,29 @@ public class DataFactory {
 
 	public long getWikiPageClassNameId() {
 		return getClassNameId(WikiPage.class);
+	}
+
+	public void initFragmentEntryJsonFilePath() {
+		StringBundler sb = new StringBundler();
+
+		_getScriptAbsolutePath(
+			new File(_getRootModulePath()), _HEADING_JSON_FILE, sb);
+
+		_fragmentEntryJsonFilePaths.put(_HEADING_RENDER_KEY, sb.toString());
+
+		sb.setIndex(0);
+
+		_getScriptAbsolutePath(
+			new File(_getRootModulePath()), _PARAGRAPH_JSON_FILE, sb);
+
+		_fragmentEntryJsonFilePaths.put(_PARAGRAPH_RENDER_KEY, sb.toString());
+
+		sb.setIndex(0);
+
+		_getScriptAbsolutePath(
+			new File(_getRootModulePath()), _IMAGE_JSON_FILE, sb);
+
+		_fragmentEntryJsonFilePaths.put(_IMAGE_RENDER_KEY, sb.toString());
 	}
 
 	public void initJournalArticleContent() {
@@ -7531,11 +7556,23 @@ public class DataFactory {
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
 
+	private static final String _HEADING_JSON_FILE =
+		"com/liferay/fragment/collection/contributor/basic/component" +
+			"/dependencies/heading/fragment.json";
+
 	private static final String _HEADING_RENDER_KEY = "BASIC_COMPONENT-heading";
+
+	private static final String _IMAGE_JSON_FILE =
+		"com/liferay/fragment/collection/contributor/basic/component" +
+			"/dependencies/image/fragment.json";
 
 	private static final String _IMAGE_RENDER_KEY = "BASIC_COMPONENT-image";
 
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
+
+	private static final String _PARAGRAPH_JSON_FILE =
+		"com/liferay/fragment/collection/contributor/basic/component" +
+			"/dependencies/paragraph/fragment.json";
 
 	private static final String _PARAGRAPH_RENDER_KEY =
 		"BASIC_COMPONENT-paragraph";
@@ -7589,6 +7626,8 @@ public class DataFactory {
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private List<String> _firstNames;
+	private final Map<String, String> _fragmentEntryJsonFilePaths =
+		new HashMap<>();
 	private final SimpleCounter _futureDateCounter;
 	private long _globalGroupId;
 	private long _guestGroupId;
