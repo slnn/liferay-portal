@@ -4695,7 +4695,7 @@ public class DataFactory {
 
 		layoutPageTemplateStructureRelModel.setData(
 			_importPageElement(
-				_getLayoyt(layoutModel), originLayoutStructure,
+				_getLayout(layoutModel), originLayoutStructure,
 				originLayoutStructure.getMainItemId(),
 				_getWelcomeSitePageElement(), 0));
 
@@ -7247,7 +7247,7 @@ public class DataFactory {
 		return StringUtil.read(new FileInputStream(new File(sb.toString())));
 	}
 
-	private Layout _getLayoyt(LayoutModel layoutModel) {
+	private Layout _getLayout(LayoutModel layoutModel) {
 		Layout layout = new LayoutImpl();
 
 		// UUID
