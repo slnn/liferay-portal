@@ -274,6 +274,7 @@ import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -373,8 +374,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import java.math.BigDecimal;
-
-import java.net.URL;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -3983,31 +3982,35 @@ public class DataFactory {
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _HEADING_RENDER_KEY,
-					_readFile(
-						_getFragmentComponentInputStream("heading", "css")),
-					_readFile(
-						_getFragmentComponentInputStream("heading", "html")),
-					_readFile("heading_configuration.json"),
+					_getFragmentEntryLinkValue(
+						_HEADING_RENDER_KEY, "cssPath", "index.css"),
+					_getFragmentEntryLinkValue(
+						_HEADING_RENDER_KEY, "htmlPath", "index.html"),
+					_getFragmentEntryLinkValue(
+						_HEADING_RENDER_KEY, "configurationPath", "index.json"),
 					_readFile("heading_editValue.json"), 0,
 					headingRenderNamespace));
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _PARAGRAPH_RENDER_KEY,
-					_readFile(
-						_getFragmentComponentInputStream("paragraph", "css")),
-					_readFile(
-						_getFragmentComponentInputStream("paragraph", "html")),
-					_readFile("paragraph_configuration.json"),
+					_getFragmentEntryLinkValue(
+						_PARAGRAPH_RENDER_KEY, "cssPath", "index.css"),
+					_getFragmentEntryLinkValue(
+						_PARAGRAPH_RENDER_KEY, "htmlPath", "index.html"),
+					_getFragmentEntryLinkValue(
+						_PARAGRAPH_RENDER_KEY, "configurationPath",
+						"index.json"),
 					_replaceReleaseInfo(_readFile("paragraph_editValue.json")),
 					0, paragraphRenderNamespace));
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _IMAGE_RENDER_KEY, "",
-					_readFile(
-						_getFragmentComponentInputStream("image", "html")),
-					_readFile("image_configuration.json"),
+					_getFragmentEntryLinkValue(
+						_IMAGE_RENDER_KEY, "htmlPath", "index.html"),
+					_getFragmentEntryLinkValue(
+						_IMAGE_RENDER_KEY, "configurationPath", "index.json"),
 					_readFile("image_editValue.json"), 0,
 					imageRenderNamespace));
 		}
@@ -7216,20 +7219,32 @@ public class DataFactory {
 		}
 	}
 
-	private InputStream _getFragmentComponentInputStream(
-			String fragmentName, String suffix)
+	private String _getFragmentEntryLinkValue(
+			String fragmentRenderKey, String fileName, String defaultFileName)
 		throws Exception {
 
-		Class<?> clazz = getClass();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			StringUtil.read(
+				new FileInputStream(
+					new File(
+						_fragmentEntryJsonFilePaths.get(fragmentRenderKey)))));
 
-		ClassLoader classLoader = clazz.getClassLoader();
+		StringBundler sb = new StringBundler(3);
 
-		URL url = classLoader.getResource(
-			StringBundler.concat(
-				"com/liferay/fragment/collection/contributor/basic/component",
-				"/dependencies/", fragmentName, "/index.", suffix));
+		sb.append(
+			FileUtil.getPath(
+				_fragmentEntryJsonFilePaths.get(fragmentRenderKey)));
 
-		return url.openStream();
+		sb.append("/");
+
+		if (Validator.isNotNull(jsonObject.getString(fileName))) {
+			sb.append(jsonObject.getString(fileName));
+		}
+		else {
+			sb.append(defaultFileName);
+		}
+
+		return StringUtil.read(new FileInputStream(new File(sb.toString())));
 	}
 
 	private Layout _getLayoyt(LayoutModel layoutModel) {
