@@ -181,7 +181,6 @@ import com.liferay.layout.model.LayoutClassedModelUsageModel;
 import com.liferay.layout.model.impl.LayoutClassedModelUsageModelImpl;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.ColumnLayoutStructureItemImporter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.ContainerLayoutStructureItemImporter;
-import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.FragmentLayoutStructureItemImporter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.RowLayoutStructureItemImporter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -829,7 +828,7 @@ public class DataFactory {
 		_layoutStructureItemImporters.put(
 			"Column", new ColumnLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
-			"Fragment", new FragmentLayoutStructureItemImporter());
+			"Fragment", _fragmentLayoutStructureItemImporter);
 		_layoutStructureItemImporters.put(
 			"Row", new RowLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
@@ -4029,7 +4028,7 @@ public class DataFactory {
 				originFragmentEntryLinkModels,
 				_objectMapper.readValue(
 					_getWelcomeSitePageElement(), PageElement.class),
-				_objectMapper);
+				_objectMapper, _fragmentEntryProcessorList);
 
 			fragmentEntryLinkModels.addAll(originFragmentEntryLinkModels);
 		}
@@ -4665,6 +4664,9 @@ public class DataFactory {
 				targetFragmentEntryLinkModels.add(model);
 			}
 		}
+
+		_layoutFragmentEntryLinkMap.put(
+			layoutModel.getPlid(), targetFragmentEntryLinkModels);
 
 		LayoutPageTemplateStructureRelModel
 			layoutPageTemplateStructureRelModel =
@@ -7530,13 +7532,31 @@ public class DataFactory {
 			Set<String> warningMessages)
 		throws Exception {
 
-		LayoutStructureItemImporter layoutStructureItemImporter =
-			_layoutStructureItemImporters.get(pageElement.getTypeAsString());
+		String type = pageElement.getTypeAsString();
 
-		LayoutStructureItem layoutStructureItem =
-			layoutStructureItemImporter.addLayoutStructureItem(
-				layout, layoutStructure, pageElement, parentItemId, position,
-				warningMessages);
+		LayoutStructureItem layoutStructureItem = null;
+
+		if (type.equals("Fragment")) {
+			SampleSQLBuilderFragmentLayoutStructureItemImporter
+				layoutStructureItemImporter =
+					(SampleSQLBuilderFragmentLayoutStructureItemImporter)
+						_layoutStructureItemImporters.get(type);
+
+			layoutStructureItem =
+				layoutStructureItemImporter.addLayoutStructureItem(
+					layout, layoutStructure, pageElement, parentItemId,
+					position, warningMessages, _layoutFragmentEntryLinkMap);
+		}
+		else {
+			LayoutStructureItemImporter layoutStructureItemImporter =
+				(LayoutStructureItemImporter)_layoutStructureItemImporters.get(
+					type);
+
+			layoutStructureItem =
+				layoutStructureItemImporter.addLayoutStructureItem(
+					layout, layoutStructure, pageElement, parentItemId,
+					position, warningMessages);
+		}
 
 		if (pageElement.getPageElements() == null) {
 			return true;
@@ -7656,7 +7676,8 @@ public class DataFactory {
 		_fragmentEntryProcessorList = new ArrayList<>();
 	private final SampleSQLBuilderFragmentLayoutStructureItemImporter
 		_fragmentLayoutStructureItemImporter =
-			new SampleSQLBuilderFragmentLayoutStructureItemImporter();
+			new SampleSQLBuilderFragmentLayoutStructureItemImporter(
+				_objectMapper);
 	private final SimpleCounter _futureDateCounter;
 	private long _globalGroupId;
 	private long _guestGroupId;
@@ -7667,13 +7688,15 @@ public class DataFactory {
 	private final String _journalDDMStructureContent;
 	private final String _journalDDMStructureLayoutContent;
 	private List<String> _lastNames;
+	private final Map<Long, List<FragmentEntryLinkModel>>
+		_layoutFragmentEntryLinkMap = new HashMap<>();
 	private final Map<String, SimpleCounter> _layoutIdCounters =
 		new HashMap<>();
 	private final String _layoutPageTemplateStructureRelData;
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
-	private final Map<String, LayoutStructureItemImporter>
-		_layoutStructureItemImporters = new HashMap<>();
+	private final Map<String, Object> _layoutStructureItemImporters =
+		new HashMap<>();
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
