@@ -27,7 +27,8 @@ import java.util.List;
 /**
  * @author Lily Chi
  */
-public class SampleSQLBuilderFreeMarkerFragmentEntryProcessor {
+public class SampleSQLBuilderFreeMarkerFragmentEntryProcessor
+	extends SampleSQLBuilderFragmentEntryProcessor {
 
 	public String getClassName() {
 		return "com.liferay.fragment.entry.processor.freemarker." +
@@ -35,7 +36,8 @@ public class SampleSQLBuilderFreeMarkerFragmentEntryProcessor {
 	}
 
 	public JSONObject getConfigurationDefaultValuesJSONObject(
-		String configuration) {
+			String configuration)
+		throws Exception {
 
 		List<FragmentConfigurationField> fragmentConfigurationFields =
 			getFragmentConfigurationFields(configuration);
@@ -47,14 +49,15 @@ public class SampleSQLBuilderFreeMarkerFragmentEntryProcessor {
 
 			defaultValuesJSONObject.put(
 				fragmentConfigurationField.getName(),
-				getFieldValue(fragmentConfigurationField, null));
+				fragmentConfigurationField.getDefaultValue());
 		}
 
 		return defaultValuesJSONObject;
 	}
 
 	public JSONObject getDefaultEditableValuesJSONObject(
-		String html, String configuration) {
+			String html, String configuration)
+		throws Exception {
 
 		return getConfigurationDefaultValuesJSONObject(configuration);
 	}

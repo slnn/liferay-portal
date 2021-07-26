@@ -18,26 +18,121 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
-import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Lily Chi
  */
 public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
+
+	public SampleSQLBuilderFragmentLayoutStructureItemImporter(
+		ObjectMapper objectMapper) {
+
+		_objectMapper = objectMapper;
+	}
+
+	public LayoutStructureItem addLayoutStructureItem(
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, String parentItemId, int position,
+			Set<String> warningMessages,
+			Map<Long, List<FragmentEntryLinkModel>> layoutFragmentEntryLinkMap)
+		throws Exception {
+
+		Map<String, Object> definitionMap = _getDefinitionMap(
+			pageElement.getDefinition());
+
+		Map<String, Object> fragmentDefinitionMap =
+			(Map<String, Object>)definitionMap.get("fragment");
+
+		String fragmentKey = (String)fragmentDefinitionMap.get("key");
+
+		FragmentEntryLinkModel fragmentEntryLinkModel = null;
+
+		for (FragmentEntryLinkModel entry :
+				layoutFragmentEntryLinkMap.get(layout.getPlid())) {
+
+			if (fragmentKey.equals(entry.getRendererKey())) {
+				fragmentEntryLinkModel = entry;
+			}
+		}
+
+		if (fragmentEntryLinkModel == null) {
+			return null;
+		}
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLinkModel.getFragmentEntryLinkId(), parentItemId,
+				position);
+
+		if (definitionMap != null) {
+			Map<String, Object> fragmentConfigMap =
+				(Map<String, Object>)definitionMap.get("fragmentConfig");
+			Map<String, Object> fragmentStyleMap =
+				(Map<String, Object>)definitionMap.get("fragmentStyle");
+
+			if (MapUtil.isNotEmpty(fragmentConfigMap) ||
+				MapUtil.isNotEmpty(fragmentStyleMap)) {
+
+				JSONObject commonStylesJSONObject = _toStylesJSONObject(
+					fragmentStyleMap);
+				JSONObject configStylesJSONObject = _toStylesJSONObject(
+					fragmentConfigMap);
+
+				for (String key : commonStylesJSONObject.keySet()) {
+					if (Validator.isNull(
+							configStylesJSONObject.getString(key))) {
+
+						configStylesJSONObject.put(
+							key, commonStylesJSONObject.get(key));
+					}
+				}
+
+				JSONObject jsonObject = JSONUtil.put(
+					"styles",
+					JSONUtil.merge(
+						commonStylesJSONObject, configStylesJSONObject));
+
+				layoutStructureItem.updateItemConfig(jsonObject);
+			}
+
+			if (definitionMap.containsKey("fragmentViewports")) {
+				List<Map<String, Object>> fragmentViewports =
+					(List<Map<String, Object>>)definitionMap.get(
+						"fragmentViewports");
+
+				for (Map<String, Object> fragmentViewport : fragmentViewports) {
+					JSONObject jsonObject = JSONUtil.put(
+						(String)fragmentViewport.get("id"),
+						_toFragmentViewportStylesJSONObject(fragmentViewport));
+
+					layoutStructureItem.updateItemConfig(jsonObject);
+				}
+			}
+		}
+
+		return layoutStructureItem;
+	}
 
 	public void updateFragmentEntryLinkModels(
 			List<FragmentEntryLinkModel> fragmentEntryLinkModels,
@@ -47,7 +142,7 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 		throws Exception {
 
 		Map<String, Object> definitionMap = _getDefinitionMap(
-			pageElement.getDefinition(), objectMapper);
+			pageElement.getDefinition());
 
 		JSONObject defaultEditableValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -111,6 +206,99 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 		}
 	}
 
+	private JSONObject _toStylesJSONObject(Map<String, Object> styles) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (MapUtil.isEmpty(styles)) {
+			return jsonObject;
+		}
+
+		jsonObject.put("backgroundColor", styles.get("backgroundColor"));
+
+		Object borderColor = styles.get("borderColor");
+
+		if (borderColor instanceof String) {
+			borderColor = _colors.getOrDefault(
+				borderColor, (String)borderColor);
+		}
+
+		String borderRadius = GetterUtil.getString(styles.get("borderRadius"));
+
+		Object shadow = styles.getOrDefault("boxShadow", styles.get("shadow"));
+
+		String textAlign = GetterUtil.getString(styles.get("textAlign"));
+
+		if (Validator.isNull(textAlign)) {
+			for (String alignKey : _ALIGN_KEYS) {
+				if (styles.containsKey(alignKey)) {
+					textAlign = GetterUtil.getString(styles.get(alignKey));
+
+					break;
+				}
+			}
+		}
+
+		Object textColor = styles.get("textColor");
+
+		if (textColor instanceof String) {
+			textColor = _colors.getOrDefault(textColor, (String)textColor);
+		}
+
+		return jsonObject.put(
+			"borderColor", borderColor
+		).put(
+			"borderRadius",
+			_borderRadiuses.getOrDefault(borderRadius, borderRadius)
+		).put(
+			"borderWidth", styles.get("borderWidth")
+		).put(
+			"fontFamily", styles.get("fontFamily")
+		).put(
+			"fontSize", styles.get("fontSize")
+		).put(
+			"fontWeight", styles.get("fontWeight")
+		).put(
+			"height", styles.get("height")
+		).put(
+			"marginBottom", styles.get("marginBottom")
+		).put(
+			"marginLeft", styles.get("marginLeft")
+		).put(
+			"marginRight", styles.get("marginRight")
+		).put(
+			"marginTop", styles.get("marginTop")
+		).put(
+			"maxHeight", styles.get("maxHeight")
+		).put(
+			"maxWidth", styles.get("maxWidth")
+		).put(
+			"minHeight", styles.get("minHeight")
+		).put(
+			"minWidth", styles.get("minWidth")
+		).put(
+			"opacity", styles.get("opacity")
+		).put(
+			"overflow", styles.get("overflow")
+		).put(
+			"paddingBottom", styles.get("paddingBottom")
+		).put(
+			"paddingLeft", styles.get("paddingLeft")
+		).put(
+			"paddingRight", styles.get("paddingRight")
+		).put(
+			"paddingTop", styles.get("paddingTop")
+		).put(
+			"shadow",
+			_shadows.getOrDefault(shadow, GetterUtil.getString(shadow))
+		).put(
+			"textAlign", textAlign
+		).put(
+			"textColor", textColor
+		).put(
+			"width", styles.get("width")
+		);
+	}
+
 	private JSONObject _createBaseFragmentFieldJSONObject(
 		Map<String, Object> map) {
 
@@ -130,19 +318,6 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 			}
 		}
 
-		Map<String, Object> defaultFragmentInlineValueMap =
-			(Map<String, Object>)map.get("defaultFragmentInlineValue");
-
-		if (defaultFragmentInlineValueMap == null) {
-			defaultFragmentInlineValueMap = (Map<String, Object>)map.get(
-				"defaultValue");
-		}
-
-		if (defaultFragmentInlineValueMap != null) {
-			jsonObject.put(
-				"defaultValue", defaultFragmentInlineValueMap.get("value"));
-		}
-
 		Map<String, Object> valueI18nMap = (Map<String, Object>)map.get(
 			"value_i18n");
 
@@ -153,8 +328,6 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 
 			return jsonObject;
 		}
-
-		processMapping(jsonObject, (Map<String, Object>)map.get("mapping"));
 
 		return jsonObject;
 	}
@@ -217,13 +390,8 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 
 		if (valueI18nMap != null) {
 			for (Map.Entry<String, Object> entry : valueI18nMap.entrySet()) {
-				Map<String, Object> fragmentLinkValueMap =
-					(Map<String, Object>)entry.getValue();
-
 				jsonObject.put(
-					entry.getKey(),
-					_createFragmentLinkValueConfigJSONObject(
-						fragmentLinkValueMap));
+					entry.getKey(), JSONFactoryUtil.createJSONObject());
 			}
 		}
 
@@ -232,72 +400,13 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 
 		if (valueMap != null) {
 			jsonObject = JSONUtil.merge(
-				jsonObject, _createFragmentLinkValueConfigJSONObject(valueMap));
+				jsonObject, JSONFactoryUtil.createJSONObject());
 		}
 
 		jsonObject = JSONUtil.merge(
-			jsonObject,
-			_createFragmentLinkValueConfigJSONObject(fragmentLinkMap));
+			jsonObject, JSONFactoryUtil.createJSONObject());
 
 		jsonObject.put("mapperType", "link");
-
-		return jsonObject;
-	}
-
-	private JSONObject _createFragmentLinkValueConfigJSONObject(
-		Map<String, Object> fragmentLinkValueMap) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (fragmentLinkValueMap == null) {
-			return jsonObject;
-		}
-
-		Map<String, Object> hrefMap =
-			(Map<String, Object>)fragmentLinkValueMap.get("href");
-
-		if (hrefMap == null) {
-			return jsonObject;
-		}
-
-		Map<String, Object> defaultFragmentInlineValueMap =
-			(Map<String, Object>)hrefMap.get("defaultFragmentInlineValue");
-
-		if (defaultFragmentInlineValueMap == null) {
-			defaultFragmentInlineValueMap = (Map<String, Object>)hrefMap.get(
-				"defaultValue");
-		}
-
-		String target = (String)fragmentLinkValueMap.get("target");
-
-		if (target != null) {
-			if (Objects.equals(target, FragmentLink.Target.PARENT.getValue()) ||
-				Objects.equals(target, FragmentLink.Target.TOP.getValue())) {
-
-				target = FragmentLink.Target.SELF.getValue();
-			}
-
-			jsonObject.put(
-				"target", "_" + StringUtil.lowerCaseFirstLetter(target));
-		}
-
-		Object value = hrefMap.get("value");
-
-		if (value != null) {
-			jsonObject.put("href", value);
-
-			return jsonObject;
-		}
-
-		if (defaultFragmentInlineValueMap != null) {
-			value = defaultFragmentInlineValueMap.get("value");
-		}
-
-		if (value != null) {
-			jsonObject.put("href", value);
-		}
-
-		processMapping(jsonObject, (Map<String, Object>)hrefMap.get("mapping"));
 
 		return jsonObject;
 	}
@@ -405,8 +514,7 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 		return configurationTypes;
 	}
 
-	private Map<String, Object> _getDefinitionMap(
-			Object definition, ObjectMapper objectMapper)
+	private Map<String, Object> _getDefinitionMap(Object definition)
 		throws Exception {
 
 		Map<String, Object> definitionMap = null;
@@ -415,7 +523,7 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 			definitionMap = (Map<String, Object>)definition;
 		}
 		else {
-			definitionMap = objectMapper.readValue(
+			definitionMap = _objectMapper.readValue(
 				definition.toString(), Map.class);
 		}
 
@@ -509,6 +617,45 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 		return jsonObject;
 	}
 
+	private JSONObject _toFragmentViewportStylesJSONObject(
+		Map<String, Object> fragmentViewport) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (MapUtil.isEmpty(fragmentViewport)) {
+			return jsonObject;
+		}
+
+		Map<String, Object> fragmentViewportStyle =
+			(Map<String, Object>)fragmentViewport.get("fragmentViewportStyle");
+
+		if (MapUtil.isEmpty(fragmentViewportStyle)) {
+			return jsonObject;
+		}
+
+		return JSONUtil.put(
+			"styles",
+			jsonObject.put(
+				"marginBottom", fragmentViewportStyle.get("marginBottom")
+			).put(
+				"marginLeft", fragmentViewportStyle.get("marginLeft")
+			).put(
+				"marginRight", fragmentViewportStyle.get("marginRight")
+			).put(
+				"marginTop", fragmentViewportStyle.get("marginTop")
+			).put(
+				"maxHeight", fragmentViewportStyle.get("maxHeight")
+			).put(
+				"paddingBottom", fragmentViewportStyle.get("paddingBottom")
+			).put(
+				"paddingLeft", fragmentViewportStyle.get("paddingLeft")
+			).put(
+				"paddingRight", fragmentViewportStyle.get("paddingRight")
+			).put(
+				"paddingTop", fragmentViewportStyle.get("paddingTop")
+			));
+	}
+
 	private JSONObject _toFreeMarkerFragmentEntryProcessorJSONObject(
 		Map<String, String> configurationTypes,
 		Map<String, Object> fragmentConfigMap) {
@@ -545,5 +692,48 @@ public class SampleSQLBuilderFragmentLayoutStructureItemImporter {
 
 		return jsonObject;
 	}
+
+	private static final String[] _ALIGN_KEYS = {
+		"buttonAlign", "contentAlign", "imageAlign", "textAlign"
+	};
+
+	private static final Map<String, String> _borderRadiuses =
+		HashMapBuilder.put(
+			"lg", "0.375rem"
+		).put(
+			"none", StringPool.BLANK
+		).put(
+			"sm", "0.1875rem"
+		).build();
+	private static final Map<String, String> _colors = HashMapBuilder.put(
+		"danger", "#DA1414"
+	).put(
+		"dark", "#272833"
+	).put(
+		"gray-dark", "#393A4A"
+	).put(
+		"info", "#2E5AAC"
+	).put(
+		"light", "#F1F2F5"
+	).put(
+		"lighter", "#F7F8F9"
+	).put(
+		"primary", "#0B5FFF"
+	).put(
+		"secondary", "#6B6C7E"
+	).put(
+		"success", "#287D3C"
+	).put(
+		"warning", "#B95000"
+	).put(
+		"white", "#FFFFFF"
+	).build();
+	private static final Map<String, String> _shadows = HashMapBuilder.put(
+		"lg", "0 1rem 3rem rgba(0, 0, 0, .175)"
+	).put(
+		"sm", "0 .125rem .25rem rgba(0, 0, 0, .075)"
+	).build();
+
+	private final ObjectMapper _objectMapper;
 
 }

@@ -70,4 +70,10 @@ public class SampleSQLBuilderEditableFragmentEntryProcessor
 		return getDefaultEditableValuesJSONObject(html);
 	}
 
+	private EditableElementParser _getEditableElementParser(Element element) {
+		String type = EditableFragmentEntryProcessorUtil.getElementType(
+			element);
+
+		return _editableElementParsers.get(type);
+	}
 }
