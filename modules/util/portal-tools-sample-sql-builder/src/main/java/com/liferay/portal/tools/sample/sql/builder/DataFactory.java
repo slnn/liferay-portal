@@ -470,6 +470,8 @@ public class DataFactory {
 		initUserNames();
 
 		initFragmentEntryJsonFilePath();
+
+		initFragmentEntryProcessorList();
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -795,6 +797,15 @@ public class DataFactory {
 			new File(_getRootModulePath()), _IMAGE_JSON_FILE, sb);
 
 		_fragmentEntryJsonFilePaths.put(_IMAGE_RENDER_KEY, sb.toString());
+	}
+
+	public void initFragmentEntryProcessorList() {
+		_fragmentEntryProcessorList.add(
+			new SampleSQLBuilderFreeMarkerFragmentEntryProcessor());
+		_fragmentEntryProcessorList.add(
+			new SampleSQLBuilderEditableFragmentEntryProcessor());
+		_fragmentEntryProcessorList.add(
+			new SampleSQLBuilderBackgroundImageFragmentEntryProcessor());
 	}
 
 	public void initJournalArticleContent() {
@@ -3979,7 +3990,10 @@ public class DataFactory {
 		String paragraphRenderNamespace = StringUtil.randomId();
 
 		for (LayoutModel layoutModel : layoutModels) {
-			fragmentEntryLinkModels.add(
+			List<FragmentEntryLinkModel> originFragmentEntryLinkModels =
+				new ArrayList<>();
+
+			originFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _HEADING_RENDER_KEY,
 					_getFragmentEntryLinkValue(
@@ -3988,10 +4002,9 @@ public class DataFactory {
 						_HEADING_RENDER_KEY, "htmlPath", "index.html"),
 					_getFragmentEntryLinkValue(
 						_HEADING_RENDER_KEY, "configurationPath", "index.json"),
-					"", 0,
-					headingRenderNamespace));
+					"", 0, headingRenderNamespace));
 
-			fragmentEntryLinkModels.add(
+			originFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _PARAGRAPH_RENDER_KEY,
 					_getFragmentEntryLinkValue(
@@ -4001,18 +4014,24 @@ public class DataFactory {
 					_getFragmentEntryLinkValue(
 						_PARAGRAPH_RENDER_KEY, "configurationPath",
 						"index.json"),
-					"",
-					0, paragraphRenderNamespace));
+					"", 0, paragraphRenderNamespace));
 
-			fragmentEntryLinkModels.add(
+			originFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _IMAGE_RENDER_KEY, "",
 					_getFragmentEntryLinkValue(
 						_IMAGE_RENDER_KEY, "htmlPath", "index.html"),
 					_getFragmentEntryLinkValue(
 						_IMAGE_RENDER_KEY, "configurationPath", "index.json"),
-					"", 0,
-					imageRenderNamespace));
+					"", 0, imageRenderNamespace));
+
+			_fragmentLayoutStructureItemImporter.updateFragmentEntryLinkModels(
+				originFragmentEntryLinkModels,
+				_objectMapper.readValue(
+					_getWelcomeSitePageElement(), PageElement.class),
+				_objectMapper);
+
+			fragmentEntryLinkModels.addAll(originFragmentEntryLinkModels);
 		}
 
 		return fragmentEntryLinkModels;
@@ -7550,16 +7569,6 @@ public class DataFactory {
 		return _readFile(getResourceInputStream(resourceName));
 	}
 
-	private String _replaceReleaseInfo(String resource) throws Exception {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("Welcome to");
-		sb.append(ReleaseInfo.getReleaseInfo());
-		sb.append(StringPool.PERIOD);
-
-		return StringUtil.replace(resource, "${paragraphValue}", sb.toString());
-	}
-
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
 	private static final long _DEFAULT_DL_FILE_ENTRY_TYPE_ID =
@@ -7643,6 +7652,11 @@ public class DataFactory {
 	private List<String> _firstNames;
 	private final Map<String, String> _fragmentEntryJsonFilePaths =
 		new HashMap<>();
+	private final List<SampleSQLBuilderFragmentEntryProcessor>
+		_fragmentEntryProcessorList = new ArrayList<>();
+	private final SampleSQLBuilderFragmentLayoutStructureItemImporter
+		_fragmentLayoutStructureItemImporter =
+			new SampleSQLBuilderFragmentLayoutStructureItemImporter();
 	private final SimpleCounter _futureDateCounter;
 	private long _globalGroupId;
 	private long _guestGroupId;

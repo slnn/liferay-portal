@@ -56,6 +56,11 @@ dependencies {
 	compileInclude project(":apps:dynamic-data-mapping:dynamic-data-mapping-web")
 	compileInclude project(":apps:fragment:fragment-api")
 	compileInclude project(":apps:fragment:fragment-collection-contributor:fragment-collection-contributor-basic-component")
+	compileInclude project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
+	compileInclude project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-background-image")
+	compileInclude project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-editable")
+	compileInclude project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-freemarker")
+	compileInclude project(":apps:fragment:fragment-impl")
 	compileInclude project(":apps:fragment:fragment-service")
 	compileInclude project(":apps:friendly-url:friendly-url-api")
 	compileInclude project(":apps:friendly-url:friendly-url-service")
@@ -87,6 +92,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.jsoup", name: "jsoup", version: "1.10.2"
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-process")
