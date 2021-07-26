@@ -82,6 +82,7 @@ public abstract class BaseLayoutStructureItemImporter {
 		JSONObject jsonObject, Map<String, Object> map) {
 
 		if (map == null) {
+			System.out.println("1 ####@@@$$$$0 processMapping map == null return");
 			return;
 		}
 
@@ -91,6 +92,7 @@ public abstract class BaseLayoutStructureItemImporter {
 			"itemReference");
 
 		if (itemReferenceMap == null) {
+			System.out.println("2 ####@@@$$$$0 processMapping itemReferenceMap == null return");
 			return;
 		}
 
@@ -99,6 +101,7 @@ public abstract class BaseLayoutStructureItemImporter {
 		if (Objects.equals(
 				ContextReference.ContextSource.COLLECTION_ITEM.getValue(),
 				contextSource)) {
+			System.out.println("3 ####@@@$$$$0 processMapping collectionFieldId return");
 
 			jsonObject.put("collectionFieldId", fieldKey);
 
@@ -108,6 +111,7 @@ public abstract class BaseLayoutStructureItemImporter {
 		if (Objects.equals(
 				ContextReference.ContextSource.DISPLAY_PAGE_ITEM.getValue(),
 				contextSource)) {
+			System.out.println("4 ####@@@$$$$0 processMapping mappedField return");
 
 			jsonObject.put("mappedField", fieldKey);
 
@@ -115,6 +119,7 @@ public abstract class BaseLayoutStructureItemImporter {
 		}
 
 		if (Validator.isNotNull(fieldKey)) {
+			System.out.println("5 ####@@@$$$$0 processMapping fieldKey is not null");
 			jsonObject.put("fieldId", fieldKey);
 		}
 
@@ -122,6 +127,8 @@ public abstract class BaseLayoutStructureItemImporter {
 
 		if (Objects.equals(className, Layout.class.getName()) &&
 			Objects.equals(itemReferenceMap.get("fieldName"), "plid")) {
+			
+			System.out.println("6 ####@@@$$$$0 processMapping plid");
 
 			String fieldValue = (String)itemReferenceMap.get("fieldValue");
 
@@ -134,7 +141,7 @@ public abstract class BaseLayoutStructureItemImporter {
 						"Unable to process mapping because layout could not " +
 							"be obtained for PLID " + fieldValue);
 				}
-
+				System.out.println("7 ####@@@$$$$0 layout == null return");
 				return;
 			}
 
@@ -156,6 +163,7 @@ public abstract class BaseLayoutStructureItemImporter {
 					"value", layout.getFriendlyURL()
 				));
 
+			System.out.println("8 ####@@@$$$$0 layout ！= null return");
 			return;
 		}
 
@@ -163,6 +171,8 @@ public abstract class BaseLayoutStructureItemImporter {
 
 		try {
 			classNameId = String.valueOf(portal.getClassNameId(className));
+			
+			System.out.println("9 ####@@@$$$$0 className= " + className);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -178,6 +188,8 @@ public abstract class BaseLayoutStructureItemImporter {
 		String classPK = String.valueOf(itemReferenceMap.get("classPK"));
 
 		if (Validator.isNotNull(classNameId) && Validator.isNotNull(classPK)) {
+			
+			System.out.println("10 ####@@@$$$$0 classPK ClassName= " + className);
 			jsonObject.put(
 				"classNameId", classNameId
 			).put(
@@ -229,6 +241,7 @@ public abstract class BaseLayoutStructureItemImporter {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (MapUtil.isEmpty(styles)) {
+			System.out.println("1 @@@##$#%$#%0 toStylesJSONObject styles is empty");
 			return jsonObject;
 		}
 
@@ -236,6 +249,8 @@ public abstract class BaseLayoutStructureItemImporter {
 
 		if (styles.containsKey("backgroundFragmentImage") ||
 			styles.containsKey("backgroundImage")) {
+			
+			System.out.println("2 @@@##$#%$#%0 toStylesJSONObject backgroundFragmentImage or backgroundImage");
 
 			JSONObject backgroundImageJSONObject =
 				JSONFactoryUtil.createJSONObject();
@@ -244,15 +259,19 @@ public abstract class BaseLayoutStructureItemImporter {
 				"backgroundFragmentImage");
 
 			if (MapUtil.isEmpty(childStyleMap)) {
+				System.out.println("3 @@@##$#%$#%0 toStylesJSONObject childStyleMap is empty");
 				childStyleMap = (Map<String, Object>)styles.get(
 					"backgroundImage");
 			}
 
 			if (MapUtil.isNotEmpty(childStyleMap)) {
+				
+				System.out.println("4 @@@##$#%$#%0 toStylesJSONObject childStyleMap is not empty");
 				Map<String, Object> titleMap =
 					(Map<String, Object>)childStyleMap.get("title");
 
 				if (titleMap != null) {
+					System.out.println("5 @@@##$#%$#%0 toStylesJSONObject titleMap != null");
 					backgroundImageJSONObject.put(
 						"title", getLocalizedValue(titleMap));
 				}
@@ -261,6 +280,8 @@ public abstract class BaseLayoutStructureItemImporter {
 					(Map<String, Object>)childStyleMap.get("url");
 
 				if (urlMap != null) {
+					
+					System.out.println("6 @@@##$#%$#%0 toStylesJSONObject urlMap != null processMapping");
 					backgroundImageJSONObject.put(
 						"url", getLocalizedValue(urlMap));
 

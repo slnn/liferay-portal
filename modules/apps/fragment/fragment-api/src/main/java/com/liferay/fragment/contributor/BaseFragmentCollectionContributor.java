@@ -206,6 +206,8 @@ public abstract class BaseFragmentCollectionContributor
 				URL url = fragmentEntriesEnumeration.nextElement();
 
 				FragmentEntry fragmentEntry = _getFragmentEntry(url);
+				
+				System.out.println("####BaseFragmentCollectionContributor fragmentEntry= " + fragmentEntry.getFragmentEntryKey() + "####url=" + url);
 
 				List<FragmentEntry> fragmentEntryList =
 					_fragmentEntries.computeIfAbsent(
@@ -389,6 +391,9 @@ public abstract class BaseFragmentCollectionContributor
 		_fragmentEntryNames.put(fragmentEntryKey, names);
 
 		String path = FileUtil.getPath(url.getPath());
+		
+		System.out.println("###################url= " + url);
+		System.out.println("###################path= " + path);
 
 		String css = _read(path, jsonObject.getString("cssPath"), "index.css");
 		String html = _read(

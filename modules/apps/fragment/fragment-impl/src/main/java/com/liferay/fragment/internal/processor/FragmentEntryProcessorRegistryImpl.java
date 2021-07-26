@@ -111,12 +111,16 @@ public class FragmentEntryProcessorRegistryImpl
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {
+			
+			System.out.println("@@@####1 FragmentEntryProcessorRegistryImpl getDefaultEditableValuesJSONObject fragmentEntryProcessor= " + fragmentEntryProcessor.toString());
 
 			JSONObject defaultEditableValuesJSONObject =
 				fragmentEntryProcessor.getDefaultEditableValuesJSONObject(
 					html, configuration);
 
 			if (defaultEditableValuesJSONObject != null) {
+				
+				System.out.println("@@@####2 FragmentEntryProcessorRegistryImpl getDefaultEditableValuesJSONObject fragmentEntryProcessor= " + fragmentEntryProcessor.toString());
 				Class<?> clazz = fragmentEntryProcessor.getClass();
 
 				jsonObject.put(

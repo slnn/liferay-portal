@@ -156,6 +156,7 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Override
 	public FragmentEntry getFragmentEntry(String fragmentEntryKey) {
+		System.out.println("##########1 FragmentCollectionContributorTrackerImpl getFragmentEntry fragmentEntryKey=" + fragmentEntryKey);
 		Map<String, FragmentEntry> fragmentEntriesMap = _getFragmentEntries();
 
 		return fragmentEntriesMap.get(fragmentEntryKey);
@@ -245,12 +246,16 @@ public class FragmentCollectionContributorTrackerImpl
 
 	private synchronized Map<String, FragmentEntry> _getFragmentEntries() {
 		Map<String, FragmentEntry> fragmentEntries = _fragmentEntries;
+		
+		System.out.println("##########2 FragmentCollectionContributorTrackerImpl _getFragmentEntries() ");
 
 		if (fragmentEntries == null) {
+			//System.out.println("##########3 FragmentCollectionContributorTrackerImpl _getFragmentEntries() ");
 			fragmentEntries = new HashMap<>();
 
 			for (FragmentCollectionContributor fragmentCollectionContributor :
 					_serviceTrackerMap.values()) {
+				//System.out.println("##########4 FragmentCollectionContributorTrackerImpl _getFragmentEntries() loop _serviceTrackerMap value fragmentCollectionContributor=" + fragmentCollectionContributor.toString());
 
 				fragmentEntries.putAll(
 					_getFragmentEntries(fragmentCollectionContributor));
@@ -268,10 +273,14 @@ public class FragmentCollectionContributorTrackerImpl
 		Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
 
 		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
+			System.out.println("##########5 FragmentCollectionContributorTrackerImpl _getFragmentEntries(fragmentCollectionContributor) loop type=" + type);
 			for (FragmentEntry fragmentEntry :
 					fragmentCollectionContributor.getFragmentEntries(type)) {
+				
+				System.out.println("##########6 FragmentCollectionContributorTrackerImpl _getFragmentEntries(fragmentCollectionContributor) loop fragmentEntry=" + fragmentEntry  + "###fragmentCollectionContributor=" + fragmentCollectionContributor);
 
 				if (!_validateFragmentEntry(fragmentEntry)) {
+					//System.out.println("##########7 FragmentCollectionContributorTrackerImpl _getFragmentEntries(fragmentCollectionContributor) _validate FragmentEntry=" + fragmentEntry + "###fragmentCollectionContributor=" + fragmentCollectionContributor);
 					continue;
 				}
 
@@ -394,8 +403,11 @@ public class FragmentCollectionContributorTrackerImpl
 				_getFragmentCompositions(fragmentCollectionContributor));
 
 			if (_fragmentEntries == null) {
+				System.out.println("##########8 FragmentCollectionContributorTrackerImpl addingService _fragmentEntries == null" );
 				_fragmentEntries = new ConcurrentHashMap<>();
 			}
+			
+			System.out.println("##########9 FragmentCollectionContributorTrackerImpl addingService _fragmentEntries.putAll fragmentCollectionContributor=" + fragmentCollectionContributor.toString());
 
 			_fragmentEntries.putAll(
 				_getFragmentEntries(fragmentCollectionContributor));

@@ -70,6 +70,7 @@ public class FragmentEntryConfigurationParserImpl
 
 		for (FragmentConfigurationField fragmentConfigurationField :
 				fragmentConfigurationFields) {
+			System.out.println("####### 0 FragmentEntryConfigurationParserImpl fragmentConfigurationField.getName()=" + fragmentConfigurationField.getName() + "###getFieldValue= " + getFieldValue(fragmentConfigurationField, null));
 
 			defaultValuesJSONObject.put(
 				fragmentConfigurationField.getName(),
@@ -218,9 +219,13 @@ public class FragmentEntryConfigurationParserImpl
 		String value) {
 
 		value = GetterUtil.getString(value);
+		
+		System.out.println("####### 2 FragmentEntryConfigurationParserImpl getFieldValue locale=" + locale);
 
 		if (fragmentConfigurationField.isLocalizable() &&
 			JSONUtil.isValid(value)) {
+			
+			System.out.println("####### 3 FragmentEntryConfigurationParserImpl getFieldValue locale=" + locale + "###LocaleUtil.toLanguageId(locale)=" + LocaleUtil.toLanguageId(locale) + "###LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault())=" + LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()) + "###LocaleUtil.getSiteDefault()= " + LocaleUtil.getSiteDefault() );
 
 			try {
 				JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject(
@@ -238,26 +243,34 @@ public class FragmentEntryConfigurationParserImpl
 			}
 		}
 		else if (Validator.isNull(value)) {
+			System.out.println("####### 4 FragmentEntryConfigurationParserImpl getFieldValue value is null");
 			value = fragmentConfigurationField.getDefaultValue();
 		}
 
 		if (StringUtil.equalsIgnoreCase(
 				fragmentConfigurationField.getType(), "checkbox")) {
+			
+			System.out.println("####### 5 FragmentEntryConfigurationParserImpl getFieldValue checkbox");
 
 			return _getFieldValue("bool", value);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(),
 					"collectionSelector")) {
+			
+			System.out.println("####### 6 FragmentEntryConfigurationParserImpl getFieldValue collectionSelector");
 
 			return _getInfoListObjectEntryJSONObject(value);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "colorPalette")) {
+			System.out.println("####### 7 FragmentEntryConfigurationParserImpl getFieldValue colorPalette");
 
 			JSONObject jsonObject = (JSONObject)_getFieldValue("object", value);
 
 			if (jsonObject.isNull("color") && !jsonObject.isNull("cssClass")) {
+				
+				System.out.println("####### 8 FragmentEntryConfigurationParserImpl getFieldValue color cssClass");
 				jsonObject.put("color", jsonObject.getString("cssClass"));
 			}
 
@@ -265,6 +278,8 @@ public class FragmentEntryConfigurationParserImpl
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "itemSelector")) {
+			
+			System.out.println("####### 9 FragmentEntryConfigurationParserImpl getFieldValue itemSelector");
 
 			return _getInfoDisplayObjectEntryJSONObject(value);
 		}
@@ -272,12 +287,18 @@ public class FragmentEntryConfigurationParserImpl
 					fragmentConfigurationField.getType(), "select") ||
 				 StringUtil.equalsIgnoreCase(
 					 fragmentConfigurationField.getType(), "text")) {
+			
+			System.out.println("####### 10 FragmentEntryConfigurationParserImpl getFieldValue select text");
 
 			String dataType = fragmentConfigurationField.getDataType();
 
 			if (Validator.isNull(dataType)) {
+				
+				System.out.println("####### 11 FragmentEntryConfigurationParserImpl getFieldValue dataType is null");
 				dataType = "string";
 			}
+			
+			System.out.println("####### 10-1 FragmentEntryConfigurationParserImpl getFieldValue select text dataType=" + dataType);
 
 			return _getFieldValue(dataType, value);
 		}
