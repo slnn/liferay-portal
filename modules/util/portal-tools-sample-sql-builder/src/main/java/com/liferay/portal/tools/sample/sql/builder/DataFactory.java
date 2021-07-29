@@ -955,7 +955,7 @@ public class DataFactory {
 			new File(rootModulePath),
 			"com/liferay/message/boards/moderation/internal/instance" +
 				"/lifecycle/dependencies" +
-					"/message-boards-moderation-definition.xml",
+					"/message-boards-moderation-workflow-definition.xml",
 			sb1);
 
 		_mbKaleoDefinitionContent = StringUtil.read(
@@ -965,7 +965,8 @@ public class DataFactory {
 
 		_getScriptAbsolutePath(
 			new File(rootModulePath),
-			"META-INF/definitions/single-approver-definition.xml", sb2);
+			"META-INF/definitions/single-approver-workflow-definition.xml",
+			sb2);
 
 		_singleApproverKaleoDefinitionContent = StringUtil.read(
 			new FileInputStream(new File(sb2.toString())));
