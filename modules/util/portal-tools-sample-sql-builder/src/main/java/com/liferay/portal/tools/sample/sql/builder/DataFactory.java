@@ -850,7 +850,7 @@ public class DataFactory {
 		return accountEntryUserRelModel;
 	}
 
-	public AccountModel newAccountModel(CompanyModel companyModel) {
+	public AccountModel newAccountModel() {
 		AccountModel accountModel = new AccountModelImpl();
 
 		// PK fields
@@ -865,13 +865,11 @@ public class DataFactory {
 
 		// Other fields
 
-		String webId = companyModel.getWebId();
-
-		if (webId.equals("liferay.com")) {
+		if (_webId.equals("liferay.com")) {
 			accountModel.setName("Liferay");
 		}
 		else {
-			accountModel.setName(webId);
+			accountModel.setName(_webId);
 		}
 
 		accountModel.setLegalName("Liferay, Inc.");
@@ -5463,12 +5461,10 @@ public class DataFactory {
 			getClassNameId(WikiPage.class), wikiPageModel.getResourcePrimKey());
 	}
 
-	public List<UserModel> newUserModels(CompanyModel companyModel) {
+	public List<UserModel> newUserModels() {
 		int userCount = 0;
 
-		String webId = companyModel.getWebId();
-
-		if (webId.equals("liferay.com")) {
+		if (_webId.equals("liferay.com")) {
 			userCount = BenchmarksPropsValues.MAX_USER_COUNT;
 		}
 		else {
@@ -5495,7 +5491,7 @@ public class DataFactory {
 			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
 	}
 
-	public VirtualHostModel newVirtualHostModel(CompanyModel companyModel) {
+	public VirtualHostModel newVirtualHostModel() {
 		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
 
 		//  PK fields
@@ -5508,14 +5504,12 @@ public class DataFactory {
 
 		// Other fields
 
-		String webId = companyModel.getWebId();
-
-		if (webId.equals("liferay.com")) {
+		if (_webId.equals("liferay.com")) {
 			virtualHostModel.setHostname(
 				BenchmarksPropsValues.VIRTUAL_HOST_NAME);
 		}
 		else {
-			virtualHostModel.setHostname(webId);
+			virtualHostModel.setHostname(_webId);
 		}
 
 		return virtualHostModel;
@@ -5582,6 +5576,10 @@ public class DataFactory {
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public void setWebId(String webId) {
+		_webId = webId;
 	}
 
 	public String toInsertSQL(BaseModel<?> baseModel) {
@@ -7137,5 +7135,6 @@ public class DataFactory {
 	private final SimpleCounter _timeCounter;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
+	private String _webId;
 
 }
