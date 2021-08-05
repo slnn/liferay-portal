@@ -17,6 +17,10 @@
 
 	${dataFactory.toInsertSQL(virtualHostModel)}
 
+	<#list dataFactory.newPortalPreferencesModels() as portalPreferencesModel>
+		${dataFactory.toInsertSQL(portalPreferencesModel)}
+	</#list>
+
 	${csvFileWriter.write("company", companyModel.companyId + "\n")}
 
 	<#list dataFactory.newPortletModels(companyModel) as portletModel>
