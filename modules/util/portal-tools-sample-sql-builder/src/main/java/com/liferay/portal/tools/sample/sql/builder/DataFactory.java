@@ -5423,6 +5423,10 @@ public class DataFactory {
 		_defaultUserId = _defaultUserIdMap.get(_companyId);
 	}
 
+	public void setWebId(String webId) {
+		_webId = webId;
+	}
+
 	public String toInsertSQL(BaseModel<?> baseModel) {
 		try {
 			StringBundler sb = new StringBundler();
@@ -6562,7 +6566,7 @@ public class DataFactory {
 		userModel.setReminderQueryQuestion("What is your screen name?");
 		userModel.setReminderQueryAnswer(screenName);
 		userModel.setScreenName(screenName);
-		userModel.setEmailAddress(screenName + "@liferay.com");
+		userModel.setEmailAddress(screenName + "@" + _webId);
 		userModel.setLanguageId("en_US");
 		userModel.setGreeting("Welcome " + screenName + StringPool.EXCLAMATION);
 		userModel.setFirstName(firstName);
@@ -7127,5 +7131,6 @@ public class DataFactory {
 	private final SimpleCounter _timeCounter;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
+	private String _webId;
 
 }
