@@ -298,8 +298,6 @@ public class CompanySampleDataGenerationTest {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				outputDirFile.getAbsolutePath());
-			BufferedWriter companyBufferedWriter = Files.newBufferedWriter(
-				outputDirPath.resolve("company.csv"));
 			BufferedWriter classNameTableBufferedWriter =
 				Files.newBufferedWriter(
 					outputDirPath.resolve("classNameTable.csv"));
@@ -319,9 +317,6 @@ public class CompanySampleDataGenerationTest {
 			Collections.sort(keys);
 
 			for (String key : keys) {
-				companyBufferedWriter.append(CSVUtil.encode(key));
-				companyBufferedWriter.newLine();
-
 				hostBufferedWriter.append("127.0.0.1 ");
 				hostBufferedWriter.append(CSVUtil.encode(key));
 				hostBufferedWriter.newLine();
@@ -352,7 +347,6 @@ public class CompanySampleDataGenerationTest {
 
 			classNameTableBufferedWriter.flush();
 			companyTableBufferedWriter.flush();
-			companyBufferedWriter.flush();
 			groupTableBufferedWriter.flush();
 			hostBufferedWriter.flush();
 			roleTableBufferedWriter.flush();
