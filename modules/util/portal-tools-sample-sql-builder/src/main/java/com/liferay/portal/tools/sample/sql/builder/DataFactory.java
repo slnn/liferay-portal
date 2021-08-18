@@ -398,6 +398,8 @@ public class DataFactory {
 
 		_defaultUserIdMap = _initDefaultUserIdMap();
 
+		_guestUserIdMap = _initGuestUserIdMap();
+
 		int totalInstanceCount = _maxVirtualInstanceCount + 1;
 
 		int groupCount =
@@ -592,6 +594,10 @@ public class DataFactory {
 
 	public long getDLFileEntryClassNameId() {
 		return getClassNameId(DLFileEntry.class);
+	}
+
+	public long getGuestUserId() {
+		return _guestUserIdMap.get(_companyId);
 	}
 
 	public long getJournalArticleClassNameId() {
@@ -4103,8 +4109,9 @@ public class DataFactory {
 			GroupConstants.GUEST, 0, typeSettings, true);
 	}
 
-	public UserModel newGuestUserModel() {
-		return newUserModel(_counter.get(), "Test", "Test", "Test", false);
+	public GroupModel newGuestGroupModel(long userId) {
+		return newGroupModel(
+			_counter.get(), getClassNameId(User.class), userId, "test", false);
 	}
 
 	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
@@ -7059,6 +7066,24 @@ public class DataFactory {
 		}
 	}
 
+	private Map<Long, Long> _initGuestUserIdMap() {
+		Map<Long, Long> guestUserIdMap = new HashMap<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(getResourceInputStream("guestUserId.csv")));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			String[] items = line.split(",");
+
+			guestUserIdMap.put(
+				GetterUtil.getLong(items[0]), GetterUtil.getLong(items[1]));
+		}
+
+		return guestUserIdMap;
+	}
+
 	private Map<Long, List<SampleSQLBuilderRoleModel>> _initRoleModelsMap() {
 		List<SampleSQLBuilderRoleModel> totalSampleSQLBuilderRoleModels =
 			new ArrayList<>();
@@ -7175,6 +7200,7 @@ public class DataFactory {
 	private final SimpleCounter _groupCounter;
 	private long _guestGroupId;
 	private RoleModel _guestRoleModel;
+	private Map<Long, Long> _guestUserIdMap;
 	private String _journalArticleContent;
 	private final Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<>();
