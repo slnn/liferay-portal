@@ -312,6 +312,8 @@ public class CompanySampleDataGenerationTest {
 					outputDirPath.resolve("defaultUserId.csv"));
 			BufferedWriter groupTableBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("groupTable.csv"));
+			BufferedWriter guestUserIdBufferedWriter = Files.newBufferedWriter(
+				outputDirPath.resolve("guestUserId.csv"));
 			BufferedWriter hostBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("host.csv"));
 			BufferedWriter roleTableBufferedWriter = Files.newBufferedWriter(
@@ -351,6 +353,9 @@ public class CompanySampleDataGenerationTest {
 
 				_exportDefaultUserId(
 					company.getCompanyId(), defaultUserIdBufferedWriter);
+
+				_exportGuestUserId(
+					company.getCompanyId(), guestUserIdBufferedWriter);
 			}
 
 			_exportClassNameTableData(classNameTableBufferedWriter);
@@ -358,6 +363,7 @@ public class CompanySampleDataGenerationTest {
 			classNameTableBufferedWriter.flush();
 			companyTableBufferedWriter.flush();
 			defaultUserIdBufferedWriter.flush();
+			guestUserIdBufferedWriter.flush();
 			hostBufferedWriter.flush();
 			roleTableBufferedWriter.flush();
 			userBufferedWriter.flush();
@@ -403,6 +409,25 @@ public class CompanySampleDataGenerationTest {
 				}
 
 				groupTableBufferedWriter.newLine();
+			}
+		}
+	}
+
+	private void _exportGuestUserId(
+			long companyId, BufferedWriter guestUserIdBufferedWriter)
+		throws Exception {
+
+		List<User> users = _userLocalService.getCompanyUsers(companyId, -1, -1);
+
+		for (User user : users) {
+			String screenName = user.getScreenName();
+
+			if (screenName.equals("test")) {
+				guestUserIdBufferedWriter.append(CSVUtil.encode(companyId));
+				guestUserIdBufferedWriter.append(StringPool.COMMA);
+				guestUserIdBufferedWriter.append(
+					CSVUtil.encode(user.getUserId()));
+				guestUserIdBufferedWriter.newLine();
 			}
 		}
 	}
