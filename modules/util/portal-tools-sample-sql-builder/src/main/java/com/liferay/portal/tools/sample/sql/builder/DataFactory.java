@@ -389,8 +389,6 @@ public class DataFactory {
 
 		_defaultUserIdMap = _initDefaultUserIdMap();
 
-		_guestUserIdMap = _initGuestUserIdMap();
-
 		_countersMap = _initCountersMap();
 
 		_counter = new SimpleCounter(_countersMap.get(Counter.class.getName()));
@@ -584,10 +582,6 @@ public class DataFactory {
 
 	public long getDLFileEntryClassNameId() {
 		return getClassNameId(DLFileEntry.class);
-	}
-
-	public long getGuestUserId() {
-		return _guestUserIdMap.get(_companyId);
 	}
 
 	public long getJournalArticleClassNameId() {
@@ -7192,25 +7186,6 @@ public class DataFactory {
 		}
 	}
 
-	private Map<Long, Long> _initGuestUserIdMap() throws Exception {
-		Map<Long, Long> guestUserIdMap = new HashMap<>();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(
-				getResourceInputStream("csv/guestUserId.csv")));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			String[] items = line.split(",");
-
-			guestUserIdMap.put(
-				GetterUtil.getLong(items[0]), GetterUtil.getLong(items[1]));
-		}
-
-		return guestUserIdMap;
-	}
-
 	private Map<Long, List<SampleSQLBuilderRoleModel>> _initRoleModelsMap()
 		throws Exception {
 
@@ -7409,7 +7384,6 @@ public class DataFactory {
 	private final SimpleCounter _groupCounter;
 	private long _guestGroupId;
 	private RoleModel _guestRoleModel;
-	private final Map<Long, Long> _guestUserIdMap;
 	private String _journalArticleContent;
 	private final Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<>();

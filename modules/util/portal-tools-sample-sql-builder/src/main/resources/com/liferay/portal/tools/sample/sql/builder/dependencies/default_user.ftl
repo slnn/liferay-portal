@@ -2,10 +2,6 @@
 
 ${dataFactory.setDefaultUserId()}
 
-<#-- Guest user -->
-
-<@insertGroup _groupModel=dataFactory.newGuestGroupModel(dataFactory.guestUserId) />
-
 <#-- Sample user -->
 
 <#assign
