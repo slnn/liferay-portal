@@ -15,6 +15,7 @@
 package com.liferay.company.sample.data.generation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -278,6 +279,19 @@ public class CompanySampleDataGenerationTest {
 		companyTableBufferedWriter.newLine();
 	}
 
+	private void _exportCounterTableData(
+			BufferedWriter counterTableBufferedWriter)
+		throws Exception {
+
+		for (String name : _counterLocalService.getNames()) {
+			counterTableBufferedWriter.append(CSVUtil.encode(name));
+			counterTableBufferedWriter.append(StringPool.COMMA);
+			counterTableBufferedWriter.append(
+				CSVUtil.encode(_counterLocalService.increment(name)));
+			counterTableBufferedWriter.newLine();
+		}
+	}
+
 	private void _exportCSVs() throws Exception {
 		String outputDir = PropsUtil.get("sample.data.output.dir");
 
@@ -303,6 +317,8 @@ public class CompanySampleDataGenerationTest {
 					outputDirPath.resolve("classNameTable.csv"));
 			BufferedWriter companyTableBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("companyTable.csv"));
+			BufferedWriter counterTableBufferedWriter = Files.newBufferedWriter(
+				outputDirPath.resolve("counterTable.csv"));
 			BufferedWriter defaultUserIdBufferedWriter =
 				Files.newBufferedWriter(
 					outputDirPath.resolve("defaultUserId.csv"));
@@ -349,10 +365,12 @@ public class CompanySampleDataGenerationTest {
 					company.getCompanyId(), defaultUserIdBufferedWriter);
 			}
 
+			_exportCounterTableData(counterTableBufferedWriter);
 			_exportClassNameTableData(classNameTableBufferedWriter);
 
 			classNameTableBufferedWriter.flush();
 			companyTableBufferedWriter.flush();
+			counterTableBufferedWriter.flush();
 			defaultUserIdBufferedWriter.flush();
 			groupTableBufferedWriter.flush();
 			hostBufferedWriter.flush();
@@ -458,6 +476,9 @@ public class CompanySampleDataGenerationTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	private final Map<String, List<String>> _csvMap = new ConcurrentHashMap<>();
 	private ExecutorService _executorService;
