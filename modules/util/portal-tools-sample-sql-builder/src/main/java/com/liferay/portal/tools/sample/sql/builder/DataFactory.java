@@ -103,7 +103,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadataModel;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
-import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
 import com.liferay.document.library.kernel.model.DLFileVersionModel;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderModel;
@@ -303,7 +302,6 @@ import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
@@ -3640,44 +3638,6 @@ public class DataFactory {
 		}
 
 		return dlFileEntryModels;
-	}
-
-	public DLFileEntryTypeModel newDLFileEntryTypeModel() {
-		DLFileEntryTypeModel defaultDLFileEntryTypeModel =
-			new DLFileEntryTypeModelImpl();
-
-		// UUID
-
-		defaultDLFileEntryTypeModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		defaultDLFileEntryTypeModel.setFileEntryTypeId(
-			_DEFAULT_DL_FILE_ENTRY_TYPE_ID);
-
-		// Audit fields
-
-		defaultDLFileEntryTypeModel.setCreateDate(nextFutureDate());
-		defaultDLFileEntryTypeModel.setModifiedDate(nextFutureDate());
-
-		// Other fields
-
-		defaultDLFileEntryTypeModel.setFileEntryTypeKey(
-			StringUtil.toUpperCase(
-				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
-		sb.append(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
-		sb.append("</name></root>");
-
-		defaultDLFileEntryTypeModel.setName(sb.toString());
-
-		defaultDLFileEntryTypeModel.setLastPublishDate(nextFutureDate());
-
-		return defaultDLFileEntryTypeModel;
 	}
 
 	public DLFileVersionModel newDLFileVersionModel(
