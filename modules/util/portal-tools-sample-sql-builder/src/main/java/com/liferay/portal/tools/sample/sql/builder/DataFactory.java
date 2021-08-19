@@ -7118,7 +7118,7 @@ public class DataFactory {
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(
-				getResourceInputStream("classNameTable.csv")));
+				getResourceInputStream("csv/classNameTable.csv")));
 
 		String line = null;
 
@@ -7140,7 +7140,8 @@ public class DataFactory {
 			new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("companyTable.csv")));
+			new InputStreamReader(
+				getResourceInputStream("csv/companyTable.csv")));
 
 		String line = null;
 
@@ -7162,7 +7163,8 @@ public class DataFactory {
 		Map<String, Long> countersMap = new HashMap<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("counterTable.csv")));
+			new InputStreamReader(
+				getResourceInputStream("csv/counterTable.csv")));
 
 		String line = null;
 
@@ -7179,7 +7181,8 @@ public class DataFactory {
 		Map<Long, Long> defautUserIdMap = new HashMap<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("defaultUserId.csv")));
+			new InputStreamReader(
+				getResourceInputStream("csv/defaultUserId.csv")));
 
 		String line = null;
 
@@ -7198,7 +7201,8 @@ public class DataFactory {
 			new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("groupTable.csv")));
+			new InputStreamReader(
+				getResourceInputStream("csv/groupTable.csv")));
 
 		String line = null;
 
@@ -7240,7 +7244,8 @@ public class DataFactory {
 		Map<Long, Long> guestUserIdMap = new HashMap<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("guestUserId.csv")));
+			new InputStreamReader(
+				getResourceInputStream("csv/guestUserId.csv")));
 
 		String line = null;
 
@@ -7261,7 +7266,7 @@ public class DataFactory {
 			new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("roleTable.csv")));
+			new InputStreamReader(getResourceInputStream("csv/roleTable.csv")));
 
 		String line = null;
 
