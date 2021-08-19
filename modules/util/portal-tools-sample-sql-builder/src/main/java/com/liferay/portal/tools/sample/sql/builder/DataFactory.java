@@ -3889,12 +3889,6 @@ public class DataFactory {
 		for (LayoutModel layoutModel : layoutModels) {
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, "", "", "", "",
-					_readFile("loginPortlet_editValue.json"), 0,
-					loginPortletNamespace));
-
-			fragmentEntryLinkModels.add(
-				newFragmentEntryLinkModel(
 					layoutModel, _HEADING_RENDER_KEY,
 					_readFile(
 						_getFragmentComponentInputStream("heading", "css")),
