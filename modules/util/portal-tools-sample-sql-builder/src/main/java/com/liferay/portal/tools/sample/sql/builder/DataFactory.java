@@ -3844,7 +3844,6 @@ public class DataFactory {
 		String headingRenderNamespace = StringUtil.randomId();
 		String imageRenderNamespace = StringUtil.randomId();
 		String paragraphRenderNamespace = StringUtil.randomId();
-		String loginPortletNamespace = StringUtil.randomId();
 
 		for (LayoutModel layoutModel : layoutModels) {
 			fragmentEntryLinkModels.add(
