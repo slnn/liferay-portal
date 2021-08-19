@@ -421,7 +421,7 @@ public class DataFactory {
 			classNameModel.setClassNameId(model.getClassNameId());
 			classNameModel.setValue(model.getValue());
 
-			_classNameModels.put(model, classNameModel);
+			_classNameModels.put(model.getValue(), classNameModel);
 		}
 
 		_assetClassNameIds = new long[] {
