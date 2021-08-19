@@ -7158,7 +7158,7 @@ public class DataFactory {
 		return sampleSQLBuilderCompanyModels;
 	}
 
-	private Map<String, Long> _initCountersMap() {
+	private Map<String, Long> _initCountersMap() throws Exception {
 		Map<String, Long> countersMap = new HashMap<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -7175,7 +7175,7 @@ public class DataFactory {
 		return countersMap;
 	}
 
-	private Map<Long, Long> _initDefaultUserIdMap() {
+	private Map<Long, Long> _initDefaultUserIdMap() throws Exception {
 		Map<Long, Long> defautUserIdMap = new HashMap<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -7236,7 +7236,7 @@ public class DataFactory {
 		}
 	}
 
-	private Map<Long, Long> _initGuestUserIdMap() {
+	private Map<Long, Long> _initGuestUserIdMap() throws Exception {
 		Map<Long, Long> guestUserIdMap = new HashMap<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -7254,7 +7254,9 @@ public class DataFactory {
 		return guestUserIdMap;
 	}
 
-	private Map<Long, List<SampleSQLBuilderRoleModel>> _initRoleModelsMap() {
+	private Map<Long, List<SampleSQLBuilderRoleModel>> _initRoleModelsMap()
+		throws Exception {
+
 		List<SampleSQLBuilderRoleModel> totalSampleSQLBuilderRoleModels =
 			new ArrayList<>();
 
