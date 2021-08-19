@@ -410,7 +410,8 @@ public class DataFactory {
 			_countersMap.get(ResourcePermission.class.getName()));
 		_socialActivityIdCounter = new SimpleCounter(
 			_countersMap.get(SocialActivity.class.getName()));
-		_userScreenNameCounter = new SimpleCounter();
+		_userScreenNameCounter = new SimpleCounter(
+			_maxVirtualInstanceCount + 1);
 
 		List<SampleSQLBuilderClassNameModel> models = _initClassNameModels();
 
@@ -3883,8 +3884,15 @@ public class DataFactory {
 		String headingRenderNamespace = StringUtil.randomId();
 		String imageRenderNamespace = StringUtil.randomId();
 		String paragraphRenderNamespace = StringUtil.randomId();
+		String loginPortletNamespace = StringUtil.randomId();
 
 		for (LayoutModel layoutModel : layoutModels) {
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, "", "", "", "",
+					_readFile("loginPortlet_editValue.json"), 0,
+					loginPortletNamespace));
+
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _HEADING_RENDER_KEY,
@@ -7021,9 +7029,15 @@ public class DataFactory {
 						String.valueOf(
 							fragmentEntryLinkModel.getFragmentEntryLinkId()));
 				}
-				else {
+				else if (rendererKey.equals(_IMAGE_RENDER_KEY)) {
 					data = StringUtil.replace(
 						data, "${imageFragmentEntryLinkId}",
+						String.valueOf(
+							fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				}
+				else {
+					data = StringUtil.replace(
+						data, "${loginPortletFragmentEntryLinkId}",
 						String.valueOf(
 							fragmentEntryLinkModel.getFragmentEntryLinkId()));
 				}
