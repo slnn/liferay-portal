@@ -121,8 +121,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
-import com.liferay.dynamic.data.mapping.model.DDMField;
-import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttributeModel;
 import com.liferay.dynamic.data.mapping.model.DDMFieldModel;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
@@ -154,7 +152,6 @@ import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryModelImpl;
-import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryModel;
@@ -393,23 +390,24 @@ public class DataFactory {
 
 		_guestUserIdMap = _initGuestUserIdMap();
 
-		int groupCount =
-			BenchmarksPropsValues.MAX_GROUP_COUNT +
-				BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
+		_countersMap = _initCountersMap();
 
-		int totalGroupCount = groupCount * _maxVirtualInstanceCount;
-
-		_counter = new SimpleCounter(totalGroupCount + 1);
+		_counter = new SimpleCounter(_countersMap.get(Counter.class.getName()));
 
 		_groupCounter = new SimpleCounter(1);
 
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
-		_layoutPlidCounter = new SimpleCounter();
-		_layoutSetIdCounter = new SimpleCounter();
-		_portletPreferenceValueIdCounter = new SimpleCounter();
-		_resourcePermissionIdCounter = new SimpleCounter();
-		_socialActivityIdCounter = new SimpleCounter();
+		_layoutPlidCounter = new SimpleCounter(
+			_countersMap.get(Layout.class.getName()));
+		_layoutSetIdCounter = new SimpleCounter(
+			_countersMap.get(LayoutSet.class.getName()));
+		_portletPreferenceValueIdCounter = new SimpleCounter(
+			_countersMap.get(PortletPreferenceValue.class.getName()));
+		_resourcePermissionIdCounter = new SimpleCounter(
+			_countersMap.get(ResourcePermission.class.getName()));
+		_socialActivityIdCounter = new SimpleCounter(
+			_countersMap.get(SocialActivity.class.getName()));
 		_userScreenNameCounter = new SimpleCounter();
 
 		List<SampleSQLBuilderClassNameModel> models = _initClassNameModels();
@@ -2298,14 +2296,6 @@ public class DataFactory {
 
 		counterModels.add(
 			_newCounterModel(Counter.class.getName(), _counter.get()));
-		counterModels.add(
-			_newCounterModel(DDMField.class.getName(), _counter.get()));
-		counterModels.add(
-			_newCounterModel(
-				DDMFieldAttribute.class.getName(), _counter.get()));
-		counterModels.add(
-			_newCounterModel(
-				FriendlyURLEntryLocalization.class.getName(), _counter.get()));
 		counterModels.add(
 			_newCounterModel(
 				PortletPreferenceValue.class.getName(),
@@ -6929,6 +6919,23 @@ public class DataFactory {
 		return sampleSQLBuilderCompanyModels;
 	}
 
+	private Map<String, Long> _initCountersMap() {
+		Map<String, Long> countersMap = new HashMap<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(getResourceInputStream("counterTable.csv")));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			String[] items = line.split(",");
+
+			countersMap.put(items[0], GetterUtil.getLong(items[1]));
+		}
+
+		return countersMap;
+	}
+
 	private Map<Long, Long> _initDefaultUserIdMap() {
 		Map<Long, Long> defautUserIdMap = new HashMap<>();
 
@@ -7105,6 +7112,7 @@ public class DataFactory {
 		new HashMap<>();
 	private long _companyId;
 	private final SimpleCounter _counter;
+	private final Map<String, Long> _countersMap;
 	private final Map<Long, CPInstanceModel> _cpInstanceModels =
 		new HashMap<>();
 	private final PortletPreferencesImpl
