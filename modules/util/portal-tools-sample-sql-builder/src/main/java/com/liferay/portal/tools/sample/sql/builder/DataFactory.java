@@ -4103,10 +4103,6 @@ public class DataFactory {
 			GroupConstants.GUEST, 0, typeSettings, true);
 	}
 
-	public UserModel newGuestUserModel() {
-		return newUserModel(_counter.get(), "Test", "Test", "Test", false);
-	}
-
 	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
 		JournalArticleModel journalArticleModel) {
 
