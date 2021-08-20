@@ -245,7 +245,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
-import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -389,6 +388,8 @@ public class DataFactory {
 			(Map<Long, List<AssetTagModel>>[])new HashMap<?, ?>
 				[(_maxVirtualInstanceCount + 1) *
 					BenchmarksPropsValues.MAX_GROUP_COUNT];
+
+		_initGroupModelMaps();
 
 		int totalInstanceCount = _maxVirtualInstanceCount + 1;
 
@@ -4038,7 +4039,10 @@ public class DataFactory {
 	}
 
 	public GroupModel newGlobalGroupModel() {
-		_globalGroupId = _counter.get();
+		SampleSQLBuilderGroupModel sampleSQLBuilderGlobalGroupModel =
+			_sampleSQLBuilderGuestGroupModelMap.get(_companyId);
+
+		_globalGroupId = sampleSQLBuilderGlobalGroupModel.getGroupId();
 
 		return newGroupModel(
 			_globalGroupId, getClassNameId(Company.class), _companyId,
@@ -4127,13 +4131,12 @@ public class DataFactory {
 	}
 
 	public GroupModel newGuestGroupModel() {
-		_guestGroupId = _counter.get();
+		SampleSQLBuilderGroupModel sampleSQLBuilderGuestGroupModel =
+			_sampleSQLBuilderGuestGroupModelMap.get(_companyId);
+
+		_guestGroupId = sampleSQLBuilderGuestGroupModel.getGroupId();
 
 		String typeSettings = StringPool.BLANK;
-
-		if (!BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
-			typeSettings = "searchLayoutCreated=true";
-		}
 
 		return newGroupModel(
 			_guestGroupId, getClassNameId(Group.class), _guestGroupId,
@@ -5488,12 +5491,6 @@ public class DataFactory {
 		}
 
 		return userModels;
-	}
-
-	public GroupModel newUserPersonalSiteGroupModel() {
-		return newGroupModel(
-			_counter.get(), getClassNameId(UserPersonalSite.class),
-			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
 	}
 
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
@@ -7194,6 +7191,50 @@ public class DataFactory {
 		return sampleSQLBuilderCompanyModels;
 	}
 
+	private void _initGroupModelMaps() throws Exception {
+		List<SampleSQLBuilderGroupModel> sampleSQLBuilderGroupModels =
+			new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(
+				getResourceInputStream("csv/groupTable.csv")));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			String[] items = line.split(",");
+
+			sampleSQLBuilderGroupModels.add(
+				new SampleSQLBuilderGroupModel(
+					GetterUtil.getLong(items[0]), GetterUtil.getLong(items[1]),
+					items[2]));
+		}
+
+		for (SampleSQLBuilderCompanyModel sampleSQLBuilderCompanyModel :
+				_sampleSQLBuilderCompanyModels) {
+
+			long companyId = sampleSQLBuilderCompanyModel.getCompanyId();
+
+			for (SampleSQLBuilderGroupModel sampleSQLBuilderGroupModel :
+					sampleSQLBuilderGroupModels) {
+
+				if (sampleSQLBuilderGroupModel.getCompanyId() == companyId) {
+					String groupKey = sampleSQLBuilderGroupModel.getGroupKey();
+
+					if (groupKey.equals(GroupConstants.GLOBAL)) {
+						_sampleSQLBuilderGobalGroupModelMap.put(
+							companyId, sampleSQLBuilderGroupModel);
+					}
+
+					if (groupKey.equals(GroupConstants.GUEST)) {
+						_sampleSQLBuilderGuestGroupModelMap.put(
+							companyId, sampleSQLBuilderGroupModel);
+					}
+				}
+			}
+		}
+	}
+
 	private LayoutModel _newContentPageLayoutModel(
 		long groupId, String name, long classNameId, long classPK) {
 
@@ -7383,6 +7424,10 @@ public class DataFactory {
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionIdCounter;
 	private List<SampleSQLBuilderCompanyModel> _sampleSQLBuilderCompanyModels;
+	private final Map<Long, SampleSQLBuilderGroupModel>
+		_sampleSQLBuilderGobalGroupModelMap = new HashMap<>();
+	private final Map<Long, SampleSQLBuilderGroupModel>
+		_sampleSQLBuilderGuestGroupModelMap = new HashMap<>();
 	private long _sampleUserId;
 	private final Format _simpleDateFormat;
 	private RoleModel _siteMemberRoleModel;

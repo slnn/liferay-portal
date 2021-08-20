@@ -14,12 +14,6 @@ ${dataFactory.toInsertSQL(countryModel)}
 
 <#include "commerce_groups.ftl">
 
-<@insertGroup _groupModel=globalGroupModel />
-
-<@insertGroup _groupModel=guestGroupModel />
-
-<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel() />
-
 <#include "asset.ftl">
 
 <#include "ddm.ftl">
