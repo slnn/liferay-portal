@@ -5397,10 +5397,6 @@ public class DataFactory {
 		return userName;
 	}
 
-	public void setAccountId(long accountId) {
-		_accountId = accountId;
-	}
-
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
@@ -7006,8 +7002,7 @@ public class DataFactory {
 
 			sampleSQLBuilderCompanyModels.add(
 				new SampleSQLBuilderCompanyModel(
-					GetterUtil.getLong(items[1]), GetterUtil.getLong(items[0]),
-					items[2]));
+					GetterUtil.getLong(items[0]), items[1]));
 		}
 
 		_maxVirtualInstanceCount = sampleSQLBuilderCompanyModels.size();
