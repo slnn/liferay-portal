@@ -7011,8 +7011,7 @@ public class DataFactory {
 
 			sampleSQLBuilderCompanyModels.add(
 				new SampleSQLBuilderCompanyModel(
-					GetterUtil.getLong(items[1]), GetterUtil.getLong(items[0]),
-					items[2]));
+					GetterUtil.getLong(items[0]), items[1]));
 		}
 
 		_maxVirtualInstanceCount = sampleSQLBuilderCompanyModels.size();
