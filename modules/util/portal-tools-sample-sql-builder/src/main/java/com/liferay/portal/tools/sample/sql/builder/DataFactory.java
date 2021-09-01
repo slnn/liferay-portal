@@ -3938,7 +3938,7 @@ public class DataFactory {
 
 	public GroupModel newGlobalGroupModel() {
 		SampleSQLBuilderGroupModel sampleSQLBuilderGlobalGroupModel =
-			_sampleSQLBuilderGuestGroupModelMap.get(_companyId);
+			_sampleSQLBuilderGlobalGroupModelMap.get(_companyId);
 
 		_globalGroupId = sampleSQLBuilderGlobalGroupModel.getGroupId();
 
@@ -7072,7 +7072,7 @@ public class DataFactory {
 					String groupKey = sampleSQLBuilderGroupModel.getGroupKey();
 
 					if (groupKey.equals(GroupConstants.GLOBAL)) {
-						_sampleSQLBuilderGobalGroupModelMap.put(
+						_sampleSQLBuilderGlobalGroupModelMap.put(
 							companyId, sampleSQLBuilderGroupModel);
 					}
 
@@ -7324,7 +7324,7 @@ public class DataFactory {
 	private final List<SampleSQLBuilderCompanyModel>
 		_sampleSQLBuilderCompanyModels;
 	private final Map<Long, SampleSQLBuilderGroupModel>
-		_sampleSQLBuilderGobalGroupModelMap = new HashMap<>();
+		_sampleSQLBuilderGlobalGroupModelMap = new HashMap<>();
 	private final Map<Long, SampleSQLBuilderGroupModel>
 		_sampleSQLBuilderGuestGroupModelMap = new HashMap<>();
 	private final Map<Long, List<SampleSQLBuilderRoleModel>>
