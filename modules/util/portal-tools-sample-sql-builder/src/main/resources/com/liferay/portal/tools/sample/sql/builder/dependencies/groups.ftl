@@ -32,8 +32,6 @@ ${dataFactory.toInsertSQL(countryModel)}
 
 	<#include "mb.ftl">
 
-	<#include "users.ftl">
-
 	<#include "wiki.ftl">
 
 	<@insertDLFolder
