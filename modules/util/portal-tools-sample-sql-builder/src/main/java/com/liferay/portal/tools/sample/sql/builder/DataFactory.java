@@ -5464,8 +5464,9 @@ public class DataFactory {
 		long rightPrimaryKey) {
 
 		return StringBundler.concat(
-			"insert into ", mappingTableName, " values (", companyId, ", ",
-			leftPrimaryKey, ", ", rightPrimaryKey, ", 0, null);");
+			"use lpartition_", _companyId, ";", "insert into ",
+			mappingTableName, " values (", companyId, ", ", leftPrimaryKey,
+			", ", rightPrimaryKey, ", 0, null);");
 	}
 
 	protected ObjectValuePair<String[], Integer>
@@ -6678,13 +6679,21 @@ public class DataFactory {
 
 	protected void toInsertSQL(StringBundler sb, BaseModel<?> baseModel) {
 		try {
-			sb.append("insert into ");
-
 			Class<?> clazz = baseModel.getClass();
 
 			Field tableNameField = clazz.getField("TABLE_NAME");
+			
+			String tableName = (String)tableNameField.get(null);
+			
+			if(!tableName.equals("Counter")){
+				sb.append("use lpartition_");
+				sb.append(_companyId);
+				sb.append(";");
+			}
+			
+			sb.append("insert into ");
 
-			sb.append(tableNameField.get(null));
+			sb.append(tableName);
 
 			sb.append(" values (");
 
