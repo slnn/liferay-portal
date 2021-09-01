@@ -3,13 +3,9 @@
 
 	${dataFactory.setWebId(companyModel.webId)}
 
-	<#list dataFactory.newPortalPreferencesModels() as portalPreferencesModel>
-		${dataFactory.toInsertSQL(portalPreferencesModel)}
-	</#list>
-
 	${csvFileWriter.write("company", companyModel.companyId + "\n")}
 
 	<#include "roles.ftl">
 
-	<#include "groups.ftl">
+	<#include "users.ftl">
 </#list>
