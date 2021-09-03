@@ -6675,7 +6675,7 @@ public class DataFactory {
 
 		// Other fields
 
-		wikiNodeModel.setName("Test Node " + index);
+		wikiNodeModel.setName("TestNode" + index);
 		wikiNodeModel.setLastPostDate(new Date());
 		wikiNodeModel.setLastPublishDate(new Date());
 		wikiNodeModel.setStatusDate(new Date());
@@ -6715,11 +6715,11 @@ public class DataFactory {
 		// Other fields
 
 		wikiPageModel.setNodeId(wikiNodeModel.getNodeId());
-		wikiPageModel.setTitle("Test Page " + index);
+		wikiPageModel.setTitle("TestPage" + index);
 		wikiPageModel.setVersion(WikiPageConstants.VERSION_DEFAULT);
 		wikiPageModel.setContent(
 			StringBundler.concat(
-				"This is Test Page ", index, " of ", wikiNodeModel.getName(),
+				"This is TestPage", index, " of ", wikiNodeModel.getName(),
 				"."));
 		wikiPageModel.setFormat("creole");
 		wikiPageModel.setHead(true);
