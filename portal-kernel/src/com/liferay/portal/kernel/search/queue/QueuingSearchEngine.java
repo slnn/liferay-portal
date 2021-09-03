@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.BaseSearchEngine;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.dummy.DummyIndexSearcher;
+import com.liferay.portal.kernel.search.dummy.DummyIndexWriter;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.QueuingInvocationHandler;
 
@@ -31,9 +32,7 @@ public class QueuingSearchEngine extends BaseSearchEngine {
 
 		Class<?> clazz = getClass();
 
-		_indexWriter = (IndexWriter)ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class<?>[] {IndexWriter.class},
-			_queuingInvocationHandler);
+		_indexWriter = new DummyIndexWriter();
 	}
 
 	public void flush() {
