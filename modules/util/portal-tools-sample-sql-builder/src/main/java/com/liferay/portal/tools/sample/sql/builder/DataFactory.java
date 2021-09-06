@@ -411,7 +411,8 @@ public class DataFactory {
 			_countersMap.get(PortletPreferenceValue.class.getName()) + 1);
 		_resourcePermissionIdCounter = new SimpleCounter(
 			_countersMap.get(ResourcePermission.class.getName()) + 1);
-		_socialActivityIdCounter = new SimpleCounter();
+		_socialActivityIdCounter = new SimpleCounter(
+			_countersMap.get(SocialActivity.class.getName()) + 1);
 		_userScreenNameCounter = new SimpleCounter(
 			_maxVirtualInstanceCount + 2);
 
