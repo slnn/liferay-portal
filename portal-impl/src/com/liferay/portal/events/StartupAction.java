@@ -154,6 +154,10 @@ public class StartupAction extends SimpleAction {
 		if (StartupHelperUtil.isDBNew()) {
 			DBUpgrader.verify();
 
+			if (_log.isInfoEnabled()) {
+				_log.info("Create basic-document, 0-0");
+			}
+
 			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 		}
 
