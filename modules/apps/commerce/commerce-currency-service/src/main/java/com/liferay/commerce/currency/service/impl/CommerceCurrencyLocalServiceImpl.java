@@ -413,19 +413,21 @@ public class CommerceCurrencyLocalServiceImpl
 			return;
 		}
 
-		BigDecimal exchangeRate = BigDecimal.ZERO;
+//		BigDecimal exchangeRate = BigDecimal.ZERO;
+//
+//		try {
+//			exchangeRate = exchangeRateProvider.getExchangeRate(
+//				primaryCommerceCurrency, commerceCurrency);
+//		}
+//		catch (Exception exception) {
+//			if (_log.isDebugEnabled()) {
+//				_log.debug(exception, exception);
+//			}
+//
+//			return;
+//		}
 
-		try {
-			exchangeRate = exchangeRateProvider.getExchangeRate(
-				primaryCommerceCurrency, commerceCurrency);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			return;
-		}
+		BigDecimal exchangeRate = BigDecimal.valueOf(1.0);
 
 		commerceCurrency.setRate(exchangeRate);
 
