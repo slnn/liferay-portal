@@ -5,8 +5,6 @@
 <#list dataFactory.newCompanyModels() as companyModel>
 	${dataFactory.setCompanyId(companyModel.companyId)}
 
-	${dataFactory.setAccountId(companyModel.accountId)}
-
 	${dataFactory.setWebId(companyModel.webId)}
 
 	<#assign virtualHostModel = dataFactory.newVirtualHostModel() />
