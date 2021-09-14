@@ -728,26 +728,12 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_WIKI_PAGE_COMMENT_COUNT;
 	}
 
-	public List<Long> getNewUserGroupIds(
-		long groupId, GroupModel guestGroupModel) {
+	public List<Long> getNewUserGroupIds(GroupModel guestGroupModel) {
 
 		List<Long> groupIds = new ArrayList<>(
 			BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT + 1);
 
 		groupIds.add(guestGroupModel.getGroupId());
-
-		if ((groupId + BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT) >
-				BenchmarksPropsValues.MAX_GROUP_COUNT) {
-
-			groupId =
-				groupId - BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT + 1;
-		}
-
-		for (int i = 0; i < BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT;
-			 i++) {
-
-			groupIds.add(groupId + i);
-		}
 
 		return groupIds;
 	}

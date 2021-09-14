@@ -24,8 +24,36 @@
 	</#list>
 
 	<#include "roles.ftl">
+	
+	<#assign
+		globalGroupModel = dataFactory.newGlobalGroupModel()
+		guestGroupModel = dataFactory.newGuestGroupModel()
 
-	<#include "groups.ftl">
+		commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
+		countryModel = dataFactory.newCountryModel()
+	/>
+
+	${dataFactory.toInsertSQL(commerceCurrencyModel)}
+
+	${dataFactory.toInsertSQL(countryModel)}
+
+	<#include "default_user.ftl">
+
+	<@insertGroup _groupModel=globalGroupModel />
+
+	<@insertGroup _groupModel=guestGroupModel />
+
+	<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel() />
+
+	<#include "users.ftl">
+	
+	<#assign defaultSiteHomePageContentLayoutModels = dataFactory.newContentPageLayoutModels(guestGroupModel.groupId, "welcome") />
+
+	<@insertContentPageLayout
+		_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(defaultSiteHomePageContentLayoutModels)
+		_layoutModels=defaultSiteHomePageContentLayoutModels
+		_templateFileName="default-homepage-layout-definition.json"
+	/>
 
 	<#list dataFactory.newResourcePermissionModels() as resourcePermissionModel>
 		${dataFactory.toInsertSQL(resourcePermissionModel)}
