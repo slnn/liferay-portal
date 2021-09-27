@@ -5714,6 +5714,24 @@ public class DataFactory {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			String portletName = jsonObject.getString("portletName");
+
+			if (StringUtil.equals(
+					_CP_OPTION_FACETS_PORTLET_NAME, portletName) &&
+				!BenchmarksPropsValues.CP_OPTION_FACETS_PORTLET_ENABLED) {
+
+				continue;
+			}
+
+			if (StringUtil.equals(
+					_CP_SPECIFICATION_OPTION_FACETS_PORTLET_NAME,
+					portletName) &&
+				!BenchmarksPropsValues.
+					CP_SPECIFICATION_OPTION_FACETS_PORTLET_ENABLED) {
+
+				continue;
+			}
+
 			String key = jsonObject.getString("layoutColumnId");
 
 			if (portletNames.containsKey(key)) {
@@ -7253,6 +7271,14 @@ public class DataFactory {
 
 		return StringUtil.replace(resource, "${paragraphValue}", sb.toString());
 	}
+
+	private static final String _CP_OPTION_FACETS_PORTLET_NAME =
+		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
+			"CPOptionFacetsPortlet";
+
+	private static final String _CP_SPECIFICATION_OPTION_FACETS_PORTLET_NAME =
+		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
+			"CPSpecificationOptionFacetsPortlet";
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
