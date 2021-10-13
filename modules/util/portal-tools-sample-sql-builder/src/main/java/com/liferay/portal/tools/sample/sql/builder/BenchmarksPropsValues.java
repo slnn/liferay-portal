@@ -48,6 +48,9 @@ public class BenchmarksPropsValues {
 		StringUtil.toUpperCase(
 			PropertiesHolder._get(BenchmarksPropsKeys.DB_TYPE)));
 
+	public static final String DEFAULT_DB_NAME = PropertiesHolder._get(
+		BenchmarksPropsKeys.DEFAULT_DB_NAME);
+
 	public static final String JDBC_DRIVER_CLASS_NAME = PropertiesHolder._get(
 		BenchmarksPropsKeys.JDBC_DRIVER_CLASS_NAME);
 
@@ -256,9 +259,6 @@ public class BenchmarksPropsValues {
 
 	public static final String OUTPUT_DIR = PropertiesHolder._get(
 		BenchmarksPropsKeys.OUTPUT_DIR);
-	
-	public static final String DEFAULT_DB_NAME = PropertiesHolder._get(
-		BenchmarksPropsKeys.DEFAULT_DB_NAME);
 
 	public static final boolean OUTPUT_MERGE = GetterUtil.getBoolean(
 		PropertiesHolder._get(BenchmarksPropsKeys.OUTPUT_MERGE));
