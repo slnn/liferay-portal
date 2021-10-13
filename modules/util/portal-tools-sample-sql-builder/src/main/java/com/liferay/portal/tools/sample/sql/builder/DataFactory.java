@@ -729,6 +729,19 @@ public class DataFactory {
 		return random.nextInt(count);
 	}
 
+	public List<Long> getSampleUserGroupIds() {
+		SampleSQLBuilderGroupModel sampleSQLBuilderGuestGroupModel =
+			_sampleSQLBuilderGuestGroupModelMap.get(_companyId);
+
+		long groupId = sampleSQLBuilderGuestGroupModel.getGroupId();
+
+		List<Long> groupIds = new ArrayList<>(1);
+
+		groupIds.add(groupId);
+
+		return groupIds;
+	}
+
 	public List<Integer> getSequence(int size) {
 		List<Integer> sequence = new ArrayList<>(size);
 

@@ -8,4 +8,6 @@
 	<#include "roles.ftl">
 
 	<#include "users.ftl">
+
+	<#include "default_user.ftl">
 </#list>
