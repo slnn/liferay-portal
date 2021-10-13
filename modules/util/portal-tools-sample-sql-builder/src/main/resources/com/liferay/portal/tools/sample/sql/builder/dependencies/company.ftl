@@ -10,4 +10,8 @@
 	<#include "users.ftl">
 
 	<#include "default_user.ftl">
+
+	<#assign guestGroupId = dataFactory.getGuestGroupId() />
+
+	<#include "blogs.ftl">
 </#list>
