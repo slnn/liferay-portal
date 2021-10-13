@@ -19,9 +19,7 @@ package com.liferay.portal.tools.sample.sql.builder;
  */
 public class SampleSQLBuilderCompanyModel {
 
-	public SampleSQLBuilderCompanyModel(
-		long companyId, String webId) {
-
+	public SampleSQLBuilderCompanyModel(long companyId, String webId) {
 		_companyId = companyId;
 		_webId = webId;
 	}
