@@ -13,5 +13,7 @@
 
 	<#assign guestGroupId = dataFactory.getGuestGroupId() />
 
+	<#include "asset_publisher.ftl">
+
 	<#include "blogs.ftl">
 </#list>
