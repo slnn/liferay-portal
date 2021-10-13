@@ -37,7 +37,6 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrencyModel;
-import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseModel;
@@ -681,13 +680,8 @@ public class DataFactory {
 		SampleSQLBuilderGroupModel sampleSQLBuilderGlobalGroupModel =
 			_sampleSQLBuilderGlobalGroupModelMap.get(_companyId);
 
-		long groupId = sampleSQLBuilderGlobalGroupModel.getGroupId();
-
-		List<Long> groupIds = new ArrayList<>(1);
-
-		groupIds.add(groupId);
-
-		return groupIds;
+		return ListUtil.fromArray(
+			sampleSQLBuilderGlobalGroupModel.getGroupId());
 	}
 
 	public long getNextAssetClassNameId(long groupId) {
@@ -733,13 +727,7 @@ public class DataFactory {
 		SampleSQLBuilderGroupModel sampleSQLBuilderGuestGroupModel =
 			_sampleSQLBuilderGuestGroupModelMap.get(_companyId);
 
-		long groupId = sampleSQLBuilderGuestGroupModel.getGroupId();
-
-		List<Long> groupIds = new ArrayList<>(1);
-
-		groupIds.add(groupId);
-
-		return groupIds;
+		return ListUtil.fromArray(sampleSQLBuilderGuestGroupModel.getGroupId());
 	}
 
 	public List<Integer> getSequence(int size) {
@@ -5454,9 +5442,9 @@ public class DataFactory {
 		long rightPrimaryKey) {
 
 		return StringBundler.concat(
-			"use lpartition_", _companyId, ";", "insert into ",
-			mappingTableName, " values (", companyId, ", ", leftPrimaryKey,
-			", ", rightPrimaryKey, ", 0, null);");
+			"use lpartition_", _companyId, ";insert into ", mappingTableName,
+			" values (", companyId, ", ", leftPrimaryKey, ", ", rightPrimaryKey,
+			", 0, null);");
 	}
 
 	protected ObjectValuePair<String[], Integer>
@@ -6680,15 +6668,15 @@ public class DataFactory {
 			Class<?> clazz = baseModel.getClass();
 
 			Field tableNameField = clazz.getField("TABLE_NAME");
-			
+
 			String tableName = (String)tableNameField.get(null);
-			
-			if(!tableName.equals("Counter")){
+
+			if (!tableName.equals("Counter")) {
 				sb.append("use lpartition_");
 				sb.append(_companyId);
 				sb.append(";");
 			}
-			
+
 			sb.append("insert into ");
 
 			sb.append(tableName);

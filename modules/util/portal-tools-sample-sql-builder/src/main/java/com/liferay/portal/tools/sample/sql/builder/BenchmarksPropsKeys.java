@@ -24,6 +24,8 @@ public interface BenchmarksPropsKeys {
 
 	public static final String DB_TYPE = "sample.sql.db.type";
 
+	public static final String DEFAULT_DB_NAME = "sample.sql.default.db.name";
+
 	public static final String JDBC_DRIVER_CLASS_NAME =
 		"sample.sql.jdbc.default.driverClassName";
 
@@ -181,8 +183,6 @@ public interface BenchmarksPropsKeys {
 
 	public static final String OUTPUT_CSV_FILE_NAMES =
 		"sample.sql.output.csv.file.names";
-	
-	public static final String DEFAULT_DB_NAME = "sample.sql.default.db.name";
 
 	public static final String OUTPUT_DIR = "sample.sql.output.dir";
 

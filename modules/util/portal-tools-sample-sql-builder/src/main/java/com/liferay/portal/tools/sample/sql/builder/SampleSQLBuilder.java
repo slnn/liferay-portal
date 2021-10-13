@@ -44,12 +44,8 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Brian Wing Shun Chan
@@ -71,11 +67,11 @@ public class SampleSQLBuilder {
 		try {
 
 			// Specific
-			
+
 			List<Reader> sortReaders = sortSQLByCompanyId(
 				reader, new File(BenchmarksPropsValues.OUTPUT_DIR));
-			
-			for(Reader sortReader : sortReaders){
+
+			for (Reader sortReader : sortReaders) {
 				compressSQL(sortReader, tempDir);
 			}
 
@@ -118,89 +114,6 @@ public class SampleSQLBuilder {
 			FileUtil.deltree(tempDir);
 		}
 	}
-	
-	protected List<Reader> sortSQLByCompanyId(Reader reader, File dir)  throws Exception {
-		List<Reader> sortReaders = new ArrayList<>();
-		
-		Map<String, StringBundler> sqls = new HashMap<>();
-
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(reader)){
-			
-			String line = null;
-			
-			while ((line = unsyncBufferedReader.readLine())!= null) {
-				line = line.trim();
-				
-				if(line.length() > 0){
-					if(line.startsWith("use lpartition_")){
-						String partitionDBName =
-							line.substring(4, line.indexOf(";"));
-						
-						StringBundler sb = sqls.get(partitionDBName);
-						
-						if((sb == null) || (sb.index() == 0)){
-							sb = new StringBundler();
-							
-							sqls.put(partitionDBName, sb);
-							
-							sb.append("use ");
-							sb.append(partitionDBName);
-							sb.append(";");
-							sb.append("\n");
-
-							sb.append(
-								line.substring(partitionDBName.length() + 5));
-							sb.append("\n");
-						}
-						else{
-							sb.append(
-								line.substring(partitionDBName.length() + 5));
-							sb.append("\n");
-						}
-					}
-					else{
-						StringBundler sb = sqls.get(
-							BenchmarksPropsValues.DEFAULT_DB_NAME);
-						
-						if((sb == null) || (sb.index() == 0)){
-							sb = new StringBundler();
-							
-							sqls.put(BenchmarksPropsValues.DEFAULT_DB_NAME, sb);
-							
-							sb.append("use ");
-							sb.append(BenchmarksPropsValues.DEFAULT_DB_NAME);
-							sb.append(";");
-							sb.append("\n");
-							sb.append(line);
-							sb.append("\n");
-						}
-						else{
-							sb.append(line);
-							sb.append("\n");
-						}
-					}
-				}
-			}
-			
-			for(Map.Entry<String, StringBundler> entry : sqls.entrySet()){
-				String fileName = entry.getKey() + ".sql";
-
-				Writer writer = createFileWriter(new File(dir, fileName));
-				
-				StringBundler sb = entry.getValue();
-				
-				writer.write(sb.toString());
-
-				writer.flush();
-
-				sortReaders.add(new FileReader(new File(dir, fileName)));
-			}
-		}
-
-		return sortReaders;
-	}
 
 	protected void compressSQL(
 			DB db, File directory, Map<String, Writer> insertSQLWriters,
@@ -210,7 +123,7 @@ public class SampleSQLBuilder {
 		String tableName = insertSQL.substring(0, insertSQL.indexOf(' '));
 
 		int index = insertSQL.indexOf(" values ") + 8;
-		
+
 		String dbName = useSQL.substring(4, useSQL.indexOf(";"));
 
 		StringBundler sb = sqls.get(tableName);
@@ -258,14 +171,14 @@ public class SampleSQLBuilder {
 		Map<String, Writer> insertSQLWriters = new HashMap<>();
 		Map<String, StringBundler> insertSQLs = new HashMap<>();
 		List<String> miscSQLs = new ArrayList<>();
-		
+
 		String dbName = null;
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(reader)) {
 
 			String s = null;
-			
+
 			String useSQL = null;
 
 			while ((_freeMarkerThrowable == null) &&
@@ -274,12 +187,12 @@ public class SampleSQLBuilder {
 				s = s.trim();
 
 				if (s.length() > 0) {
-					if(s.startsWith("use ")){
+					if (s.startsWith("use ")) {
 						useSQL = s;
-						
+
 						dbName = useSQL.substring(4, useSQL.indexOf(";"));
-						
-						if(!dbName.contains("lpartition")){
+
+						if (!dbName.contains("lpartition")) {
 							miscSQLs.add(useSQL);
 						}
 					}
@@ -304,7 +217,7 @@ public class SampleSQLBuilder {
 							s.substring(12), useSQL);
 					}
 					else {
-						if(!dbName.contains("lpartition")){
+						if (!dbName.contains("lpartition")) {
 							miscSQLs.add(s);
 						}
 					}
@@ -325,18 +238,17 @@ public class SampleSQLBuilder {
 				String insertSQL = db.buildSQL(sb.toString());
 
 				writeToInsertSQLFile(
-					dir, tableName, insertSQLWriters, insertSQL,
-					dbName);
+					dir, tableName, insertSQLWriters, insertSQL, dbName);
 			}
 
 			try (Writer insertSQLWriter = insertSQLWriters.remove(tableName)) {
 				insertSQLWriter.write(";\n");
 			}
 		}
-		
-		if(!dbName.contains("lpartition")){
-			try (Writer miscSQLWriter = 
-				new FileWriter(new File(dir, "misc.sql"))) {
+
+		if (!dbName.contains("lpartition")) {
+			try (Writer miscSQLWriter = new FileWriter(
+					new File(dir, "misc.sql"))) {
 
 				for (String miscSQL : miscSQLs) {
 					miscSQL = db.buildSQL(miscSQL);
@@ -435,18 +347,98 @@ public class SampleSQLBuilder {
 		inputFile.delete();
 	}
 
+	protected List<Reader> sortSQLByCompanyId(Reader reader, File dir)
+		throws Exception {
+
+		List<Reader> sortReaders = new ArrayList<>();
+
+		Map<String, StringBundler> sqls = new HashMap<>();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(reader)) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				if (line.length() > 0) {
+					if (line.startsWith("use lpartition_")) {
+						String partitionDBName = line.substring(
+							4, line.indexOf(";"));
+
+						StringBundler sb = sqls.get(partitionDBName);
+
+						if ((sb == null) || (sb.index() == 0)) {
+							sb = new StringBundler();
+
+							sqls.put(partitionDBName, sb);
+
+							sb.append("use ");
+							sb.append(partitionDBName);
+							sb.append(";\n");
+
+							sb.append(
+								line.substring(partitionDBName.length() + 5));
+							sb.append("\n");
+						}
+						else {
+							sb.append(
+								line.substring(partitionDBName.length() + 5));
+							sb.append("\n");
+						}
+					}
+					else {
+						StringBundler sb = sqls.get(
+							BenchmarksPropsValues.DEFAULT_DB_NAME);
+
+						if ((sb == null) || (sb.index() == 0)) {
+							sb = new StringBundler();
+
+							sqls.put(BenchmarksPropsValues.DEFAULT_DB_NAME, sb);
+
+							sb.append("use ");
+							sb.append(BenchmarksPropsValues.DEFAULT_DB_NAME);
+							sb.append(";\n");
+							sb.append(line);
+							sb.append("\n");
+						}
+						else {
+							sb.append(line);
+							sb.append("\n");
+						}
+					}
+				}
+			}
+
+			for (Map.Entry<String, StringBundler> entry : sqls.entrySet()) {
+				String fileName = entry.getKey() + ".sql";
+
+				Writer writer = createFileWriter(new File(dir, fileName));
+
+				StringBundler sb = entry.getValue();
+
+				writer.write(sb.toString());
+
+				writer.flush();
+
+				sortReaders.add(new FileReader(new File(dir, fileName)));
+			}
+		}
+
+		return sortReaders;
+	}
+
 	protected void writeToInsertSQLFile(
 			File dir, String tableName, Map<String, Writer> insertSQLWriters,
 			String insertSQL, String dbName)
 		throws IOException {
 
 		Writer insertSQLWriter = insertSQLWriters.get(tableName);
-		
-		String fileName =
-			StringBundler.concat(dbName,"_", tableName, ".sql");
 
 		if (insertSQLWriter == null) {
-			File file = new File(dir, fileName);
+			File file = new File(
+				dir, StringBundler.concat(dbName, "_", tableName, ".sql"));
 
 			insertSQLWriter = createFileWriter(file);
 
