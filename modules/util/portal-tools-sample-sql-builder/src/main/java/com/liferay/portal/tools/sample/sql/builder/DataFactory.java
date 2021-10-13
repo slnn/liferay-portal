@@ -590,6 +590,13 @@ public class DataFactory {
 		return getClassNameId(DLFileEntry.class);
 	}
 
+	public long getGuestGroupId() {
+		SampleSQLBuilderGroupModel sampleSQLBuilderGuestGroupModel =
+			_sampleSQLBuilderGuestGroupModelMap.get(_companyId);
+
+		return sampleSQLBuilderGuestGroupModel.getGroupId();
+	}
+
 	public long getJournalArticleClassNameId() {
 		return getClassNameId(JournalArticle.class);
 	}
