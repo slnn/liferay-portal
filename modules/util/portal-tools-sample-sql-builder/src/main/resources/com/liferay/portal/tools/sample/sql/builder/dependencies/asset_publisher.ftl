@@ -1,5 +1,5 @@
 <#assign
-	assetVocabularyModels = dataFactory.newAssetVocabularyModels(groupId)
+	assetVocabularyModels = dataFactory.newAssetVocabularyModels(guestGroupId)
 	pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount)
 />
 
@@ -7,11 +7,11 @@
 	${dataFactory.toInsertSQL(assetVocabularyModel)}
 </#list>
 
-<#list dataFactory.newAssetCategoryModels(groupId, assetVocabularyModels) as assetCategoryModel>
+<#list dataFactory.newAssetCategoryModels(guestGroupId, assetVocabularyModels) as assetCategoryModel>
 	${dataFactory.toInsertSQL(assetCategoryModel)}
 </#list>
 
-<#list dataFactory.newAssetTagModels(groupId) as assetTagModel>
+<#list dataFactory.newAssetTagModels(guestGroupId) as assetTagModel>
 	${dataFactory.toInsertSQL(assetTagModel)}
 </#list>
 
@@ -19,7 +19,7 @@
 	<#assign
 		portletId = dataFactory.getPortletId("com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_")
 
-		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)
+		layoutModel = dataFactory.newLayoutModel(guestGroupId, guestGroupId + "_asset_publisher_" + pageCount, "", portletId)
 	/>
 
 	${csvFileWriter.write("assetPublisher", companyModel.webId + "," + layoutModel.friendlyURL + "\n")}
@@ -32,11 +32,11 @@
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
 	</#list>
 
-	<#assign assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount) />
+	<#assign assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, guestGroupId, portletId, pageCount) />
 
 	${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
 
-	<#assign assetPublisherPortletPreferencesModels = dataFactory.newAssetPublisherPortletPreferenceValueModels(assetPublisherPortletPreferencesModel, groupId, pageCount) />
+	<#assign assetPublisherPortletPreferencesModels = dataFactory.newAssetPublisherPortletPreferenceValueModels(assetPublisherPortletPreferencesModel, guestGroupId, pageCount) />
 
 	<#list assetPublisherPortletPreferencesModels as assetPublisherPortletPreferencesModel>
 		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
