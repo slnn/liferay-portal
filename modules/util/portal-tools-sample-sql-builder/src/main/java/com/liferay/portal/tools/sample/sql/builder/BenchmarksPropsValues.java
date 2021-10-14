@@ -51,6 +51,11 @@ public class BenchmarksPropsValues {
 	public static final String DEFAULT_DB_NAME = PropertiesHolder._get(
 		BenchmarksPropsKeys.DEFAULT_DB_NAME);
 
+	public static final int INTEGRATION_TEST_USER_PER_COMMPANY_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.INTEGRATION_TEST_USER_PER_COMMPANY_COUNT));
+
 	public static final String JDBC_DRIVER_CLASS_NAME = PropertiesHolder._get(
 		BenchmarksPropsKeys.JDBC_DRIVER_CLASS_NAME);
 
