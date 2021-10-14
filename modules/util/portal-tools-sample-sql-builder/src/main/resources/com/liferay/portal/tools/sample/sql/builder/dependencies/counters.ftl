@@ -1,9 +1,9 @@
 <#assign counterModels = dataFactory.newCounterModels() />
 
 <#list counterModels as counterModel>
-	<#if "${counterModel.name}"?contains("#")>
-		${dataFactory.toInsertSQL(counterModel)}
-	<#else>
+	<#if dataFactory.updateCounter(counterModel)>
 		update Counter set currentId = ${counterModel.currentId} where name = '${counterModel.name}';
+	<#else>
+		${dataFactory.toInsertSQL(counterModel)}
 	</#if>
 </#list>
