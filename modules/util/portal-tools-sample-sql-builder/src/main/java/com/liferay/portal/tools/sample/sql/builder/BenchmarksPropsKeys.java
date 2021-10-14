@@ -26,6 +26,9 @@ public interface BenchmarksPropsKeys {
 
 	public static final String DEFAULT_DB_NAME = "sample.sql.default.db.name";
 
+	public static final String INTEGRATION_TEST_USER_PER_COMMPANY_COUNT =
+		"sample.sql.integration.test.user.per.company.count";
+
 	public static final String JDBC_DRIVER_CLASS_NAME =
 		"sample.sql.jdbc.default.driverClassName";
 
