@@ -5408,6 +5408,12 @@ public class DataFactory {
 			", 0, null);");
 	}
 
+	public Boolean updateCounter(CounterModel counterModel) {
+		Set<String> counterNames = _countersMap.keySet();
+
+		return counterNames.contains(counterModel.getName());
+	}
+
 	protected ObjectValuePair<String[], Integer>
 		getAssetPublisherAssetCategoriesQueryValues(
 			List<AssetCategoryModel> assetCategoryModels, int index) {
