@@ -26,4 +26,6 @@
 	<#include "journal_article.ftl">
 
 	<#include "mb.ftl">
+
+	<#include "wiki.ftl">
 </#list>

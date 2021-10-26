@@ -1,4 +1,4 @@
-<#assign wikiNodeModels = dataFactory.newWikiNodeModels(groupId) />
+<#assign wikiNodeModels = dataFactory.newWikiNodeModels(guestGroupId) />
 
 <#list wikiNodeModels as wikiNodeModel>
 	${dataFactory.toInsertSQL(wikiNodeModel)}
@@ -22,7 +22,7 @@
 		<@insertMBDiscussion
 			_classNameId=dataFactory.wikiPageClassNameId
 			_classPK=wikiPageModel.resourcePrimKey
-			_groupId=groupId
+			_groupId=guestGroupId
 			_maxCommentCount=dataFactory.maxWikiPageCommentCount
 			_mbRootMessageId=mbRootMessageId
 			_mbThreadId=dataFactory.getCounterNext()
