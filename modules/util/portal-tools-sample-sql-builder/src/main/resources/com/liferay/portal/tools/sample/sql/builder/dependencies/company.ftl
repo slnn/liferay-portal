@@ -11,6 +11,8 @@
 
 	<#include "default_user.ftl">
 
+	<#include "ddm.ftl">
+
 	<#assign guestGroupId = dataFactory.getGuestGroupId() />
 
 	<#list dataFactory.newGroupLayoutModels(guestGroupId) as groupLayoutModel>
@@ -20,4 +22,6 @@
 	<#include "asset_publisher.ftl">
 
 	<#include "blogs.ftl">
+
+	<#include "journal_article.ftl">
 </#list>
