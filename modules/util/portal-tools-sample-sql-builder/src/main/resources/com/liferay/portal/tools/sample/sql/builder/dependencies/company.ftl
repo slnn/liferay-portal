@@ -24,4 +24,6 @@
 	<#include "blogs.ftl">
 
 	<#include "journal_article.ftl">
+
+	<#include "mb.ftl">
 </#list>
