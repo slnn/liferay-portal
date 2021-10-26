@@ -28,4 +28,11 @@
 	<#include "mb.ftl">
 
 	<#include "wiki.ftl">
+
+	<@insertDLFolder
+		_ddmStructureId=dataFactory.defaultDLDDMStructureId
+		_dlFolderDepth=1
+		_groupId=guestGroupId
+		_parentDLFolderId=0
+	/>
 </#list>
