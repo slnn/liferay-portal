@@ -1,3 +1,5 @@
+${csvFileWriter.write("company", dataFactory.defaultCompanyId + "\n")}
+
 <#list dataFactory.companyModels as companyModel>
 	${dataFactory.setCompanyId(companyModel.companyId)}
 

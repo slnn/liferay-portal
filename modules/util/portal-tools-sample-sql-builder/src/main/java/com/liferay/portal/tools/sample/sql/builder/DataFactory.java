@@ -576,6 +576,10 @@ public class DataFactory {
 		return getClassNameId(CProduct.class);
 	}
 
+	public String getDefaultCompanyId() {
+		return _defaultCompanyId;
+	}
+
 	public long getDefaultDLDDMStructureId() {
 		return _defaultDLDDMStructureId;
 	}
@@ -7007,12 +7011,17 @@ public class DataFactory {
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			String[] items = line.split(",");
 
-			sampleSQLBuilderCompanyModels.add(
-				new SampleSQLBuilderCompanyModel(
-					GetterUtil.getLong(items[0]), items[1]));
+			if (line.contains("liferay.com")) {
+				_defaultCompanyId = items[0];
+			}
+			else {
+				sampleSQLBuilderCompanyModels.add(
+					new SampleSQLBuilderCompanyModel(
+						GetterUtil.getLong(items[0]), items[1]));
+			}
 		}
 
-		_maxVirtualInstanceCount = sampleSQLBuilderCompanyModels.size();
+		_maxVirtualInstanceCount = sampleSQLBuilderCompanyModels.size() - 1;
 
 		return sampleSQLBuilderCompanyModels;
 	}
@@ -7279,6 +7288,7 @@ public class DataFactory {
 		new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
+	private String _defaultCompanyId;
 	private long _defaultDLDDMStructureId;
 	private long _defaultDLDDMStructureVersionId;
 	private long _defaultJournalDDMStructureId;
