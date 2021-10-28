@@ -330,6 +330,13 @@ public class CompanySampleDataGenerationTest {
 				outputDirPath.resolve("roleTable.csv"));
 			BufferedWriter userBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("user.csv"))) {
+			
+			Company defaultCompany =
+				_companyLocalService.getCompanyByWebId("liferay.com");
+
+			CompanyThreadLocal.setCompanyId(defaultCompany.getCompanyId());
+			
+			_exportCompanyTableData(defaultCompany, companyTableBufferedWriter);
 
 			List<String> keys = new ArrayList<>(_csvMap.keySet());
 
