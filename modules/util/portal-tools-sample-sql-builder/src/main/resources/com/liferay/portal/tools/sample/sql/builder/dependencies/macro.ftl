@@ -179,7 +179,7 @@
 				_companyModel=_companyModel
 				_ddmStructureId=_ddmStructureId
 				_dlFolderDepth=_dlFolderDepth + 1
-				_groupId=groupId
+				_groupId=guestGroupId
 				_parentDLFolderId=dlFolderModel.folderId
 			/>
 		</#list>
