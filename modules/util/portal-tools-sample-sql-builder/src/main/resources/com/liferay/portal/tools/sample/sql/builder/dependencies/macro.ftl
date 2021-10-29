@@ -122,6 +122,7 @@
 </#macro>
 
 <#macro insertDLFolder
+	_companyModel
 	_ddmStructureId
 	_dlFolderDepth
 	_groupId
@@ -171,10 +172,11 @@
 
 				${dataFactory.toInsertSQL(dataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel))}
 
-				${csvFileWriter.write("documentLibrary", companyModel.webId + "," + dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "\n")}
+				${csvFileWriter.write("documentLibrary", _companyModel.webId + "," + dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "\n")}
 			</#list>
 
 			<@insertDLFolder
+				_companyModel=_companyModel
 				_ddmStructureId=_ddmStructureId
 				_dlFolderDepth=_dlFolderDepth + 1
 				_groupId=groupId

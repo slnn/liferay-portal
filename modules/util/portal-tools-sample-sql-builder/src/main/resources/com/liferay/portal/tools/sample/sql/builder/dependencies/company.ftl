@@ -32,6 +32,7 @@ ${csvFileWriter.write("company", dataFactory.defaultCompanyId + "\n")}
 	<#include "wiki.ftl">
 
 	<@insertDLFolder
+		_companyModel=companyModel
 		_ddmStructureId=dataFactory.defaultDLDDMStructureId
 		_dlFolderDepth=1
 		_groupId=guestGroupId
