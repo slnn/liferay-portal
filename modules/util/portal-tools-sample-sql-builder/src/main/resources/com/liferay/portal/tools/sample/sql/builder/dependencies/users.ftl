@@ -1,12 +1,12 @@
 <#assign
-	groupIds = dataFactory.getNewUserGroupIds(groupModel.groupId, guestGroupModel)
-	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
-
-	userModels = dataFactory.newUserModels()
+	groupIds = dataFactory.getNewUserGroupIds()
+	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.userRoleModel.roleId]
 />
 
-<#list userModels as userModel>
+<#list dataFactory.newUserModels() as userModel>
 	<#assign userGroupModel = dataFactory.newGroupModel(userModel) />
+
+	${csvFileWriter.write("user", companyModel.webId + "," + userModel.screenName + "\n")}
 
 	<@insertLayout _layoutModel=dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "") />
 

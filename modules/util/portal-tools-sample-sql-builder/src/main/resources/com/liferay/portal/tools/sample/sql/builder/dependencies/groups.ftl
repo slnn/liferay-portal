@@ -2,27 +2,20 @@
 	globalGroupModel = dataFactory.newGlobalGroupModel()
 	guestGroupModel = dataFactory.newGuestGroupModel()
 
-	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 	countryModel = dataFactory.newCountryModel()
 />
-
-${dataFactory.toInsertSQL(commerceCurrencyModel)}
 
 ${dataFactory.toInsertSQL(countryModel)}
 
 <#include "default_user.ftl">
 
-<#include "segments.ftl">
-
 <#include "commerce_groups.ftl">
 
-<@insertLayout _layoutModel=dataFactory.newLayoutModel(guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,") />
+<#include "asset.ftl">
 
-<@insertGroup _groupModel=globalGroupModel />
+<#include "ddm.ftl">
 
-<@insertGroup _groupModel=guestGroupModel />
-
-<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel() />
+<#include "segments.ftl">
 
 <#list dataFactory.newGroupModels() as groupModel>
 	<#assign groupId = groupModel.groupId />
@@ -39,8 +32,6 @@ ${dataFactory.toInsertSQL(countryModel)}
 
 	<#include "mb.ftl">
 
-	<#include "users.ftl">
-
 	<#include "wiki.ftl">
 
 	<@insertDLFolder
@@ -50,7 +41,13 @@ ${dataFactory.toInsertSQL(countryModel)}
 		_parentDLFolderId=0
 	/>
 
-	<#assign groupLayoutModels = dataFactory.newGroupLayoutModels(groupId) />
+	<#assign homePageContentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, "welcome") />
+
+	<@insertContentPageLayout
+		_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(homePageContentLayoutModels)
+		_layoutModels=homePageContentLayoutModels
+		_templateFileName="default-homepage-layout-definition.json"
+	/>
 
 	<#list groupLayoutModels as groupLayoutModel>
 		<@insertLayout _layoutModel=groupLayoutModel />

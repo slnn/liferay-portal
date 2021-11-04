@@ -48,6 +48,26 @@ public class BenchmarksPropsValues {
 		StringUtil.toUpperCase(
 			PropertiesHolder._get(BenchmarksPropsKeys.DB_TYPE)));
 
+	public static final String DEFAULT_DB_NAME = PropertiesHolder._get(
+		BenchmarksPropsKeys.DEFAULT_DB_NAME);
+
+	public static final int INTEGRATION_TEST_USER_PER_COMMPANY_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.INTEGRATION_TEST_USER_PER_COMMPANY_COUNT));
+
+	public static final String JDBC_DRIVER_CLASS_NAME = PropertiesHolder._get(
+		BenchmarksPropsKeys.JDBC_DRIVER_CLASS_NAME);
+
+	public static final String JDBC_PASSWORD = PropertiesHolder._get(
+		BenchmarksPropsKeys.JDBC_PASSWORD);
+
+	public static final String JDBC_URL = PropertiesHolder._get(
+		BenchmarksPropsKeys.JDBC_URL);
+
+	public static final String JDBC_USER_NAME = PropertiesHolder._get(
+		BenchmarksPropsKeys.JDBC_USER_NAME);
+
 	public static final int MAX_ASSET_CATEGORY_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_ASSET_CATEGORY_COUNT));
 
@@ -219,11 +239,13 @@ public class BenchmarksPropsValues {
 	public static final int MAX_SEGMENTS_ENTRY_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT));
 
-	public static final int MAX_USER_COUNT = GetterUtil.getInteger(
-		PropertiesHolder._get(BenchmarksPropsKeys.MAX_USER_COUNT));
-
 	public static final int MAX_USER_TO_GROUP_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_USER_TO_GROUP_COUNT));
+
+	public static final int MAX_VIRTUAL_INSTANCE_USER_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_VIRTUAL_INSTANCE_USER_COUNT));
 
 	public static final int MAX_WIKI_NODE_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_WIKI_NODE_COUNT));
@@ -251,9 +273,6 @@ public class BenchmarksPropsValues {
 
 	public static final boolean SEARCH_BAR_ENABLED = GetterUtil.getBoolean(
 		PropertiesHolder._get(BenchmarksPropsKeys.SEARCH_BAR_ENABLED));
-
-	public static final String VIRTUAL_HOST_NAME = PropertiesHolder._get(
-		BenchmarksPropsKeys.VIRTUAL_HOST_NAME);
 
 	private static class PropertiesHolder {
 

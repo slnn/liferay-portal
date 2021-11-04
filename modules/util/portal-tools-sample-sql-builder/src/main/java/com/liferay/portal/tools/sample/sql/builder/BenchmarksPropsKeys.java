@@ -24,6 +24,22 @@ public interface BenchmarksPropsKeys {
 
 	public static final String DB_TYPE = "sample.sql.db.type";
 
+	public static final String DEFAULT_DB_NAME = "sample.sql.default.db.name";
+
+	public static final String INTEGRATION_TEST_USER_PER_COMMPANY_COUNT =
+		"sample.sql.integration.test.user.per.company.count";
+
+	public static final String JDBC_DRIVER_CLASS_NAME =
+		"sample.sql.jdbc.default.driverClassName";
+
+	public static final String JDBC_PASSWORD =
+		"sample.sql.jdbc.default.password";
+
+	public static final String JDBC_URL = "sample.sql.jdbc.default.url";
+
+	public static final String JDBC_USER_NAME =
+		"sample.sql.jdbc.default.username";
+
 	public static final String MAX_ASSET_CATEGORY_COUNT =
 		"sample.sql.max.asset.category.count";
 
@@ -150,10 +166,11 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_SEGMENTS_ENTRY_COUNT =
 		"sample.sql.max.segments.entry.count";
 
-	public static final String MAX_USER_COUNT = "sample.sql.max.user.count";
-
 	public static final String MAX_USER_TO_GROUP_COUNT =
 		"sample.sql.max.user.to.group.count";
+
+	public static final String MAX_VIRTUAL_INSTANCE_USER_COUNT =
+		"sample.sql.max.virtual.instance.user.count";
 
 	public static final String MAX_WIKI_NODE_COUNT =
 		"sample.sql.max.wiki.node.count";
@@ -178,8 +195,5 @@ public interface BenchmarksPropsKeys {
 
 	public static final String SEARCH_BAR_ENABLED =
 		"sample.sql.search.bar.enabled";
-
-	public static final String VIRTUAL_HOST_NAME =
-		"sample.sql.virtual.hostname";
 
 }
