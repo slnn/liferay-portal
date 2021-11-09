@@ -1,4 +1,4 @@
-${csvFileWriter.write("company", dataFactory.defaultCompanyId + "\n")}
+${csvFileWriter.write("company", "liferay.com" + "," + dataFactory.defaultCompanyId + "\n")}
 
 <#list dataFactory.companyModels as companyModel>
 	${dataFactory.setCompanyId(companyModel.companyId)}
