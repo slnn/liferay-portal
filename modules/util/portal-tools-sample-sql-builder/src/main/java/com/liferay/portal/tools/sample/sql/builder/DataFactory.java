@@ -456,9 +456,7 @@ public class DataFactory {
 		}
 
 		if (_assetCategoryCounters == null) {
-			_assetCategoryCounters =
-				(Map<Long, SimpleCounter>[])new HashMap<?, ?>
-					[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
+			_assetCategoryCounters = new HashMap<>();
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -499,8 +497,7 @@ public class DataFactory {
 		}
 
 		if (_assetTagCounters == null) {
-			_assetTagCounters = (Map<Long, SimpleCounter>[])new HashMap<?, ?>
-				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
+			_assetTagCounters = new HashMap<>();
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -5344,16 +5341,16 @@ public class DataFactory {
 	}
 
 	protected SimpleCounter getSimpleCounter(
-		Map<Long, SimpleCounter>[] simpleCountersArray, long groupId,
+		Map<Long, Map<Long, SimpleCounter>> simpleCountersMap, long groupId,
 		long classNameId) {
 
-		Map<Long, SimpleCounter> simpleCounters =
-			simpleCountersArray[(int)groupId - 1];
+		Map<Long, SimpleCounter> simpleCounters = simpleCountersMap.get(
+			groupId);
 
 		if (simpleCounters == null) {
 			simpleCounters = new HashMap<>();
 
-			simpleCountersArray[(int)groupId - 1] = simpleCounters;
+			simpleCountersMap.put(groupId, simpleCounters);
 		}
 
 		SimpleCounter simpleCounter = simpleCounters.get(classNameId);
@@ -7087,7 +7084,7 @@ public class DataFactory {
 		new PortletPreferencesFactoryImpl();
 
 	private RoleModel _administratorRoleModel;
-	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
+	private Map<Long, Map<Long, SimpleCounter>> _assetCategoryCounters;
 	private final Map<Long, Map<Long, List<AssetCategoryModel>>>
 		_assetCategoryModelsMaps = new HashMap<>();
 	private final long[] _assetClassNameIds;
@@ -7095,7 +7092,7 @@ public class DataFactory {
 		new HashMap<>();
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
-	private Map<Long, SimpleCounter>[] _assetTagCounters;
+	private Map<Long, Map<Long, SimpleCounter>> _assetTagCounters;
 	private final Map<Long, Map<Long, List<AssetTagModel>>>
 		_assetTagModelsMaps = new HashMap<>();
 	private final Map<String, ClassNameModel> _classNameModels =
