@@ -354,6 +354,8 @@ public class SampleSQLBuilder {
 
 		Map<String, StringBundler> sqls = new HashMap<>();
 
+		StringBundler portletPreferenceValuesSB = new StringBundler();
+
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(reader)) {
 
@@ -363,49 +365,66 @@ public class SampleSQLBuilder {
 				line = line.trim();
 
 				if (line.length() > 0) {
-					if (line.startsWith("use lpartition_")) {
-						String partitionDBName = line.substring(
-							4, line.indexOf(";"));
+					if (line.contains("update Counter") ||
+						(!line.contains("PortletPreferenceValue") &&
+						 line.contains("insert into"))) {
 
-						StringBundler sb = sqls.get(partitionDBName);
+						if (line.startsWith("use lpartition_")) {
+							String partitionDBName = line.substring(
+								4, line.indexOf(StringPool.SEMICOLON));
 
-						if ((sb == null) || (sb.index() == 0)) {
-							sb = new StringBundler();
+							StringBundler sb = sqls.get(partitionDBName);
 
-							sqls.put(partitionDBName, sb);
-
-							sb.append("use ");
-							sb.append(partitionDBName);
-							sb.append(";\n");
-
-							sb.append(
-								line.substring(partitionDBName.length() + 5));
-							sb.append("\n");
+							_split(
+								line.substring(partitionDBName.length() + 5),
+								partitionDBName, sb, sqls);
 						}
 						else {
-							sb.append(
-								line.substring(partitionDBName.length() + 5));
-							sb.append("\n");
+							StringBundler sb = sqls.get(
+								BenchmarksPropsValues.DEFAULT_DB_NAME);
+
+							if ((sb == null) || (sb.index() == 0)) {
+								sb = new StringBundler();
+
+								sqls.put(
+									BenchmarksPropsValues.DEFAULT_DB_NAME, sb);
+
+								sb.append("use ");
+								sb.append(
+									BenchmarksPropsValues.DEFAULT_DB_NAME);
+								sb.append(";\n");
+								sb.append(line);
+								sb.append("\n");
+							}
+							else {
+								sb.append(line);
+								sb.append("\n");
+							}
 						}
 					}
 					else {
-						StringBundler sb = sqls.get(
-							BenchmarksPropsValues.DEFAULT_DB_NAME);
+						portletPreferenceValuesSB.append(line);
 
-						if ((sb == null) || (sb.index() == 0)) {
-							sb = new StringBundler();
+						if (line.endsWith(StringPool.SEMICOLON) &&
+							!line.contains("insert into")) {
 
-							sqls.put(BenchmarksPropsValues.DEFAULT_DB_NAME, sb);
+							String portletPreferenceValueLine =
+								portletPreferenceValuesSB.toString();
 
-							sb.append("use ");
-							sb.append(BenchmarksPropsValues.DEFAULT_DB_NAME);
-							sb.append(";\n");
-							sb.append(line);
-							sb.append("\n");
-						}
-						else {
-							sb.append(line);
-							sb.append("\n");
+							String partitionDBName =
+								portletPreferenceValueLine.substring(
+									4,
+									portletPreferenceValueLine.indexOf(
+										StringPool.SEMICOLON));
+
+							StringBundler sb = sqls.get(partitionDBName);
+
+							_split(
+								portletPreferenceValueLine.substring(
+									partitionDBName.length() + 5),
+								partitionDBName, sb, sqls);
+
+							portletPreferenceValuesSB.setIndex(0);
 						}
 					}
 				}
@@ -446,6 +465,28 @@ public class SampleSQLBuilder {
 		}
 
 		insertSQLWriter.write(insertSQL);
+	}
+
+	private void _split(
+		String line, String partitionDBName, StringBundler sb,
+		Map<String, StringBundler> sqls) {
+
+		if ((sb == null) || (sb.index() == 0)) {
+			sb = new StringBundler();
+
+			sqls.put(partitionDBName, sb);
+
+			sb.append("use ");
+			sb.append(partitionDBName);
+			sb.append(";\n");
+
+			sb.append(line);
+			sb.append("\n");
+		}
+		else {
+			sb.append(line);
+			sb.append("\n");
+		}
 	}
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
