@@ -402,6 +402,30 @@ public class SampleSQLBuilder {
 							}
 						}
 					}
+					else if(line.contains("PortletPreferenceValue")){
+						portletPreferenceValuesSB.append(line);
+						
+						if (line.endsWith(StringPool.SEMICOLON)) {
+
+							String portletPreferenceValueLine =
+								portletPreferenceValuesSB.toString();
+
+							String partitionDBName =
+								portletPreferenceValueLine.substring(
+									4,
+									portletPreferenceValueLine.indexOf(
+										StringPool.SEMICOLON));
+
+							StringBundler sb = sqls.get(partitionDBName);
+
+							_split(
+								portletPreferenceValueLine.substring(
+									partitionDBName.length() + 5),
+								partitionDBName, sb, sqls);
+
+							portletPreferenceValuesSB.setIndex(0);
+						}
+					}
 					else {
 						portletPreferenceValuesSB.append(line);
 
