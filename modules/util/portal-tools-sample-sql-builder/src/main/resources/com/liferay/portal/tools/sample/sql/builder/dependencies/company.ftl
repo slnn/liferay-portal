@@ -1,19 +1,11 @@
-<#list dataFactory.newCompanyModels() as companyModel>
+<#list dataFactory.companyModels as companyModel>
 	${dataFactory.setCompanyId(companyModel.companyId)}
-
-	${dataFactory.setWebId(companyModel.webId)}
-
-	<#assign virtualHostModel = dataFactory.newVirtualHostModel() />
-
-	${dataFactory.toInsertSQL(companyModel)}
-
-	${dataFactory.toInsertSQL(virtualHostModel)}
 
 	<#list dataFactory.newPortalPreferencesModels() as portalPreferencesModel>
 		${dataFactory.toInsertSQL(portalPreferencesModel)}
 	</#list>
 
-	${csvFileWriter.write("company", virtualHostModel.hostname + "," + companyModel.companyId + "\n")}
+	${csvFileWriter.write("company", companyModel.webId + "," + companyModel.companyId + "\n")}
 
 	<#include "roles.ftl">
 
