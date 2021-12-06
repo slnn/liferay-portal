@@ -15,11 +15,8 @@
 package com.liferay.portal.upgrade.internal.release;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
@@ -44,26 +41,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  * @author Carlos Sierra Andrés
  */
-@Component(
-	immediate = true, service = {ModelListener.class, ReleasePublisher.class}
-)
-public final class ReleasePublisher extends BaseModelListener<Release> {
-
-	@Override
-	public void onAfterRemove(Release release) throws ModelListenerException {
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				ServiceRegistration<Release> serviceRegistration =
-					_serviceConfiguratorRegistrations.remove(
-						release.getServletContextName());
-
-				if (serviceRegistration != null) {
-					serviceRegistration.unregister();
-				}
-
-				return null;
-			});
-	}
+@Component(immediate = true, service = ReleasePublisher.class)
+public class ReleasePublisher {
 
 	public ServiceRegistration<Release> publish(Release release) {
 		Dictionary<String, Object> properties = new Hashtable<>();
@@ -98,6 +77,21 @@ public final class ReleasePublisher extends BaseModelListener<Release> {
 		release.setState(_STATE_IN_PROGRESS);
 
 		return publish(release);
+	}
+
+	public void unpublish(Release release) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				ServiceRegistration<Release> serviceRegistration =
+					_serviceConfiguratorRegistrations.remove(
+						release.getServletContextName());
+
+				if (serviceRegistration != null) {
+					serviceRegistration.unregister();
+				}
+
+				return null;
+			});
 	}
 
 	@Activate
