@@ -253,9 +253,9 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
@@ -2127,10 +2127,21 @@ public class DataFactory {
 	public LayoutModel newContentLayoutModel(
 		long groupId, String name, String fragmentEntries) {
 
-		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
-			LayoutLocalServiceImpl.getCounterName(groupId, false),
-			counterName -> new SimpleCounter(
-				_countersMap.get(counterName) + 1));
+		String layoutIdCounterName = LayoutLocalServiceImpl.getCounterName(
+			groupId, false);
+
+		SimpleCounter simpleCounter;
+
+		if (_countersMap.containsKey(layoutIdCounterName)) {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName,
+				counterName -> new SimpleCounter(
+					_countersMap.get(layoutIdCounterName) + 1));
+		}
+		else {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName, counterName -> new SimpleCounter());
+		}
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
@@ -6201,10 +6212,21 @@ public class DataFactory {
 		long groupId, long parentLayoutId, String name, boolean privateLayout,
 		boolean hidden, String layoutTemplateId, String... columns) {
 
-		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
-			LayoutLocalServiceImpl.getCounterName(groupId, privateLayout),
-			counterName -> new SimpleCounter(
-				_countersMap.get(counterName) + 1));
+		String layoutIdCounterName = LayoutLocalServiceImpl.getCounterName(
+			groupId, privateLayout);
+
+		SimpleCounter simpleCounter;
+
+		if (_countersMap.containsKey(layoutIdCounterName)) {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName,
+				counterName -> new SimpleCounter(
+					_countersMap.get(layoutIdCounterName) + 1));
+		}
+		else {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName, counterName -> new SimpleCounter());
+		}
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
@@ -7161,10 +7183,21 @@ public class DataFactory {
 	private LayoutModel _newContentPageLayoutModel(
 		long groupId, String name, long classNameId, long classPK) {
 
-		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
-			LayoutLocalServiceImpl.getCounterName(groupId, false),
-			counterName -> new SimpleCounter(
-				_countersMap.get(counterName) + 1));
+		String layoutIdCounterName = LayoutLocalServiceImpl.getCounterName(
+			groupId, false);
+
+		SimpleCounter simpleCounter;
+
+		if (_countersMap.containsKey(layoutIdCounterName)) {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName,
+				counterName -> new SimpleCounter(
+					_countersMap.get(layoutIdCounterName) + 1));
+		}
+		else {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName, counterName -> new SimpleCounter());
+		}
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
