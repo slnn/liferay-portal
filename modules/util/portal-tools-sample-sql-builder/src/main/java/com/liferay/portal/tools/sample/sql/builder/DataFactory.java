@@ -2129,7 +2129,8 @@ public class DataFactory {
 
 		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, false),
-			counterName -> new SimpleCounter());
+			counterName -> new SimpleCounter(
+				_countersMap.get(counterName) + 1));
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
@@ -6202,7 +6203,8 @@ public class DataFactory {
 
 		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, privateLayout),
-			counterName -> new SimpleCounter());
+			counterName -> new SimpleCounter(
+				_countersMap.get(counterName) + 1));
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
@@ -7161,7 +7163,8 @@ public class DataFactory {
 
 		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, false),
-			counterName -> new SimpleCounter());
+			counterName -> new SimpleCounter(
+				_countersMap.get(counterName) + 1));
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
