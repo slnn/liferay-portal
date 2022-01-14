@@ -1,8 +1,8 @@
-<#list dataFactory.newMBCategoryModels(groupId) as mbCategoryModel>
+<#list dataFactory.newMBCategoryModels(guestGroupId) as mbCategoryModel>
 	${dataFactory.toInsertSQL(mbCategoryModel)}
 	${dataFactory.toInsertSQL(dataFactory.newMBMailingListModel(mbCategoryModel, sampleUserModel))}
 
-	${csvFileWriter.write("mbCategory", virtualHostModel.hostname + "," + mbCategoryModel.categoryId + "," + mbCategoryModel.name + "\n")}
+	${csvFileWriter.write("mbCategory", companyModel.webId + "," + mbCategoryModel.categoryId + "," + mbCategoryModel.name + "\n")}
 
 	<#list dataFactory.newMBThreadModels(mbCategoryModel) as mbThreadModel>
 		${dataFactory.toInsertSQL(mbThreadModel)}
@@ -19,6 +19,6 @@
 			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel))}
 		</#list>
 
-		${csvFileWriter.write("mbThread", virtualHostModel.hostname + "," + mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
+		${csvFileWriter.write("mbThread", companyModel.webId + "," + mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
 	</#list>
 </#list>

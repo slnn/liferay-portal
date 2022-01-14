@@ -1,21 +1,41 @@
-<#list dataFactory.newCompanyModels() as companyModel>
+${csvFileWriter.write("company", "liferay.com" + "," + dataFactory.defaultCompanyId + "\n")}
+
+<#list dataFactory.companyModels as companyModel>
 	${dataFactory.setCompanyId(companyModel.companyId)}
 
 	${dataFactory.setWebId(companyModel.webId)}
 
-	<#assign virtualHostModel = dataFactory.newVirtualHostModel() />
-
-	${dataFactory.toInsertSQL(companyModel)}
-
-	${dataFactory.toInsertSQL(virtualHostModel)}
-
-	<#list dataFactory.newPortalPreferencesModels() as portalPreferencesModel>
-		${dataFactory.toInsertSQL(portalPreferencesModel)}
-	</#list>
-
-	${csvFileWriter.write("company", virtualHostModel.hostname + "," + companyModel.companyId + "\n")}
+	${csvFileWriter.write("company", companyModel.webId + "," + companyModel.companyId + "\n")}
 
 	<#include "roles.ftl">
 
-	<#include "groups.ftl">
+	<#include "users.ftl">
+
+	<#include "default_user.ftl">
+
+	<#include "ddm.ftl">
+
+	<#assign guestGroupId = dataFactory.getGuestGroupId() />
+
+	<#list dataFactory.newGroupLayoutModels(guestGroupId) as groupLayoutModel>
+		<@insertLayout _layoutModel=groupLayoutModel />
+	</#list>
+
+	<#include "asset_publisher.ftl">
+
+	<#include "blogs.ftl">
+
+	<#include "journal_article.ftl">
+
+	<#include "mb.ftl">
+
+	<#include "wiki.ftl">
+
+	<@insertDLFolder
+		_companyModel=companyModel
+		_ddmStructureId=dataFactory.defaultDLDDMStructureId
+		_dlFolderDepth=1
+		_groupId=guestGroupId
+		_parentDLFolderId=0
+	/>
 </#list>

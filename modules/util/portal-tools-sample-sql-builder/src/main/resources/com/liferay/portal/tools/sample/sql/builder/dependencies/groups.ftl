@@ -2,23 +2,14 @@
 	globalGroupModel = dataFactory.newGlobalGroupModel()
 	guestGroupModel = dataFactory.newGuestGroupModel()
 
-	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 	countryModel = dataFactory.newCountryModel()
 />
-
-${dataFactory.toInsertSQL(commerceCurrencyModel)}
 
 ${dataFactory.toInsertSQL(countryModel)}
 
 <#include "default_user.ftl">
 
 <#include "commerce_groups.ftl">
-
-<@insertGroup _groupModel=globalGroupModel />
-
-<@insertGroup _groupModel=guestGroupModel />
-
-<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel() />
 
 <#include "asset.ftl">
 
@@ -40,8 +31,6 @@ ${dataFactory.toInsertSQL(countryModel)}
 	<#include "fragment.ftl">
 
 	<#include "mb.ftl">
-
-	<#include "users.ftl">
 
 	<#include "wiki.ftl">
 

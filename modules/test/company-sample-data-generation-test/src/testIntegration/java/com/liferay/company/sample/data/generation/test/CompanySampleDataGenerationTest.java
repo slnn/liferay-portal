@@ -276,9 +276,6 @@ public class CompanySampleDataGenerationTest {
 		companyTableBufferedWriter.append(
 			CSVUtil.encode(company.getCompanyId()));
 		companyTableBufferedWriter.append(StringPool.COMMA);
-		companyTableBufferedWriter.append(
-			CSVUtil.encode(company.getAccountId()));
-		companyTableBufferedWriter.append(StringPool.COMMA);
 		companyTableBufferedWriter.append(CSVUtil.encode(company.getWebId()));
 		companyTableBufferedWriter.newLine();
 	}
@@ -289,9 +286,6 @@ public class CompanySampleDataGenerationTest {
 
 		for (String name : _counterLocalService.getNames()) {
 			counterTableBufferedWriter.append(CSVUtil.encode(name));
-			counterTableBufferedWriter.append(StringPool.COMMA);
-			counterTableBufferedWriter.append(
-				CSVUtil.encode(_counterLocalService.increment(name)));
 			counterTableBufferedWriter.newLine();
 		}
 	}

@@ -1,4 +1,4 @@
-<#list dataFactory.newBlogsEntryModels(groupId) as blogsEntryModel>
+<#list dataFactory.newBlogsEntryModels(guestGroupId) as blogsEntryModel>
 	${dataFactory.toInsertSQL(blogsEntryModel)}
 
 	<#assign friendlyURLEntryModel = dataFactory.newFriendlyURLEntryModel(blogsEntryModel.groupId, dataFactory.blogsEntryClassNameId, blogsEntryModel.entryId) />
@@ -19,7 +19,7 @@
 	<@insertMBDiscussion
 		_classNameId=dataFactory.blogsEntryClassNameId
 		_classPK=blogsEntryModel.entryId
-		_groupId=groupId
+		_groupId=guestGroupId
 		_maxCommentCount=dataFactory.maxBlogsEntryCommentCount
 		_mbRootMessageId=mbRootMessageId
 		_mbThreadId=dataFactory.getCounterNext()
@@ -29,5 +29,5 @@
 
 	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(blogsEntryModel))}
 
-	${csvFileWriter.write("blog", virtualHostModel.hostname + "," + blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbRootMessageId + "\n")}
+	${csvFileWriter.write("blog", companyModel.webId + "," + blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbRootMessageId + "\n")}
 </#list>

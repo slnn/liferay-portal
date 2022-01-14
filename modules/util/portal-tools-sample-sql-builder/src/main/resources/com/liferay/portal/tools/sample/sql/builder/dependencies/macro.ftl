@@ -122,6 +122,7 @@
 </#macro>
 
 <#macro insertDLFolder
+	_companyModel
 	_ddmStructureId
 	_dlFolderDepth
 	_groupId
@@ -171,13 +172,14 @@
 
 				${dataFactory.toInsertSQL(dataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel))}
 
-				${csvFileWriter.write("documentLibrary", virtualHostModel.hostname + "," + dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dlFileEntryModel.fileName + "," + _groupId + "\n")}
+				${csvFileWriter.write("documentLibrary", _companyModel.webId + "," + dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dlFileEntryModel.fileName + "," + _groupId + "\n")}
 			</#list>
 
 			<@insertDLFolder
+				_companyModel=_companyModel
 				_ddmStructureId=_ddmStructureId
 				_dlFolderDepth=_dlFolderDepth + 1
-				_groupId=groupId
+				_groupId=guestGroupId
 				_parentDLFolderId=dlFolderModel.folderId
 			/>
 		</#list>
@@ -287,10 +289,10 @@
 	${dataFactory.toInsertSQL(dataFactory.newContactModel(_userModel))}
 
 	<#list _roleIds as roleId>
-		${dataFactory.toInsertSQL("Users_Roles", 0, roleId, _userModel.userId)}
+		${dataFactory.toInsertSQL("Users_Roles", _userModel.companyId, roleId, _userModel.userId)}
 	</#list>
 
 	<#list _groupIds as groupId>
-		${dataFactory.toInsertSQL("Users_Groups", 0, groupId, _userModel.userId)}
+		${dataFactory.toInsertSQL("Users_Groups", _userModel.companyId, groupId, _userModel.userId)}
 	</#list>
 </#macro>

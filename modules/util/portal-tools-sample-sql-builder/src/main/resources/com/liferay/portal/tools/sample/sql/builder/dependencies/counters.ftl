@@ -1,7 +1,7 @@
 <#assign counterModels = dataFactory.newCounterModels() />
 
 <#list counterModels as counterModel>
-	<#if '${counterModel.name}' == 'com.liferay.counter.kernel.model.Counter'>
+	<#if dataFactory.updateCounter(counterModel)>
 		update Counter set currentId = ${counterModel.currentId} where name = '${counterModel.name}';
 	<#else>
 		${dataFactory.toInsertSQL(counterModel)}
