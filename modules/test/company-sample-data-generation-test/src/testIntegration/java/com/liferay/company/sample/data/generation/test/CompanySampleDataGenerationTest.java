@@ -285,9 +285,6 @@ public class CompanySampleDataGenerationTest {
 
 		for (String name : _counterLocalService.getNames()) {
 			counterTableBufferedWriter.append(String.valueOf(name));
-			counterTableBufferedWriter.append(StringPool.COMMA);
-			counterTableBufferedWriter.append(
-				String.valueOf(_counterLocalService.increment(name)));
 			counterTableBufferedWriter.newLine();
 		}
 	}
@@ -329,6 +326,13 @@ public class CompanySampleDataGenerationTest {
 				outputDirPath.resolve("roleTable.csv"));
 			BufferedWriter userBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("user.csv"))) {
+
+			Company defaultCompany = _companyLocalService.getCompanyByWebId(
+				"liferay.com");
+
+			CompanyThreadLocal.setCompanyId(defaultCompany.getCompanyId());
+
+			_exportCompanyTableData(defaultCompany, companyTableBufferedWriter);
 
 			List<String> keys = new ArrayList<>(_csvMap.keySet());
 
