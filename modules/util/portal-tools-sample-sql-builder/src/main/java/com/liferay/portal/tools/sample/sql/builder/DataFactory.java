@@ -231,8 +231,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferenceValueModel;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
-import com.liferay.portal.kernel.model.ReleaseConstants;
-import com.liferay.portal.kernel.model.ReleaseModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
@@ -277,7 +275,6 @@ import com.liferay.portal.model.impl.PortalPreferencesModelImpl;
 import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
 import com.liferay.portal.model.impl.PortletPreferenceValueModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
-import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
@@ -293,7 +290,6 @@ import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortle
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
 import com.liferay.portal.service.impl.LayoutLocalServiceImpl;
-import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -4887,38 +4883,6 @@ public class DataFactory {
 		return portletPreferenceValueModel;
 	}
 
-	public List<ReleaseModel> newReleaseModels() throws Exception {
-		List<ReleaseModel> releases = new ArrayList<>();
-
-		releases.add(
-			newReleaseModel(
-				ReleaseConstants.DEFAULT_ID,
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
-				String.valueOf(PortalUpgradeProcess.getLatestSchemaVersion()),
-				ReleaseInfo.getBuildNumber(), false,
-				ReleaseConstants.TEST_STRING));
-
-		for (String release :
-				_readLines(
-					DataFactory.class.getResourceAsStream(
-						"dependencies/releases.txt"))) {
-
-			String[] parts = StringUtil.split(release, CharPool.COLON);
-
-			if (parts.length > 0) {
-				String servletContextName = parts[0];
-				String schemaVersion = parts[1];
-
-				releases.add(
-					newReleaseModel(
-						_counter.get(), servletContextName, schemaVersion, 0,
-						true, null));
-			}
-		}
-
-		return releases;
-	}
-
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AccountEntryModel accountEntryModel) {
 
@@ -6527,34 +6491,6 @@ public class DataFactory {
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
 		return portalPreferencesModel;
-	}
-
-	protected ReleaseModelImpl newReleaseModel(
-			long releaseId, String servletContextName, String schemaVersion,
-			int buildNumber, boolean verified, String testString)
-		throws IOException {
-
-		ReleaseModelImpl releaseModelImpl = new ReleaseModelImpl();
-
-		// PK fields
-
-		releaseModelImpl.setReleaseId(releaseId);
-
-		// Audit fields
-
-		releaseModelImpl.setCreateDate(new Date());
-		releaseModelImpl.setModifiedDate(new Date());
-
-		// Other fields
-
-		releaseModelImpl.setServletContextName(servletContextName);
-		releaseModelImpl.setSchemaVersion(schemaVersion);
-		releaseModelImpl.setBuildNumber(buildNumber);
-		releaseModelImpl.setBuildDate(new Date());
-		releaseModelImpl.setVerified(verified);
-		releaseModelImpl.setTestString(testString);
-
-		return releaseModelImpl;
 	}
 
 	protected ResourcePermissionModel newResourcePermissionModel(
