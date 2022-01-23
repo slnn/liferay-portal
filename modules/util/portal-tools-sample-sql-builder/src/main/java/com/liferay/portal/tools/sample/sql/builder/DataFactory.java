@@ -240,7 +240,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
-import com.liferay.portal.kernel.model.VirtualHostModel;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -282,7 +281,6 @@ import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
-import com.liferay.portal.model.impl.VirtualHostModelImpl;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
@@ -5381,30 +5379,6 @@ public class DataFactory {
 		}
 
 		return userModels;
-	}
-
-	public VirtualHostModel newVirtualHostModel() {
-		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
-
-		//  PK fields
-
-		virtualHostModel.setVirtualHostId(_counter.get());
-
-		// Audit fields
-
-		virtualHostModel.setCompanyId(_companyId);
-
-		// Other fields
-
-		if (_webId.equals("liferay.com")) {
-			virtualHostModel.setHostname(
-				BenchmarksPropsValues.VIRTUAL_HOST_NAME);
-		}
-		else {
-			virtualHostModel.setHostname(_webId);
-		}
-
-		return virtualHostModel;
 	}
 
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
