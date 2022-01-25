@@ -3900,10 +3900,6 @@ public class DataFactory {
 		return groupModels;
 	}
 
-	public UserModel newGuestUserModel() {
-		return newUserModel(_counter.get(), "Test", "Test", "Test", false);
-	}
-
 	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
 		JournalArticleModel journalArticleModel) {
 
