@@ -1,12 +1,10 @@
 <#assign
-	globalGroupModel = dataFactory.newGlobalGroupModel()
-	guestGroupModel = dataFactory.newGuestGroupModel()
+	globalGroupId = dataFactory.getGlobalGroupId()
+	guestGroupId = dataFactory.getGuestGroupId()
 
 	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 	countryModel = dataFactory.newCountryModel()
 />
-
-${dataFactory.toInsertSQL(commerceCurrencyModel)}
 
 ${dataFactory.toInsertSQL(countryModel)}
 
@@ -14,20 +12,15 @@ ${dataFactory.toInsertSQL(countryModel)}
 
 <#include "commerce_groups.ftl">
 
-<@insertGroup _groupModel=globalGroupModel />
-
-<@insertGroup _groupModel=guestGroupModel />
-
-<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel() />
-
-<#include "asset.ftl">
-
 <#include "ddm.ftl">
 
 <#include "segments.ftl">
 
 <#list dataFactory.newGroupModels() as groupModel>
-	<#assign groupId = groupModel.groupId />
+	<#assign
+		groupId = groupModel.groupId
+		currentCompanyModelList = companyModelList
+	/>
 
 	<#include "asset_publisher.ftl">
 
@@ -68,11 +61,3 @@ ${dataFactory.toInsertSQL(countryModel)}
 
 	${csvFileWriter.write("repository", groupId + ", " + groupModel.name + "\n")}
 </#list>
-
-<#assign defaultSiteHomePageContentLayoutModels = dataFactory.newContentPageLayoutModels(guestGroupModel.groupId, "welcome") />
-
-<@insertContentPageLayout
-	_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(defaultSiteHomePageContentLayoutModels)
-	_layoutModels=defaultSiteHomePageContentLayoutModels
-	_templateFileName="default-homepage-layout-definition.json"
-/>

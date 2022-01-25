@@ -111,12 +111,9 @@
 
 <#macro insertDDMStructure
 	_ddmStructureModel
-	_ddmStructureLayoutModel
 	_ddmStructureVersionModel
 >
 	${dataFactory.toInsertSQL(_ddmStructureModel)}
-
-	${dataFactory.toInsertSQL(_ddmStructureLayoutModel)}
 
 	${dataFactory.toInsertSQL(_ddmStructureVersionModel)}
 </#macro>
@@ -171,7 +168,7 @@
 
 				${dataFactory.toInsertSQL(dataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel))}
 
-				${csvFileWriter.write("documentLibrary", virtualHostModel.hostname + "," + dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dlFileEntryModel.fileName + "," + _groupId + "\n")}
+				${csvFileWriter.write("documentLibrary", currentCompanyModelList[1] + "," + dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dlFileEntryModel.fileName + "," + _groupId + "\n")}
 			</#list>
 
 			<@insertDLFolder
@@ -198,13 +195,12 @@
 
 <#macro insertJournalArticle
 	_journalArticleModel
-	_journalDDMStructureModel
-	_journalDDMTemplateModel
+	_journalDDMTemplateId
 	_insertAssetEntry
 >
 	${dataFactory.toInsertSQL(_journalArticleModel)}
 
-	<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel) />
+	<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel, dataFactory.defaultJournalDDMStructureVersionId) />
 
 	<#list ddmFieldModels as ddmFieldModel>
 		${dataFactory.toInsertSQL(ddmFieldModel)}
@@ -220,9 +216,9 @@
 
 	${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateModel.templateId))}
+	${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateId))}
 
-	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId))}
+	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, dataFactory.defaultJournalDDMStructureVersionId))}
 
 	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(_journalArticleModel))}
 
@@ -287,10 +283,10 @@
 	${dataFactory.toInsertSQL(dataFactory.newContactModel(_userModel))}
 
 	<#list _roleIds as roleId>
-		${dataFactory.toInsertSQL("Users_Roles", 0, roleId, _userModel.userId)}
+		${dataFactory.toInsertSQL("Users_Roles", _userModel.companyId, roleId, _userModel.userId)}
 	</#list>
 
 	<#list _groupIds as groupId>
-		${dataFactory.toInsertSQL("Users_Groups", 0, groupId, _userModel.userId)}
+		${dataFactory.toInsertSQL("Users_Groups", _userModel.companyId, groupId, _userModel.userId)}
 	</#list>
 </#macro>

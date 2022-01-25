@@ -141,9 +141,6 @@ public class BenchmarksPropsValues {
 				BenchmarksPropsKeys.
 					MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT));
 
-	public static final int MAX_COMPANY_COUNT = GetterUtil.getInteger(
-		PropertiesHolder._get(BenchmarksPropsKeys.MAX_COMPANY_COUNT));
-
 	public static final int MAX_COMPANY_USER_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_COMPANY_USER_COUNT));
 
@@ -257,9 +254,6 @@ public class BenchmarksPropsValues {
 
 	public static final boolean SEARCH_BAR_ENABLED = GetterUtil.getBoolean(
 		PropertiesHolder._get(BenchmarksPropsKeys.SEARCH_BAR_ENABLED));
-
-	public static final String VIRTUAL_HOST_NAME = PropertiesHolder._get(
-		BenchmarksPropsKeys.VIRTUAL_HOST_NAME);
 
 	private static class PropertiesHolder {
 

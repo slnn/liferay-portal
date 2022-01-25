@@ -28,6 +28,6 @@
 			_mbThreadId=dataFactory.getCounterNext()
 		/>
 
-		${csvFileWriter.write("wiki", virtualHostModel.hostname + "," + wikiNodeModel.nodeId + "," + wikiNodeModel.name + "," + wikiPageModel.resourcePrimKey + "," + wikiPageModel.title + "," + mbRootMessageId + "\n")}
+		${csvFileWriter.write("wiki", companyModelList[1] + "," + wikiNodeModel.nodeId + "," + wikiNodeModel.name + "," + wikiPageModel.resourcePrimKey + "," + wikiPageModel.title + "," + mbRootMessageId + "\n")}
 	</#list>
 </#list>

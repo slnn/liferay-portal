@@ -8,7 +8,6 @@
 		/>
 
 		<@insertDDMStructure
-			_ddmStructureLayoutModel=dataFactory.newDDLDDMStructureLayoutModel(groupId, ddmStructureVersionModel)
 			_ddmStructureModel=ddmStructureModel
 			_ddmStructureVersionModel=ddmStructureVersionModel
 		/>
@@ -46,7 +45,7 @@
 			_entry=ddlRecordModel
 		/>
 
-		${csvFileWriter.write("dynamicDataList", virtualHostModel.hostname + "," + ddlRecordModel.groupId + "," + layoutName + "," + portletId + "," + ddlRecordSetModel.recordSetId + "," + ddlRecordModel.recordId + "\n")}
+		${csvFileWriter.write("dynamicDataList", companyModelList[1] + "," + ddlRecordModel.groupId + "," + layoutName + "," + portletId + "," + ddlRecordSetModel.recordSetId + "," + ddlRecordModel.recordId + "\n")}
 	</#list>
 
 	<#assign ddlPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletId) />

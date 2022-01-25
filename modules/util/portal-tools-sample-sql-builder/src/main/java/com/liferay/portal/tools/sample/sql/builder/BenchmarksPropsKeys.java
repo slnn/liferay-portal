@@ -87,9 +87,6 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT =
 		"sample.sql.max.commerce.product.option.category.count";
 
-	public static final String MAX_COMPANY_COUNT =
-		"sample.sql.max.company.count";
-
 	public static final String MAX_COMPANY_USER_COUNT =
 		"sample.sql.max.company.user.count";
 
@@ -184,8 +181,5 @@ public interface BenchmarksPropsKeys {
 
 	public static final String SEARCH_BAR_ENABLED =
 		"sample.sql.search.bar.enabled";
-
-	public static final String VIRTUAL_HOST_NAME =
-		"sample.sql.virtual.hostname";
 
 }

@@ -9,7 +9,7 @@
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
 	/>
 
-	${csvFileWriter.write("layout", virtualHostModel.hostname + "," + layoutModel.friendlyURL + "\n")}
+	${csvFileWriter.write("layout", companyModelList[1] + "," + layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout _layoutModel=layoutModel />
 
@@ -26,8 +26,7 @@
 			<@insertJournalArticle
 				_insertAssetEntry=(versionCount==dataFactory.maxJournalArticleVersionCount)
 				_journalArticleModel=journalArticleModel
-				_journalDDMStructureModel=defaultJournalDDMStructureModel
-				_journalDDMTemplateModel=defaultJournalDDMTemplateModel
+				_journalDDMTemplateId=dataFactory.defaultJournalDDMTemplateId
 			/>
 		</#list>
 
