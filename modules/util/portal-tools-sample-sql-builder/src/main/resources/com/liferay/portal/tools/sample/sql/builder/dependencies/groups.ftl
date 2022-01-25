@@ -12,8 +12,6 @@ ${dataFactory.toInsertSQL(countryModel)}
 
 <#include "commerce_groups.ftl">
 
-<#include "asset.ftl">
-
 <#include "ddm.ftl">
 
 <#include "segments.ftl">
