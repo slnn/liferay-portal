@@ -15,6 +15,8 @@
 package com.liferay.company.sample.data.generation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -268,6 +270,20 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
+	private void _exportCommerceCurrencyTableData(
+			long companyId, BufferedWriter commerceCurrencyTableBufferedWriter)
+		throws Exception {
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(companyId, "USD");
+
+		commerceCurrencyTableBufferedWriter.append(String.valueOf(companyId));
+		commerceCurrencyTableBufferedWriter.append(StringPool.COMMA);
+		commerceCurrencyTableBufferedWriter.append(
+			String.valueOf(commerceCurrency.getCommerceCurrencyId()));
+		commerceCurrencyTableBufferedWriter.newLine();
+	}
+
 	private void _exportCompanyTableData(
 			Company company, BufferedWriter companyTableBufferedWriter)
 		throws Exception {
@@ -314,6 +330,9 @@ public class CompanySampleDataGenerationTest {
 			BufferedWriter classNameTableBufferedWriter =
 				Files.newBufferedWriter(
 					outputDirPath.resolve("classNameTable.csv"));
+			BufferedWriter commerceCurrencyTableBufferedWriter =
+				Files.newBufferedWriter(
+					outputDirPath.resolve("commerceCurrencyTable.csv"));
 			BufferedWriter companyTableBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("companyTable.csv"));
 			BufferedWriter counterTableBufferedWriter = Files.newBufferedWriter(
@@ -333,6 +352,10 @@ public class CompanySampleDataGenerationTest {
 			CompanyThreadLocal.setCompanyId(defaultCompany.getCompanyId());
 
 			_exportCompanyTableData(defaultCompany, companyTableBufferedWriter);
+
+			_exportCommerceCurrencyTableData(
+				defaultCompany.getCompanyId(),
+				commerceCurrencyTableBufferedWriter);
 
 			List<String> keys = new ArrayList<>(_csvMap.keySet());
 
@@ -360,6 +383,10 @@ public class CompanySampleDataGenerationTest {
 
 				_exportCompanyTableData(company, companyTableBufferedWriter);
 
+				_exportCommerceCurrencyTableData(
+					company.getCompanyId(),
+					commerceCurrencyTableBufferedWriter);
+
 				_exportGroupTableData(
 					company.getCompanyId(), groupTableBufferedWriter);
 
@@ -371,6 +398,7 @@ public class CompanySampleDataGenerationTest {
 			_exportClassNameTableData(classNameTableBufferedWriter);
 
 			classNameTableBufferedWriter.flush();
+			commerceCurrencyTableBufferedWriter.flush();
 			companyTableBufferedWriter.flush();
 			counterTableBufferedWriter.flush();
 			groupTableBufferedWriter.flush();
@@ -466,6 +494,9 @@ public class CompanySampleDataGenerationTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
