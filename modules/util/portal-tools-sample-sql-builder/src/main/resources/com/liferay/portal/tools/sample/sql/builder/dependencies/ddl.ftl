@@ -8,7 +8,6 @@
 		/>
 
 		<@insertDDMStructure
-			_ddmStructureLayoutModel=dataFactory.newDDLDDMStructureLayoutModel(groupId, ddmStructureVersionModel)
 			_ddmStructureModel=ddmStructureModel
 			_ddmStructureVersionModel=ddmStructureVersionModel
 		/>

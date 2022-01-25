@@ -123,7 +123,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFieldAttributeModel;
 import com.liferay.dynamic.data.mapping.model.DDMFieldModel;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
@@ -135,7 +134,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
-import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
@@ -433,12 +431,8 @@ public class DataFactory {
 
 		_dlDDMStructureContent = _readFile(
 			"ddm_structure/ddm_structure_basic_document.json");
-		_dlDDMStructureLayoutContent = _readFile(
-			"ddm_structure/ddm_structure_layout_basic_document.json");
 		_journalDDMStructureContent = _readFile(
 			"ddm_structure/ddm_structure_basic_web_content.json");
-		_journalDDMStructureLayoutContent = _readFile(
-			"ddm_structure/ddm_structure_layout_basic_web_content.json");
 		_layoutPageTemplateStructureRelData = _readFile(
 			"layout_page_template_structure_rel.json");
 
@@ -2946,36 +2940,6 @@ public class DataFactory {
 		return cpTaxCategoryModel;
 	}
 
-	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
-		long groupId, DDMStructureVersionModel ddmStructureVersionModel) {
-
-		StringBundler sb = new StringBundler(
-			3 + (BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT * 4));
-
-		sb.append("{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": ");
-		sb.append("[");
-
-		for (int i = 0; i < BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT;
-			 i++) {
-
-			sb.append("{\"columns\": [{\"fieldNames\": [\"");
-			sb.append(nextDDLCustomFieldName(groupId, i));
-			sb.append("\"], \"size\": 12}]}");
-			sb.append(", ");
-		}
-
-		if (BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		sb.append("], \"title\": {\"en_US\": \"\"}}],\"paginationMode\": ");
-		sb.append("\"single-page\"}");
-
-		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId,
-			ddmStructureVersionModel.getStructureVersionId(), sb.toString());
-	}
-
 	public DDMStructureModel newDDLDDMStructureModel(long groupId) {
 		StringBundler sb = new StringBundler(
 			3 + (BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT * 9));
@@ -3429,12 +3393,6 @@ public class DataFactory {
 			PropsValues.ASSET_VOCABULARY_DEFAULT);
 	}
 
-	public DDMStructureLayoutModel newDefaultDLDDMStructureLayoutModel() {
-		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId, _defaultDLDDMStructureVersionId,
-			_dlDDMStructureLayoutContent);
-	}
-
 	public DDMStructureModel newDefaultDLDDMStructureModel() {
 		_defaultDLDDMStructureId = _counter.get();
 
@@ -3451,14 +3409,6 @@ public class DataFactory {
 
 		return newDDMStructureVersionModel(
 			ddmStructureModel, _defaultDLDDMStructureVersionId);
-	}
-
-	public DDMStructureLayoutModel newDefaultJournalDDMStructureLayoutModel() {
-		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId,
-			_defaultJournalDDMStructureVersionId,
-			_journalDDMStructureLayoutContent,
-			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY);
 	}
 
 	public DDMStructureModel newDefaultJournalDDMStructureModel() {
@@ -5963,51 +5913,6 @@ public class DataFactory {
 		return ddmStorageLinkModel;
 	}
 
-	protected DDMStructureLayoutModel newDDMStructureLayoutModel(
-		long groupId, long userId, long structureVersionId, String definition) {
-
-		return newDDMStructureLayoutModel(
-			groupId, userId, structureVersionId, definition, 0,
-			String.valueOf(_counter.get()));
-	}
-
-	protected DDMStructureLayoutModel newDDMStructureLayoutModel(
-		long groupId, long userId, long structureVersionId, String definition,
-		long classNameId, String structureLayoutKey) {
-
-		DDMStructureLayoutModel ddmStructureLayoutModel =
-			new DDMStructureLayoutModelImpl();
-
-		// UUID
-
-		ddmStructureLayoutModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		ddmStructureLayoutModel.setStructureLayoutId(_counter.get());
-
-		// Group instance
-
-		ddmStructureLayoutModel.setGroupId(groupId);
-
-		// Audit fields
-
-		ddmStructureLayoutModel.setCompanyId(_companyId);
-		ddmStructureLayoutModel.setUserId(userId);
-		ddmStructureLayoutModel.setUserName(_SAMPLE_USER_NAME);
-		ddmStructureLayoutModel.setCreateDate(nextFutureDate());
-		ddmStructureLayoutModel.setModifiedDate(nextFutureDate());
-
-		// Other fields
-
-		ddmStructureLayoutModel.setClassNameId(classNameId);
-		ddmStructureLayoutModel.setStructureLayoutKey(structureLayoutKey);
-		ddmStructureLayoutModel.setStructureVersionId(structureVersionId);
-		ddmStructureLayoutModel.setDefinition(definition);
-
-		return ddmStructureLayoutModel;
-	}
-
 	protected DDMStructureLinkModel newDDMStructureLinkModel(
 		long classNameId, long classPK, long structureId) {
 
@@ -7410,7 +7315,6 @@ public class DataFactory {
 	private long _defaultUserId;
 	private final Map<Long, Long> _defaultUserIdMap = new HashMap<>();
 	private final String _dlDDMStructureContent;
-	private final String _dlDDMStructureLayoutContent;
 	private final SimpleCounter _dLFileEntryIdCounter;
 	private final List<String> _firstNames;
 	private final SimpleCounter _futureDateCounter;
@@ -7422,7 +7326,6 @@ public class DataFactory {
 	private final Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<>();
 	private final String _journalDDMStructureContent;
-	private final String _journalDDMStructureLayoutContent;
 	private final List<String> _lastNames;
 	private final Map<String, SimpleCounter> _layoutIdCounters =
 		new HashMap<>();
