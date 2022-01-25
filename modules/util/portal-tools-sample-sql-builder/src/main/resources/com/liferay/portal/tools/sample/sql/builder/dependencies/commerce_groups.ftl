@@ -86,7 +86,7 @@
 			<#assign
 				cpDefinitionModels = dataFactory.newCPDefinitionModels(cpTaxCategoryModel, cProductModel)
 
-				friendlyURLEntryModel = dataFactory.newFriendlyURLEntryModel(globalGroupModel.groupId, dataFactory.CProductClassNameId, cProductModel.CProductId)
+				friendlyURLEntryModel = dataFactory.newFriendlyURLEntryModel(globalGroupId, dataFactory.CProductClassNameId, cProductModel.CProductId)
 
 				friendlyURLEntryLocalizationModel = dataFactory.newFriendlyURLEntryLocalizationModel(friendlyURLEntryModel, "definition-" + cProductModel.publishedCPDefinitionId)
 			/>

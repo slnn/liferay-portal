@@ -10,8 +10,7 @@
 	<@insertJournalArticle
 		_insertAssetEntry=true
 		_journalArticleModel=journalArticleModel
-		_journalDDMStructureModel=defaultJournalDDMStructureModel
-		_journalDDMTemplateModel=defaultJournalDDMTemplateModel
+		_journalDDMTemplateId=dataFactory.defaultJournalDDMTemplateId
 	/>
 
 	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
@@ -29,6 +28,6 @@
 			_layoutModel=contentLayoutModel
 		/>
 
-		${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + contentLayoutModel.friendlyURL + "\n")}
+		${csvFileWriter.write("fragment", companyModelList[1] + "," + contentLayoutModel.friendlyURL + "\n")}
 	</#list>
 </#if>
