@@ -63,11 +63,3 @@ ${dataFactory.toInsertSQL(countryModel)}
 
 	${csvFileWriter.write("repository", groupId + ", " + groupModel.name + "\n")}
 </#list>
-
-<#assign defaultSiteHomePageContentLayoutModels = dataFactory.newContentPageLayoutModels(guestGroupId, "welcome") />
-
-<@insertContentPageLayout
-	_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(defaultSiteHomePageContentLayoutModels)
-	_layoutModels=defaultSiteHomePageContentLayoutModels
-	_templateFileName="default-homepage-layout-definition.json"
-/>
