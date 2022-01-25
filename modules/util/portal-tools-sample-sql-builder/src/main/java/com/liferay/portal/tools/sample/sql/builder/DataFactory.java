@@ -129,7 +129,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
-import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldModelImpl;
@@ -139,7 +138,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
-import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollectionModel;
@@ -3427,46 +3425,6 @@ public class DataFactory {
 
 		return newDDMStructureVersionModel(
 			ddmStructureModel, _defaultJournalDDMStructureVersionId);
-	}
-
-	public DDMTemplateVersionModel newDefaultJournalDDMTemplateVersionModel() {
-		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
-			new DDMTemplateVersionModelImpl();
-
-		// PK fields
-
-		ddmTemplateVersionModelImpl.setTemplateVersionId(_counter.get());
-
-		// Group instance
-
-		ddmTemplateVersionModelImpl.setGroupId(_globalGroupId);
-
-		// Audit fields
-
-		ddmTemplateVersionModelImpl.setCompanyId(_companyId);
-		ddmTemplateVersionModelImpl.setUserId(_defaultUserId);
-		ddmTemplateVersionModelImpl.setCreateDate(nextFutureDate());
-
-		// Other fields
-
-		ddmTemplateVersionModelImpl.setClassNameId(
-			getClassNameId(DDMStructure.class));
-		ddmTemplateVersionModelImpl.setClassPK(_defaultJournalDDMStructureId);
-		ddmTemplateVersionModelImpl.setTemplateId(
-			_ddmTemplateMap.get(_companyId));
-		ddmTemplateVersionModelImpl.setVersion(
-			DDMTemplateConstants.VERSION_DEFAULT);
-
-		ddmTemplateVersionModelImpl.setName(
-			StringBundler.concat(
-				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
-				"default-locale=\"en_US\"><name language-id=\"en_US\">",
-				_JOURNAL_STRUCTURE_KEY, "</name></root>"));
-
-		ddmTemplateVersionModelImpl.setStatusByUserId(_defaultUserId);
-		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
-
-		return ddmTemplateVersionModelImpl;
 	}
 
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(

@@ -5,8 +5,6 @@
 	_ddmStructureVersionModel=dataFactory.newDefaultJournalDDMStructureVersionModel(defaultJournalDDMStructureModel)
 />
 
-${dataFactory.toInsertSQL(dataFactory.newDefaultJournalDDMTemplateVersionModel())}
-
 <#assign defaultDLDDMStructureModel = dataFactory.newDefaultDLDDMStructureModel() />
 
 <@insertDDMStructure
