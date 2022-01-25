@@ -111,12 +111,9 @@
 
 <#macro insertDDMStructure
 	_ddmStructureModel
-	_ddmStructureLayoutModel
 	_ddmStructureVersionModel
 >
 	${dataFactory.toInsertSQL(_ddmStructureModel)}
-
-	${dataFactory.toInsertSQL(_ddmStructureLayoutModel)}
 
 	${dataFactory.toInsertSQL(_ddmStructureVersionModel)}
 </#macro>
