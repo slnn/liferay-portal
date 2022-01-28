@@ -394,6 +394,8 @@ public class DataFactory {
 
 		_initDefaultUserIdMap();
 
+		_initCommerceCurrencyMap();
+
 		_countersMap = _initCountersMap();
 
 		_counter = new SimpleCounter(_countersMap.get(Counter.class.getName()));
@@ -1444,47 +1446,14 @@ public class DataFactory {
 		CommerceCurrencyModel commerceCurrencyModel =
 			new CommerceCurrencyModelImpl();
 
-		commerceCurrencyModel.setUuid(SequentialUUID.generate());
-
 		// PK fields
 
-		commerceCurrencyModel.setCommerceCurrencyId(_counter.get());
-
-		// Audit fields
-
-		commerceCurrencyModel.setCompanyId(_companyId);
-		commerceCurrencyModel.setUserId(_sampleUserId);
-		commerceCurrencyModel.setUserName(_SAMPLE_USER_NAME);
-		commerceCurrencyModel.setCreateDate(new Date());
-		commerceCurrencyModel.setModifiedDate(new Date());
+		commerceCurrencyModel.setCommerceCurrencyId(
+			_commerceCurrencyIdMap.get(_companyId));
 
 		// Other fields
 
 		commerceCurrencyModel.setCode("USD");
-
-		String name = StringBundler.concat(
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
-			"=\"en_US\" default-locale=\"en_US\"><Name language-id=\"en_US\">",
-			"US Dollar</Name></root>");
-
-		commerceCurrencyModel.setName(name);
-
-		commerceCurrencyModel.setRate(BigDecimal.valueOf(1));
-
-		String formatPattern = StringBundler.concat(
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
-			"=\"en_US\" default-locale=\"en_US\"><FormatPattern language-id",
-			"=\"en_US\">$###,##0.00</FormatPattern></root>");
-
-		commerceCurrencyModel.setFormatPattern(formatPattern);
-
-		commerceCurrencyModel.setMaxFractionDigits(2);
-		commerceCurrencyModel.setMinFractionDigits(2);
-		commerceCurrencyModel.setRoundingMode("HALF_EVEN");
-		commerceCurrencyModel.setPrimary(true);
-		commerceCurrencyModel.setPriority(1);
-		commerceCurrencyModel.setActive(true);
-		commerceCurrencyModel.setLastPublishDate(new Date());
 
 		return commerceCurrencyModel;
 	}
@@ -7142,6 +7111,21 @@ public class DataFactory {
 		return classNameModelLists;
 	}
 
+	private void _initCommerceCurrencyMap() throws Exception {
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(
+				getResourceInputStream("csv/commerceCurrencyTable.csv")));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			String[] items = line.split(StringPool.COMMA);
+
+			_commerceCurrencyIdMap.put(
+				GetterUtil.getLong(items[0]), GetterUtil.getLong(items[1]));
+		}
+	}
+
 	private void _initCompanyModels() throws Exception {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(
@@ -7422,6 +7406,7 @@ public class DataFactory {
 	private final Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps;
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
+	private final Map<Long, Long> _commerceCurrencyIdMap = new HashMap<>();
 	private long _companyId;
 	private final List<List<String>> _companyModelLists = new ArrayList<>();
 	private final SimpleCounter _counter;
