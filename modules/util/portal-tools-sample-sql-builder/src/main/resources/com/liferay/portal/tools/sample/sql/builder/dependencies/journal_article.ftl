@@ -27,7 +27,7 @@
 				_insertAssetEntry=(versionCount==dataFactory.maxJournalArticleVersionCount)
 				_journalArticleModel=journalArticleModel
 				_journalDDMStructureModel=defaultJournalDDMStructureModel
-				_journalDDMTemplateModel=defaultJournalDDMTemplateModel
+				_journalDDMTemplateId=dataFactory.defaultJournalDDMTemplateId
 			/>
 		</#list>
 
