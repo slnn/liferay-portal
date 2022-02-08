@@ -216,7 +216,6 @@ import com.liferay.portal.kernel.model.AddressModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.CompanyModel;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.ContactModel;
 import com.liferay.portal.kernel.model.Country;
@@ -274,7 +273,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.AddressModelImpl;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
-import com.liferay.portal.model.impl.CompanyModelImpl;
 import com.liferay.portal.model.impl.ContactModelImpl;
 import com.liferay.portal.model.impl.CountryModelImpl;
 import com.liferay.portal.model.impl.GroupModelImpl;
@@ -380,13 +378,21 @@ public class DataFactory {
 		_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss", TimeZone.getDefault());
 
-		int totalCompanyCount = BenchmarksPropsValues.MAX_COMPANY_COUNT + 1;
+		_initCompanyModels();
+
+		_assetCategoryModelsMaps =
+			(Map<Long, List<AssetCategoryModel>>[])new HashMap<?, ?>
+				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
+
+		_assetTagModelsMaps =
+			(Map<Long, List<AssetTagModel>>[])new HashMap<?, ?>
+				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
 
 		int groupCount =
 			BenchmarksPropsValues.MAX_GROUP_COUNT +
 				BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
 
-		int totalGroupCount = groupCount * totalCompanyCount;
+		int totalGroupCount = groupCount * _maxCompanyCount;
 
 		_counter = new SimpleCounter(totalGroupCount + 1);
 
@@ -461,8 +467,7 @@ public class DataFactory {
 		if (_assetCategoryCounters == null) {
 			_assetCategoryCounters =
 				(Map<Long, SimpleCounter>[])new HashMap<?, ?>
-					[(BenchmarksPropsValues.MAX_COMPANY_COUNT + 1) *
-						BenchmarksPropsValues.MAX_GROUP_COUNT];
+					[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -504,8 +509,7 @@ public class DataFactory {
 
 		if (_assetTagCounters == null) {
 			_assetTagCounters = (Map<Long, SimpleCounter>[])new HashMap<?, ?>
-				[(BenchmarksPropsValues.MAX_COMPANY_COUNT + 1) *
-					BenchmarksPropsValues.MAX_GROUP_COUNT];
+				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -545,6 +549,10 @@ public class DataFactory {
 
 	public long getCommerceInventoryWarehouseClassNameId() {
 		return getClassNameId(CommerceInventoryWarehouse.class);
+	}
+
+	public List<List<String>> getCompanyModelLists() {
+		return _companyModelLists;
 	}
 
 	public long getCounterNext() {
@@ -2094,20 +2102,6 @@ public class DataFactory {
 				StringUtil.read(
 					getResourceInputStream(
 						"commerce/commerce_theme_portlet_settings.json"))));
-	}
-
-	public List<CompanyModel> newCompanyModels() {
-		List<CompanyModel> companyModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_COMPANY_COUNT + 1);
-
-		companyModels.add(_newCompanyModel("liferay.com"));
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_COMPANY_COUNT; i++) {
-			companyModels.add(
-				_newCompanyModel(StringBundler.concat("liferay", i, ".com")));
-		}
-
-		return companyModels;
 	}
 
 	public ContactModel newContactModel(UserModel userModel) {
@@ -5549,8 +5543,8 @@ public class DataFactory {
 		return userName;
 	}
 
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
+	public void setCompanyId(String companyId) {
+		_companyId = GetterUtil.getLong(companyId);
 	}
 
 	public void setWebId(String webId) {
@@ -7171,27 +7165,25 @@ public class DataFactory {
 		return classNameModelLists;
 	}
 
-	private CompanyModel _newCompanyModel(String webId) {
-		CompanyModel companyModel = new CompanyModelImpl();
+	private void _initCompanyModels() throws Exception {
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(
+				getResourceInputStream("csv/companyTable.csv")));
 
-		// PK fields
+		String line = null;
 
-		companyModel.setCompanyId(_counter.get());
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			String[] items = line.split(StringPool.COMMA);
 
-		// Audit fields
+			List<String> companyModelList = new ArrayList<>();
 
-		companyModel.setCreateDate(new Date());
-		companyModel.setModifiedDate(new Date());
+			companyModelList.add(items[0]);
+			companyModelList.add(items[1]);
 
-		// Other fields
+			_companyModelLists.add(companyModelList);
+		}
 
-		companyModel.setWebId(webId);
-		companyModel.setMx("liferay.com");
-		companyModel.setActive(true);
-		companyModel.setName(webId);
-		companyModel.setLegalName("Liferay, Inc.");
-
-		return companyModel;
+		_maxCompanyCount = _companyModelLists.size();
 	}
 
 	private LayoutModel _newContentPageLayoutModel(
@@ -7335,23 +7327,18 @@ public class DataFactory {
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private final Map<Long, List<AssetCategoryModel>>[]
-		_assetCategoryModelsMaps =
-			(Map<Long, List<AssetCategoryModel>>[])new HashMap<?, ?>
-				[(BenchmarksPropsValues.MAX_COMPANY_COUNT + 1) *
-					BenchmarksPropsValues.MAX_GROUP_COUNT];
+		_assetCategoryModelsMaps;
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
-	private final Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps =
-		(Map<Long, List<AssetTagModel>>[])new HashMap<?, ?>
-			[(BenchmarksPropsValues.MAX_COMPANY_COUNT + 1) *
-				BenchmarksPropsValues.MAX_GROUP_COUNT];
+	private final Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps;
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
 	private long _companyId;
+	private final List<List<String>> _companyModelLists = new ArrayList<>();
 	private final SimpleCounter _counter;
 	private final Map<Long, CPInstanceModel> _cpInstanceModels =
 		new HashMap<>();
@@ -7383,6 +7370,7 @@ public class DataFactory {
 	private final String _layoutPageTemplateStructureRelData;
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
+	private int _maxCompanyCount;
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
