@@ -13,7 +13,6 @@
  */
 
 import ClayForm, {ClaySelect} from '@clayui/form';
-import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -25,6 +24,7 @@ import {
 	TEMPLATE_SELECTED_EVENT,
 	TEMPLATE_SOILED,
 } from './constants';
+import {fireTemplateSelectionEvent} from './getMappingFromTemplate';
 
 const TemplateSelect = ({
 	initialTemplate,
@@ -45,7 +45,13 @@ const TemplateSelect = ({
 				{label: name, value: batchPlannerPlanId},
 				...options,
 			]);
-			fireTemplateSelectionEvent(batchPlannerPlanId);
+			fireTemplateSelectionEvent(
+				batchPlannerPlanId,
+				NULL_TEMPLATE_VALUE,
+				TEMPLATE_SELECTED_EVENT,
+				HEADLESS_BATCH_PLANNER_URL,
+				HEADLESS_ENDPOINT_POLICY_NAME
+			);
 		}
 
 		Liferay.on(TEMPLATE_CREATED, handleTemplateCreated);
@@ -76,7 +82,13 @@ const TemplateSelect = ({
 	const onChange = (event) => {
 		const newTemplateId = event.target.value;
 		setTemplate(newTemplateId);
-		fireTemplateSelectionEvent(newTemplateId);
+		fireTemplateSelectionEvent(
+			newTemplateId,
+			NULL_TEMPLATE_VALUE,
+			TEMPLATE_SELECTED_EVENT,
+			HEADLESS_BATCH_PLANNER_URL,
+			HEADLESS_ENDPOINT_POLICY_NAME
+		);
 	};
 
 	const selectId = `${portletNamespace}templateName`;
@@ -112,57 +124,5 @@ TemplateSelect.propTypes = {
 	selectedTemplateMapping: PropTypes.object,
 	templatesOptions: PropTypes.arrayOf(PropTypes.object),
 };
-
-function getMappingFromTemplate(template) {
-	const {mappings} = template;
-
-	return mappings.reduce((accumulator, map) => {
-		accumulator[map.internalFieldName] = map.externalFieldName;
-
-		return accumulator;
-	}, {});
-}
-
-async function fireTemplateSelectionEvent(templateId) {
-	if (templateId === NULL_TEMPLATE_VALUE) {
-		return Liferay.fire(TEMPLATE_SELECTED_EVENT, {
-			template: null,
-		});
-	}
-
-	try {
-		const request = await fetch(
-			`${HEADLESS_BATCH_PLANNER_URL}/plans/${templateId}`
-		);
-
-		if (!request.ok) {
-			return openToast({
-				message: Liferay.Language.get('your-request-has-failed'),
-				type: 'danger',
-			});
-		}
-
-		const templateRequest = await request.json();
-
-		const headlessEndpoint = templateRequest.policies.find(
-			(policy) => policy?.name === HEADLESS_ENDPOINT_POLICY_NAME
-		);
-
-		Liferay.fire(TEMPLATE_SELECTED_EVENT, {
-			template: {
-				externalType: templateRequest.externalType,
-				headlessEndpoint: headlessEndpoint?.value,
-				internalClassName: templateRequest.internalClassName,
-				mapping: getMappingFromTemplate(templateRequest),
-			},
-		});
-	}
-	catch (error) {
-		openToast({
-			message: Liferay.Language.get('your-request-has-failed'),
-			type: 'danger',
-		});
-	}
-}
 
 export default TemplateSelect;

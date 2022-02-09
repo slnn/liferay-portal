@@ -12,12 +12,17 @@
  * details.
  */
 
+import SampleCustomDataRenderer from './SampleCustomDataRenderer';
+
 export default function propsTransformer({
 	additionalProps: {greeting},
 	...otherProps
 }) {
 	return {
 		...otherProps,
+		customDataRenderers: {
+			sampleCustomDataRenderer: SampleCustomDataRenderer,
+		},
 		onActionDropdownItemClick({action, itemData}) {
 			if (action.data.id === 'sampleMessage') {
 				alert(`${greeting} ${itemData.title}!`);

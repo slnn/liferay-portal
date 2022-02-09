@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.graphql.dto.v1_0;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -30,6 +31,7 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
+import com.liferay.portal.vulcan.graphql.dto.v1_0.Creator;
 import com.liferay.portal.vulcan.list.type.ListEntry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -62,7 +64,17 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of(
-				objectDefinition.getPKObjectFieldName(), Long.class));
+				objectDefinition.getPKObjectFieldName(), true, Long.class));
+		graphQLDTOProperties.add(
+			GraphQLDTOProperty.of("creator", true, Creator.class));
+		graphQLDTOProperties.add(
+			GraphQLDTOProperty.of("dateCreated", true, Date.class));
+		graphQLDTOProperties.add(
+			GraphQLDTOProperty.of("dateModified", true, Date.class));
+		graphQLDTOProperties.add(
+			GraphQLDTOProperty.of("externalReferenceCode", String.class));
+		graphQLDTOProperties.add(
+			GraphQLDTOProperty.of("status", true, String.class));
 
 		List<GraphQLDTOProperty> relationshipGraphQLDTOProperties =
 			new ArrayList<>();
@@ -212,7 +224,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		}
 
 		return (T)_toMap(
-			_objectEntryManager.getObjectEntry(
+			_objectEntryManager.fetchObjectEntry(
 				dtoConverterContext, null, (long)relationshipId),
 			relationshipIdName);
 	}
@@ -272,9 +284,23 @@ public class ObjectDefinitionGraphQLDTOContributor
 	private Map<String, Object> _toMap(
 		ObjectEntry objectEntry, String objectEntryIdName) {
 
+		if (objectEntry == null) {
+			return null;
+		}
+
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		properties.put(objectEntryIdName, objectEntry.getId());
+
+		properties.put("creator", objectEntry.getCreator());
+		properties.put("dateCreated", objectEntry.getDateCreated());
+		properties.put("dateModified", objectEntry.getDateModified());
+		properties.put(
+			"externalReferenceCode", objectEntry.getExternalReferenceCode());
+
+		Status status = objectEntry.getStatus();
+
+		properties.put("status", status.getLabel());
 
 		return properties;
 	}

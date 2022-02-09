@@ -175,6 +175,8 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 						).setParameter(
 							"template", true
 						).buildString()
+					).put(
+						"mappedFields", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
 					).build()
 				%>'
 			/>

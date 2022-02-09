@@ -12,6 +12,7 @@
  * details.
  */
 
+import {StyleErrorsContextProvider} from '@liferay/layout-content-page-editor-web';
 import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -79,13 +80,15 @@ const StyleBookEditor = ({
 			}}
 		>
 			<div className="cadmin style-book-editor">
-				{config.templatesPreviewEnabled && <Toolbar />}
+				<StyleErrorsContextProvider>
+					{config.templatesPreviewEnabled && <Toolbar />}
 
-				<div className="d-flex">
-					<LayoutPreview />
+					<div className="d-flex">
+						<LayoutPreview />
 
-					<Sidebar />
-				</div>
+						<Sidebar />
+					</div>
+				</StyleErrorsContextProvider>
 			</div>
 		</StyleBookContextProvider>
 	);

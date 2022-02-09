@@ -122,10 +122,14 @@ public class LayoutPageTemplateLayoutPrototypeLocalServiceWrapper
 			return layoutPrototype;
 		}
 
-		String nameXML = layoutPrototype.getName();
+		long userId = serviceContext.getUserId();
+
+		if (userId == 0) {
+			userId = layoutPageTemplateEntry.getUserId();
+		}
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			LocalizationUtil.getDefaultLanguageId(nameXML));
+			LocalizationUtil.getDefaultLanguageId(layoutPrototype.getName()));
 
 		int status = WorkflowConstants.STATUS_INACTIVE;
 
@@ -134,8 +138,7 @@ public class LayoutPageTemplateLayoutPrototypeLocalServiceWrapper
 		}
 
 		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getUserId(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			userId, layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			nameMap.get(defaultLocale), status);
 
 		return layoutPrototype;

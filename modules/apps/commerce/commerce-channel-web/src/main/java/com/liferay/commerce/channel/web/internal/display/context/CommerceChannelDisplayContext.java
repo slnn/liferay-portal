@@ -37,7 +37,12 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.tax.configuration.CommerceShippingTaxConfiguration;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -52,6 +57,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -65,6 +73,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -81,30 +90,35 @@ public class CommerceChannelDisplayContext
 	extends BaseCommerceChannelDisplayContext {
 
 	public CommerceChannelDisplayContext(
+		CommerceChannelHealthStatusRegistry commerceChannelHealthStatusRegistry,
 		ModelResourcePermission<CommerceChannel>
 			commerceChannelModelResourcePermission,
-		CommerceChannelHealthStatusRegistry commerceChannelHealthStatusRegistry,
 		CommerceChannelService commerceChannelService,
 		CommerceChannelTypeRegistry commerceChannelTypeRegistry,
 		CommerceCurrencyService commerceCurrencyService,
 		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
 		ConfigurationProvider configurationProvider,
-		HttpServletRequest httpServletRequest, Portal portal,
+		CPTaxCategoryLocalService cpTaxCategoryLocalService,
+		DLAppLocalService dlAppLocalService,
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		Portal portal,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
-		WorkflowDefinitionManager workflowDefinitionManager,
-		CPTaxCategoryLocalService cpTaxCategoryLocalService) {
+		WorkflowDefinitionManager workflowDefinitionManager) {
 
 		super(httpServletRequest);
 
-		_commerceChannelModelResourcePermission =
-			commerceChannelModelResourcePermission;
 		_commerceChannelHealthStatusRegistry =
 			commerceChannelHealthStatusRegistry;
+		_commerceChannelModelResourcePermission =
+			commerceChannelModelResourcePermission;
 		_commerceChannelService = commerceChannelService;
 		_commerceChannelTypeRegistry = commerceChannelTypeRegistry;
 		_commerceCurrencyService = commerceCurrencyService;
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
 		_configurationProvider = configurationProvider;
+		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
+		_dlAppLocalService = dlAppLocalService;
+		_itemSelector = itemSelector;
 		_portal = portal;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
@@ -112,8 +126,11 @@ public class CommerceChannelDisplayContext
 
 		_commerceChannelRequestHelper = new CommerceChannelRequestHelper(
 			httpServletRequest);
+	}
 
-		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
+	public FileEntry fetchFileEntry() throws PortalException {
+		return _dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+			getCommerceChannel().getGroupId(), "ORDER_PRINT_TEMPLATE");
 	}
 
 	public int getAccountCartMaxAllowed() throws PortalException {
@@ -291,6 +308,25 @@ public class CommerceChannelDisplayContext
 				null, null, "save"));
 
 		return headerActionModels;
+	}
+
+	public String getImageItemSelectorURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				cpRequestHelper.getRenderRequest());
+
+		FileItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.<ItemSelectorReturnType>singletonList(
+				new FileEntryItemSelectorReturnType()));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "addFileEntry",
+			fileItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
 	}
 
 	@Override
@@ -497,6 +533,8 @@ public class CommerceChannelDisplayContext
 	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 	private final ConfigurationProvider _configurationProvider;
 	private final CPTaxCategoryLocalService _cpTaxCategoryLocalService;
+	private final DLAppLocalService _dlAppLocalService;
+	private final ItemSelector _itemSelector;
 	private final Portal _portal;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;

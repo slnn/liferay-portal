@@ -111,8 +111,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 					_mfaTimeBasedOTPConfiguration.algorithmKeySize());
 
 			httpServletRequest.setAttribute(
-				MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_ALGORITHM,
-				MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_ALGORITHM);
+				MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_ALGORITHM, "SHA1");
 			httpServletRequest.setAttribute(
 				MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_COMPANY_NAME,
 				company.getName());

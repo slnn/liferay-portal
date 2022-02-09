@@ -134,7 +134,7 @@ public class SXPBlueprintSearchResultTest {
 
 		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			_user.getUserId(),
-			SXPBlueprintSearchResultTestUtil.QUERY_CONFIGURATION_JSON,
+			SXPBlueprintSearchResultTestUtil.JSON_QUERY_CONFIGURATION,
 			Collections.singletonMap(LocaleUtil.US, ""), null, "",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
@@ -492,9 +492,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", Integer.valueOf(1)
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"fuzziness", "AUTO"
 				).put(
@@ -527,9 +525,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", Integer.valueOf(1)
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"fuzziness", "AUTO"
 				).put(
@@ -669,19 +665,13 @@ public class SXPBlueprintSearchResultTest {
 					"query",
 					SXPBlueprintSearchResultTestUtil.
 						getMultiMatchQueryJSONObject(
-							1,
-							new String[] {
-								"localized_title_${context.language_id}^2",
-								"content_${context.language_id}^1"
-							},
-							null, "or", "${keywords}", "most_fields")
+							1, SXPBlueprintSearchResultTestUtil.FIELDS, null,
+							"or", "${keywords}", "most_fields")
 				).build(),
 				HashMapBuilder.<String, Object>put(
 					"boost", 100
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"keywords", "${keywords}"
 				).put(
@@ -703,12 +693,8 @@ public class SXPBlueprintSearchResultTest {
 					"query",
 					SXPBlueprintSearchResultTestUtil.
 						getMultiMatchQueryJSONObject(
-							10,
-							new String[] {
-								"localized_title_${context.language_id}^2",
-								"content_${context.language_id}^1"
-							},
-							null, "or", "${keywords}", "most_fields")
+							10, SXPBlueprintSearchResultTestUtil.FIELDS, null,
+							"or", "${keywords}", "most_fields")
 				).build()
 			},
 			new String[] {"Paste Any Elasticsearch Query"},
@@ -736,9 +722,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", Integer.valueOf(1)
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"fuzziness", "AUTO"
 				).put(
@@ -772,9 +756,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", 1
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"operator", "and"
 				).build()
@@ -787,9 +769,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", 1
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"operator", "and"
 				).build()
@@ -815,9 +795,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", Integer.valueOf(1)
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"fuzziness", "AUTO"
 				).put(
@@ -847,9 +825,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", Integer.valueOf(1)
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"fuzziness", "0"
 				).put(
@@ -886,9 +862,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", Integer.valueOf(1)
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"fuzziness", "0"
 				).put(
@@ -912,9 +886,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", Integer.valueOf(1)
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"fuzziness", "0"
 				).put(
@@ -950,12 +922,8 @@ public class SXPBlueprintSearchResultTest {
 					"query",
 					SXPBlueprintSearchResultTestUtil.
 						getMultiMatchQueryJSONObject(
-							1,
-							new String[] {
-								"localized_title_${context.language_id}^2",
-								"content_${context.language_id}^1"
-							},
-							null, "and", "${keywords}", "cross_fields")
+							1, SXPBlueprintSearchResultTestUtil.FIELDS, null,
+							"and", "${keywords}", "cross_fields")
 				).build()
 			},
 			new String[] {"Paste Any Elasticsearch Query"},
@@ -970,12 +938,8 @@ public class SXPBlueprintSearchResultTest {
 					"query",
 					SXPBlueprintSearchResultTestUtil.
 						getMultiMatchQueryJSONObject(
-							1,
-							new String[] {
-								"localized_title_${context.language_id}^2",
-								"content_${context.language_id}^1"
-							},
-							null, "or", "${keywords}", "cross_fields")
+							1, SXPBlueprintSearchResultTestUtil.FIELDS, null,
+							"or", "${keywords}", "cross_fields")
 				).build()
 			},
 			new String[] {"Paste Any Elasticsearch Query"},
@@ -998,9 +962,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", Integer.valueOf(1)
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"fuzziness", "0"
 				).put(
@@ -1023,9 +985,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", Integer.valueOf(1)
 				).put(
-					"fields",
-					"[\"localized_title_${context.language_id}^2\"," +
-						"\"content_${context.language_id}^1\"]"
+					"fields", SXPBlueprintSearchResultTestUtil.FIELDS
 				).put(
 					"fuzziness", "0"
 				).put(
@@ -1066,12 +1026,8 @@ public class SXPBlueprintSearchResultTest {
 					"query",
 					SXPBlueprintSearchResultTestUtil.
 						getMultiMatchQueryJSONObject(
-							1,
-							new String[] {
-								"localized_title_${context.language_id}^2",
-								"content_${context.language_id}^1"
-							},
-							null, null, "${keywords}", "phrase")
+							1, SXPBlueprintSearchResultTestUtil.FIELDS, null,
+							null, "${keywords}", "phrase")
 				).build()
 			},
 			new String[] {"Paste Any Elasticsearch Query"},
@@ -1101,12 +1057,8 @@ public class SXPBlueprintSearchResultTest {
 					"query",
 					SXPBlueprintSearchResultTestUtil.
 						getMultiMatchQueryJSONObject(
-							1,
-							new String[] {
-								"localized_title_${context.language_id}^2",
-								"content_${context.language_id}^1"
-							},
-							null, null, "${keywords}", "phrase_prefix")
+							1, SXPBlueprintSearchResultTestUtil.FIELDS, null,
+							null, "${keywords}", "phrase_prefix")
 				).build()
 			},
 			new String[] {"Paste Any Elasticsearch Query"},
@@ -1238,7 +1190,7 @@ public class SXPBlueprintSearchResultTest {
 				{
 					configuration = ConfigurationUtil.toConfiguration(
 						SXPBlueprintSearchResultTestUtil.
-							QUERY_CONFIGURATION_JSON);
+							JSON_QUERY_CONFIGURATION);
 					elementInstances = ElementInstanceUtil.toElementInstances(
 						elementInstanceJSON);
 				}

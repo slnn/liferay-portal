@@ -537,17 +537,6 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
-	macro assertCategoryDisplayPageOverride {
-		AssertElementPresent(
-			key_entryName = "${category}",
-			key_table = "Override Default Category Display Page",
-			locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
-
-		AssertElementPresent(
-			key_layout = "${layout}",
-			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE_LAYOUT");
-	}
-
 	macro assertDefaultDisplayPage {
 		if (!(isSet(pageType))) {
 			AssertTextEquals(
@@ -566,6 +555,20 @@ definition {
 				locator1 = "CommerceEntry#DISPLAY_PAGE_ANY",
 				value1 = "Private Pages > ${pageName}");
 		}
+	}
+
+	macro assertDisplayPageOverride {
+		AssertElementPresent(
+			key_entryName = "${entryName}",
+			key_layout = "${layout}",
+			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE");
+	}
+
+	macro assertNoDisplayPageOverride {
+		AssertElementNotPresent(
+			key_entryName = "${entryName}",
+			key_layout = "${layout}",
+			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE");
 	}
 
 	macro changePinColor {
@@ -687,13 +690,22 @@ definition {
 	}
 
 	macro deleteCommerceEntry {
+		WaitForElementPresent(locator1 = "CommerceEntry#PAGINATION_RESULTS");
+
 		var paginationResults = selenium.getText("CommerceEntry#PAGINATION_RESULTS");
 		var numberOfEntries = StringUtil.extractLast("${paginationResults}", " ");
 		var numberOfEntriesAfterDeletion = ${numberOfEntries} - 1;
 
-		ClickNoError(
-			key_value = "",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		if (!(isSet(entryName))) {
+			ClickNoError(
+				key_value = "",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+		else {
+			ClickNoError(
+				key_value = "${entryName}",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
 
 		CommerceEntry.clickNoError(menuItem = "Delete");
 

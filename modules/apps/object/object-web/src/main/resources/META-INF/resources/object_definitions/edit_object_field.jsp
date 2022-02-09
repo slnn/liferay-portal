@@ -40,14 +40,17 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() || Validator.isNotNull(objectField.getRelationshipType()) %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
 
 					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() || Validator.isNotNull(objectField.getRelationshipType()) %>" name="type" required="<%= true %>">
-						<aui:option label="BigDecimal" selected='<%= Objects.equals(objectField.getDBType(), "BigDecimal") %>' value="BigDecimal" />
-						<aui:option label="Boolean" selected='<%= Objects.equals(objectField.getDBType(), "Boolean") %>' value="Boolean" />
-						<aui:option label="Clob" selected='<%= Objects.equals(objectField.getDBType(), "Clob") %>' value="Clob" />
-						<aui:option label="Date" selected='<%= Objects.equals(objectField.getDBType(), "Date") %>' value="Date" />
-						<aui:option label="Double" selected='<%= Objects.equals(objectField.getDBType(), "Double") %>' value="Double" />
-						<aui:option label="Integer" selected='<%= Objects.equals(objectField.getDBType(), "Integer") %>' value="Integer" />
-						<aui:option label="Long" selected='<%= Objects.equals(objectField.getDBType(), "Long") %>' value="Long" />
-						<aui:option label="String" selected='<%= Objects.equals(objectField.getDBType(), "String") %>' value="String" />
+
+						<%
+						for (Map<String, String> objectFieldBusinessTypeMap : objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(locale)) {
+						%>
+
+							<aui:option label='<%= objectDefinitionsFieldsDisplayContext.isFFObjectFieldBusinessTypeConfigurationEnabled() ? GetterUtil.getString(objectFieldBusinessTypeMap.get("label")) : GetterUtil.getString(objectFieldBusinessTypeMap.get("dbType")) %>' selected='<%= Objects.equals(objectField.getBusinessType(), GetterUtil.getString(objectFieldBusinessTypeMap.get("businessType"))) %>' value='<%= GetterUtil.getString(objectFieldBusinessTypeMap.get("businessType")) %>' />
+
+						<%
+						}
+						%>
+
 					</aui:select>
 
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
@@ -114,6 +117,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
+			"objectFieldBusinessTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(locale)
+		).put(
 			"objectFieldId", objectField.getObjectFieldId()
 		).build()
 	%>'

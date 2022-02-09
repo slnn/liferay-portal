@@ -25,11 +25,20 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceChannelPermission;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -43,10 +52,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UploadHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -81,15 +92,29 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				_updateCommerceChannel(actionRequest);
+				_uploadPrintOrderTemplate(actionRequest);
 			}
 			else if (cmd.equals("selectSite")) {
 				_selectSite(actionRequest);
 			}
 		}
-		catch (PrincipalException principalException) {
-			SessionErrors.add(actionRequest, principalException.getClass());
+		catch (FileExtensionException | PrincipalException exception) {
+			if (exception instanceof FileExtensionException) {
+				hideDefaultErrorMessage(actionRequest);
 
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else {
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
 		}
 	}
 
@@ -317,6 +342,79 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			workflowDefinitionOVPs);
 	}
 
+	private void _uploadPrintOrderTemplate(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceChannelId = ParamUtil.getLong(
+			actionRequest, "commerceChannelId");
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
+
+		FileEntry existingFileEntry =
+			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+				commerceChannel.getGroupId(), "ORDER_PRINT_TEMPLATE");
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId == 0) {
+			if (existingFileEntry != null) {
+				_dlAppLocalService.deleteFileEntry(
+					existingFileEntry.getFileEntryId());
+			}
+
+			return;
+		}
+
+		FileEntry newFileEntry = _dlAppLocalService.getFileEntry(
+			fileEntryId);
+
+		if (!Objects.equals(newFileEntry.getExtension(), "jrxml")) {
+			throw new FileExtensionException();
+		}
+
+		if (existingFileEntry == null) {
+			String fileName = newFileEntry.getFileName();
+
+			int extensionIndex = fileName.indexOf(
+				newFileEntry.getExtension());
+
+			String formattedFileName = StringBundler.concat(
+				fileName.substring(0, extensionIndex - 1), StringPool.UNDERLINE,
+				System.currentTimeMillis(), StringPool.PERIOD,
+				newFileEntry.getExtension());
+
+			try {
+				_dlAppLocalService.addFileEntry(
+					"ORDER_PRINT_TEMPLATE", commerceChannel.getUserId(),
+					commerceChannel.getGroupId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					newFileEntry.getFileName(),
+					newFileEntry.getMimeType(), formattedFileName,
+					StringPool.BLANK, StringPool.BLANK,
+					newFileEntry.getContentStream(),
+					newFileEntry.getSize(), null, null,
+					new ServiceContext());
+			}
+			finally {
+				_dlAppLocalService.deleteFileEntry(fileEntryId);
+			}
+		}
+		else {
+			_dlAppLocalService.updateFileEntry(
+				commerceChannel.getUserId(),
+				existingFileEntry.getFileEntryId(),
+				newFileEntry.getFileName(),
+				newFileEntry.getMimeType(),
+				existingFileEntry.getTitle(),
+				existingFileEntry.getDescription(), StringPool.BLANK,
+				DLVersionNumberIncrease.NONE,
+				newFileEntry.getContentStream(),
+				newFileEntry.getSize(), null, null,
+				new ServiceContext());
+		}
+	}
+
 	@Reference
 	private AccountEntryGroupSettings _accountEntryGroupSettings;
 
@@ -330,10 +428,16 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference
 	private SettingsFactory _settingsFactory;
+
+	@Reference
+	private UploadHandler _uploadHandler;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

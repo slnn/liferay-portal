@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.SourceFormatBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -38,7 +39,7 @@ public class TestrayFactory {
 		TestrayServer testrayServer = testrayCaseResult.getTestrayServer();
 
 		if (testrayServer instanceof RsyncTestrayServer) {
-			return new DefaultTestrayAttachment(testrayCaseResult, name, key);
+			return new RsyncTestrayAttachment(testrayCaseResult, name, key);
 		}
 
 		return new S3TestrayAttachment(testrayCaseResult, name, key);
@@ -62,7 +63,8 @@ public class TestrayFactory {
 	}
 
 	public static TestrayAttachmentUploader newTestrayAttachmentUploader(
-		Build build, URL testrayServerURL) {
+		Build build, URL testrayServerURL,
+		TestrayAttachmentUploader.Type type) {
 
 		String testrayServerURLString = "";
 
@@ -70,7 +72,9 @@ public class TestrayFactory {
 			testrayServerURLString = String.valueOf(testrayServerURL);
 		}
 
-		String key = build.getBuildURL() + "_" + testrayServerURLString;
+		String key = JenkinsResultsParserUtil.combine(
+			build.getBuildURL(), "_", testrayServerURLString, "_",
+			type.toString());
 
 		TestrayAttachmentUploader testrayAttachmentUploader =
 			_testrayAttachmentUploaders.get(key);
@@ -79,12 +83,13 @@ public class TestrayFactory {
 			return testrayAttachmentUploader;
 		}
 
-		if (testrayServerURLString.startsWith("https://testray.liferay.com")) {
+		if (type == TestrayAttachmentUploader.Type.RSYNC) {
 			testrayAttachmentUploader = new RsyncTestrayAttachmentUploader(
 				build, testrayServerURL);
 		}
 		else {
-			testrayAttachmentUploader = new S3TestrayAttachmentUploader(build);
+			testrayAttachmentUploader = new S3TestrayAttachmentUploader(
+				build, testrayServerURL);
 		}
 
 		_testrayAttachmentUploaders.put(key, testrayAttachmentUploader);
@@ -128,24 +133,33 @@ public class TestrayFactory {
 			testrayBuild, topLevelBuild, axisTestClassGroup);
 	}
 
-	public static TestrayServer newTestrayServer(
-		String testrayServerURLString) {
+	public static TestrayServer newTestrayServer(String testrayServerURL) {
+		return newTestrayServer(testrayServerURL, "RSYNC");
+	}
 
-		TestrayServer testrayServer = _testrayServers.get(
-			testrayServerURLString);
+	public static TestrayServer newTestrayServer(
+		String testrayServerURL, String testrayServerType) {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayServerType)) {
+			testrayServerType = "RSYNC";
+		}
+
+		String key = testrayServerURL + "_" + testrayServerType;
+
+		TestrayServer testrayServer = _testrayServers.get(key);
 
 		if (testrayServer != null) {
 			return testrayServer;
 		}
 
-		if (testrayServerURLString.startsWith("https://testray.liferay.com")) {
-			testrayServer = new RsyncTestrayServer(testrayServerURLString);
+		if (testrayServerType.equals("S3")) {
+			testrayServer = new S3TestrayServer(testrayServerURL);
 		}
 		else {
-			testrayServer = new DefaultTestrayServer(testrayServerURLString);
+			testrayServer = new RsyncTestrayServer(testrayServerURL);
 		}
 
-		_testrayServers.put(testrayServerURLString, testrayServer);
+		_testrayServers.put(key, testrayServer);
 
 		return testrayServer;
 	}

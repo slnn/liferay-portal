@@ -50,6 +50,8 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
 
+		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanAddMoreThan1Document");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_2");
@@ -59,8 +61,6 @@ definition {
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.emptyCP();
-
-		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanAddMoreThan1Document");
 	}
 
 	@description = "This is a test for LPS-131425. Verify if its possible only maximum of 10 recipients can be added"
@@ -186,6 +186,10 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
 
+		Refresh();
+
+		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanViewSuccessMessage");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
@@ -193,8 +197,6 @@ definition {
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.emptyCP();
-
-		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanViewSuccessMessage");
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Email Subject field is required"

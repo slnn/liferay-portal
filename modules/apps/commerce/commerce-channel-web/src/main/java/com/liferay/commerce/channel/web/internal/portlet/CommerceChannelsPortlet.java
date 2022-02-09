@@ -23,6 +23,8 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -92,13 +94,15 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 
 		CommerceChannelDisplayContext commerceChannelDisplayContext =
 			new CommerceChannelDisplayContext(
+				_commerceChannelHealthStatusRegistry,
 				_commerceChannelModelResourcePermission,
-				_commerceChannelHealthStatusRegistry, _commerceChannelService,
-				_commerceChannelTypeRegistry, _commerceCurrencyService,
-				_commercePaymentMethodRegistry, _configurationProvider,
-				_portal.getHttpServletRequest(renderRequest), _portal,
-				_workflowDefinitionLinkLocalService, _workflowDefinitionManager,
-				_cpTaxCategoryLocalService);
+				_commerceChannelService, _commerceChannelTypeRegistry,
+				_commerceCurrencyService, _commercePaymentMethodRegistry,
+				_configurationProvider, _cpTaxCategoryLocalService,
+				_dlAppLocalService,
+				_portal.getHttpServletRequest(renderRequest), _itemSelector,
+				_portal, _workflowDefinitionLinkLocalService,
+				_workflowDefinitionManager);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceChannelDisplayContext);
@@ -133,6 +137,12 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 
 	@Reference
 	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

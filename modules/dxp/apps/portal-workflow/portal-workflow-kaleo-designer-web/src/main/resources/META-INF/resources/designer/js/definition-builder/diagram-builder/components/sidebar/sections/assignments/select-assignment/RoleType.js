@@ -16,22 +16,34 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {headers, retrieveAccountRoles} from '../../../../../../util/fetchUtil';
+import {
+	headers,
+	retrieveAccountRoles,
+	userBaseURL,
+} from '../../../../../../util/fetchUtil';
 import {titleCase} from '../../../../../../util/utils';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
-const RoleType = ({identifier, index, sectionsLength, setSections}) => {
+const RoleType = ({
+	autoCreate = true,
+	identifier,
+	index,
+	roleName = '',
+	roleType = '',
+	sectionsLength,
+	setSections,
+}) => {
 	const {setSelectedItem} = useContext(DiagramBuilderContext);
-	const [checked, setChecked] = useState(true);
 	const [accountRoles, setAccountRoles] = useState([]);
+	const [checked, setChecked] = useState(autoCreate);
 	const [filterRoleName, setFilterRoleName] = useState(true);
 	const [filterRoleType, setFilterRoleType] = useState(true);
 	const [networkStatus, setNetworkStatus] = useState(4);
-	const [roleTypeDropdownActive, setRoleTypeDropdownActive] = useState(false);
 	const [roleNameDropdownActive, setRoleNameDropdownActive] = useState(false);
-	const [selectedRoleName, setSelectedRoleName] = useState('');
-	const [selectedRoleType, setSelectedRoleType] = useState('');
+	const [roleTypeDropdownActive, setRoleTypeDropdownActive] = useState(false);
+	const [selectedRoleName, setSelectedRoleName] = useState(roleName);
+	const [selectedRoleType, setSelectedRoleType] = useState(roleType);
 
 	const {resource} = useResource({
 		fetchOptions: {
@@ -42,7 +54,7 @@ const RoleType = ({identifier, index, sectionsLength, setSections}) => {
 			},
 		},
 		fetchPolicy: 'cache-first',
-		link: `${window.location.origin}/o/headless-admin-user/v1.0/roles`,
+		link: `${window.location.origin}${userBaseURL}/roles`,
 		onNetworkStatusChange: setNetworkStatus,
 	});
 

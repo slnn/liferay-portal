@@ -823,13 +823,26 @@ public class TestrayImporter {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
+			String testrayServerType = System.getenv("TESTRAY_SERVER_TYPE");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(testrayServerType)) {
+				testrayServerType = _getBuildParameter("TESTRAY_SERVER_TYPE");
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(testrayServerType)) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					getJob(), "testray.server.type");
+
+				testrayServerType = jobProperty.getValue();
+			}
+
 			String testrayServerURL = System.getenv("TESTRAY_SERVER_URL");
 
 			if ((testrayServerURL != null) &&
 				testrayServerURL.matches("https?://.*")) {
 
 				testrayServer = TestrayFactory.newTestrayServer(
-					testrayServerURL);
+					testrayServerURL, testrayServerType);
 			}
 
 			testrayServerURL = _getBuildParameter("TESTRAY_SERVER_URL");
@@ -838,7 +851,7 @@ public class TestrayImporter {
 				testrayServerURL.matches("https?://.*")) {
 
 				testrayServer = TestrayFactory.newTestrayServer(
-					testrayServerURL);
+					testrayServerURL, testrayServerType);
 			}
 
 			if (testrayServer == null) {
@@ -851,7 +864,7 @@ public class TestrayImporter {
 					testrayServerURL.matches("https?://.*")) {
 
 					testrayServer = TestrayFactory.newTestrayServer(
-						testrayServerURL);
+						testrayServerURL, testrayServerType);
 				}
 			}
 		}
@@ -1102,9 +1115,10 @@ public class TestrayImporter {
 									"name", testrayAttachment.getName());
 								attachmentFileElement.addAttribute(
 									"url",
-									String.valueOf(testrayAttachment.getURL()));
+									testrayAttachment.getURL() + "?authuser=0");
 								attachmentFileElement.addAttribute(
-									"value", testrayAttachment.getKey());
+									"value",
+									testrayAttachment.getKey() + "?authuser=0");
 							}
 
 							String errors = testrayCaseResult.getErrors();
@@ -1168,8 +1182,6 @@ public class TestrayImporter {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
-
 		List<Integer> testrayBuildIDs = new ArrayList<>();
 
 		for (TestrayBuild testrayBuild : _testrayBuilds.values()) {
@@ -1181,7 +1193,7 @@ public class TestrayImporter {
 
 			TestrayServer testrayServer = testrayBuild.getTestrayServer();
 
-			testrayServer.importCaseResults(jenkinsMaster);
+			testrayServer.importCaseResults(topLevelBuild);
 		}
 
 		_sendPullRequestNotification();
@@ -1593,6 +1605,14 @@ public class TestrayImporter {
 		string = _replaceEnvVarsQAWebsitesTopLevelBuild(string);
 		string = _replaceEnvVarsTopLevelBuild(string);
 
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String jobName = topLevelBuild.getJobName();
+
+		if (jobName.contains("subrepository")) {
+			string = _replaceEnvVarsSubrepository(string);
+		}
+
 		return string;
 	}
 
@@ -1865,6 +1885,16 @@ public class TestrayImporter {
 				",", qaWebsitesTopLevelBuild.getProjectNames()));
 	}
 
+	private String _replaceEnvVarsSubrepository(String string) {
+		string = string.replace(
+			"$(github.upstream.branch.name)",
+			_topLevelBuild.getParameterValue("GITHUB_UPSTREAM_BRANCH_NAME"));
+
+		return string.replace(
+			"$(repository.name)",
+			_topLevelBuild.getParameterValue("REPOSITORY_NAME"));
+	}
+
 	private String _replaceEnvVarsTopLevelBuild(String string) {
 		string = string.replace(
 			"$(ci.test.suite)", _topLevelBuild.getTestSuiteName());
@@ -1992,7 +2022,7 @@ public class TestrayImporter {
 	}
 
 	private void _setupPortalBundle() {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
+		final PortalGitWorkingDirectory portalGitWorkingDirectory =
 			_getPortalGitWorkingDirectory();
 
 		if (portalGitWorkingDirectory == null) {
@@ -2070,6 +2100,20 @@ public class TestrayImporter {
 					AntUtil.callTarget(
 						workingDirectory, "build-test.xml",
 						"set-tomcat-version-number", parameters);
+
+					String upstreamBranchName =
+						portalGitWorkingDirectory.getUpstreamBranchName();
+
+					if (upstreamBranchName.contains("6.1") ||
+						upstreamBranchName.contains("6.2")) {
+
+						parameters.put(
+							"test.app.server.bin.dir",
+							JenkinsResultsParserUtil.getProperty(
+								portalGitWorkingDirectory.
+									getAppServerProperties(),
+								"app.server.tomcat.bin.dir"));
+					}
 
 					AntUtil.callTarget(
 						workingDirectory, "build-test.xml",

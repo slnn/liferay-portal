@@ -20,8 +20,11 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.report.exporter.CommerceReportExporter;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -121,31 +125,38 @@ public class ExportCommerceOrderReportMVCResourceCommand
 				"billingAddressStreet3", billingAddress.getStreet3()
 			).put(
 				"billingAddressZip", billingAddress.getZip()
-			).put(
-				"billingPhone", billingAddress.getPhoneNumber()
 			);
 		}
 
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
 		hashMapWrapper.put(
+			"commerceAccountName", commerceAccount.getName()
+		).put(
 			"commerceOrderId", commerceOrder.getCommerceOrderId()
 		).put(
-			"companyCode", commerceAccount.getCompanyId()
+			"commerceOrderItemsSize", commerceOrderItems.size()
 		).put(
-			"companyName", commerceAccount.getName()
+			"companyId", commerceAccount.getCompanyId()
 		).put(
 			"locale", themeDisplay.getLocale()
 		).put(
-			"logoUrl", _getLogoURL(themeDisplay)
+			"logoURL", _getLogoURL(themeDisplay)
 		).put(
 			"orderDate",
-			(commerceOrder.getOrderDate() != null) ?
-				commerceOrder.getOrderDate() : ""
+			(commerceOrder.getOrderDate() == null) ? null :
+				commerceOrder.getOrderDate()
 		).put(
 			"printedNote",
-			(commerceOrder.getPrintedNote() != null) ?
-				commerceOrder.getOrderDate() : ""
+			(commerceOrder.getPrintedNote() == null) ? StringPool.BLANK :
+				commerceOrder.getPrintedNote()
 		).put(
 			"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber()
+		).put(
+			"requestedDeliveryDate",
+			(commerceOrder.getRequestedDeliveryDate() == null) ? null :
+				commerceOrder.getRequestedDeliveryDate()
 		);
 
 		if (shippingAddress != null) {
@@ -162,6 +173,8 @@ public class ExportCommerceOrderReportMVCResourceCommand
 
 					return country.getName(themeDisplay.getLocale());
 				}
+			).put(
+				"shippingAmountMoney", commerceOrder.getShippingMoney()
 			).put(
 				"shippingAddressName", shippingAddress.getName()
 			).put(
@@ -186,38 +199,38 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			).put(
 				"shippingAddressZip", shippingAddress.getZip()
 			).put(
-				"shippingAmount", commerceOrder.getShippingMoney()
-			).put(
 				"shippingDiscountAmount",
 				_commercePriceFormatter.format(
 					commerceOrder.getCommerceCurrency(),
 					commerceOrder.getShippingDiscountAmount(),
 					themeDisplay.getLocale())
-			).put(
-				"shippingPhone", shippingAddress.getPhoneNumber()
 			);
 		}
 
-		List<CommerceOrderItem> commerceOrderItemList =
-			commerceOrder.getCommerceOrderItems();
-
 		hashMapWrapper.put(
-			"subtotal", commerceOrder.getTotalMoney()
-		).put(
 			"taxAmount",
 			_commercePriceFormatter.format(
 				commerceOrder.getCommerceCurrency(),
 				commerceOrder.getTaxAmount(), themeDisplay.getLocale())
 		).put(
-			"totalWithTax", commerceOrder.getTotalWithTaxAmountMoney()
+			"totalMoney", commerceOrder.getTotalMoney()
 		).put(
-			"unitsCount", commerceOrderItemList.size()
+			"totalWithTaxAmountMoney",
+			commerceOrder.getTotalWithTaxAmountMoney()
 		);
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
+		FileEntry fileEntry =
+			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+				commerceChannel.getGroupId(), "ORDER_PRINT_TEMPLATE");
 
 		PortletResponseUtil.write(
 			resourceResponse,
 			_commerceReportExporter.export(
-				commerceOrderItemList, hashMapWrapper.build()));
+				commerceOrderItems, fileEntry, hashMapWrapper.build()));
 	}
 
 	private String _getLogoURL(ThemeDisplay themeDisplay) throws Exception {
@@ -242,6 +255,9 @@ public class ExportCommerceOrderReportMVCResourceCommand
 	}
 
 	@Reference
+	private CommerceChannelService _commerceChannelService;
+
+	@Reference
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
@@ -252,6 +268,9 @@ public class ExportCommerceOrderReportMVCResourceCommand
 
 	@Reference
 	private CompanyService _companyService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private Portal _portal;

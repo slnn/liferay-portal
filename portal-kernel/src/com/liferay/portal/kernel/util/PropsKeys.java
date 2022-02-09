@@ -1771,9 +1771,6 @@ public interface PropsKeys {
 
 	public static final String LOGOUT_EVENTS_PRE = "logout.events.pre";
 
-	public static final String LOOK_AND_FEEL_MODIFIABLE =
-		"look.and.feel.modifiable";
-
 	public static final String MAIL_AUDIT_TRAIL = "mail.audit.trail";
 
 	public static final String MAIL_BATCH_SIZE = "mail.batch.size";
@@ -1984,15 +1981,6 @@ public interface PropsKeys {
 	public static final String MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT =
 		"minifier.inline.content.cache.skip.javascript";
 
-	public static final String MOBILE_DEVICE_RULES_PUBLISH_TO_LIVE_BY_DEFAULT =
-		"mobile.device.rules.publish.to.live.by.default";
-
-	public static final String MOBILE_DEVICE_RULES_RULE_GROUP_COPY_POSTFIX =
-		"mobile.device.rules.rule.group.copy.postfix";
-
-	public static final String MOBILE_DEVICE_SESSION_CACHE_ENABLED =
-		"mobile.device.session.cache.enabled";
-
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";
 
 	public static final String MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE =
@@ -2026,8 +2014,34 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES =
 		"module.framework.export.password.attributes";
 
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_ACTIVE_LEVEL =
+		"module.framework.file.install.active.level";
+
+	public static final String
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY =
+			"module.framework.file.install.bundles.start.activation.policy";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW =
+		"module.framework.file.install.bundles.start.new";
+
+	public static final String
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT =
+			"module.framework.file.install.bundles.start.transient";
+
 	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
 		"module.framework.file.install.cfg.enabled";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING =
+		"module.framework.file.install.config.encoding";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_FILTER =
+		"module.framework.file.install.filter";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY =
+		"module.framework.file.install.no.initial.delay";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE =
+		"module.framework.file.install.subdir.mode";
 
 	public static final String MODULE_FRAMEWORK_MARKETPLACE_DIR =
 		"module.framework.marketplace.dir";

@@ -1758,10 +1758,10 @@ public class VerifyProperties extends VerifyProcess {
 		"layout.view.page[control_panel]", "layout.view.page[embedded]",
 		"layout.view.page[link_to_layout]", "layout.view.page[panel]",
 		"layout.view.page[url]", "library.download.url.resin.jar",
-		"library.download.url.script-10.jar", "lucene.analyzer",
-		"lucene.cluster.index.loading.sync.timeout", "lucene.file.extractor",
-		"lucene.file.extractor.regexp.strip", "lucene.replicate.write",
-		"lucene.store.jdbc.auto.clean.up",
+		"library.download.url.script-10.jar", "look.and.feel.modifiable",
+		"lucene.analyzer", "lucene.cluster.index.loading.sync.timeout",
+		"lucene.file.extractor", "lucene.file.extractor.regexp.strip",
+		"lucene.replicate.write", "lucene.store.jdbc.auto.clean.up",
 		"lucene.store.jdbc.auto.clean.up.enabled",
 		"lucene.store.jdbc.auto.clean.up.interval",
 		"lucene.store.jdbc.dialect.db2", "lucene.store.jdbc.dialect.derby",
@@ -1984,26 +1984,46 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		{
 			"module.framework.properties.felix.fileinstall.bundles.new.start",
-			"module.framework.properties.file.install.bundles.new.start"
+			"module.framework.file.install.bundles.start.new"
+		},
+		{
+			"module.framework.properties.file.install.bundles.new.start",
+			"module.framework.file.install.bundles.start.new"
 		},
 		{
 			"module.framework.properties.felix.fileinstall.bundles." +
 				"startActivationPolicy",
+			"module.framework.file.install.bundles.use.start.activation.policy"
+		},
+		{
 			"module.framework.properties.file.install.bundles." +
-				"startActivationPolicy"
+				"startActivationPolicy",
+			"module.framework.file.install.bundles.use.start.activation.policy"
 		},
 		{
 			"module.framework.properties.felix.fileinstall.bundles." +
 				"startTransient",
-			"module.framework.properties.file.install.bundles.startTransient"
+			"module.framework.file.install.bundles.start.transient"
+		},
+		{
+			"module.framework.properties.file.install.bundles.startTransient",
+			"module.framework.file.install.bundles.start.transient"
 		},
 		{
 			"module.framework.properties.felix.fileinstall.noInitialDelay",
-			"module.framework.properties.file.install.noInitialDelay"
+			"module.framework.file.install.no.initial.delay"
+		},
+		{
+			"module.framework.properties.file.install.noInitialDelay",
+			"module.framework.file.install.no.initial.delay"
 		},
 		{
 			"module.framework.properties.felix.fileinstall.subdir.mode",
-			"module.framework.properties.file.install.subdir.mode"
+			"module.framework.file.install.subdir.mode"
+		},
+		{
+			"module.framework.properties.file.install.subdir.mode",
+			"module.framework.file.install.subdir.mode"
 		},
 		{
 			"passwords.passwordpolicytoolkit.charset.lowercase",

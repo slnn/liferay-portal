@@ -380,6 +380,14 @@ public class CommerceTermEntryLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static List<CommerceTermEntry> getPaymentCommerceTermEntries(
+		long companyId, long commerceOrderTypeId,
+		long commercePaymentMethodGroupRelId) {
+
+		return getService().getPaymentCommerceTermEntries(
+			companyId, commerceOrderTypeId, commercePaymentMethodGroupRelId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -387,6 +395,23 @@ public class CommerceTermEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<CommerceTermEntry> searchCommerceTermEntries(
+				long companyId, long accountEntryId, String keywords,
+				java.util.LinkedHashMap<String, String> params, int start,
+				int end, com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
+
+		return getService().searchCommerceTermEntries(
+			companyId, accountEntryId, keywords, params, start, end, sort);
 	}
 
 	/**

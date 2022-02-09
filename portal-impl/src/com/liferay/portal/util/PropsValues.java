@@ -1550,10 +1550,6 @@ public class PropsValues {
 	public static final String[] LOGOUT_EVENTS_PRE = PropsUtil.getArray(
 		PropsKeys.LOGOUT_EVENTS_PRE);
 
-	public static final boolean LOOK_AND_FEEL_MODIFIABLE =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LOOK_AND_FEEL_MODIFIABLE));
-
 	public static final String MAIL_AUDIT_TRAIL = PropsUtil.get(
 		PropsKeys.MAIL_AUDIT_TRAIL);
 
@@ -1660,18 +1656,6 @@ public class PropsValues {
 		PropsUtil.getArray(
 			PropsKeys.MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT);
 
-	public static final boolean MOBILE_DEVICE_RULES_PUBLISH_TO_LIVE_BY_DEFAULT =
-		GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.MOBILE_DEVICE_RULES_PUBLISH_TO_LIVE_BY_DEFAULT));
-
-	public static final String MOBILE_DEVICE_RULES_RULE_GROUP_COPY_POSTFIX =
-		PropsUtil.get(PropsKeys.MOBILE_DEVICE_RULES_RULE_GROUP_COPY_POSTFIX);
-
-	public static final boolean MOBILE_DEVICE_SESSION_CACHE_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.MOBILE_DEVICE_SESSION_CACHE_ENABLED));
-
 	public static final int MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE =
 		GetterUtil.getInteger(
 			PropsUtil.get(
@@ -1715,9 +1699,48 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES));
 
+	public static final int MODULE_FRAMEWORK_FILE_INSTALL_ACTIVE_LEVEL =
+		GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_ACTIVE_LEVEL));
+
+	public static final boolean
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY =
+			GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY),
+				true);
+
+	public static final boolean
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW = GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW));
+
+	public static final boolean
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT =
+			GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT));
+
 	public static final boolean MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED));
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING =
+		PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING);
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_FILTER =
+		PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_FILTER);
+
+	public static final boolean MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY));
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE =
+		PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE);
 
 	public static final String MODULE_FRAMEWORK_MARKETPLACE_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_MARKETPLACE_DIR);

@@ -280,8 +280,13 @@ export const getKoroneikiAccounts = gql`
 					region
 					slaCurrent
 					slaCurrentEndDate
+					slaCurrentStartDate
 					slaExpired
+					slaExpiredEndDate
+					slaExpiredStartDate
 					slaFuture
+					slaFutureEndDate
+					slaFutureStartDate
 				}
 			}
 		}
@@ -296,6 +301,17 @@ export const getListTypeDefinitions = gql`
 					key
 					name
 				}
+			}
+		}
+	}
+`;
+
+export const getAccounts = gql`
+	query getAccounts {
+		accounts {
+			items {
+				externalReferenceCode
+				name
 			}
 		}
 	}
@@ -317,6 +333,9 @@ export const getUserAccount = gql`
 			id
 			image
 			name
+			roleBriefs {
+				name
+			}
 		}
 	}
 `;

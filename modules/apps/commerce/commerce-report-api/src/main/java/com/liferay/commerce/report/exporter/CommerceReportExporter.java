@@ -16,6 +16,10 @@ package com.liferay.commerce.report.exporter;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
+
+import java.io.IOException;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -27,6 +31,8 @@ import java.util.Map;
 public interface CommerceReportExporter {
 
 	public byte[] export(
-		Collection<?> beanCollection, Map<String, Object> parameters);
+			Collection<?> beanCollection, FileEntry fileEntry,
+			Map<String, Object> parameters)
+		throws IOException;
 
 }

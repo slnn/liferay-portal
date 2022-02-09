@@ -25,11 +25,10 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
+import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
+import com.liferay.portal.workflow.metrics.model.UpdateProcessRequest;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
-
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -97,51 +96,40 @@ public class ProcessWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public Document addProcess(
-		boolean active, long companyId, Date createDate, String description,
-		Date modifiedDate, String name, long processId, String title,
-		Map<Locale, String> titleMap, String version) {
-
-		return addProcess(
-			active, companyId, createDate, description, modifiedDate, name,
-			processId, title, titleMap, version, new String[] {version});
-	}
-
-	@Override
-	public Document addProcess(
-		boolean active, long companyId, Date createDate, String description,
-		Date modifiedDate, String name, long processId, String title,
-		Map<Locale, String> titleMap, String version, String[] versions) {
-
+	public Document addProcess(AddProcessRequest addProcessRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
 		documentBuilder.setValue(
-			"active", active
+			"active", addProcessRequest.isActive()
 		).setLong(
-			"companyId", companyId
+			"companyId", addProcessRequest.getCompanyId()
 		).setDate(
-			"createDate", getDate(createDate)
+			"createDate", getDate(addProcessRequest.getCreateDate())
 		).setValue(
 			"deleted", false
 		).setString(
-			"description", description
+			"description", addProcessRequest.getDescription()
 		).setDate(
-			"modifiedDate", getDate(modifiedDate)
+			"modifiedDate", getDate(addProcessRequest.getModifiedDate())
 		).setString(
-			"name", name
+			"name", addProcessRequest.getName()
 		).setLong(
-			"processId", processId
+			"processId", addProcessRequest.getProcessId()
 		).setString(
-			"title", title
+			"title", addProcessRequest.getTitle()
 		).setString(
-			"uid", digest(companyId, processId)
+			"uid",
+			digest(
+				addProcessRequest.getCompanyId(),
+				addProcessRequest.getProcessId())
 		).setString(
-			"version", version
+			"version", addProcessRequest.getVersion()
 		).setStrings(
-			"versions", versions
+			"versions", addProcessRequest.getVersions()
 		);
 
-		setLocalizedField(documentBuilder, "title", titleMap);
+		setLocalizedField(
+			documentBuilder, "title", addProcessRequest.getTitleMap());
 
 		Document document = documentBuilder.build();
 
@@ -151,15 +139,18 @@ public class ProcessWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public void deleteProcess(long companyId, long processId) {
+	public void deleteProcess(DeleteProcessRequest deleteProcessRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
 		documentBuilder.setLong(
-			"companyId", companyId
+			"companyId", deleteProcessRequest.getCompanyId()
 		).setLong(
-			"processId", processId
+			"processId", deleteProcessRequest.getProcessId()
 		).setString(
-			"uid", digest(companyId, processId)
+			"uid",
+			digest(
+				deleteProcessRequest.getCompanyId(),
+				deleteProcessRequest.getProcessId())
 		);
 
 		workflowMetricsPortalExecutor.execute(
@@ -177,41 +168,44 @@ public class ProcessWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public Document updateProcess(
-		Boolean active, long companyId, String description, Date modifiedDate,
-		long processId, String title, Map<Locale, String> titleMap,
-		String version) {
-
+	public Document updateProcess(UpdateProcessRequest updateProcessRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		if (active != null) {
-			documentBuilder.setValue("active", active);
+		if (updateProcessRequest.getActive() != null) {
+			documentBuilder.setValue(
+				"active", updateProcessRequest.getActive());
 		}
 
-		documentBuilder.setLong("companyId", companyId);
+		documentBuilder.setLong(
+			"companyId", updateProcessRequest.getCompanyId());
 
-		if (description != null) {
-			documentBuilder.setValue("description", description);
+		if (updateProcessRequest.getDescription() != null) {
+			documentBuilder.setValue(
+				"description", updateProcessRequest.getDescription());
 		}
 
 		documentBuilder.setDate(
-			"modifiedDate", getDate(modifiedDate)
+			"modifiedDate", getDate(updateProcessRequest.getModifiedDate())
 		).setLong(
-			"processId", processId
+			"processId", updateProcessRequest.getProcessId()
 		);
 
-		if (title != null) {
-			documentBuilder.setValue("title", title);
+		if (updateProcessRequest.getTitle() != null) {
+			documentBuilder.setValue("title", updateProcessRequest.getTitle());
 		}
 
 		documentBuilder.setString(
-			"uid", digest(companyId, processId)
+			"uid",
+			digest(
+				updateProcessRequest.getCompanyId(),
+				updateProcessRequest.getProcessId())
 		).setValue(
-			"version", version
+			"version", updateProcessRequest.getVersion()
 		);
 
-		if (MapUtil.isNotEmpty(titleMap)) {
-			setLocalizedField(documentBuilder, "title", titleMap);
+		if (MapUtil.isNotEmpty(updateProcessRequest.getTitleMap())) {
+			setLocalizedField(
+				documentBuilder, "title", updateProcessRequest.getTitleMap());
 		}
 
 		Document document = documentBuilder.build();
@@ -224,10 +218,11 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 				UpdateDocumentRequest updateDocumentRequest =
 					new UpdateDocumentRequest(
-						getIndexName(companyId),
+						getIndexName(updateProcessRequest.getCompanyId()),
 						WorkflowMetricsIndexerUtil.digest(
 							_processWorkflowMetricsIndex.getIndexType(),
-							companyId, processId),
+							updateProcessRequest.getCompanyId(),
+							updateProcessRequest.getProcessId()),
 						scriptBuilder.idOrCode(
 							StringUtil.read(
 								getClass(),
@@ -236,7 +231,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 						).language(
 							"painless"
 						).putParameter(
-							"version", version
+							"version", updateProcessRequest.getVersion()
 						).scriptType(
 							ScriptType.INLINE
 						).build());

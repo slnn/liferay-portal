@@ -32,6 +32,7 @@ function ImportForm({
 	formDataQuerySelector,
 	formImportURL,
 	formSaveAsTemplateURL,
+	mappedFields,
 	portletNamespace,
 }) {
 	const [fileFields, setFileFields] = useState();
@@ -106,6 +107,13 @@ function ImportForm({
 		};
 	}, []);
 
+	useEffect(() => {
+		if (mappedFields) {
+			setFileFields(Object.keys(mappedFields));
+			setDbFields(Object.values(mappedFields));
+		}
+	}, [mappedFields]);
+
 	const selectableFields =
 		dbFields?.filter(
 			(field) =>
@@ -122,7 +130,7 @@ function ImportForm({
 
 	return (
 		<>
-			{fileFields && dbFields && (
+			{fileFields && (dbFields || fileFields) && (
 				<div className="card import-mapping-table">
 					<h4 className="card-header">
 						{Liferay.Language.get('import-mappings')}

@@ -42,6 +42,9 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -272,10 +275,29 @@ public class ShippingMethodCommerceCheckoutStep
 			commerceContext, commerceOrder, commerceShippingMethodId,
 			commerceShippingOptionName, themeDisplay.getLocale());
 
-		_commerceOrderLocalService.updateCommerceShippingMethod(
-			commerceOrder.getCommerceOrderId(), commerceShippingMethodId,
-			commerceShippingOptionName, shippingAmount, commerceContext);
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_commerceOrderLocalService.updateCommerceShippingMethod(
+						commerceOrder.getCommerceOrderId(),
+						commerceShippingMethodId, commerceShippingOptionName,
+						shippingAmount, commerceContext);
+
+					_commerceOrderLocalService.recalculatePrice(
+						commerceOrder.getCommerceOrderId(), commerceContext);
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
+		}
 	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private CommerceCheckoutStepHttpHelper _commerceCheckoutStepHttpHelper;

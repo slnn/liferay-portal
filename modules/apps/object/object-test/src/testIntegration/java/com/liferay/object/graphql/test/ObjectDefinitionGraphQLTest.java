@@ -127,6 +127,27 @@ public class ObjectDefinitionGraphQLTest {
 				"JSONObject/data", "JSONObject/c",
 				"JSONObject/create" + _objectDefinitionName,
 				"Object/" + _objectFieldName));
+
+		Assert.assertEquals(
+			"Bad Request",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"mutation",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								"create" + _objectDefinitionName,
+								HashMapBuilder.<String, Object>put(
+									_objectDefinitionName,
+									StringBundler.concat(
+										"{", _objectFieldName, ": \"",
+										RandomTestUtil.randomString(), "\"",
+										", status: draft }")
+								).build(),
+								new GraphQLField(_objectFieldName))))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	@Test
@@ -272,6 +293,35 @@ public class ObjectDefinitionGraphQLTest {
 								new GraphQLField(_objectFieldName))))),
 				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
 				"Object/" + _objectFieldName));
+
+		JSONObject jsonObject = _invoke(
+			new GraphQLField(
+				"query",
+				new GraphQLField(
+					"c",
+					new GraphQLField(
+						key,
+						HashMapBuilder.<String, Object>put(
+							_objectDefinitionPrimaryKeyName,
+							_objectEntry.getObjectEntryId()
+						).build(),
+						new GraphQLField(_objectFieldName),
+						new GraphQLField("dateCreated"),
+						new GraphQLField("dateModified"),
+						new GraphQLField("status")))));
+
+		Assert.assertNotNull(
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data", "JSONObject/c",
+				"JSONObject/" + key, "Object/dateCreated"));
+		Assert.assertNotNull(
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data", "JSONObject/c",
+				"JSONObject/" + key, "Object/dateModified"));
+		Assert.assertNotNull(
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data", "JSONObject/c",
+				"JSONObject/" + key, "Object/status"));
 	}
 
 	@Test

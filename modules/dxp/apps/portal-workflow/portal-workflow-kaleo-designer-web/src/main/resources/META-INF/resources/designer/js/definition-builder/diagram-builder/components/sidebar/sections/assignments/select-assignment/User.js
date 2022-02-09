@@ -14,21 +14,29 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
-import {headers} from '../../../../../../util/fetchUtil';
+import {headers, userBaseURL} from '../../../../../../util/fetchUtil';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
-const User = ({identifier, index, sectionsLength, setSections}) => {
-	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+const User = ({
+	emailAddress = '',
+	identifier,
+	index,
+	screenName = '',
+	sectionsLength,
+	setSections,
+	userId = null,
+}) => {
+	const {setSelectedItem} = useContext(DiagramBuilderContext);
 
 	const [search, setSearch] = useState('');
 	const [networkStatus, setNetworkStatus] = useState(4);
 	const [user, setUser] = useState({
-		emailAddress: '',
-		screenName: '',
-		userId: null,
+		emailAddress,
+		screenName,
+		userId,
 	});
 
 	const {resource} = useResource({
@@ -39,36 +47,10 @@ const User = ({identifier, index, sectionsLength, setSections}) => {
 				'x-csrf-token': Liferay.authToken,
 			},
 		},
-		link: `${window.location.origin}/o/headless-admin-user/v1.0/user-accounts`,
+		link: `${window.location.origin}${userBaseURL}/user-accounts`,
 		onNetworkStatusChange: setNetworkStatus,
 		variables: {search},
 	});
-
-	useEffect(() => {
-		setUser((prev) => {
-			if (selectedItem.data.assignments?.sectionsData) {
-				return {
-					emailAddress:
-						selectedItem.data.assignments?.sectionsData[index]
-							?.emailAddress,
-					screenName:
-						selectedItem.data.assignments?.sectionsData[index]
-							?.screenName,
-					userId:
-						selectedItem.data.assignments?.sectionsData[index]
-							?.userId,
-				};
-			}
-			else {
-				return {
-					emailAddress: prev.emailAddress,
-					screenName: prev.screenName,
-					userId: prev.userId,
-				};
-			}
-		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	const updateSelectedItem = (values) => {
 		setSelectedItem((previousItem) => ({

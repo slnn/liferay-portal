@@ -308,6 +308,14 @@ definition {
 			value1 = "${pageTitle}");
 	}
 
+	macro assertPageTitleNotPresent {
+		var key_pageTitle = "${pageTitle}";
+
+		AssertElementNotPresent(
+			locator1 = "ACUtils#PAGE_TITLE",
+			value1 = "${pageTitle}");
+	}
+
 	macro assertRequestCommonPropertiesValue {
 		var actualChannelId = ACUtils.getRequestCommonPropertyValue(property = "channelId");
 
@@ -789,6 +797,20 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ALERT_DISMISSIBLE",
 			value1 = "${infoMessage}");
+	}
+
+	macro viewGenericText {
+		var key_textValue = "${textValue}";
+
+		WaitForPageLoad();
+
+		while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_TEXT") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
+		AssertTextEquals(
+			locator1 = "ACUtils#GENERIC_TEXT",
+			value1 = "${textValue}");
 	}
 
 	macro viewNameList {

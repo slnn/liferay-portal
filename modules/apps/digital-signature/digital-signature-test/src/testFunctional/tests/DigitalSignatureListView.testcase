@@ -111,6 +111,8 @@ definition {
 
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECENT_CREATE_DATE");
 
+		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanViewCorrectDate");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
@@ -118,8 +120,6 @@ definition {
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.emptyCP();
-
-		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanViewCorrectDate");
 	}
 
 	@description = "This is a test for LPS-131206. Verify if its possible view envelope details"
@@ -191,6 +191,10 @@ definition {
 
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
 
+		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test HaveMoreRecipientsThanOne");
+
+		AssertElementNotPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
@@ -198,10 +202,6 @@ definition {
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.emptyCP();
-
-		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test HaveMoreRecipientsThanOne");
-
-		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
 	}
 
 }
