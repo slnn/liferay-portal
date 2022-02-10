@@ -27,7 +27,10 @@ ${dataFactory.toInsertSQL(countryModel)}
 <#include "segments.ftl">
 
 <#list dataFactory.newGroupModels() as groupModel>
-	<#assign groupId = groupModel.groupId />
+	<#assign
+		groupId = groupModel.groupId
+		currentCompanyModelList = companyModelList
+	/>
 
 	<#include "asset_publisher.ftl">
 
