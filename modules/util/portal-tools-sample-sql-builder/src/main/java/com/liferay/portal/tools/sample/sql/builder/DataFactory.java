@@ -360,14 +360,6 @@ public class DataFactory {
 
 		_initCompanyModels();
 
-		_assetCategoryModelsMaps =
-			(Map<Long, List<AssetCategoryModel>>[])new HashMap<?, ?>
-				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
-
-		_assetTagModelsMaps =
-			(Map<Long, List<AssetTagModel>>[])new HashMap<?, ?>
-				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
-
 		_initGroupModelMaps();
 
 		_initRoleModelsMap();
@@ -443,7 +435,7 @@ public class DataFactory {
 
 	public List<Long> getAssetCategoryIds(AssetEntryModel assetEntryModel) {
 		Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-			_assetCategoryModelsMaps[(int)assetEntryModel.getGroupId() - 1];
+			_assetCategoryModelsMaps.get(assetEntryModel.getGroupId());
 
 		if ((assetCategoryModelsMap == null) ||
 			assetCategoryModelsMap.isEmpty()) {
@@ -488,7 +480,7 @@ public class DataFactory {
 
 	public List<Long> getAssetTagIds(AssetEntryModel assetEntryModel) {
 		Map<Long, List<AssetTagModel>> assetTagModelsMap =
-			_assetTagModelsMaps[(int)assetEntryModel.getGroupId() - 1];
+			_assetTagModelsMaps.get(assetEntryModel.getGroupId());
 
 		if ((assetTagModelsMap == null) || assetTagModelsMap.isEmpty()) {
 			return Collections.emptyList();
@@ -953,7 +945,7 @@ public class DataFactory {
 				groupAssetCategoryModels.subList(fromIndex, toIndex));
 		}
 
-		_assetCategoryModelsMaps[(int)groupId - 1] = assetCategoryModelsMap;
+		_assetCategoryModelsMaps.put(groupId, assetCategoryModelsMap);
 
 		return assetCategoryModels;
 	}
@@ -1081,7 +1073,7 @@ public class DataFactory {
 
 		if (assetPublisherQueryName.equals("assetCategories")) {
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-				_assetCategoryModelsMaps[(int)groupId - 1];
+				_assetCategoryModelsMaps.get(groupId);
 
 			List<AssetCategoryModel> assetCategoryModels =
 				assetCategoryModelsMap.get(getNextAssetClassNameId(groupId));
@@ -1095,7 +1087,7 @@ public class DataFactory {
 		}
 		else {
 			Map<Long, List<AssetTagModel>> assetTagModelsMap =
-				_assetTagModelsMaps[(int)groupId - 1];
+				_assetTagModelsMaps.get(groupId);
 
 			List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
 				getNextAssetClassNameId(groupId));
@@ -1195,7 +1187,7 @@ public class DataFactory {
 				groupAssetTagModels.subList(fromIndex, toIndex));
 		}
 
-		_assetTagModelsMaps[(int)groupId - 1] = assetTagModelsMap;
+		_assetTagModelsMaps.put(groupId, assetTagModelsMap);
 
 		return assetTagModels;
 	}
@@ -4604,7 +4596,7 @@ public class DataFactory {
 
 		if (assetPublisherQueryName.equals("assetCategories")) {
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-				_assetCategoryModelsMaps[(int)groupId - 1];
+				_assetCategoryModelsMaps.get(groupId);
 
 			List<AssetCategoryModel> assetCategoryModels =
 				assetCategoryModelsMap.get(getNextAssetClassNameId(groupId));
@@ -4618,7 +4610,7 @@ public class DataFactory {
 		}
 		else {
 			Map<Long, List<AssetTagModel>> assetTagModelsMap =
-				_assetTagModelsMaps[(int)groupId - 1];
+				_assetTagModelsMaps.get(groupId);
 
 			List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
 				getNextAssetClassNameId(groupId));
@@ -7076,15 +7068,16 @@ public class DataFactory {
 
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
-	private final Map<Long, List<AssetCategoryModel>>[]
-		_assetCategoryModelsMaps;
+	private final Map<Long, Map<Long, List<AssetCategoryModel>>>
+		_assetCategoryModelsMaps = new HashMap<>();
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
-	private final Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps;
+	private final Map<Long, Map<Long, List<AssetTagModel>>>
+		_assetTagModelsMaps = new HashMap<>();
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
 	private final Map<Long, Long> _commerceCurrencyIdMap = new HashMap<>();
