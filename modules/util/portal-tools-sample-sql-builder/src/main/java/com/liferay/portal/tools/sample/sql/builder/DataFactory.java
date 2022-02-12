@@ -360,15 +360,11 @@ public class DataFactory {
 		_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss", TimeZone.getDefault());
 
+		if (!BenchmarksPropsValues.DEFAULT_SITE_ADDITIONAL_DATA_ENABLED) {
+			_maxGroupCount = BenchmarksPropsValues.MAX_GROUP_COUNT;
+		}
+
 		_initCompanyModels();
-
-		_assetCategoryModelsMaps =
-			(Map<Long, List<AssetCategoryModel>>[])new HashMap<?, ?>
-				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
-
-		_assetTagModelsMaps =
-			(Map<Long, List<AssetTagModel>>[])new HashMap<?, ?>
-				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
 
 		_initGroupModelMaps();
 
@@ -452,7 +448,7 @@ public class DataFactory {
 
 	public List<Long> getAssetCategoryIds(AssetEntryModel assetEntryModel) {
 		Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-			_assetCategoryModelsMaps[(int)assetEntryModel.getGroupId() - 1];
+			_assetCategoryModelsMaps.get(assetEntryModel.getGroupId());
 
 		if ((assetCategoryModelsMap == null) ||
 			assetCategoryModelsMap.isEmpty()) {
@@ -468,9 +464,7 @@ public class DataFactory {
 		}
 
 		if (_assetCategoryCounters == null) {
-			_assetCategoryCounters =
-				(Map<Long, SimpleCounter>[])new HashMap<?, ?>
-					[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
+			_assetCategoryCounters = new HashMap<>();
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -497,7 +491,7 @@ public class DataFactory {
 
 	public List<Long> getAssetTagIds(AssetEntryModel assetEntryModel) {
 		Map<Long, List<AssetTagModel>> assetTagModelsMap =
-			_assetTagModelsMaps[(int)assetEntryModel.getGroupId() - 1];
+			_assetTagModelsMaps.get(assetEntryModel.getGroupId());
 
 		if ((assetTagModelsMap == null) || assetTagModelsMap.isEmpty()) {
 			return Collections.emptyList();
@@ -511,8 +505,7 @@ public class DataFactory {
 		}
 
 		if (_assetTagCounters == null) {
-			_assetTagCounters = (Map<Long, SimpleCounter>[])new HashMap<?, ?>
-				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
+			_assetTagCounters = new HashMap<>();
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -586,6 +579,10 @@ public class DataFactory {
 
 	public long getDefaultJournalDDMTemplateId() {
 		return _ddmTemplateMap.get(_companyId);
+	}
+
+	public boolean getDefaultSiteAdditionalDataEnable() {
+		return BenchmarksPropsValues.DEFAULT_SITE_ADDITIONAL_DATA_ENABLED;
 	}
 
 	public long getDLFileEntryClassNameId() {
@@ -666,10 +663,6 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_DL_FOLDER_DEPTH;
 	}
 
-	public int getMaxGroupCount() {
-		return BenchmarksPropsValues.MAX_GROUP_COUNT;
-	}
-
 	public int getMaxJournalArticleCount() {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_COUNT;
 	}
@@ -691,13 +684,17 @@ public class DataFactory {
 	}
 
 	public List<Long> getNewUserGroupIds(long groupId, long guestGroupId) {
+		if (groupId == guestGroupId) {
+			return Arrays.asList(groupId);
+		}
+
 		List<Long> groupIds = new ArrayList<>(
 			BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT + 1);
 
 		groupIds.add(guestGroupId);
 
 		if ((groupId + BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT) >
-				BenchmarksPropsValues.MAX_GROUP_COUNT) {
+				_maxGroupCount) {
 
 			groupId =
 				groupId - BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT + 1;
@@ -749,6 +746,20 @@ public class DataFactory {
 		}
 
 		return random.nextInt(count);
+	}
+
+	public List<Long> getSampleUserGroupIds() {
+		if (BenchmarksPropsValues.DEFAULT_SITE_ADDITIONAL_DATA_ENABLED) {
+			return Arrays.asList(getGuestGroupId());
+		}
+
+		List<Long> groupIds = new ArrayList<>(_maxGroupCount);
+
+		for (int i = 1; i <= _maxGroupCount; i++) {
+			groupIds.add((long)i);
+		}
+
+		return groupIds;
 	}
 
 	public List<Integer> getSequence(int size) {
@@ -962,7 +973,7 @@ public class DataFactory {
 				groupAssetCategoryModels.subList(fromIndex, toIndex));
 		}
 
-		_assetCategoryModelsMaps[(int)groupId - 1] = assetCategoryModelsMap;
+		_assetCategoryModelsMaps.put(groupId, assetCategoryModelsMap);
 
 		return assetCategoryModels;
 	}
@@ -1090,7 +1101,7 @@ public class DataFactory {
 
 		if (assetPublisherQueryName.equals("assetCategories")) {
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-				_assetCategoryModelsMaps[(int)groupId - 1];
+				_assetCategoryModelsMaps.get(groupId);
 
 			List<AssetCategoryModel> assetCategoryModels =
 				assetCategoryModelsMap.get(getNextAssetClassNameId(groupId));
@@ -1104,7 +1115,7 @@ public class DataFactory {
 		}
 		else {
 			Map<Long, List<AssetTagModel>> assetTagModelsMap =
-				_assetTagModelsMaps[(int)groupId - 1];
+				_assetTagModelsMaps.get(groupId);
 
 			List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
 				getNextAssetClassNameId(groupId));
@@ -1204,7 +1215,7 @@ public class DataFactory {
 				groupAssetTagModels.subList(fromIndex, toIndex));
 		}
 
-		_assetTagModelsMaps[(int)groupId - 1] = assetTagModelsMap;
+		_assetTagModelsMaps.put(groupId, assetTagModelsMap);
 
 		return assetTagModels;
 	}
@@ -3891,10 +3902,9 @@ public class DataFactory {
 	}
 
 	public List<GroupModel> newGroupModels() {
-		List<GroupModel> groupModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_GROUP_COUNT);
+		List<GroupModel> groupModels = new ArrayList<>(_maxGroupCount);
 
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
+		for (int i = 1; i <= _maxGroupCount; i++) {
 			long groupId = _groupCounter.get();
 
 			groupModels.add(
@@ -4612,7 +4622,7 @@ public class DataFactory {
 
 		if (assetPublisherQueryName.equals("assetCategories")) {
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-				_assetCategoryModelsMaps[(int)groupId - 1];
+				_assetCategoryModelsMaps.get(groupId);
 
 			List<AssetCategoryModel> assetCategoryModels =
 				assetCategoryModelsMap.get(getNextAssetClassNameId(groupId));
@@ -4626,7 +4636,7 @@ public class DataFactory {
 		}
 		else {
 			Map<Long, List<AssetTagModel>> assetTagModelsMap =
-				_assetTagModelsMaps[(int)groupId - 1];
+				_assetTagModelsMaps.get(groupId);
 
 			List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
 				getNextAssetClassNameId(groupId));
@@ -5354,16 +5364,16 @@ public class DataFactory {
 	}
 
 	protected SimpleCounter getSimpleCounter(
-		Map<Long, SimpleCounter>[] simpleCountersArray, long groupId,
+		Map<Long, Map<Long, SimpleCounter>> simpleCountersMap, long groupId,
 		long classNameId) {
 
-		Map<Long, SimpleCounter> simpleCounters =
-			simpleCountersArray[(int)groupId - 1];
+		Map<Long, SimpleCounter> simpleCounters = simpleCountersMap.get(
+			groupId);
 
 		if (simpleCounters == null) {
 			simpleCounters = new HashMap<>();
 
-			simpleCountersArray[(int)groupId - 1] = simpleCounters;
+			simpleCountersMap.put(groupId, simpleCounters);
 		}
 
 		SimpleCounter simpleCounter = simpleCounters.get(classNameId);
@@ -7088,16 +7098,17 @@ public class DataFactory {
 		new PortletPreferencesFactoryImpl();
 
 	private RoleModel _administratorRoleModel;
-	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
-	private final Map<Long, List<AssetCategoryModel>>[]
-		_assetCategoryModelsMaps;
+	private Map<Long, Map<Long, SimpleCounter>> _assetCategoryCounters;
+	private final Map<Long, Map<Long, List<AssetCategoryModel>>>
+		_assetCategoryModelsMaps = new HashMap<>();
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
-	private Map<Long, SimpleCounter>[] _assetTagCounters;
-	private final Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps;
+	private Map<Long, Map<Long, SimpleCounter>> _assetTagCounters;
+	private final Map<Long, Map<Long, List<AssetTagModel>>>
+		_assetTagModelsMaps = new HashMap<>();
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
 	private final Map<Long, Long> _commerceCurrencyIdMap = new HashMap<>();
@@ -7135,6 +7146,7 @@ public class DataFactory {
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
 	private int _maxCompanyCount;
+	private int _maxGroupCount = 1;
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
