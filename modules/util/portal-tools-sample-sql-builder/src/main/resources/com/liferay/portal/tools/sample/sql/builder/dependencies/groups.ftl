@@ -4,6 +4,7 @@
 
 	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 	countryModel = dataFactory.newCountryModel()
+	currentCompanyModelList = companyModelList
 />
 
 ${dataFactory.toInsertSQL(countryModel)}
@@ -16,48 +17,27 @@ ${dataFactory.toInsertSQL(countryModel)}
 
 <#include "segments.ftl">
 
-<#list dataFactory.newGroupModels() as groupModel>
-	<#assign
-		groupId = groupModel.groupId
-		currentCompanyModelList = companyModelList
-	/>
+<#if dataFactory.defaultSiteAdditionalDataEnable>
+	<#assign groupId = guestGroupId />
 
-	<#include "asset_publisher.ftl">
+	<#include "group_additional_data.ftl">
+<#else>
+	<#list dataFactory.newGroupModels() as groupModel>
+		<#assign
+			groupId = groupModel.groupId
+			homePageContentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, "welcome")
+		/>
 
-	<#include "blogs.ftl">
+		<#include "group_additional_data.ftl">
 
-	<#include "ddl.ftl">
+		<@insertContentPageLayout
+			_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(homePageContentLayoutModels)
+			_layoutModels=homePageContentLayoutModels
+			_templateFileName="default-homepage-layout-definition.json"
+		/>
 
-	<#include "journal_article.ftl">
+		<@insertGroup _groupModel=groupModel />
 
-	<#include "fragment.ftl">
-
-	<#include "mb.ftl">
-
-	<#include "users.ftl">
-
-	<#include "wiki.ftl">
-
-	<@insertDLFolder
-		_ddmStructureId=dataFactory.defaultDLDDMStructureId
-		_dlFolderDepth=1
-		_groupId=groupId
-		_parentDLFolderId=0
-	/>
-
-	<#assign homePageContentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, "welcome") />
-
-	<@insertContentPageLayout
-		_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(homePageContentLayoutModels)
-		_layoutModels=homePageContentLayoutModels
-		_templateFileName="default-homepage-layout-definition.json"
-	/>
-
-	<#list dataFactory.newGroupLayoutModels(groupId) as groupLayoutModel>
-		<@insertLayout _layoutModel=groupLayoutModel />
+		${csvFileWriter.write("repository", groupId + ", " + groupModel.name + "\n")}
 	</#list>
-
-	<@insertGroup _groupModel=groupModel />
-
-	${csvFileWriter.write("repository", groupId + ", " + groupModel.name + "\n")}
-</#list>
+</#if>
