@@ -48,6 +48,11 @@ public class BenchmarksPropsValues {
 		StringUtil.toUpperCase(
 			PropertiesHolder._get(BenchmarksPropsKeys.DB_TYPE)));
 
+	public static final int INTEGRATION_TEST_USER_PER_COMMPANY_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.INTEGRATION_TEST_USER_PER_COMMPANY_COUNT));
+
 	public static final int MAX_ASSET_CATEGORY_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_ASSET_CATEGORY_COUNT));
 
