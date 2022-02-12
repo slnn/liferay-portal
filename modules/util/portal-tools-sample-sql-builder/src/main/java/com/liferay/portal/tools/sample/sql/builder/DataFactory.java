@@ -405,7 +405,12 @@ public class DataFactory {
 			_countersMap.get(ResourcePermission.class.getName()) + 1);
 		_socialActivityIdCounter = new SimpleCounter(
 			_countersMap.get(SocialActivity.class.getName()) + 1);
-		_userScreenNameCounter = new SimpleCounter();
+
+		int userNameIndexInitValue =
+			(_maxCompanyCount - 1) *
+				BenchmarksPropsValues.INTEGRATION_TEST_USER_PER_COMMPANY_COUNT;
+
+		_userScreenNameCounter = new SimpleCounter(userNameIndexInitValue + 1);
 
 		for (List<String> classNameModelList : _initClassNameModels()) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();

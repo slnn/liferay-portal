@@ -48,6 +48,11 @@ public class BenchmarksPropsValues {
 		StringUtil.toUpperCase(
 			PropertiesHolder._get(BenchmarksPropsKeys.DB_TYPE)));
 
+	public static final int INTEGRATION_TEST_USER_PER_COMMPANY_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.INTEGRATION_TEST_USER_PER_COMMPANY_COUNT));
+
 	public static final String JDBC_DRIVER_CLASS_NAME = PropertiesHolder._get(
 		BenchmarksPropsKeys.JDBC_DRIVER_CLASS_NAME);
 
