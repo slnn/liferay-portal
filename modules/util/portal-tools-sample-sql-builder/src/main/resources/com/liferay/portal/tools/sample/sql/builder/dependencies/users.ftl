@@ -1,6 +1,6 @@
 <#assign
 	groupIds = dataFactory.getNewUserGroupIds(groupModel.groupId, guestGroupId)
-	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
+	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.userRoleModel.roleId]
 />
 
 <#list dataFactory.newUserModels() as userModel>
