@@ -15,7 +15,7 @@ ${dataFactory.setDefaultUserId()}
 <@insertGroup _groupModel=userGroupModel />
 
 <@insertUser
-	_groupIds=dataFactory.getSequence(dataFactory.maxGroupCount)
+	_groupIds=dataFactory.getSampleUserGroupIds()
 	_roleIds=[dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
 	_userModel=sampleUserModel
 />
