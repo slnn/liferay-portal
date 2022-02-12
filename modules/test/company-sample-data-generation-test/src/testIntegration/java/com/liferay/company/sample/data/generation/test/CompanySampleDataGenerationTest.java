@@ -19,7 +19,10 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -339,6 +342,9 @@ public class CompanySampleDataGenerationTest {
 			BufferedWriter ddmTemplateTableBufferedWriter =
 				Files.newBufferedWriter(
 					outputDirPath.resolve("ddmTemplateTable.csv"));
+			BufferedWriter ddmStructureVersionTableBufferedWriter =
+				Files.newBufferedWriter(
+					outputDirPath.resolve("ddmStructureVersionTable.csv"));
 			BufferedWriter companyTableBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("companyTable.csv"));
 			BufferedWriter counterTableBufferedWriter = Files.newBufferedWriter(
@@ -365,6 +371,10 @@ public class CompanySampleDataGenerationTest {
 			_exportCommerceCurrencyTableData(
 				defaultCompany.getCompanyId(),
 				commerceCurrencyTableBufferedWriter);
+
+			_exportDDMStructureVersionTableData(
+				defaultCompany.getCompanyId(),
+				ddmStructureVersionTableBufferedWriter);
 
 			_exportDDMTemplateTableData(
 				defaultCompany.getCompanyId(), ddmTemplateTableBufferedWriter);
@@ -408,6 +418,10 @@ public class CompanySampleDataGenerationTest {
 					company.getCompanyId(),
 					commerceCurrencyTableBufferedWriter);
 
+				_exportDDMStructureVersionTableData(
+					company.getCompanyId(),
+					ddmStructureVersionTableBufferedWriter);
+
 				_exportDDMTemplateTableData(
 					company.getCompanyId(), ddmTemplateTableBufferedWriter);
 
@@ -428,6 +442,7 @@ public class CompanySampleDataGenerationTest {
 			commerceCurrencyTableBufferedWriter.flush();
 			companyTableBufferedWriter.flush();
 			counterTableBufferedWriter.flush();
+			ddmStructureVersionTableBufferedWriter.flush();
 			ddmTemplateTableBufferedWriter.flush();
 			defaultUserIdBufferedWriter.flush();
 			groupTableBufferedWriter.flush();
@@ -437,6 +452,34 @@ public class CompanySampleDataGenerationTest {
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(oldCompanyId);
+		}
+	}
+
+	private void _exportDDMStructureVersionTableData(
+			long companyId,
+			BufferedWriter ddmStructureVersionTableBufferedWriter)
+		throws Exception {
+
+		for (DDMStructure ddmStructure :
+				_dDMStructureLocalService.getStructures()) {
+
+			String structureKey = ddmStructure.getStructureKey();
+
+			if (structureKey.equals("BASIC-WEB-CONTENT")) {
+				DDMStructureVersion ddmStructureVersion =
+					_dDMStructureVersionLocalService.getStructureVersion(
+						ddmStructure.getStructureId(), "1.0");
+
+				ddmStructureVersionTableBufferedWriter.append(
+					String.valueOf(companyId));
+
+				ddmStructureVersionTableBufferedWriter.append(StringPool.COMMA);
+
+				ddmStructureVersionTableBufferedWriter.append(
+					String.valueOf(ddmStructureVersion.getPrimaryKey()));
+
+				ddmStructureVersionTableBufferedWriter.newLine();
+			}
 		}
 	}
 
@@ -566,6 +609,12 @@ public class CompanySampleDataGenerationTest {
 	private CounterLocalService _counterLocalService;
 
 	private final Map<String, List<String>> _csvMap = new ConcurrentHashMap<>();
+
+	@Inject
+	private DDMStructureLocalService _dDMStructureLocalService;
+
+	@Inject
+	private DDMStructureVersionLocalService _dDMStructureVersionLocalService;
 
 	@Inject
 	private DDMTemplateLocalService _dDMTemplateLocalService;
