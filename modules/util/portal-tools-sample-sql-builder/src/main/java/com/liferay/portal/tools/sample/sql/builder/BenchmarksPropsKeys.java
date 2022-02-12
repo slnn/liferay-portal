@@ -24,6 +24,9 @@ public interface BenchmarksPropsKeys {
 
 	public static final String DB_TYPE = "sample.sql.db.type";
 
+	public static final String INTEGRATION_TEST_USER_PER_COMMPANY_COUNT =
+		"sample.sql.integration.test.user.per.company.count";
+
 	public static final String MAX_ASSET_CATEGORY_COUNT =
 		"sample.sql.max.asset.category.count";
 
