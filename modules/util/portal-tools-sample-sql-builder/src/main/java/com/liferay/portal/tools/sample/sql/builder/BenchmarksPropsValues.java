@@ -48,6 +48,11 @@ public class BenchmarksPropsValues {
 		StringUtil.toUpperCase(
 			PropertiesHolder._get(BenchmarksPropsKeys.DB_TYPE)));
 
+	public static final boolean DEFAULT_SITE_ADDITIONAL_DATA_ENABLED =
+		GetterUtil.getBoolean(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.DEFAULT_SITE_ADDITIONAL_DATA_ENABLED));
+
 	public static final int INTEGRATION_TEST_USER_PER_COMMPANY_COUNT =
 		GetterUtil.getInteger(
 			PropertiesHolder._get(

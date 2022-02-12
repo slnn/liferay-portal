@@ -363,6 +363,10 @@ public class DataFactory {
 		_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss", TimeZone.getDefault());
 
+		if (!BenchmarksPropsValues.DEFAULT_SITE_ADDITIONAL_DATA_ENABLED) {
+			_maxGroupCount = BenchmarksPropsValues.MAX_GROUP_COUNT;
+		}
+
 		_initCompanyModels();
 
 		_initGroupModelMaps();
@@ -573,6 +577,10 @@ public class DataFactory {
 		return _ddmTemplateMap.get(_companyId);
 	}
 
+	public boolean getDefaultSiteAdditionalDataEnable() {
+		return BenchmarksPropsValues.DEFAULT_SITE_ADDITIONAL_DATA_ENABLED;
+	}
+
 	public long getDLFileEntryClassNameId() {
 		return getClassNameId(DLFileEntry.class);
 	}
@@ -651,10 +659,6 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_DL_FOLDER_DEPTH;
 	}
 
-	public int getMaxGroupCount() {
-		return BenchmarksPropsValues.MAX_GROUP_COUNT;
-	}
-
 	public int getMaxJournalArticleCount() {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_COUNT;
 	}
@@ -676,13 +680,17 @@ public class DataFactory {
 	}
 
 	public List<Long> getNewUserGroupIds(long groupId, long guestGroupId) {
+		if (groupId == guestGroupId) {
+			return Arrays.asList(groupId);
+		}
+
 		List<Long> groupIds = new ArrayList<>(
 			BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT + 1);
 
 		groupIds.add(guestGroupId);
 
 		if ((groupId + BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT) >
-				BenchmarksPropsValues.MAX_GROUP_COUNT) {
+				_maxGroupCount) {
 
 			groupId =
 				groupId - BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT + 1;
@@ -734,6 +742,20 @@ public class DataFactory {
 		}
 
 		return random.nextInt(count);
+	}
+
+	public List<Long> getSampleUserGroupIds() {
+		if (BenchmarksPropsValues.DEFAULT_SITE_ADDITIONAL_DATA_ENABLED) {
+			return Arrays.asList(getGuestGroupId());
+		}
+
+		List<Long> groupIds = new ArrayList<>(_maxGroupCount);
+
+		for (int i = 1; i <= _maxGroupCount; i++) {
+			groupIds.add((long)i);
+		}
+
+		return groupIds;
 	}
 
 	public List<Integer> getSequence(int size) {
@@ -3877,10 +3899,9 @@ public class DataFactory {
 	}
 
 	public List<GroupModel> newGroupModels() {
-		List<GroupModel> groupModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_GROUP_COUNT);
+		List<GroupModel> groupModels = new ArrayList<>(_maxGroupCount);
 
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
+		for (int i = 1; i <= _maxGroupCount; i++) {
 			long groupId = _groupCounter.get();
 
 			groupModels.add(
@@ -7131,6 +7152,7 @@ public class DataFactory {
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
 	private int _maxCompanyCount;
+	private int _maxGroupCount = 1;
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
