@@ -196,6 +196,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -5256,9 +5257,20 @@ public class DataFactory {
 		String mappingTableName, long companyId, long leftPrimaryKey,
 		long rightPrimaryKey) {
 
+		StringBundler sb = new StringBundler(3);
+
+		if (BenchmarksPropsValues.DB_TYPE.equals(DBType.MYSQL) &&
+			(_defaultCompanyId != 0) && (_defaultCompanyId != _companyId)) {
+
+			sb.append("use lpartition_");
+			sb.append(_companyId);
+			sb.append(";");
+		}
+
 		return StringBundler.concat(
-			"insert into ", mappingTableName, " values (", companyId, ", ",
-			leftPrimaryKey, ", ", rightPrimaryKey, ", 0, null);");
+			sb.toString(), "insert into ", mappingTableName, " values (",
+			companyId, ", ", leftPrimaryKey, ", ", rightPrimaryKey,
+			", 0, null);");
 	}
 
 	public Boolean updateCounter(CounterModel counterModel) {
@@ -6501,13 +6513,24 @@ public class DataFactory {
 
 	protected void toInsertSQL(StringBundler sb, BaseModel<?> baseModel) {
 		try {
-			sb.append("insert into ");
-
 			Class<?> clazz = baseModel.getClass();
 
 			Field tableNameField = clazz.getField("TABLE_NAME");
 
-			sb.append(tableNameField.get(null));
+			String tableName = (String)tableNameField.get(null);
+
+			if (BenchmarksPropsValues.DB_TYPE.equals(DBType.MYSQL) &&
+				(_defaultCompanyId != 0) && (_defaultCompanyId != _companyId) &&
+				!tableName.equals("Counter")) {
+
+				sb.append("use lpartition_");
+				sb.append(_companyId);
+				sb.append(";");
+			}
+
+			sb.append("insert into ");
+
+			sb.append(tableName);
 
 			sb.append(" values (");
 
