@@ -24,6 +24,8 @@ public interface BenchmarksPropsKeys {
 
 	public static final String DB_TYPE = "sample.sql.db.type";
 
+	public static final String DEFAULT_DB_NAME = "sample.sql.default.db.name";
+
 	public static final String DEFAULT_SITE_ADDITIONAL_DATA_ENABLED =
 		"sample.sql.default.site.additional.data.enable";
 
