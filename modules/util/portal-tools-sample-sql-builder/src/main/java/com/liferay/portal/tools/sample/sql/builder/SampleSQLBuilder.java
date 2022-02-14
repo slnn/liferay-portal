@@ -32,6 +32,7 @@ import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
@@ -318,6 +319,73 @@ public class SampleSQLBuilder {
 		inputFile.delete();
 	}
 
+	protected Map<String, Reader> sortSQLByDBName(Reader reader, File dir) {
+		Map<String, Reader> readers = new HashMap<>();
+
+		Map<String, StringBundler> sqls = new HashMap<>();
+
+		String commitTransaction = "";
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(reader)) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				if (line.length() > 0) {
+					if (line.startsWith("update")) {
+						_sort(line, sqls);
+					}
+					else if (line.contains("insert into ")) {
+						if (!line.endsWith(");")) {
+							StringBundler sb = new StringBundler();
+
+							while (!line.endsWith(");")) {
+								sb.append(line);
+								sb.append(StringPool.NEW_LINE);
+
+								line = unsyncBufferedReader.readLine();
+							}
+
+							sb.append(line);
+
+							line = sb.toString();
+						}
+
+						_sort(line, sqls);
+					}
+					else {
+						commitTransaction = line;
+					}
+				}
+			}
+
+			for (Map.Entry<String, StringBundler> entry : sqls.entrySet()) {
+				String fileName = entry.getKey() + ".sql";
+
+				Writer writer = createFileWriter(new File(dir, fileName));
+
+				StringBundler sb = entry.getValue();
+
+				sb.append(commitTransaction);
+
+				writer.write(sb.toString());
+
+				writer.flush();
+
+				readers.put(
+					entry.getKey(), new FileReader(new File(dir, fileName)));
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
+		return readers;
+	}
+
 	protected void writeToInsertSQLFile(
 			File dir, String tableName, Map<String, Writer> insertSQLWriters,
 			String insertSQL)
@@ -334,6 +402,31 @@ public class SampleSQLBuilder {
 		}
 
 		insertSQLWriter.write(insertSQL);
+	}
+
+	private void _sort(String line, Map<String, StringBundler> sqls) {
+		String dBName = BenchmarksPropsValues.DEFAULT_DB_NAME;
+
+		if (line.startsWith("use lpartition_")) {
+			dBName = line.substring(4, line.indexOf(StringPool.SEMICOLON));
+
+			line = line.substring(dBName.length() + 5);
+		}
+
+		StringBundler sb = sqls.get(dBName);
+
+		if ((sb == null) || (sb.index() == 0)) {
+			sb = new StringBundler();
+
+			sqls.put(dBName, sb);
+
+			sb.append(line);
+			sb.append("\n");
+		}
+		else {
+			sb.append(line);
+			sb.append("\n");
+		}
 	}
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
