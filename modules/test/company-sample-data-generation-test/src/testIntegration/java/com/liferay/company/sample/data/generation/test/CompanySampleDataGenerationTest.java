@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.ClassName;
@@ -58,6 +59,10 @@ import java.net.InetSocketAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -278,6 +283,29 @@ public class CompanySampleDataGenerationTest {
 		companyTableBufferedWriter.newLine();
 	}
 
+	private void _exportCounterTableData(
+			BufferedWriter counterTableBufferedWriter)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select name, currentId from Counter")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					String name = resultSet.getString("name");
+					long currentId = resultSet.getLong("currentId");
+
+					counterTableBufferedWriter.append(name);
+					counterTableBufferedWriter.append(StringPool.COMMA);
+					counterTableBufferedWriter.append(
+						CSVUtil.encode(currentId));
+					counterTableBufferedWriter.newLine();
+				}
+			}
+		}
+	}
+
 	private void _exportCSVs() throws Exception {
 		String outputDir = PropsUtil.get("sample.data.output.dir");
 
@@ -305,6 +333,8 @@ public class CompanySampleDataGenerationTest {
 					outputDirPath.resolve("classNameTable.csv"));
 			BufferedWriter companyTableBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("companyTable.csv"));
+			BufferedWriter counterTableBufferedWriter = Files.newBufferedWriter(
+				outputDirPath.resolve("counterTable.csv"));
 			BufferedWriter groupTableBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("groupTable.csv"));
 			BufferedWriter hostBufferedWriter = Files.newBufferedWriter(
@@ -347,10 +377,12 @@ public class CompanySampleDataGenerationTest {
 					company.getCompanyId(), roleTableBufferedWriter);
 			}
 
+			_exportCounterTableData(counterTableBufferedWriter);
 			_exportClassNameTableData(classNameTableBufferedWriter);
 
 			classNameTableBufferedWriter.flush();
 			companyTableBufferedWriter.flush();
+			counterTableBufferedWriter.flush();
 			groupTableBufferedWriter.flush();
 			hostBufferedWriter.flush();
 			roleTableBufferedWriter.flush();
