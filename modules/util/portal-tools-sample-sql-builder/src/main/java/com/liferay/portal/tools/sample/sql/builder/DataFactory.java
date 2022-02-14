@@ -386,6 +386,8 @@ public class DataFactory {
 
 		_initGroupModelMaps();
 
+		_initRoleModelsMap();
+
 		_initCountersMap();
 
 		_counter = new SimpleCounter(_countersMap.get(Counter.class.getName()));
@@ -774,6 +776,49 @@ public class DataFactory {
 		}
 
 		_journalArticleContent = new String(chars);
+	}
+
+	public void initRoleModels() {
+		Map<String, Long> companyRoleModelMap = _roleModelsMap.get(_companyId);
+
+		// Administrator
+
+		_administratorRoleModel = new RoleModelImpl();
+
+		_administratorRoleModel.setRoleId(
+			companyRoleModelMap.get(RoleConstants.ADMINISTRATOR));
+
+		// Guest
+
+		_guestRoleModel = new RoleModelImpl();
+
+		_guestRoleModel.setRoleId(companyRoleModelMap.get(RoleConstants.GUEST));
+
+		// Owner
+
+		_ownerRoleModel = new RoleModelImpl();
+
+		_ownerRoleModel.setRoleId(companyRoleModelMap.get(RoleConstants.OWNER));
+
+		// Power Userd
+
+		_powerUserRoleModel = new RoleModelImpl();
+
+		_powerUserRoleModel.setRoleId(
+			companyRoleModelMap.get(RoleConstants.POWER_USER));
+
+		// Site Member
+
+		_siteMemberRoleModel = new RoleModelImpl();
+
+		_siteMemberRoleModel.setRoleId(
+			companyRoleModelMap.get(RoleConstants.SITE_MEMBER));
+
+		// User
+
+		_userRoleModel = new RoleModelImpl();
+
+		_userRoleModel.setRoleId(companyRoleModelMap.get(RoleConstants.USER));
 	}
 
 	public AccountEntryModel newAccountEntryModel(String type, int index) {
@@ -5197,86 +5242,6 @@ public class DataFactory {
 			String.valueOf(wikiPageModel.getResourcePrimKey()), _sampleUserId);
 	}
 
-	public List<RoleModel> newRoleModels() {
-		List<RoleModel> roleModels = new ArrayList<>();
-
-		// Administrator
-
-		_administratorRoleModel = newRoleModel(
-			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
-
-		roleModels.add(_administratorRoleModel);
-
-		// Guest
-
-		_guestRoleModel = newRoleModel(
-			RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
-
-		roleModels.add(_guestRoleModel);
-
-		// Organization Administrator
-
-		roleModels.add(
-			newRoleModel(
-				RoleConstants.ORGANIZATION_ADMINISTRATOR,
-				RoleConstants.TYPE_ORGANIZATION));
-
-		// Organization Owner
-
-		roleModels.add(
-			newRoleModel(
-				RoleConstants.ORGANIZATION_OWNER,
-				RoleConstants.TYPE_ORGANIZATION));
-
-		// Organization User
-
-		roleModels.add(
-			newRoleModel(
-				RoleConstants.ORGANIZATION_USER,
-				RoleConstants.TYPE_ORGANIZATION));
-
-		// Owner
-
-		_ownerRoleModel = newRoleModel(
-			RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
-
-		roleModels.add(_ownerRoleModel);
-
-		// Power User
-
-		_powerUserRoleModel = newRoleModel(
-			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
-
-		roleModels.add(_powerUserRoleModel);
-
-		// Site Administrator
-
-		roleModels.add(
-			newRoleModel(
-				RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE));
-
-		// Site Member
-
-		_siteMemberRoleModel = newRoleModel(
-			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
-
-		roleModels.add(_siteMemberRoleModel);
-
-		// Site Owner
-
-		roleModels.add(
-			newRoleModel(RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE));
-
-		// User
-
-		_userRoleModel = newRoleModel(
-			RoleConstants.USER, RoleConstants.TYPE_REGULAR);
-
-		roleModels.add(_userRoleModel);
-
-		return roleModels;
-	}
-
 	public UserModel newSampleUserModel() {
 		_sampleUserId = _counter.get();
 
@@ -6694,35 +6659,6 @@ public class DataFactory {
 				name, primKey, _siteMemberRoleModel.getRoleId(), 0));
 	}
 
-	protected RoleModel newRoleModel(String name, int type) {
-		RoleModel roleModel = new RoleModelImpl();
-
-		// UUID
-
-		roleModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		roleModel.setRoleId(_counter.get());
-
-		// Audit fields
-
-		roleModel.setCompanyId(_companyId);
-		roleModel.setUserId(_sampleUserId);
-		roleModel.setUserName(_SAMPLE_USER_NAME);
-		roleModel.setCreateDate(new Date());
-		roleModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		roleModel.setClassNameId(getClassNameId(Role.class));
-		roleModel.setClassPK(roleModel.getRoleId());
-		roleModel.setName(name);
-		roleModel.setType(type);
-
-		return roleModel;
-	}
-
 	protected SocialActivityModel newSocialActivityModel(
 		long groupId, long classNameId, long classPK, int type,
 		String extraData) {
@@ -7251,6 +7187,42 @@ public class DataFactory {
 		}
 	}
 
+	private void _initRoleModelsMap() throws Exception {
+		List<List<String>> totalRoleModelLists = new ArrayList<>();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getResourceInputStream("csv/roleTable.csv")))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				String[] items = line.split(StringPool.COMMA);
+
+				totalRoleModelLists.add(
+					Arrays.asList(items[0], items[2], items[1]));
+			}
+
+			for (List<String> companyModelList : _companyModelLists) {
+				String companyId = companyModelList.get(0);
+
+				Map<String, Long> companyRoleModelMap = new HashMap<>();
+
+				for (List<String> roleModelList : totalRoleModelLists) {
+					if (companyId.equals(roleModelList.get(0))) {
+						companyRoleModelMap.put(
+							roleModelList.get(1),
+							GetterUtil.getLong(roleModelList.get(2)));
+					}
+				}
+
+				_roleModelsMap.put(
+					GetterUtil.getLong(companyId), companyRoleModelMap);
+			}
+		}
+	}
+
 	private LayoutModel _newContentPageLayoutModel(
 		long groupId, String name, long classNameId, long classPK) {
 
@@ -7453,6 +7425,7 @@ public class DataFactory {
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionIdCounter;
+	private final Map<Long, Map<String, Long>> _roleModelsMap = new HashMap<>();
 	private final Map<Long, Long> _sampleSQLBuilderGobalGroupIdsMap =
 		new HashMap<>();
 	private final Map<Long, Long> _sampleSQLBuilderGuestGroupIdsMap =
