@@ -6,8 +6,6 @@
 	countryModel = dataFactory.newCountryModel()
 />
 
-${dataFactory.toInsertSQL(commerceCurrencyModel)}
-
 ${dataFactory.toInsertSQL(countryModel)}
 
 <#include "default_user.ftl">
