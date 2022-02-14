@@ -160,12 +160,15 @@ public class SampleSQLBuilder {
 		if ((BenchmarksPropsValues.DB_TYPE == DBType.MYSQL) &&
 			(BenchmarksPropsValues.DEFAULT_DB_NAME != null)) {
 
-			Map<String, Reader> readers = sortSQLByDBName(
-				reader, new File(BenchmarksPropsValues.OUTPUT_DIR));
-
 			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
 
-			for (Map.Entry<String, Reader> entry : readers.entrySet()) {
+			miscSQLs.add("use " + BenchmarksPropsValues.DEFAULT_DB_NAME);
+
+			for (Map.Entry<String, Reader> entry :
+					sortSQLByDBName(
+						reader, new File(BenchmarksPropsValues.OUTPUT_DIR)
+					).entrySet()) {
+
 				compressSQL(
 					entry.getValue(), dir, db, insertSQLWriters, insertSQLs,
 					miscSQLs, entry.getKey());
@@ -401,7 +404,9 @@ public class SampleSQLBuilder {
 
 				StringBundler sb = entry.getValue();
 
-				sb.append(commitTransaction);
+				if (entry.getKey() == BenchmarksPropsValues.DEFAULT_DB_NAME) {
+					sb.append(commitTransaction);
+				}
 
 				writer.write(sb.toString());
 
