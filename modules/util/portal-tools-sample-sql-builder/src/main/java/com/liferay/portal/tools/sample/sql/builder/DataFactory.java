@@ -6806,6 +6806,12 @@ public class DataFactory {
 				}
 				companyModelList.add(items[1]);
 
+				if ((BenchmarksPropsValues.DEFAULT_DB_NAME != null) &&
+					items[1].equals("liferay.com")) {
+
+					_defaultCompanyId = GetterUtil.getLong(items[0]);
+				}
+
 				_companyModelLists.add(companyModelList);
 			}
 
@@ -7126,6 +7132,7 @@ public class DataFactory {
 	private final Map<Long, Long> _ddmTemplateMap = new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
+	private long _defaultCompanyId;
 	private long _defaultDLDDMStructureId;
 	private long _defaultDLDDMStructureVersionId;
 	private long _defaultJournalDDMStructureId;
