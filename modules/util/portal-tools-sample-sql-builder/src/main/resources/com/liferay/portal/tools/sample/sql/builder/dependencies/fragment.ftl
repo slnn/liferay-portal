@@ -11,7 +11,7 @@
 		_insertAssetEntry=true
 		_journalArticleModel=journalArticleModel
 		_journalDDMStructureModel=defaultJournalDDMStructureModel
-		_journalDDMTemplateModel=defaultJournalDDMTemplateModel
+		_journalDDMTemplateId=dataFactory.defaultJournalDDMTemplateId
 	/>
 
 	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
