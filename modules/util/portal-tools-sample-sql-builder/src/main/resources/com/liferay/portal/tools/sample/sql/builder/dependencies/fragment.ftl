@@ -29,6 +29,6 @@
 			_layoutModel=contentLayoutModel
 		/>
 
-		${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + contentLayoutModel.friendlyURL + "\n")}
+		${csvFileWriter.write("fragment", companyModelList[1] + "," + contentLayoutModel.friendlyURL + "\n")}
 	</#list>
 </#if>
