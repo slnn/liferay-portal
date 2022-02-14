@@ -212,7 +212,6 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.AddressModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameModel;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.ContactModel;
 import com.liferay.portal.kernel.model.Country;
@@ -384,6 +383,8 @@ public class DataFactory {
 		_assetTagModelsMaps =
 			(Map<Long, List<AssetTagModel>>[])new HashMap<?, ?>
 				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
+
+		_initGroupModelMaps();
 
 		_initCountersMap();
 
@@ -581,6 +582,18 @@ public class DataFactory {
 		return getClassNameId(DLFileEntry.class);
 	}
 
+	public long getGlobalGroupId() {
+		_globalGroupId = _sampleSQLBuilderGobalGroupIdsMap.get(_companyId);
+
+		return _globalGroupId;
+	}
+
+	public long getGuestGroupId() {
+		_guestGroupId = _sampleSQLBuilderGuestGroupIdsMap.get(_companyId);
+
+		return _guestGroupId;
+	}
+
 	public long getJournalArticleClassNameId() {
 		return getClassNameId(JournalArticle.class);
 	}
@@ -667,13 +680,11 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_WIKI_PAGE_COMMENT_COUNT;
 	}
 
-	public List<Long> getNewUserGroupIds(
-		long groupId, GroupModel guestGroupModel) {
-
+	public List<Long> getNewUserGroupIds(long groupId, long guestGroupId) {
 		List<Long> groupIds = new ArrayList<>(
 			BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT + 1);
 
-		groupIds.add(guestGroupModel.getGroupId());
+		groupIds.add(guestGroupId);
 
 		if ((groupId + BenchmarksPropsValues.MAX_USER_TO_GROUP_COUNT) >
 				BenchmarksPropsValues.MAX_GROUP_COUNT) {
@@ -4002,14 +4013,6 @@ public class DataFactory {
 		return friendlyURLEntryModel;
 	}
 
-	public GroupModel newGlobalGroupModel() {
-		_globalGroupId = _counter.get();
-
-		return newGroupModel(
-			_globalGroupId, getClassNameId(Company.class), _companyId,
-			GroupConstants.GLOBAL, false);
-	}
-
 	public List<LayoutModel> newGroupLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
@@ -4089,20 +4092,6 @@ public class DataFactory {
 		}
 
 		return groupModels;
-	}
-
-	public GroupModel newGuestGroupModel() {
-		_guestGroupId = _counter.get();
-
-		String typeSettings = StringPool.BLANK;
-
-		if (!BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
-			typeSettings = "searchLayoutCreated=true";
-		}
-
-		return newGroupModel(
-			_guestGroupId, getClassNameId(Group.class), _guestGroupId,
-			GroupConstants.GUEST, 0, typeSettings, true);
 	}
 
 	public UserModel newGuestUserModel() {
@@ -7228,6 +7217,40 @@ public class DataFactory {
 		}
 	}
 
+	private void _initGroupModelMaps() throws Exception {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getResourceInputStream("csv/groupTable.csv")))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				String[] items = line.split(StringPool.COMMA);
+
+				for (List<String> companyModelList : _companyModelLists) {
+					String companyId = companyModelList.get(0);
+
+					if (items[0].equals(companyId)) {
+						if (items[2].equals(GroupConstants.GLOBAL)) {
+							_sampleSQLBuilderGobalGroupIdsMap.put(
+								GetterUtil.getLong(companyId),
+								GetterUtil.getLong(items[1]));
+						}
+
+						if (items[2].equals(GroupConstants.GUEST)) {
+							_sampleSQLBuilderGuestGroupIdsMap.put(
+								GetterUtil.getLong(companyId),
+								GetterUtil.getLong(items[1]));
+						}
+
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	private LayoutModel _newContentPageLayoutModel(
 		long groupId, String name, long classNameId, long classPK) {
 
@@ -7430,6 +7453,10 @@ public class DataFactory {
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionIdCounter;
+	private final Map<Long, Long> _sampleSQLBuilderGobalGroupIdsMap =
+		new HashMap<>();
+	private final Map<Long, Long> _sampleSQLBuilderGuestGroupIdsMap =
+		new HashMap<>();
 	private long _sampleUserId;
 	private final Format _simpleDateFormat;
 	private RoleModel _siteMemberRoleModel;
