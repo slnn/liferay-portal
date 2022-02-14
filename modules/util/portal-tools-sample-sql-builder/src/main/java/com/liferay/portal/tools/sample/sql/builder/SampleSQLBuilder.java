@@ -112,7 +112,7 @@ public class SampleSQLBuilder {
 
 	protected void compressSQL(
 			DB db, File directory, Map<String, Writer> insertSQLWriters,
-			Map<String, StringBundler> sqls, String insertSQL)
+			Map<String, StringBundler> sqls, String insertSQL, String dBName)
 		throws IOException, SQLException {
 
 		String tableName = insertSQL.substring(0, insertSQL.indexOf(' '));
@@ -146,22 +146,50 @@ public class SampleSQLBuilder {
 			sb.setIndex(0);
 
 			writeToInsertSQLFile(
-				directory, tableName, insertSQLWriters, insertSQL);
+				directory, tableName, insertSQLWriters, insertSQL, dBName);
 		}
 	}
 
 	protected void compressSQL(Reader reader, File dir) throws Exception {
 		DB db = DBManagerUtil.getDB(BenchmarksPropsValues.DB_TYPE, null);
 
-		if ((BenchmarksPropsValues.DB_TYPE == DBType.MARIADB) ||
-			(BenchmarksPropsValues.DB_TYPE == DBType.MYSQL)) {
-
-			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
-		}
-
 		Map<String, Writer> insertSQLWriters = new HashMap<>();
 		Map<String, StringBundler> insertSQLs = new HashMap<>();
 		List<String> miscSQLs = new ArrayList<>();
+
+		if ((BenchmarksPropsValues.DB_TYPE == DBType.MYSQL) &&
+			(BenchmarksPropsValues.DEFAULT_DB_NAME != null)) {
+
+			Map<String, Reader> readers = sortSQLByDBName(
+				reader, new File(BenchmarksPropsValues.OUTPUT_DIR));
+
+			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
+
+			for (Map.Entry<String, Reader> entry : readers.entrySet()) {
+				compressSQL(
+					entry.getValue(), dir, db, insertSQLWriters, insertSQLs,
+					miscSQLs, entry.getKey());
+			}
+		}
+		else {
+			if ((BenchmarksPropsValues.DB_TYPE == DBType.MARIADB) ||
+				(BenchmarksPropsValues.DB_TYPE == DBType.MYSQL)) {
+
+				db = new SampleMySQLDB(
+					db.getMajorVersion(), db.getMinorVersion());
+			}
+
+			compressSQL(
+				reader, dir, db, insertSQLWriters, insertSQLs, miscSQLs, "");
+		}
+	}
+
+	protected void compressSQL(
+			Reader reader, File dir, DB db,
+			Map<String, Writer> insertSQLWriters,
+			Map<String, StringBundler> insertSQLs, List<String> miscSQLs,
+			String dBName)
+		throws Exception {
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(reader)) {
@@ -192,7 +220,7 @@ public class SampleSQLBuilder {
 
 						compressSQL(
 							db, dir, insertSQLWriters, insertSQLs,
-							s.substring(12));
+							s.substring(12), dBName);
 					}
 					else {
 						miscSQLs.add(s);
@@ -214,13 +242,17 @@ public class SampleSQLBuilder {
 				String insertSQL = db.buildSQL(sb.toString());
 
 				writeToInsertSQLFile(
-					dir, tableName, insertSQLWriters, insertSQL);
+					dir, tableName, insertSQLWriters, insertSQL, dBName);
 			}
 
 			try (Writer insertSQLWriter = insertSQLWriters.remove(tableName)) {
 				insertSQLWriter.write(";\n");
 			}
+
+			sb.setIndex(0);
 		}
+
+		insertSQLs.clear();
 
 		try (Writer miscSQLWriter = new FileWriter(new File(dir, "misc.sql"))) {
 			for (String miscSQL : miscSQLs) {
@@ -388,13 +420,22 @@ public class SampleSQLBuilder {
 
 	protected void writeToInsertSQLFile(
 			File dir, String tableName, Map<String, Writer> insertSQLWriters,
-			String insertSQL)
+			String insertSQL, String dBName)
 		throws IOException {
+
+		if (!dBName.equals("")) {
+			insertSQL = StringBundler.concat(
+				"use ", dBName, StringPool.SEMICOLON, StringPool.NEW_LINE,
+				insertSQL);
+
+			dBName = dBName + "_";
+		}
 
 		Writer insertSQLWriter = insertSQLWriters.get(tableName);
 
 		if (insertSQLWriter == null) {
-			File file = new File(dir, tableName + ".sql");
+			File file = new File(
+				dir, StringBundler.concat(dBName, tableName, ".sql"));
 
 			insertSQLWriter = createFileWriter(file);
 
