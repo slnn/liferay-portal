@@ -141,9 +141,6 @@ public class BenchmarksPropsValues {
 				BenchmarksPropsKeys.
 					MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT));
 
-	public static final int MAX_COMPANY_COUNT = GetterUtil.getInteger(
-		PropertiesHolder._get(BenchmarksPropsKeys.MAX_COMPANY_COUNT));
-
 	public static final int MAX_COMPANY_USER_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_COMPANY_USER_COUNT));
 
