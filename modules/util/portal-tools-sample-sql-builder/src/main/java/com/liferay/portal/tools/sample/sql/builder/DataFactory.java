@@ -119,8 +119,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
-import com.liferay.dynamic.data.mapping.model.DDMField;
-import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttributeModel;
 import com.liferay.dynamic.data.mapping.model.DDMFieldModel;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
@@ -152,7 +150,6 @@ import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryModelImpl;
-import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryModel;
@@ -388,23 +385,26 @@ public class DataFactory {
 			(Map<Long, List<AssetTagModel>>[])new HashMap<?, ?>
 				[_maxCompanyCount * BenchmarksPropsValues.MAX_GROUP_COUNT];
 
-		int groupCount =
-			BenchmarksPropsValues.MAX_GROUP_COUNT +
-				BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
+		_initCountersMap();
 
-		int totalGroupCount = groupCount * _maxCompanyCount;
+		_counter = new SimpleCounter(_countersMap.get(Counter.class.getName()));
 
-		_counter = new SimpleCounter(totalGroupCount + 1);
+		_dLFileEntryIdCounter = new SimpleCounter(
+			_countersMap.get(DLFileEntry.class.getName()));
 
-		_dLFileEntryIdCounter = new SimpleCounter();
 		_groupCounter = new SimpleCounter(1);
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
-		_layoutPlidCounter = new SimpleCounter();
-		_layoutSetIdCounter = new SimpleCounter();
-		_portletPreferenceValueIdCounter = new SimpleCounter();
-		_resourcePermissionIdCounter = new SimpleCounter();
-		_socialActivityIdCounter = new SimpleCounter();
+		_layoutPlidCounter = new SimpleCounter(
+			_countersMap.get(Layout.class.getName()) + 1);
+		_layoutSetIdCounter = new SimpleCounter(
+			_countersMap.get(LayoutSet.class.getName()) + 1);
+		_portletPreferenceValueIdCounter = new SimpleCounter(
+			_countersMap.get(PortletPreferenceValue.class.getName()) + 1);
+		_resourcePermissionIdCounter = new SimpleCounter(
+			_countersMap.get(ResourcePermission.class.getName()) + 1);
+		_socialActivityIdCounter = new SimpleCounter(
+			_countersMap.get(SocialActivity.class.getName()) + 1);
 		_userScreenNameCounter = new SimpleCounter();
 
 		for (List<String> classNameModelList : _initClassNameModels()) {
@@ -2145,9 +2145,21 @@ public class DataFactory {
 	public LayoutModel newContentLayoutModel(
 		long groupId, String name, String fragmentEntries) {
 
-		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
-			LayoutLocalServiceImpl.getCounterName(groupId, false),
-			counterName -> new SimpleCounter());
+		String layoutIdCounterName = LayoutLocalServiceImpl.getCounterName(
+			groupId, false);
+
+		SimpleCounter simpleCounter;
+
+		if (_countersMap.containsKey(layoutIdCounterName)) {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName,
+				counterName -> new SimpleCounter(
+					_countersMap.get(layoutIdCounterName) + 1));
+		}
+		else {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName, counterName -> new SimpleCounter());
+		}
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
@@ -2231,16 +2243,8 @@ public class DataFactory {
 		counterModels.add(
 			_newCounterModel(Counter.class.getName(), _counter.get()));
 		counterModels.add(
-			_newCounterModel(DDMField.class.getName(), _counter.get()));
-		counterModels.add(
-			_newCounterModel(
-				DDMFieldAttribute.class.getName(), _counter.get()));
-		counterModels.add(
 			_newCounterModel(
 				DLFileEntry.class.getName(), _dLFileEntryIdCounter.get()));
-		counterModels.add(
-			_newCounterModel(
-				FriendlyURLEntryLocalization.class.getName(), _counter.get()));
 		counterModels.add(
 			_newCounterModel(
 				PortletPreferenceValue.class.getName(),
@@ -5597,6 +5601,12 @@ public class DataFactory {
 			leftPrimaryKey, ", ", rightPrimaryKey, ", 0, null);");
 	}
 
+	public Boolean updateCounter(CounterModel counterModel) {
+		Set<String> counterNames = _countersMap.keySet();
+
+		return counterNames.contains(counterModel.getName());
+	}
+
 	protected ObjectValuePair<String[], Integer>
 		getAssetPublisherAssetCategoriesQueryValues(
 			List<AssetCategoryModel> assetCategoryModels, int index) {
@@ -6366,9 +6376,21 @@ public class DataFactory {
 		long groupId, long parentLayoutId, String name, boolean privateLayout,
 		boolean hidden, String layoutTemplateId, String... columns) {
 
-		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
-			LayoutLocalServiceImpl.getCounterName(groupId, privateLayout),
-			counterName -> new SimpleCounter());
+		String layoutIdCounterName = LayoutLocalServiceImpl.getCounterName(
+			groupId, privateLayout);
+
+		SimpleCounter simpleCounter;
+
+		if (_countersMap.containsKey(layoutIdCounterName)) {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName,
+				counterName -> new SimpleCounter(
+					_countersMap.get(layoutIdCounterName) + 1));
+		}
+		else {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName, counterName -> new SimpleCounter());
+		}
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
@@ -7190,12 +7212,40 @@ public class DataFactory {
 		}
 	}
 
+	private void _initCountersMap() throws Exception {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getResourceInputStream("csv/counterTable.csv")))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				String[] items = line.split(StringPool.COMMA);
+
+				_countersMap.put(items[0], GetterUtil.getLong(items[1]));
+			}
+		}
+	}
+
 	private LayoutModel _newContentPageLayoutModel(
 		long groupId, String name, long classNameId, long classPK) {
 
-		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
-			LayoutLocalServiceImpl.getCounterName(groupId, false),
-			counterName -> new SimpleCounter());
+		String layoutIdCounterName = LayoutLocalServiceImpl.getCounterName(
+			groupId, false);
+
+		SimpleCounter simpleCounter;
+
+		if (_countersMap.containsKey(layoutIdCounterName)) {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName,
+				counterName -> new SimpleCounter(
+					_countersMap.get(layoutIdCounterName) + 1));
+		}
+		else {
+			simpleCounter = _layoutIdCounters.computeIfAbsent(
+				layoutIdCounterName, counterName -> new SimpleCounter());
+		}
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
@@ -7344,6 +7394,7 @@ public class DataFactory {
 	private long _companyId;
 	private final List<List<String>> _companyModelLists = new ArrayList<>();
 	private final SimpleCounter _counter;
+	private final Map<String, Long> _countersMap = new HashMap<>();
 	private final Map<Long, CPInstanceModel> _cpInstanceModels =
 		new HashMap<>();
 	private final PortletPreferencesImpl
