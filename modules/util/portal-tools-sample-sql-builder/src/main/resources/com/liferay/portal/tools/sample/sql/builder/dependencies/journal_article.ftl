@@ -26,7 +26,6 @@
 			<@insertJournalArticle
 				_insertAssetEntry=(versionCount==dataFactory.maxJournalArticleVersionCount)
 				_journalArticleModel=journalArticleModel
-				_journalDDMStructureModel=defaultJournalDDMStructureModel
 				_journalDDMTemplateId=dataFactory.defaultJournalDDMTemplateId
 			/>
 		</#list>

@@ -10,7 +10,6 @@
 	<@insertJournalArticle
 		_insertAssetEntry=true
 		_journalArticleModel=journalArticleModel
-		_journalDDMStructureModel=defaultJournalDDMStructureModel
 		_journalDDMTemplateId=dataFactory.defaultJournalDDMTemplateId
 	/>
 

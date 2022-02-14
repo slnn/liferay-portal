@@ -388,6 +388,8 @@ public class DataFactory {
 
 		_initCommerceCurrencyMap();
 
+		_initDDMStructureVersionMap();
+
 		_initDDMTemplateMap();
 
 		_initCountersMap();
@@ -429,8 +431,6 @@ public class DataFactory {
 
 		_dlDDMStructureContent = _readFile(
 			"ddm_structure/ddm_structure_basic_document.json");
-		_journalDDMStructureContent = _readFile(
-			"ddm_structure/ddm_structure_basic_web_content.json");
 		_layoutPageTemplateStructureRelData = _readFile(
 			"layout_page_template_structure_rel.json");
 
@@ -576,6 +576,10 @@ public class DataFactory {
 
 	public long getDefaultDLDDMStructureId() {
 		return _defaultDLDDMStructureId;
+	}
+
+	public long getDefaultJournalDDMStructureVersionId() {
+		return _ddmStructureVersionMap.get(_companyId);
 	}
 
 	public long getDefaultJournalDDMTemplateId() {
@@ -3236,17 +3240,15 @@ public class DataFactory {
 	}
 
 	public List<DDMFieldModel> newDDMFieldModels(
-		JournalArticleModel journalArticleModel) {
+		JournalArticleModel journalArticleModel, long ddmStructureVersionId) {
 
 		return Arrays.asList(
 			newDDMFieldModel(
-				journalArticleModel.getId(),
-				_defaultJournalDDMStructureVersionId, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, false, 0),
+				journalArticleModel.getId(), ddmStructureVersionId,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, false, 0),
 			newDDMFieldModel(
-				journalArticleModel.getId(),
-				_defaultJournalDDMStructureVersionId, "content", "rich_text",
-				StringUtil.randomId(), true, 1));
+				journalArticleModel.getId(), ddmStructureVersionId, "content",
+				"rich_text", StringUtil.randomId(), true, 1));
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
@@ -3268,7 +3270,7 @@ public class DataFactory {
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
-		JournalArticleModel journalArticleModel, long structureId) {
+		JournalArticleModel journalArticleModel, long ddmStructureVersionId) {
 
 		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
 
@@ -3285,9 +3287,8 @@ public class DataFactory {
 		ddmStorageLinkModel.setClassNameId(
 			getClassNameId(JournalArticle.class));
 		ddmStorageLinkModel.setClassPK(journalArticleModel.getId());
-		ddmStorageLinkModel.setStructureId(structureId);
-		ddmStorageLinkModel.setStructureVersionId(
-			_defaultJournalDDMStructureVersionId);
+		ddmStorageLinkModel.setStructureId(_defaultJournalDDMStructureId);
+		ddmStorageLinkModel.setStructureVersionId(ddmStructureVersionId);
 
 		return ddmStorageLinkModel;
 	}
@@ -3314,51 +3315,6 @@ public class DataFactory {
 		DDMStructureModel ddmStructureModel) {
 
 		return newDDMStructureVersionModel(ddmStructureModel, _counter.get());
-	}
-
-	public DDMStructureVersionModel newDDMStructureVersionModel(
-		DDMStructureModel ddmStructureModel, long structureVersionId) {
-
-		DDMStructureVersionModel ddmStructureVersionModel =
-			new DDMStructureVersionModelImpl();
-
-		// PK fields
-
-		ddmStructureVersionModel.setStructureVersionId(structureVersionId);
-
-		// Group instance
-
-		ddmStructureVersionModel.setGroupId(ddmStructureModel.getGroupId());
-
-		// Audit fields
-
-		ddmStructureVersionModel.setCompanyId(_companyId);
-		ddmStructureVersionModel.setUserId(ddmStructureModel.getUserId());
-		ddmStructureVersionModel.setUserName(_SAMPLE_USER_NAME);
-		ddmStructureVersionModel.setCreateDate(nextFutureDate());
-
-		// Other fields
-
-		ddmStructureVersionModel.setStructureId(
-			ddmStructureModel.getStructureId());
-		ddmStructureVersionModel.setVersion(
-			DDMStructureConstants.VERSION_DEFAULT);
-
-		ddmStructureVersionModel.setName(
-			StringBundler.concat(
-				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
-				"default-locale=\"en_US\"><name language-id=\"en_US\">",
-				ddmStructureModel.getStructureKey(), "</name></root>"));
-
-		ddmStructureVersionModel.setDefinition(
-			ddmStructureModel.getDefinition());
-		ddmStructureVersionModel.setStorageType(StorageType.DEFAULT.toString());
-		ddmStructureVersionModel.setStatusByUserId(
-			ddmStructureModel.getUserId());
-		ddmStructureVersionModel.setStatusByUserName(_SAMPLE_USER_NAME);
-		ddmStructureVersionModel.setStatusDate(nextFutureDate());
-
-		return ddmStructureVersionModel;
 	}
 
 	public DDMTemplateLinkModel newDDMTemplateLinkModel(
@@ -3407,24 +3363,6 @@ public class DataFactory {
 
 		return newDDMStructureVersionModel(
 			ddmStructureModel, _defaultDLDDMStructureVersionId);
-	}
-
-	public DDMStructureModel newDefaultJournalDDMStructureModel() {
-		_defaultJournalDDMStructureId = _counter.get();
-
-		return newDDMStructureModel(
-			_globalGroupId, _defaultUserId,
-			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY,
-			_journalDDMStructureContent, _defaultJournalDDMStructureId);
-	}
-
-	public DDMStructureVersionModel newDefaultJournalDDMStructureVersionModel(
-		DDMStructureModel ddmStructureModel) {
-
-		_defaultJournalDDMStructureVersionId = _counter.get();
-
-		return newDDMStructureVersionModel(
-			ddmStructureModel, _defaultJournalDDMStructureVersionId);
 	}
 
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(
@@ -5941,6 +5879,51 @@ public class DataFactory {
 		return ddmStructureModel;
 	}
 
+	protected DDMStructureVersionModel newDDMStructureVersionModel(
+		DDMStructureModel ddmStructureModel, long structureVersionId) {
+
+		DDMStructureVersionModel ddmStructureVersionModel =
+			new DDMStructureVersionModelImpl();
+
+		// PK fields
+
+		ddmStructureVersionModel.setStructureVersionId(structureVersionId);
+
+		// Group instance
+
+		ddmStructureVersionModel.setGroupId(ddmStructureModel.getGroupId());
+
+		// Audit fields
+
+		ddmStructureVersionModel.setCompanyId(_companyId);
+		ddmStructureVersionModel.setUserId(ddmStructureModel.getUserId());
+		ddmStructureVersionModel.setUserName(_SAMPLE_USER_NAME);
+		ddmStructureVersionModel.setCreateDate(nextFutureDate());
+
+		// Other fields
+
+		ddmStructureVersionModel.setStructureId(
+			ddmStructureModel.getStructureId());
+		ddmStructureVersionModel.setVersion(
+			DDMStructureConstants.VERSION_DEFAULT);
+
+		ddmStructureVersionModel.setName(
+			StringBundler.concat(
+				"<?xml version=\"1.0\"?><root available-locales=\"en_US\" ",
+				"default-locale=\"en_US\"><name language-id=\"en_US\">",
+				ddmStructureModel.getStructureKey(), "</name></root>"));
+
+		ddmStructureVersionModel.setDefinition(
+			ddmStructureModel.getDefinition());
+		ddmStructureVersionModel.setStorageType(StorageType.DEFAULT.toString());
+		ddmStructureVersionModel.setStatusByUserId(
+			ddmStructureModel.getUserId());
+		ddmStructureVersionModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		ddmStructureVersionModel.setStatusDate(nextFutureDate());
+
+		return ddmStructureVersionModel;
+	}
+
 	protected DDMTemplateModel newDDMTemplateModel(
 		long groupId, long userId, String mode, String name, String script,
 		long classNameId, long classPK, long resourceClassNameId,
@@ -6989,6 +6972,24 @@ public class DataFactory {
 		}
 	}
 
+	private void _initDDMStructureVersionMap() throws Exception {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getResourceInputStream(
+							"csv/ddmStructureVersionTable.csv")))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				String[] items = line.split(StringPool.COMMA);
+
+				_ddmStructureVersionMap.put(
+					GetterUtil.getLong(items[0]), GetterUtil.getLong(items[1]));
+			}
+		}
+	}
+
 	private void _initDDMTemplateMap() throws Exception {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
@@ -7263,13 +7264,13 @@ public class DataFactory {
 	private final Map<String, Long> _countersMap = new HashMap<>();
 	private final Map<Long, CPInstanceModel> _cpInstanceModels =
 		new HashMap<>();
+	private final Map<Long, Long> _ddmStructureVersionMap = new HashMap<>();
 	private final Map<Long, Long> _ddmTemplateMap = new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
 	private long _defaultDLDDMStructureId;
 	private long _defaultDLDDMStructureVersionId;
 	private long _defaultJournalDDMStructureId;
-	private long _defaultJournalDDMStructureVersionId;
 	private long _defaultUserId;
 	private final Map<Long, Long> _defaultUserIdMap = new HashMap<>();
 	private final String _dlDDMStructureContent;
@@ -7283,7 +7284,6 @@ public class DataFactory {
 	private String _journalArticleContent;
 	private final Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<>();
-	private final String _journalDDMStructureContent;
 	private final List<String> _lastNames;
 	private final Map<String, SimpleCounter> _layoutIdCounters =
 		new HashMap<>();
