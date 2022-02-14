@@ -1,3 +1,3 @@
 <#list dataFactory.getSequence(dataFactory.maxSegmentsEntryCount) as index>
-	${dataFactory.toInsertSQL(dataFactory.newSegmentsEntry(guestGroupModel.groupId, index))}
+	${dataFactory.toInsertSQL(dataFactory.newSegmentsEntry(guestGroupId, index))}
 </#list>

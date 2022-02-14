@@ -1,6 +1,6 @@
 <#assign
-	globalGroupModel = dataFactory.newGlobalGroupModel()
-	guestGroupModel = dataFactory.newGuestGroupModel()
+	globalGroupId = dataFactory.getGlobalGroupId()
+	guestGroupId = dataFactory.getGuestGroupId()
 
 	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 	countryModel = dataFactory.newCountryModel()
@@ -13,10 +13,6 @@ ${dataFactory.toInsertSQL(countryModel)}
 <#include "default_user.ftl">
 
 <#include "commerce_groups.ftl">
-
-<@insertGroup _groupModel=globalGroupModel />
-
-<@insertGroup _groupModel=guestGroupModel />
 
 <@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel() />
 
@@ -72,7 +68,7 @@ ${dataFactory.toInsertSQL(countryModel)}
 	${csvFileWriter.write("repository", groupId + ", " + groupModel.name + "\n")}
 </#list>
 
-<#assign defaultSiteHomePageContentLayoutModels = dataFactory.newContentPageLayoutModels(guestGroupModel.groupId, "welcome") />
+<#assign defaultSiteHomePageContentLayoutModels = dataFactory.newContentPageLayoutModels(guestGroupId, "welcome") />
 
 <@insertContentPageLayout
 	_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(defaultSiteHomePageContentLayoutModels)
