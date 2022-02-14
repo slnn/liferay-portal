@@ -32,6 +32,7 @@ import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
@@ -111,7 +112,7 @@ public class SampleSQLBuilder {
 
 	protected void compressSQL(
 			DB db, File directory, Map<String, Writer> insertSQLWriters,
-			Map<String, StringBundler> sqls, String insertSQL)
+			Map<String, StringBundler> sqls, String insertSQL, String dBName)
 		throws IOException, SQLException {
 
 		String tableName = insertSQL.substring(0, insertSQL.indexOf(' '));
@@ -145,22 +146,53 @@ public class SampleSQLBuilder {
 			sb.setIndex(0);
 
 			writeToInsertSQLFile(
-				directory, tableName, insertSQLWriters, insertSQL);
+				directory, tableName, insertSQLWriters, insertSQL, dBName);
 		}
 	}
 
 	protected void compressSQL(Reader reader, File dir) throws Exception {
 		DB db = DBManagerUtil.getDB(BenchmarksPropsValues.DB_TYPE, null);
 
-		if ((BenchmarksPropsValues.DB_TYPE == DBType.MARIADB) ||
-			(BenchmarksPropsValues.DB_TYPE == DBType.MYSQL)) {
-
-			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
-		}
-
 		Map<String, Writer> insertSQLWriters = new HashMap<>();
 		Map<String, StringBundler> insertSQLs = new HashMap<>();
 		List<String> miscSQLs = new ArrayList<>();
+
+		if ((BenchmarksPropsValues.DB_TYPE == DBType.MYSQL) &&
+			(BenchmarksPropsValues.DEFAULT_DB_NAME != null)) {
+
+			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
+
+			miscSQLs.add("use " + BenchmarksPropsValues.DEFAULT_DB_NAME);
+
+			for (Map.Entry<String, Reader> entry :
+					sortSQLByDBName(
+						reader, new File(BenchmarksPropsValues.OUTPUT_DIR)
+					).entrySet()) {
+
+				compressSQL(
+					entry.getValue(), dir, db, insertSQLWriters, insertSQLs,
+					miscSQLs, entry.getKey());
+			}
+		}
+		else {
+			if ((BenchmarksPropsValues.DB_TYPE == DBType.MARIADB) ||
+				(BenchmarksPropsValues.DB_TYPE == DBType.MYSQL)) {
+
+				db = new SampleMySQLDB(
+					db.getMajorVersion(), db.getMinorVersion());
+			}
+
+			compressSQL(
+				reader, dir, db, insertSQLWriters, insertSQLs, miscSQLs, "");
+		}
+	}
+
+	protected void compressSQL(
+			Reader reader, File dir, DB db,
+			Map<String, Writer> insertSQLWriters,
+			Map<String, StringBundler> insertSQLs, List<String> miscSQLs,
+			String dBName)
+		throws Exception {
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(reader)) {
@@ -191,7 +223,7 @@ public class SampleSQLBuilder {
 
 						compressSQL(
 							db, dir, insertSQLWriters, insertSQLs,
-							s.substring(12));
+							s.substring(12), dBName);
 					}
 					else {
 						miscSQLs.add(s);
@@ -213,13 +245,17 @@ public class SampleSQLBuilder {
 				String insertSQL = db.buildSQL(sb.toString());
 
 				writeToInsertSQLFile(
-					dir, tableName, insertSQLWriters, insertSQL);
+					dir, tableName, insertSQLWriters, insertSQL, dBName);
 			}
 
 			try (Writer insertSQLWriter = insertSQLWriters.remove(tableName)) {
 				insertSQLWriter.write(";\n");
 			}
+
+			sb.setIndex(0);
 		}
+
+		insertSQLs.clear();
 
 		try (Writer miscSQLWriter = new FileWriter(new File(dir, "misc.sql"))) {
 			for (String miscSQL : miscSQLs) {
@@ -318,15 +354,93 @@ public class SampleSQLBuilder {
 		inputFile.delete();
 	}
 
+	protected Map<String, Reader> sortSQLByDBName(Reader reader, File dir) {
+		Map<String, Reader> readers = new HashMap<>();
+
+		Map<String, StringBundler> sqls = new HashMap<>();
+
+		String commitTransaction = "";
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(reader)) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				if (line.length() > 0) {
+					if (line.startsWith("update")) {
+						_sort(line, sqls);
+					}
+					else if (line.contains("insert into ")) {
+						if (!line.endsWith(");")) {
+							StringBundler sb = new StringBundler();
+
+							while (!line.endsWith(");")) {
+								sb.append(line);
+								sb.append(StringPool.NEW_LINE);
+
+								line = unsyncBufferedReader.readLine();
+							}
+
+							sb.append(line);
+
+							line = sb.toString();
+						}
+
+						_sort(line, sqls);
+					}
+					else {
+						commitTransaction = line;
+					}
+				}
+			}
+
+			for (Map.Entry<String, StringBundler> entry : sqls.entrySet()) {
+				String fileName = entry.getKey() + ".sql";
+
+				Writer writer = createFileWriter(new File(dir, fileName));
+
+				StringBundler sb = entry.getValue();
+
+				if (entry.getKey() == BenchmarksPropsValues.DEFAULT_DB_NAME) {
+					sb.append(commitTransaction);
+				}
+
+				writer.write(sb.toString());
+
+				writer.flush();
+
+				readers.put(
+					entry.getKey(), new FileReader(new File(dir, fileName)));
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
+		return readers;
+	}
+
 	protected void writeToInsertSQLFile(
 			File dir, String tableName, Map<String, Writer> insertSQLWriters,
-			String insertSQL)
+			String insertSQL, String dBName)
 		throws IOException {
+
+		if (!dBName.equals("")) {
+			insertSQL = StringBundler.concat(
+				"use ", dBName, StringPool.SEMICOLON, StringPool.NEW_LINE,
+				insertSQL);
+
+			dBName = dBName + "_";
+		}
 
 		Writer insertSQLWriter = insertSQLWriters.get(tableName);
 
 		if (insertSQLWriter == null) {
-			File file = new File(dir, tableName + ".sql");
+			File file = new File(
+				dir, StringBundler.concat(dBName, tableName, ".sql"));
 
 			insertSQLWriter = createFileWriter(file);
 
@@ -334,6 +448,31 @@ public class SampleSQLBuilder {
 		}
 
 		insertSQLWriter.write(insertSQL);
+	}
+
+	private void _sort(String line, Map<String, StringBundler> sqls) {
+		String dBName = BenchmarksPropsValues.DEFAULT_DB_NAME;
+
+		if (line.startsWith("use lpartition_")) {
+			dBName = line.substring(4, line.indexOf(StringPool.SEMICOLON));
+
+			line = line.substring(dBName.length() + 5);
+		}
+
+		StringBundler sb = sqls.get(dBName);
+
+		if ((sb == null) || (sb.index() == 0)) {
+			sb = new StringBundler();
+
+			sqls.put(dBName, sb);
+
+			sb.append(line);
+			sb.append("\n");
+		}
+		else {
+			sb.append(line);
+			sb.append("\n");
+		}
 	}
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
