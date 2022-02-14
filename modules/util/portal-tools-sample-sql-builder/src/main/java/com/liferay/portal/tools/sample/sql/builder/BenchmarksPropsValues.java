@@ -48,6 +48,9 @@ public class BenchmarksPropsValues {
 		StringUtil.toUpperCase(
 			PropertiesHolder._get(BenchmarksPropsKeys.DB_TYPE)));
 
+	public static final String DEFAULT_DB_NAME = PropertiesHolder._get(
+		BenchmarksPropsKeys.DEFAULT_DB_NAME);
+
 	public static final boolean DEFAULT_SITE_ADDITIONAL_DATA_ENABLED =
 		GetterUtil.getBoolean(
 			PropertiesHolder._get(
