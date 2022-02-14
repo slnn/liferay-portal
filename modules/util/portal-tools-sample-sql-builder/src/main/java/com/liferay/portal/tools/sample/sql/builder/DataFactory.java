@@ -392,6 +392,8 @@ public class DataFactory {
 
 		_initCommerceCurrencyMap();
 
+		_initDDMTemplateMap();
+
 		_initCountersMap();
 
 		_counter = new SimpleCounter(_countersMap.get(Counter.class.getName()));
@@ -582,6 +584,10 @@ public class DataFactory {
 
 	public long getDefaultDLDDMStructureId() {
 		return _defaultDLDDMStructureId;
+	}
+
+	public long getDefaultJournalDDMTemplateId() {
+		return _ddmTemplateMap.get(_companyId);
 	}
 
 	public long getDLFileEntryClassNameId() {
@@ -3473,14 +3479,6 @@ public class DataFactory {
 			ddmStructureModel, _defaultJournalDDMStructureVersionId);
 	}
 
-	public DDMTemplateModel newDefaultJournalDDMTemplateModel() {
-		_defaultJournalDDMTemplateId = _counter.get();
-
-		return newDDMTemplateModel(
-			_globalGroupId, _defaultUserId, _defaultJournalDDMStructureId,
-			getClassNameId(JournalArticle.class), _defaultJournalDDMTemplateId);
-	}
-
 	public DDMTemplateVersionModel newDefaultJournalDDMTemplateVersionModel() {
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
 			new DDMTemplateVersionModelImpl();
@@ -3504,7 +3502,8 @@ public class DataFactory {
 		ddmTemplateVersionModelImpl.setClassNameId(
 			getClassNameId(DDMStructure.class));
 		ddmTemplateVersionModelImpl.setClassPK(_defaultJournalDDMStructureId);
-		ddmTemplateVersionModelImpl.setTemplateId(_defaultJournalDDMTemplateId);
+		ddmTemplateVersionModelImpl.setTemplateId(
+			_ddmTemplateMap.get(_companyId));
 		ddmTemplateVersionModelImpl.setVersion(
 			DDMTemplateConstants.VERSION_DEFAULT);
 
@@ -6080,17 +6079,6 @@ public class DataFactory {
 	}
 
 	protected DDMTemplateModel newDDMTemplateModel(
-		long groupId, long userId, long structureId, long sourceClassNameId,
-		long templateId) {
-
-		return newDDMTemplateModel(
-			groupId, userId, DDMTemplateConstants.TEMPLATE_MODE_CREATE,
-			"Basic Web Content", "${content.getData()}",
-			getClassNameId(DDMStructure.class), structureId, sourceClassNameId,
-			templateId, _JOURNAL_STRUCTURE_KEY);
-	}
-
-	protected DDMTemplateModel newDDMTemplateModel(
 		long groupId, long userId, String mode, String name, String script,
 		long classNameId, long classPK, long resourceClassNameId,
 		long templateId, String templateKey) {
@@ -7138,6 +7126,23 @@ public class DataFactory {
 		}
 	}
 
+	private void _initDDMTemplateMap() throws Exception {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getResourceInputStream("csv/ddmTemplateTable.csv")))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				String[] items = line.split(StringPool.COMMA);
+
+				_ddmTemplateMap.put(
+					GetterUtil.getLong(items[0]), GetterUtil.getLong(items[1]));
+			}
+		}
+	}
+
 	private void _initDefaultUserIdMap() throws Exception {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
@@ -7395,13 +7400,13 @@ public class DataFactory {
 	private final Map<String, Long> _countersMap = new HashMap<>();
 	private final Map<Long, CPInstanceModel> _cpInstanceModels =
 		new HashMap<>();
+	private final Map<Long, Long> _ddmTemplateMap = new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
 	private long _defaultDLDDMStructureId;
 	private long _defaultDLDDMStructureVersionId;
 	private long _defaultJournalDDMStructureId;
 	private long _defaultJournalDDMStructureVersionId;
-	private long _defaultJournalDDMTemplateId;
 	private long _defaultUserId;
 	private final Map<Long, Long> _defaultUserIdMap = new HashMap<>();
 	private final String _dlDDMStructureContent;

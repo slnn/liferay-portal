@@ -199,7 +199,7 @@
 <#macro insertJournalArticle
 	_journalArticleModel
 	_journalDDMStructureModel
-	_journalDDMTemplateModel
+	_journalDDMTemplateId
 	_insertAssetEntry
 >
 	${dataFactory.toInsertSQL(_journalArticleModel)}
@@ -220,7 +220,7 @@
 
 	${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateModel.templateId))}
+	${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateId))}
 
 	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId))}
 
