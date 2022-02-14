@@ -195,13 +195,12 @@
 
 <#macro insertJournalArticle
 	_journalArticleModel
-	_journalDDMStructureModel
 	_journalDDMTemplateId
 	_insertAssetEntry
 >
 	${dataFactory.toInsertSQL(_journalArticleModel)}
 
-	<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel) />
+	<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel, dataFactory.defaultJournalDDMStructureVersionId) />
 
 	<#list ddmFieldModels as ddmFieldModel>
 		${dataFactory.toInsertSQL(ddmFieldModel)}
@@ -219,7 +218,7 @@
 
 	${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateId))}
 
-	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId))}
+	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, dataFactory.defaultJournalDDMStructureVersionId))}
 
 	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(_journalArticleModel))}
 
