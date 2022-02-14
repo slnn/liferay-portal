@@ -13,7 +13,7 @@
 
 	${csvFileWriter.write("company", companyModelList[1] + "," + companyModelList[0] + "\n")}
 
-	<#include "roles.ftl">
+	${dataFactory.initRoleModels()}
 
 	<#include "groups.ftl">
 </#list>
