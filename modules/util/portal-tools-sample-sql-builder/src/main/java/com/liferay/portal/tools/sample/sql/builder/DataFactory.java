@@ -390,6 +390,8 @@ public class DataFactory {
 
 		_initRoleModelsMap();
 
+		_initDefaultUserIdMap();
+
 		_initCountersMap();
 
 		_counter = new SimpleCounter(_countersMap.get(Counter.class.getName()));
@@ -3557,14 +3559,6 @@ public class DataFactory {
 		return ddmTemplateVersionModelImpl;
 	}
 
-	public UserModel newDefaultUserModel() {
-		_defaultUserId = _counter.get();
-
-		return newUserModel(
-			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, true);
-	}
-
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(
 		long ddmStorageLinkId, long ddmStructureId,
 		DLFileVersionModel dlFileVersionModel) {
@@ -5513,6 +5507,10 @@ public class DataFactory {
 		_companyId = GetterUtil.getLong(companyId);
 	}
 
+	public void setDefaultUserId() {
+		_defaultUserId = _defaultUserIdMap.get(_companyId);
+	}
+
 	public void setWebId(String webId) {
 		_webId = webId;
 	}
@@ -7170,6 +7168,23 @@ public class DataFactory {
 		}
 	}
 
+	private void _initDefaultUserIdMap() throws Exception {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getResourceInputStream("csv/defaultUserId.csv")))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				String[] items = line.split(StringPool.COMMA);
+
+				_defaultUserIdMap.put(
+					GetterUtil.getLong(items[0]), GetterUtil.getLong(items[1]));
+			}
+		}
+	}
+
 	private void _initGroupModelMaps() throws Exception {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
@@ -7417,6 +7432,7 @@ public class DataFactory {
 	private long _defaultJournalDDMStructureVersionId;
 	private long _defaultJournalDDMTemplateId;
 	private long _defaultUserId;
+	private final Map<Long, Long> _defaultUserIdMap = new HashMap<>();
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private final SimpleCounter _dLFileEntryIdCounter;
