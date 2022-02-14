@@ -231,7 +231,6 @@ import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
-import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.PortalPreferencesModel;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
@@ -402,20 +401,14 @@ public class DataFactory {
 		_socialActivityIdCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
 
-		List<String> models = ModelHintsUtil.getModels();
-
-		models.add(Layout.class.getName());
-		models.add(NavItem.class.getName());
-		models.add(PortletDisplayTemplate.class.getName());
-		models.add(UserPersonalSite.class.getName());
-
-		for (String model : models) {
+		for (List<String> classNameModelList : _initClassNameModels()) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
 
-			classNameModel.setClassNameId(_counter.get());
-			classNameModel.setValue(model);
+			classNameModel.setClassNameId(
+				GetterUtil.getLong(classNameModelList.get(0)));
+			classNameModel.setValue(classNameModelList.get(1));
 
-			_classNameModels.put(model, classNameModel);
+			_classNameModels.put(classNameModelList.get(1), classNameModel);
 		}
 
 		_assetClassNameIds = new long[] {
@@ -7152,6 +7145,32 @@ public class DataFactory {
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	private List<List<String>> _initClassNameModels() throws Exception {
+		List<List<String>> classNameModelLists = new ArrayList<>();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getResourceInputStream("csv/classNameTable.csv")))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				String[] items = line.split(StringPool.COMMA);
+
+				List<String> classNameModelList = new ArrayList<>();
+
+				classNameModelList.add(items[0]);
+
+				classNameModelList.add(items[1]);
+
+				classNameModelLists.add(classNameModelList);
+			}
+		}
+
+		return classNameModelLists;
 	}
 
 	private CompanyModel _newCompanyModel(String webId) {
