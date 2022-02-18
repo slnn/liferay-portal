@@ -269,19 +269,21 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
-	private void _exportClassNameTableData(
-			BufferedWriter classNameTableBufferedWriter)
-		throws Exception {
-
+	private void _exportClassNameTableData() throws Exception {
 		List<ClassName> classNames = _classNameLocalService.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (ClassName className : classNames) {
-			classNameTableBufferedWriter.append(
-				String.valueOf(className.getClassNameId()));
-			classNameTableBufferedWriter.append(StringPool.COMMA);
-			classNameTableBufferedWriter.append(className.getValue());
-			classNameTableBufferedWriter.newLine();
+		try (BufferedWriter classNameTableBufferedWriter =
+				Files.newBufferedWriter(
+					outputDirPath.resolve("classNameTable.csv"))) {
+
+			for (ClassName className : classNames) {
+				classNameTableBufferedWriter.append(
+					String.valueOf(className.getClassNameId()));
+				classNameTableBufferedWriter.append(StringPool.COMMA);
+				classNameTableBufferedWriter.append(className.getValue());
+				classNameTableBufferedWriter.newLine();
+			}
 		}
 	}
 
@@ -357,9 +359,6 @@ public class CompanySampleDataGenerationTest {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				outputDirFile.getAbsolutePath());
-			BufferedWriter classNameTableBufferedWriter =
-				Files.newBufferedWriter(
-					outputDirPath.resolve("classNameTable.csv"));
 			BufferedWriter commerceCurrencyTableBufferedWriter =
 				Files.newBufferedWriter(
 					outputDirPath.resolve("commerceCurrencyTable.csv"));
@@ -460,7 +459,7 @@ public class CompanySampleDataGenerationTest {
 			}
 
 			_exportCounterTableData(counterTableBufferedWriter);
-			_exportClassNameTableData(classNameTableBufferedWriter);
+			_exportClassNameTableData();
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(oldCompanyId);
