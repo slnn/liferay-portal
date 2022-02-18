@@ -461,18 +461,6 @@ public class CompanySampleDataGenerationTest {
 
 			_exportCounterTableData(counterTableBufferedWriter);
 			_exportClassNameTableData(classNameTableBufferedWriter);
-
-			classNameTableBufferedWriter.flush();
-			commerceCurrencyTableBufferedWriter.flush();
-			companyTableBufferedWriter.flush();
-			counterTableBufferedWriter.flush();
-			ddmStructureVersionTableBufferedWriter.flush();
-			ddmTemplateTableBufferedWriter.flush();
-			defaultUserIdBufferedWriter.flush();
-			groupTableBufferedWriter.flush();
-			hostBufferedWriter.flush();
-			roleTableBufferedWriter.flush();
-			userBufferedWriter.flush();
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(oldCompanyId);
