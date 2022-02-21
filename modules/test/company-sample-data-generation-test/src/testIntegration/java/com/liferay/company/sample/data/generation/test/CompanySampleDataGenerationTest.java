@@ -15,6 +15,9 @@
 package com.liferay.company.sample.data.generation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.product.constants.CommerceCatalogConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -247,6 +250,33 @@ public class CompanySampleDataGenerationTest {
 		CompanyThreadLocal.setCompanyId(company.getCompanyId());
 
 		_exportCompanyTableData(company);
+
+		_exportCommerceCurrencyTableData(company.getCompanyId());
+	}
+
+	private void _exportCommerceCurrencyTableData(long companyId)
+		throws Exception {
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				companyId,
+				CommerceCatalogConstants.MASTER_COMMERCE_DEFAULT_CURRENCY);
+
+		Path commerceCurrencyTableCSVFilePath = _outputDirPath.resolve(
+			_COMMERCE_CURRENCY_TABLE_CSV);
+
+		try (BufferedWriter commerceCurrencyTableBufferedWriter =
+				new BufferedWriter(
+					new FileWriter(
+						commerceCurrencyTableCSVFilePath.toFile(), true))) {
+
+			commerceCurrencyTableBufferedWriter.append(
+				String.valueOf(companyId));
+			commerceCurrencyTableBufferedWriter.append(StringPool.COMMA);
+			commerceCurrencyTableBufferedWriter.append(
+				String.valueOf(commerceCurrency.getCommerceCurrencyId()));
+			commerceCurrencyTableBufferedWriter.newLine();
+		}
 	}
 
 	private void _exportCompanyTableData(Company company) throws Exception {
@@ -357,6 +387,9 @@ public class CompanySampleDataGenerationTest {
 		return serviceContext;
 	}
 
+	private static final String _COMMERCE_CURRENCY_TABLE_CSV =
+		"commerceCurrencyTable.csv";
+
 	private static final int _COMPANY_COUNT = GetterUtil.get(
 		PropsUtil.get("sample.data.company.count"), 2);
 
@@ -373,6 +406,9 @@ public class CompanySampleDataGenerationTest {
 
 	private static final int _USER_PER_COMPANY_COUNT = GetterUtil.get(
 		PropsUtil.get("sample.data.user.per.company.count"), 2);
+
+	@Inject
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
