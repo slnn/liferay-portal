@@ -18,6 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.constants.CommerceCatalogConstants;
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -252,6 +257,8 @@ public class CompanySampleDataGenerationTest {
 		_exportCompanyTableData(company);
 
 		_exportCommerceCurrencyTableData(company.getCompanyId());
+
+		_exportDDMStructureVersionTableData(company.getCompanyId());
 	}
 
 	private void _exportCommerceCurrencyTableData(long companyId)
@@ -337,6 +344,40 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
+	private void _exportDDMStructureVersionTableData(long companyId)
+		throws Exception {
+
+		Path ddmStructureVersionTableCSVFilePath = _outputDirPath.resolve(
+			_DDM_STRUCTURE_VERSION_TABLE_CSV);
+
+		try (BufferedWriter ddmStructureVersionTableBufferedWriter =
+				new BufferedWriter(
+					new FileWriter(
+						ddmStructureVersionTableCSVFilePath.toFile(), true))) {
+
+			for (DDMStructure ddmStructure :
+					_dDMStructureLocalService.getStructures()) {
+
+				String structureKey = ddmStructure.getStructureKey();
+
+				if (structureKey.equals(_JOURNAL_STRUCTURE_KEY)) {
+					DDMStructureVersion ddmStructureVersion =
+						_dDMStructureVersionLocalService.getStructureVersion(
+							ddmStructure.getStructureId(),
+							DDMStructureConstants.VERSION_DEFAULT);
+
+					ddmStructureVersionTableBufferedWriter.append(
+						String.valueOf(companyId));
+					ddmStructureVersionTableBufferedWriter.append(
+						StringPool.COMMA);
+					ddmStructureVersionTableBufferedWriter.append(
+						String.valueOf(ddmStructureVersion.getPrimaryKey()));
+					ddmStructureVersionTableBufferedWriter.newLine();
+				}
+			}
+		}
+	}
+
 	private void _exportHost(String hostName) throws Exception {
 		Path hostCSVFilePath = _outputDirPath.resolve(_HOST_CSV);
 
@@ -395,9 +436,14 @@ public class CompanySampleDataGenerationTest {
 
 	private static final String _COMPANY_TABLE_CSV = "companyTable.csv";
 
+	private static final String _DDM_STRUCTURE_VERSION_TABLE_CSV =
+		"ddmStructureVersionTable.csv";
+
 	private static final String _DEFAULT_COMPANY_WEBID = "liferay.com";
 
 	private static final String _HOST_CSV = "host.csv";
+
+	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
 
 	private static final String _PORTAL_SERVER_IP_ADDRESS = GetterUtil.get(
 		PropsUtil.get("sample.data.portal.server.ip.address"), "127.0.0.1");
@@ -414,6 +460,13 @@ public class CompanySampleDataGenerationTest {
 	private CompanyLocalService _companyLocalService;
 
 	private final Map<String, List<String>> _csvMap = new ConcurrentHashMap<>();
+
+	@Inject
+	private DDMStructureLocalService _dDMStructureLocalService;
+
+	@Inject
+	private DDMStructureVersionLocalService _dDMStructureVersionLocalService;
+
 	private ExecutorService _executorService;
 	private AtomicReference<InetSocketAddress> _originalAtomicReference;
 	private Path _outputDirPath;
