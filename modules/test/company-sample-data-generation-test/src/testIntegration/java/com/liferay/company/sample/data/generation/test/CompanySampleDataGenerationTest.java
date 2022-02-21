@@ -15,17 +15,35 @@
 package com.liferay.company.sample.data.generation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.product.constants.CommerceCatalogConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -55,12 +73,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -244,6 +269,101 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
+	private void _exportByCompany(Company company) throws Exception {
+		CompanyThreadLocal.setCompanyId(company.getCompanyId());
+
+		_exportCompanyTableData(company);
+
+		_exportCommerceCurrencyTableData(company.getCompanyId());
+
+		_exportDDMStructureVersionTableData(company.getCompanyId());
+
+		_exportDDMTemplateTableData(company.getCompanyId());
+
+		_exportDefaultUserId(company.getCompanyId());
+
+		_exportGroupTableData(company.getCompanyId());
+
+		_exportRoleTableData(company.getCompanyId());
+	}
+
+	private void _exportClassNameTableData() throws Exception {
+		List<ClassName> classNames = _classNameLocalService.getClassNames(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		try (BufferedWriter classNameTableBufferedWriter =
+				Files.newBufferedWriter(
+					_outputDirPath.resolve(_CLASS_NAME_TABLE_CSV))) {
+
+			for (ClassName className : classNames) {
+				classNameTableBufferedWriter.append(
+					String.valueOf(className.getClassNameId()));
+				classNameTableBufferedWriter.append(StringPool.COMMA);
+				classNameTableBufferedWriter.append(className.getValue());
+				classNameTableBufferedWriter.newLine();
+			}
+		}
+	}
+
+	private void _exportCommerceCurrencyTableData(long companyId)
+		throws Exception {
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				companyId,
+				CommerceCatalogConstants.MASTER_COMMERCE_DEFAULT_CURRENCY);
+
+		try (BufferedWriter commerceCurrencyTableBufferedWriter =
+				Files.newBufferedWriter(
+					_outputDirPath.resolve(_COMMERCE_CURRENCY_TABLE_CSV))) {
+
+			commerceCurrencyTableBufferedWriter.append(
+				String.valueOf(companyId));
+			commerceCurrencyTableBufferedWriter.append(StringPool.COMMA);
+			commerceCurrencyTableBufferedWriter.append(
+				String.valueOf(commerceCurrency.getCommerceCurrencyId()));
+			commerceCurrencyTableBufferedWriter.newLine();
+		}
+	}
+
+	private void _exportCompanyTableData(Company company) throws Exception {
+		try (BufferedWriter companyTableBufferedWriter =
+				Files.newBufferedWriter(
+					_outputDirPath.resolve(_COMPANY_TABLE_CSV))) {
+
+			companyTableBufferedWriter.append(
+				String.valueOf(company.getCompanyId()));
+			companyTableBufferedWriter.append(StringPool.COMMA);
+			companyTableBufferedWriter.append(company.getWebId());
+			companyTableBufferedWriter.newLine();
+		}
+	}
+
+	private void _exportCounterTableData() throws Exception {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select name, currentId from Counter")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					String name = resultSet.getString("name");
+					long currentId = resultSet.getLong("currentId");
+
+					try (BufferedWriter counterTableBufferedWriter =
+							Files.newBufferedWriter(
+								_outputDirPath.resolve(_COUNTER_TABLE_CSV))) {
+
+						counterTableBufferedWriter.append(name);
+						counterTableBufferedWriter.append(StringPool.COMMA);
+						counterTableBufferedWriter.append(
+							String.valueOf(currentId));
+						counterTableBufferedWriter.newLine();
+					}
+				}
+			}
+		}
+	}
+
 	private void _exportCSVs() throws Exception {
 		String outputDir = PropsUtil.get("sample.data.output.dir");
 
@@ -251,10 +371,10 @@ public class CompanySampleDataGenerationTest {
 			return;
 		}
 
-		Path outputDirPath = Paths.get(
+		_outputDirPath = Paths.get(
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), outputDir);
 
-		File outputDirFile = outputDirPath.toFile();
+		File outputDirFile = _outputDirPath.toFile();
 
 		if (outputDirFile.exists()) {
 			FileUtil.deltree(outputDirFile);
@@ -262,42 +382,181 @@ public class CompanySampleDataGenerationTest {
 
 		outputDirFile.mkdir();
 
+		long oldCompanyId = CompanyThreadLocal.getCompanyId();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer(
-				outputDirFile.getAbsolutePath());
-			BufferedWriter companyBufferedWriter = Files.newBufferedWriter(
-				outputDirPath.resolve("company.csv"));
-			BufferedWriter hostBufferedWriter = Files.newBufferedWriter(
-				outputDirPath.resolve("host.csv"));
-			BufferedWriter userBufferedWriter = Files.newBufferedWriter(
-				outputDirPath.resolve("user.csv"))) {
+				outputDirFile.getAbsolutePath())) {
+
+			_exportByCompany(
+				_companyLocalService.getCompanyByWebId("liferay.com"));
 
 			List<String> keys = new ArrayList<>(_csvMap.keySet());
 
 			Collections.sort(keys);
 
 			for (String key : keys) {
-				companyBufferedWriter.append(CSVUtil.encode(key));
-				companyBufferedWriter.newLine();
+				_exportUserTableData(key);
 
-				hostBufferedWriter.append("127.0.0.1 ");
-				hostBufferedWriter.append(CSVUtil.encode(key));
-				hostBufferedWriter.newLine();
-
-				List<String> screenNames = _csvMap.get(key);
-
-				Collections.sort(screenNames);
-
-				for (String screenName : screenNames) {
-					userBufferedWriter.append(CSVUtil.encode(key));
-					userBufferedWriter.append(StringPool.COMMA);
-					userBufferedWriter.append(CSVUtil.encode(screenName));
-					userBufferedWriter.newLine();
-				}
+				_exportByCompany(_companyLocalService.getCompanyByWebId(key));
 			}
 
-			companyBufferedWriter.flush();
-			hostBufferedWriter.flush();
-			userBufferedWriter.flush();
+			_exportCounterTableData();
+
+			_exportClassNameTableData();
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(oldCompanyId);
+		}
+	}
+
+	private void _exportDDMStructureVersionTableData(long companyId)
+		throws Exception {
+
+		for (DDMStructure ddmStructure :
+				_dDMStructureLocalService.getStructures()) {
+
+			String structureKey = ddmStructure.getStructureKey();
+
+			if (structureKey.equals(_JOURNAL_STRUCTURE_KEY)) {
+				DDMStructureVersion ddmStructureVersion =
+					_dDMStructureVersionLocalService.getStructureVersion(
+						ddmStructure.getStructureId(),
+						DDMStructureConstants.VERSION_DEFAULT);
+
+				try (BufferedWriter ddmStructureVersionTableBufferedWriter =
+						Files.newBufferedWriter(
+							_outputDirPath.resolve(
+								_DDM_STRUCTURE_VERSION_TABLE_CSV))) {
+
+					ddmStructureVersionTableBufferedWriter.append(
+						String.valueOf(companyId));
+					ddmStructureVersionTableBufferedWriter.append(
+						StringPool.COMMA);
+					ddmStructureVersionTableBufferedWriter.append(
+						String.valueOf(ddmStructureVersion.getPrimaryKey()));
+					ddmStructureVersionTableBufferedWriter.newLine();
+				}
+			}
+		}
+	}
+
+	private void _exportDDMTemplateTableData(long companyId) throws Exception {
+		Group globalGroup = _groupLocalService.getGroup(
+			companyId, String.valueOf(companyId));
+
+		List<DDMTemplate> ddmTemplates = _dDMTemplateLocalService.getTemplates(
+			globalGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(DDMStructure.class));
+
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			try (BufferedWriter ddmTemplateTableBufferedWriter =
+					Files.newBufferedWriter(
+						_outputDirPath.resolve(_DDM_TEMPLATE_TABLE_CSV))) {
+
+				ddmTemplateTableBufferedWriter.append(
+					String.valueOf(ddmTemplate.getCompanyId()));
+				ddmTemplateTableBufferedWriter.append(StringPool.COMMA);
+				ddmTemplateTableBufferedWriter.append(
+					String.valueOf(ddmTemplate.getTemplateId()));
+				ddmTemplateTableBufferedWriter.newLine();
+			}
+		}
+	}
+
+	private void _exportDefaultUserId(long companyId) throws Exception {
+		try (BufferedWriter defaultUserIdBufferedWriter =
+				Files.newBufferedWriter(
+					_outputDirPath.resolve(_DEFAULT_USER_ID_CSV))) {
+
+			defaultUserIdBufferedWriter.append(String.valueOf(companyId));
+			defaultUserIdBufferedWriter.append(StringPool.COMMA);
+			defaultUserIdBufferedWriter.append(
+				String.valueOf(_userLocalService.getDefaultUserId(companyId)));
+			defaultUserIdBufferedWriter.newLine();
+		}
+	}
+
+	private void _exportGroupTableData(long companyId) throws Exception {
+		Set<String> expectedGroupKeyNames = new HashSet<>(
+			Arrays.asList(GroupConstants.GUEST, String.valueOf(companyId)));
+
+		List<Group> groups = _groupLocalService.getCompanyGroups(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (Group group : groups) {
+			String groupKey = group.getGroupKey();
+
+			if (expectedGroupKeyNames.contains(groupKey)) {
+				try (BufferedWriter groupTableBufferedWriter =
+						Files.newBufferedWriter(
+							_outputDirPath.resolve(_GROUP_TABLE_CSV))) {
+
+					groupTableBufferedWriter.append(String.valueOf(companyId));
+					groupTableBufferedWriter.append(StringPool.COMMA);
+					groupTableBufferedWriter.append(
+						String.valueOf(group.getGroupId()));
+					groupTableBufferedWriter.append(StringPool.COMMA);
+
+					if (groupKey.equals(String.valueOf(companyId))) {
+						groupTableBufferedWriter.append(GroupConstants.GLOBAL);
+					}
+					else {
+						groupTableBufferedWriter.append(groupKey);
+					}
+
+					groupTableBufferedWriter.newLine();
+				}
+			}
+		}
+	}
+
+	private void _exportRoleTableData(long companyId) throws Exception {
+		Set<String> unexpectedRoleNames = new HashSet<>(
+			Arrays.asList(
+				RoleConstants.ANALYTICS_ADMINISTRATOR,
+				RoleConstants.PUBLICATIONS_USER,
+				DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+				DepotRolesConstants.ASSET_LIBRARY_MEMBER));
+
+		List<Role> roles = _roleLocalService.getRoles(
+			companyId,
+			new int[] {
+				RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE,
+				RoleConstants.TYPE_ORGANIZATION, RoleConstants.TYPE_DEPOT
+			});
+
+		for (Role role : roles) {
+			if (!unexpectedRoleNames.contains(role.getName())) {
+				try (BufferedWriter roleTableBufferedWriter =
+						Files.newBufferedWriter(
+							_outputDirPath.resolve(_ROLE_TABLE_CSV))) {
+
+					roleTableBufferedWriter.append(String.valueOf(companyId));
+					roleTableBufferedWriter.append(StringPool.COMMA);
+					roleTableBufferedWriter.append(
+						String.valueOf(role.getRoleId()));
+					roleTableBufferedWriter.append(StringPool.COMMA);
+					roleTableBufferedWriter.append(role.getName());
+					roleTableBufferedWriter.newLine();
+				}
+			}
+		}
+	}
+
+	private void _exportUserTableData(String hostName) throws Exception {
+		List<String> screenNames = _csvMap.get(hostName);
+
+		Collections.sort(screenNames);
+
+		for (String screenName : screenNames) {
+			try (BufferedWriter userBufferedWriter = Files.newBufferedWriter(
+					_outputDirPath.resolve(_USER_TABLE_CSV))) {
+
+				userBufferedWriter.append(CSVUtil.encode(hostName));
+				userBufferedWriter.append(StringPool.COMMA);
+				userBufferedWriter.append(CSVUtil.encode(screenName));
+				userBufferedWriter.newLine();
+			}
 		}
 	}
 
@@ -319,18 +578,64 @@ public class CompanySampleDataGenerationTest {
 		return serviceContext;
 	}
 
+	private static final String _CLASS_NAME_TABLE_CSV = "classNameTable.csv";
+
+	private static final String _COMMERCE_CURRENCY_TABLE_CSV =
+		"commerceCurrencyTable.csv";
+
 	private static final int _COMPANY_COUNT = GetterUtil.get(
 		PropsUtil.get("sample.data.company.count"), 2);
 
+	private static final String _COMPANY_TABLE_CSV = "companyTable.csv";
+
+	private static final String _COUNTER_TABLE_CSV = "counterTable.csv";
+
+	private static final String _DDM_STRUCTURE_VERSION_TABLE_CSV =
+		"ddmStructureVersionTable.csv";
+
+	private static final String _DDM_TEMPLATE_TABLE_CSV =
+		"ddmTemplateTable.csv";
+
+	private static final String _DEFAULT_USER_ID_CSV = "defaultUserId.csv";
+
+	private static final String _GROUP_TABLE_CSV = "groupTable.csv";
+
+	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
+
+	private static final String _ROLE_TABLE_CSV = "roleTable.csv";
+
 	private static final int _USER_PER_COMPANY_COUNT = GetterUtil.get(
 		PropsUtil.get("sample.data.user.per.company.count"), 2);
+
+	private static final String _USER_TABLE_CSV = "user.csv";
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	private final Map<String, List<String>> _csvMap = new ConcurrentHashMap<>();
+
+	@Inject
+	private DDMStructureLocalService _dDMStructureLocalService;
+
+	@Inject
+	private DDMStructureVersionLocalService _dDMStructureVersionLocalService;
+
+	@Inject
+	private DDMTemplateLocalService _dDMTemplateLocalService;
+
 	private ExecutorService _executorService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private AtomicReference<InetSocketAddress> _originalAtomicReference;
+	private Path _outputDirPath;
 
 	@Inject
 	private Portal _portal;
