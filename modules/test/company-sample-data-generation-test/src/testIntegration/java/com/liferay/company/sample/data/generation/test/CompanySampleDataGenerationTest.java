@@ -28,10 +28,12 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -68,11 +70,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -268,6 +273,8 @@ public class CompanySampleDataGenerationTest {
 		_exportDDMTemplateTableData(company.getCompanyId());
 
 		_exportDefaultUserId(company.getCompanyId());
+
+		_exportGroupTableData(company.getCompanyId());
 	}
 
 	private void _exportCommerceCurrencyTableData(long companyId)
@@ -427,6 +434,41 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
+	private void _exportGroupTableData(long companyId) throws Exception {
+		Set<String> expectedGroupKeyNames = new HashSet<>(
+			Arrays.asList(GroupConstants.GUEST, String.valueOf(companyId)));
+
+		List<Group> groups = _groupLocalService.getCompanyGroups(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Path groupTableCSVFilePath = _outputDirPath.resolve(_GROUP_TABLE_CSV);
+
+		try (BufferedWriter groupTableBufferedWriter = new BufferedWriter(
+				new FileWriter(groupTableCSVFilePath.toFile(), true))) {
+
+			for (Group group : groups) {
+				String groupKey = group.getGroupKey();
+
+				if (expectedGroupKeyNames.contains(groupKey)) {
+					groupTableBufferedWriter.append(String.valueOf(companyId));
+					groupTableBufferedWriter.append(StringPool.COMMA);
+					groupTableBufferedWriter.append(
+						String.valueOf(group.getGroupId()));
+					groupTableBufferedWriter.append(StringPool.COMMA);
+
+					if (groupKey.equals(String.valueOf(companyId))) {
+						groupTableBufferedWriter.append(GroupConstants.GLOBAL);
+					}
+					else {
+						groupTableBufferedWriter.append(groupKey);
+					}
+
+					groupTableBufferedWriter.newLine();
+				}
+			}
+		}
+	}
+
 	private void _exportHost(String hostName) throws Exception {
 		Path hostCSVFilePath = _outputDirPath.resolve(_HOST_CSV);
 
@@ -494,6 +536,8 @@ public class CompanySampleDataGenerationTest {
 	private static final String _DEFAULT_COMPANY_WEBID = "liferay.com";
 
 	private static final String _DEFAULT_USER_ID_CSV = "defaultUserId.csv";
+
+	private static final String _GROUP_TABLE_CSV = "groupTable.csv";
 
 	private static final String _HOST_CSV = "host.csv";
 
