@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.constants.CommerceCatalogConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -275,6 +276,8 @@ public class CompanySampleDataGenerationTest {
 		_exportDefaultUserId(company.getCompanyId());
 
 		_exportGroupTableData(company.getCompanyId());
+
+		_exportRoleTableData(company.getCompanyId());
 	}
 
 	private void _exportCommerceCurrencyTableData(long companyId)
@@ -482,6 +485,40 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
+	private void _exportRoleTableData(long companyId) throws Exception {
+		Set<String> unexpectedRoleNames = new HashSet<>(
+			Arrays.asList(
+				RoleConstants.ANALYTICS_ADMINISTRATOR,
+				RoleConstants.PUBLICATIONS_USER,
+				DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+				DepotRolesConstants.ASSET_LIBRARY_MEMBER));
+
+		List<Role> roles = _roleLocalService.getRoles(
+			companyId,
+			new int[] {
+				RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE,
+				RoleConstants.TYPE_ORGANIZATION, RoleConstants.TYPE_DEPOT
+			});
+
+		Path roleTableCSVFilePath = _outputDirPath.resolve(_ROLE_TABLE_CSV);
+
+		try (BufferedWriter roleTableBufferedWriter = new BufferedWriter(
+				new FileWriter(roleTableCSVFilePath.toFile(), true))) {
+
+			for (Role role : roles) {
+				if (!unexpectedRoleNames.contains(role.getName())) {
+					roleTableBufferedWriter.append(String.valueOf(companyId));
+					roleTableBufferedWriter.append(StringPool.COMMA);
+					roleTableBufferedWriter.append(
+						String.valueOf(role.getRoleId()));
+					roleTableBufferedWriter.append(StringPool.COMMA);
+					roleTableBufferedWriter.append(role.getName());
+					roleTableBufferedWriter.newLine();
+				}
+			}
+		}
+	}
+
 	private void _exportUserData(String hostName) throws Exception {
 		List<String> screenNames = _csvMap.get(hostName);
 
@@ -545,6 +582,8 @@ public class CompanySampleDataGenerationTest {
 
 	private static final String _PORTAL_SERVER_IP_ADDRESS = GetterUtil.get(
 		PropsUtil.get("sample.data.portal.server.ip.address"), "127.0.0.1");
+
+	private static final String _ROLE_TABLE_CSV = "roleTable.csv";
 
 	private static final String _USER_CSV = "user.csv";
 
