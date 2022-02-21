@@ -266,6 +266,8 @@ public class CompanySampleDataGenerationTest {
 		_exportDDMStructureVersionTableData(company.getCompanyId());
 
 		_exportDDMTemplateTableData(company.getCompanyId());
+
+		_exportDefaultUserId(company.getCompanyId());
 	}
 
 	private void _exportCommerceCurrencyTableData(long companyId)
@@ -410,6 +412,21 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
+	private void _exportDefaultUserId(long companyId) throws Exception {
+		Path defaultUserIdCSVFilePath = _outputDirPath.resolve(
+			_DEFAULT_USER_ID_CSV);
+
+		try (BufferedWriter defaultUserIdBufferedWriter = new BufferedWriter(
+				new FileWriter(defaultUserIdCSVFilePath.toFile(), true))) {
+
+			defaultUserIdBufferedWriter.append(String.valueOf(companyId));
+			defaultUserIdBufferedWriter.append(StringPool.COMMA);
+			defaultUserIdBufferedWriter.append(
+				String.valueOf(_userLocalService.getDefaultUserId(companyId)));
+			defaultUserIdBufferedWriter.newLine();
+		}
+	}
+
 	private void _exportHost(String hostName) throws Exception {
 		Path hostCSVFilePath = _outputDirPath.resolve(_HOST_CSV);
 
@@ -475,6 +492,8 @@ public class CompanySampleDataGenerationTest {
 		"ddmTemplateTable.csv";
 
 	private static final String _DEFAULT_COMPANY_WEBID = "liferay.com";
+
+	private static final String _DEFAULT_USER_ID_CSV = "defaultUserId.csv";
 
 	private static final String _HOST_CSV = "host.csv";
 
