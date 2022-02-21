@@ -21,19 +21,24 @@ import com.liferay.commerce.product.constants.CommerceCatalogConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -259,6 +264,8 @@ public class CompanySampleDataGenerationTest {
 		_exportCommerceCurrencyTableData(company.getCompanyId());
 
 		_exportDDMStructureVersionTableData(company.getCompanyId());
+
+		_exportDDMTemplateTableData(company.getCompanyId());
 	}
 
 	private void _exportCommerceCurrencyTableData(long companyId)
@@ -378,6 +385,31 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
+	private void _exportDDMTemplateTableData(long companyId) throws Exception {
+		Group globalGroup = _groupLocalService.getGroup(
+			companyId, String.valueOf(companyId));
+
+		List<DDMTemplate> ddmTemplates = _dDMTemplateLocalService.getTemplates(
+			globalGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(DDMStructure.class));
+
+		Path ddmTemplateTableCSVFilePath = _outputDirPath.resolve(
+			_DDM_TEMPLATE_TABLE_CSV);
+
+		try (BufferedWriter ddmTemplateTableBufferedWriter = new BufferedWriter(
+				new FileWriter(ddmTemplateTableCSVFilePath.toFile(), true))) {
+
+			for (DDMTemplate ddmTemplate : ddmTemplates) {
+				ddmTemplateTableBufferedWriter.append(
+					String.valueOf(ddmTemplate.getCompanyId()));
+				ddmTemplateTableBufferedWriter.append(StringPool.COMMA);
+				ddmTemplateTableBufferedWriter.append(
+					String.valueOf(ddmTemplate.getTemplateId()));
+				ddmTemplateTableBufferedWriter.newLine();
+			}
+		}
+	}
+
 	private void _exportHost(String hostName) throws Exception {
 		Path hostCSVFilePath = _outputDirPath.resolve(_HOST_CSV);
 
@@ -439,6 +471,9 @@ public class CompanySampleDataGenerationTest {
 	private static final String _DDM_STRUCTURE_VERSION_TABLE_CSV =
 		"ddmStructureVersionTable.csv";
 
+	private static final String _DDM_TEMPLATE_TABLE_CSV =
+		"ddmTemplateTable.csv";
+
 	private static final String _DEFAULT_COMPANY_WEBID = "liferay.com";
 
 	private static final String _HOST_CSV = "host.csv";
@@ -454,6 +489,9 @@ public class CompanySampleDataGenerationTest {
 		PropsUtil.get("sample.data.user.per.company.count"), 2);
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Inject
@@ -467,7 +505,14 @@ public class CompanySampleDataGenerationTest {
 	@Inject
 	private DDMStructureVersionLocalService _dDMStructureVersionLocalService;
 
+	@Inject
+	private DDMTemplateLocalService _dDMTemplateLocalService;
+
 	private ExecutorService _executorService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private AtomicReference<InetSocketAddress> _originalAtomicReference;
 	private Path _outputDirPath;
 
