@@ -7194,6 +7194,10 @@ public class DataFactory {
 				List<String> companyModelList = new ArrayList<>();
 
 				companyModelList.add(items[0]);
+				
+				if(items[1].equals("liferay.com")){
+					items[1] = BenchmarksPropsValues.VIRTUAL_HOST_NAME;
+				}
 				companyModelList.add(items[1]);
 
 				_companyModelLists.add(companyModelList);
