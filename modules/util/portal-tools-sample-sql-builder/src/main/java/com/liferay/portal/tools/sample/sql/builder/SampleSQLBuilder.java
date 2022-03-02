@@ -115,7 +115,7 @@ public class SampleSQLBuilder {
 	}
 
 	protected void compressSQL(
-			DB db, File directory, Map<String, Writer> insertSQLWriters,
+			DB db, File directory, Map<String, Writer> sqlWriters,
 			Map<String, StringBundler> sqls, String insertSQL)
 		throws IOException, SQLException {
 
@@ -149,8 +149,7 @@ public class SampleSQLBuilder {
 
 			sb.setIndex(0);
 
-			writeToInsertSQLFile(
-				directory, tableName, insertSQLWriters, insertSQL);
+			writeToSQLFile(directory, tableName, sqlWriters, insertSQL);
 		}
 	}
 
@@ -174,7 +173,7 @@ public class SampleSQLBuilder {
 
 		createSQL = db.buildSQL(createSQL) + StringPool.NEW_LINE;
 
-		writeToInsertSQLFile(directory, tableName, sqlWriters, createSQL);
+		writeToSQLFile(directory, tableName, sqlWriters, createSQL);
 	}
 
 	protected void compressSQL(Reader reader, File dir) throws Exception {
@@ -186,7 +185,7 @@ public class SampleSQLBuilder {
 			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
 		}
 
-		Map<String, Writer> insertSQLWriters = new HashMap<>();
+		Map<String, Writer> sqlWriters = new HashMap<>();
 		Map<String, StringBundler> insertSQLs = new HashMap<>();
 		List<String> miscSQLs = new ArrayList<>();
 
@@ -217,7 +216,7 @@ public class SampleSQLBuilder {
 							s = sb.toString();
 						}
 
-						compressSQL(db, dir, insertSQLWriters, s);
+						compressSQL(db, dir, sqlWriters, s);
 					}
 					else if (s.startsWith("insert into ")) {
 						if (!s.endsWith(");")) {
@@ -236,8 +235,7 @@ public class SampleSQLBuilder {
 						}
 
 						compressSQL(
-							db, dir, insertSQLWriters, insertSQLs,
-							s.substring(12));
+							db, dir, sqlWriters, insertSQLs, s.substring(12));
 					}
 					else if (!s.contains("##")) {
 						miscSQLs.add(s);
@@ -258,12 +256,11 @@ public class SampleSQLBuilder {
 			if (sb.index() > 0) {
 				String insertSQL = db.buildSQL(sb.toString());
 
-				writeToInsertSQLFile(
-					dir, tableName, insertSQLWriters, insertSQL);
+				writeToSQLFile(dir, tableName, sqlWriters, insertSQL);
 			}
 
-			try (Writer insertSQLWriter = insertSQLWriters.remove(tableName)) {
-				insertSQLWriter.write(";\n");
+			try (Writer sqlWriter = sqlWriters.remove(tableName)) {
+				sqlWriter.write(";\n");
 			}
 		}
 
@@ -383,24 +380,24 @@ public class SampleSQLBuilder {
 		inputFile.delete();
 	}
 
-	protected void writeToInsertSQLFile(
-			File dir, String tableName, Map<String, Writer> insertSQLWriters,
-			String insertSQL)
+	protected void writeToSQLFile(
+			File dir, String tableName, Map<String, Writer> sqlWriters,
+			String sql)
 		throws IOException {
 
-		Writer insertSQLWriter = insertSQLWriters.get(tableName);
+		Writer sqlWriter = sqlWriters.get(tableName);
 
-		if (insertSQLWriter == null) {
+		if (sqlWriter == null) {
 			File file = new File(dir, tableName + ".sql");
 
-			insertSQLWriter = createFileWriter(file);
+			sqlWriter = createFileWriter(file);
 
-			insertSQLWriters.put(tableName, insertSQLWriter);
+			sqlWriters.put(tableName, sqlWriter);
 		}
 
-		insertSQLWriter.write(insertSQL);
+		sqlWriter.write(sql);
 
-		insertSQLWriter.flush();
+		sqlWriter.flush();
 	}
 
 	private void _mergeCreateSQLTemplate(InputStream inputStream, Writer writer)
