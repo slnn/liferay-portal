@@ -201,38 +201,12 @@ public class SampleSQLBuilder {
 
 				if (s.length() > 0) {
 					if (s.startsWith("create")) {
-						if (!s.endsWith(");")) {
-							StringBundler sb = new StringBundler();
-
-							while (!s.endsWith(");")) {
-								sb.append(s);
-								sb.append(StringPool.NEW_LINE);
-
-								s = unsyncBufferedReader.readLine();
-							}
-
-							sb.append(s);
-
-							s = sb.toString();
-						}
-
-						compressSQL(db, dir, sqlWriters, s);
+						compressSQL(
+							db, dir, sqlWriters,
+							_mergeSingleSQLTemplate(s, unsyncBufferedReader));
 					}
 					else if (s.startsWith("insert into ")) {
-						if (!s.endsWith(");")) {
-							StringBundler sb = new StringBundler();
-
-							while (!s.endsWith(");")) {
-								sb.append(s);
-								sb.append(StringPool.NEW_LINE);
-
-								s = unsyncBufferedReader.readLine();
-							}
-
-							sb.append(s);
-
-							s = sb.toString();
-						}
+						s = _mergeSingleSQLTemplate(s, unsyncBufferedReader);
 
 						compressSQL(
 							db, dir, sqlWriters, insertSQLs, s.substring(12));
@@ -413,6 +387,28 @@ public class SampleSQLBuilder {
 				writer.append(System.lineSeparator());
 			}
 		}
+	}
+
+	private String _mergeSingleSQLTemplate(
+			String line, UnsyncBufferedReader unsyncBufferedReader)
+		throws Exception {
+
+		if (!line.endsWith(");")) {
+			StringBundler sb = new StringBundler();
+
+			while (!line.endsWith(");")) {
+				sb.append(line);
+				sb.append(StringPool.NEW_LINE);
+
+				line = unsyncBufferedReader.readLine();
+			}
+
+			sb.append(line);
+
+			line = sb.toString();
+		}
+
+		return line;
 	}
 
 	private static final String _CORE_COMMON_SQL_FILE_NAME =
