@@ -85,7 +85,8 @@ public class SampleSQLBuilder {
 			if (BenchmarksPropsValues.OUTPUT_MERGE) {
 				File sqlFile = new File(
 					BenchmarksPropsValues.OUTPUT_DIR,
-					"sample-" + BenchmarksPropsValues.DB_TYPE + ".sql");
+					"sample-" + BenchmarksPropsValues.DB_TYPE +
+						_SQL_FILE_SUFFIX);
 
 				FileUtil.delete(sqlFile);
 
@@ -132,10 +133,11 @@ public class SampleSQLBuilder {
 
 			sb.append("insert into ");
 			sb.append(insertSQL.substring(0, index));
-			sb.append("\n");
+			sb.append(StringPool.NEW_LINE);
 		}
 		else {
-			sb.append(",\n");
+			sb.append(StringPool.COMMA);
+			sb.append(StringPool.NEW_LINE);
 		}
 
 		String values = insertSQL.substring(index, insertSQL.length() - 1);
@@ -143,7 +145,8 @@ public class SampleSQLBuilder {
 		sb.append(values);
 
 		if (sb.index() >= BenchmarksPropsValues.OPTIMIZE_BUFFER_SIZE) {
-			sb.append(";\n");
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
 
 			insertSQL = db.buildSQL(sb.toString());
 
@@ -234,7 +237,8 @@ public class SampleSQLBuilder {
 			}
 
 			try (Writer sqlWriter = sqlWriters.remove(tableName)) {
-				sqlWriter.write(";\n");
+				sqlWriter.write(StringPool.SEMICOLON);
+				sqlWriter.write(StringPool.NEW_LINE);
 			}
 		}
 
@@ -271,7 +275,7 @@ public class SampleSQLBuilder {
 						createFileWriter(
 							new File(
 								BenchmarksPropsValues.OUTPUT_DIR,
-								"sample.sql")))) {
+								"sample" + _SQL_FILE_SUFFIX)))) {
 
 					for (String sqlFileName : _createSQLStatementTemplateList) {
 						if (sqlFileName.contains(_CORE_SQL_FILE_DIR)) {
@@ -364,7 +368,7 @@ public class SampleSQLBuilder {
 		Writer sqlWriter = sqlWriters.get(tableName);
 
 		if (sqlWriter == null) {
-			File file = new File(dir, tableName + ".sql");
+			File file = new File(dir, tableName + _SQL_FILE_SUFFIX);
 
 			sqlWriter = createFileWriter(file);
 
@@ -435,6 +439,8 @@ public class SampleSQLBuilder {
 		"META-INF/sql/tables.sql";
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
+
+	private static final String _SQL_FILE_SUFFIX = ".sql";
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
