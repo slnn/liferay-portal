@@ -14,11 +14,15 @@
 
 package com.liferay.portal.search.web.internal.search.bar.portlet;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -85,13 +89,37 @@ public class SearchBarPortlet extends MVCPortlet {
 			new SearchBarPortletPreferencesImpl(
 				Optional.ofNullable(renderRequest.getPreferences()));
 
-		PortletSharedSearchResponse portletSharedSearchResponse =
-			portletSharedSearchRequest.search(renderRequest);
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext = null;
 
-		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			_buildDisplayContext(
-				portletSharedSearchResponse, renderRequest,
-				searchBarPortletPreferences);
+		String destination = searchBarPortletPreferences.getDestinationString();
+
+		if (!Validator.isBlank(destination)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			if (destination.charAt(0) != CharPool.SLASH) {
+				destination = StringPool.SLASH.concat(destination);
+			}
+
+			Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
+				themeDisplay.getScopeGroupId(), false, destination);
+
+			if (layout == null) {
+				searchBarPortletDisplayContext =
+					new SearchBarPortletDisplayContext();
+
+				searchBarPortletDisplayContext.setDestinationUnreachable(true);
+				searchBarPortletDisplayContext.setRenderNothing(true);
+			}
+			else {
+				PortletSharedSearchResponse portletSharedSearchResponse =
+					portletSharedSearchRequest.search(renderRequest);
+
+				searchBarPortletDisplayContext = _buildDisplayContext(
+					portletSharedSearchResponse, renderRequest,
+					searchBarPortletPreferences);
+			}
+		}
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, searchBarPortletDisplayContext);
