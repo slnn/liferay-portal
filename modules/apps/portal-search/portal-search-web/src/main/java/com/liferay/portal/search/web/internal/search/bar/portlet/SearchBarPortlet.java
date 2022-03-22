@@ -192,16 +192,31 @@ public class SearchBarPortlet extends MVCPortlet {
 			new SearchBarPortletPreferencesImpl(
 				Optional.ofNullable(renderRequest.getPreferences()));
 
+		SearchBarPortletDisplayContextBuilder
+			searchBarPortletDisplayContextBuilder =
+				new SearchBarPortletDisplayContextBuilder(
+					http, layoutLocalService, portal, renderRequest);
+
+		searchBarPortletDisplayContextBuilder =
+			searchBarPortletDisplayContextBuilder.setDestination(
+				searchBarPortletPreferences.getDestinationString());
+
+		ThemeDisplay defaultThemeDisplay =
+			(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+		searchBarPortletDisplayContextBuilder =
+			searchBarPortletDisplayContextBuilder.setThemeDisplay(
+				defaultThemeDisplay);
+
+		if (searchBarPortletDisplayContextBuilder.isDestinationUnreachable()) {
+			return searchBarPortletDisplayContextBuilder.build();
+		}
+
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(renderRequest);
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
-
-		SearchBarPortletDisplayContextBuilder
-			searchBarPortletDisplayContextBuilder =
-				new SearchBarPortletDisplayContextBuilder(
-					http, layoutLocalService, portal, renderRequest);
 
 		String keywordsParameterName = getKeywordsParameterName(
 			portletSharedSearchResponse.getSearchSettings(),
@@ -216,9 +231,7 @@ public class SearchBarPortlet extends MVCPortlet {
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
-		return searchBarPortletDisplayContextBuilder.setDestination(
-			searchBarPortletPreferences.getDestinationString()
-		).setEmptySearchEnabled(
+		return searchBarPortletDisplayContextBuilder.setEmptySearchEnabled(
 			isEmptySearchEnabled(portletSharedSearchResponse)
 		).setInvisible(
 			searchBarPortletPreferences.isInvisible()
