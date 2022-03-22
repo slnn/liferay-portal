@@ -28,12 +28,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
-import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Optional;
 
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,28 +66,6 @@ public class SearchBarPortletDisplayContextBuilderTest {
 		_setUpLanguageUtil();
 		_setUpPortal();
 		_setUpThemeDisplay();
-	}
-
-	@Test
-	public void testSamePageNoDestination() throws PortletException {
-		Mockito.doReturn(
-			"http://example.com/web/guest/home?param=arg"
-		).when(
-			_themeDisplay
-		).getURLCurrent();
-
-		SearchBarPortletDisplayContextBuilder
-			searchBarPortletDisplayContextBuilder =
-				_createSearchBarPortletDisplayContextBuilder();
-
-		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayContextBuilder.build();
-
-		Assert.assertFalse(
-			searchBarPortletDisplayContext.isDestinationUnreachable());
-
-		Assert.assertEquals(
-			"/web/guest/home", searchBarPortletDisplayContext.getSearchURL());
 	}
 
 	@Test
