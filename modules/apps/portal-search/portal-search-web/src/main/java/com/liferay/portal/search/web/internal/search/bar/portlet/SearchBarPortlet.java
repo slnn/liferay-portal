@@ -94,13 +94,13 @@ public class SearchBarPortlet extends MVCPortlet {
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext = null;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String destination = searchBarPortletPreferences.getDestinationString();
 
 		if (!Validator.isBlank(destination) &&
-			(_getDestinationURL(destination, themeDisplay) == null)) {
+			(_getDestinationURL(destination) == null)) {
 
 			searchBarPortletDisplayContext =
 				new SearchBarPortletDisplayContext();
@@ -111,11 +111,11 @@ public class SearchBarPortlet extends MVCPortlet {
 		else {
 			if (Validator.isBlank(destination)) {
 				searchBarPortletDisplayContext.setSearchURL(
-					_getURLCurrentPath(themeDisplay));
+					_getURLCurrentPath());
 			}
 			else {
 				searchBarPortletDisplayContext.setSearchURL(
-					_getDestinationURL(destination, themeDisplay));
+					_getDestinationURL(destination));
 			}
 
 			PortletSharedSearchResponse portletSharedSearchResponse =
@@ -139,22 +139,21 @@ public class SearchBarPortlet extends MVCPortlet {
 
 	protected String getKeywordsParameterName(
 		SearchSettings searchSettings,
-		SearchBarPortletPreferences searchBarPortletPreferences,
-		ThemeDisplay themeDisplay) {
+		SearchBarPortletPreferences searchBarPortletPreferences) {
 
 		Optional<com.liferay.portal.kernel.model.Portlet>
 			headerSearchBarOptional =
 				searchBarPrecedenceHelper.findHeaderSearchBarPortletOptional(
-					themeDisplay);
+					_themeDisplay);
 
 		if (headerSearchBarOptional.isPresent()) {
 			Optional<PortletPreferences> headerPortletPreferencesOptional =
 				portletPreferencesLookup.fetchPreferences(
-					headerSearchBarOptional.get(), themeDisplay);
+					headerSearchBarOptional.get(), _themeDisplay);
 
 			if (headerPortletPreferencesOptional.isPresent() &&
 				SearchBarPortletDestinationUtil.isSameDestination(
-					headerPortletPreferencesOptional.get(), themeDisplay)) {
+					headerPortletPreferencesOptional.get(), _themeDisplay)) {
 
 				Optional<String> optional =
 					searchSettings.getKeywordsParameterName();
@@ -169,22 +168,21 @@ public class SearchBarPortlet extends MVCPortlet {
 
 	protected String getScopeParameterName(
 		SearchSettings searchSettings,
-		SearchBarPortletPreferences searchBarPortletPreferences,
-		ThemeDisplay themeDisplay) {
+		SearchBarPortletPreferences searchBarPortletPreferences) {
 
 		Optional<com.liferay.portal.kernel.model.Portlet>
 			headerSearchBarOptional =
 				searchBarPrecedenceHelper.findHeaderSearchBarPortletOptional(
-					themeDisplay);
+					_themeDisplay);
 
 		if (headerSearchBarOptional.isPresent()) {
 			Optional<PortletPreferences> headerPortletPreferencesOptional =
 				portletPreferencesLookup.fetchPreferences(
-					headerSearchBarOptional.get(), themeDisplay);
+					headerSearchBarOptional.get(), _themeDisplay);
 
 			if (headerPortletPreferencesOptional.isPresent() &&
 				SearchBarPortletDestinationUtil.isSameDestination(
-					headerPortletPreferencesOptional.get(), themeDisplay)) {
+					headerPortletPreferencesOptional.get(), _themeDisplay)) {
 
 				Optional<String> optional =
 					searchSettings.getScopeParameterName();
@@ -237,16 +235,13 @@ public class SearchBarPortlet extends MVCPortlet {
 				new SearchBarPortletDisplayContextBuilder(
 					portal, renderRequest);
 
-		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
-			renderRequest);
-
 		String keywordsParameterName = getKeywordsParameterName(
 			portletSharedSearchResponse.getSearchSettings(),
-			searchBarPortletPreferences, themeDisplay);
+			searchBarPortletPreferences);
 
 		String scopeParameterName = getScopeParameterName(
 			portletSharedSearchResponse.getSearchSettings(),
-			searchBarPortletPreferences, themeDisplay);
+			searchBarPortletPreferences);
 
 		SearchResponse searchResponse = _getSearchResponse(
 			portletSharedSearchResponse, searchBarPortletPreferences);
@@ -285,24 +280,20 @@ public class SearchBarPortlet extends MVCPortlet {
 			groupId, true, friendlyURL);
 	}
 
-	private String _getDestinationURL(
-		String friendlyURL, ThemeDisplay themeDisplay) {
-
+	private String _getDestinationURL(String friendlyURL) {
 		Layout layout = _fetchLayoutByFriendlyURL(
-			themeDisplay.getScopeGroupId(), _slashify(friendlyURL));
+			_themeDisplay.getScopeGroupId(), _slashify(friendlyURL));
 
 		if (layout == null) {
 			return null;
 		}
 
-		return _getLayoutFriendlyURL(layout, themeDisplay);
+		return _getLayoutFriendlyURL(layout);
 	}
 
-	private String _getLayoutFriendlyURL(
-		Layout layout, ThemeDisplay themeDisplay) {
-
+	private String _getLayoutFriendlyURL(Layout layout) {
 		try {
-			return portal.getLayoutFriendlyURL(layout, themeDisplay);
+			return portal.getLayoutFriendlyURL(layout, _themeDisplay);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -324,8 +315,8 @@ public class SearchBarPortlet extends MVCPortlet {
 			searchBarPortletPreferences.getFederatedSearchKeyOptional());
 	}
 
-	private String _getURLCurrentPath(ThemeDisplay themeDisplay) {
-		return http.getPath(themeDisplay.getURLCurrent());
+	private String _getURLCurrentPath() {
+		return http.getPath(_themeDisplay.getURLCurrent());
 	}
 
 	private String _slashify(String s) {
@@ -338,5 +329,7 @@ public class SearchBarPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchBarPortlet.class);
+
+	private ThemeDisplay _themeDisplay;
 
 }
