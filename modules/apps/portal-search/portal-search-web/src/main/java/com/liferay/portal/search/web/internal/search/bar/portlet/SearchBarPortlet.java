@@ -253,9 +253,7 @@ public class SearchBarPortlet extends MVCPortlet {
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
-		return searchBarPortletDisplayContextBuilder.setDestination(
-			searchBarPortletPreferences.getDestinationString()
-		).setEmptySearchEnabled(
+		return searchBarPortletDisplayContextBuilder.setEmptySearchEnabled(
 			isEmptySearchEnabled(portletSharedSearchResponse)
 		).setInvisible(
 			searchBarPortletPreferences.isInvisible()

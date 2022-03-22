@@ -104,14 +104,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		return searchBarPortletDisplayContext;
 	}
 
-	public SearchBarPortletDisplayContextBuilder setDestination(
-		String destination) {
-
-		_destination = destination;
-
-		return this;
-	}
-
 	public SearchBarPortletDisplayContextBuilder setEmptySearchEnabled(
 		boolean emptySearchEnabled) {
 
@@ -280,7 +272,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		}
 	}
 
-	private String _destination;
 	private boolean _emptySearchEnabled;
 	private boolean _invisible;
 	private String _keywords;
