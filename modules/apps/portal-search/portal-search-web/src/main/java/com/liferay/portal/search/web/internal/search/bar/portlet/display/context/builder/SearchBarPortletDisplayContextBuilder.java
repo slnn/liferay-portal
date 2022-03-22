@@ -18,10 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
@@ -42,11 +40,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchBarPortletDisplayContextBuilder {
 
 	public SearchBarPortletDisplayContextBuilder(
-		Http http, LayoutLocalService layoutLocalService, Portal portal,
-		RenderRequest renderRequest) {
+		Portal portal, RenderRequest renderRequest) {
 
-		_http = http;
-		_layoutLocalService = layoutLocalService;
 		_portal = portal;
 		_renderRequest = renderRequest;
 	}
@@ -287,11 +282,9 @@ public class SearchBarPortletDisplayContextBuilder {
 
 	private String _destination;
 	private boolean _emptySearchEnabled;
-	private final Http _http;
 	private boolean _invisible;
 	private String _keywords;
 	private String _keywordsParameterName;
-	private final LayoutLocalService _layoutLocalService;
 	private String _paginationStartParameterName;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;

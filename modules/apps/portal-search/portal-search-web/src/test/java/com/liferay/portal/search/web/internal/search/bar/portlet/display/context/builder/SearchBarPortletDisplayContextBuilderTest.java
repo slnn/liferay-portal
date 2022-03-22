@@ -272,7 +272,7 @@ public class SearchBarPortletDisplayContextBuilderTest {
 		SearchBarPortletDisplayContextBuilder
 			searchBarPortletDisplayContextBuilder =
 				new SearchBarPortletDisplayContextBuilder(
-					_http, _layoutLocalService, _portal, renderRequest);
+					_portal, renderRequest);
 
 		searchBarPortletDisplayContextBuilder.setSearchScopePreference(
 			SearchScopePreference.getSearchScopePreference("everything"));
