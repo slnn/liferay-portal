@@ -14,13 +14,8 @@
 
 package com.liferay.portal.search.web.internal.search.bar.portlet.display.context.builder;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -28,7 +23,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
@@ -107,21 +101,6 @@ public class SearchBarPortletDisplayContextBuilder {
 			searchBarPortletInstanceConfiguration);
 
 		_setSelectedSearchScope(searchBarPortletDisplayContext);
-
-		if (Validator.isBlank(_destination)) {
-			searchBarPortletDisplayContext.setSearchURL(_getURLCurrentPath());
-		}
-		else {
-			String destinationURL = _getDestinationURL(_destination);
-
-			if (destinationURL == null) {
-				searchBarPortletDisplayContext.setDestinationUnreachable(true);
-				searchBarPortletDisplayContext.setRenderNothing(true);
-			}
-			else {
-				searchBarPortletDisplayContext.setSearchURL(destinationURL);
-			}
-		}
 
 		if (_invisible) {
 			searchBarPortletDisplayContext.setRenderNothing(true);
@@ -211,20 +190,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		return this;
 	}
 
-	protected Layout fetchLayoutByFriendlyURL(
-		long groupId, String friendlyURL) {
-
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, false, friendlyURL);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		return _layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, true, friendlyURL);
-	}
-
 	protected long getDisplayStyleGroupId(
 		SearchBarPortletInstanceConfiguration
 			searchBarPortletInstanceConfiguration,
@@ -255,22 +220,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	protected String getLayoutFriendlyURL(Layout layout) {
-		try {
-			return _portal.getLayoutFriendlyURL(layout, _themeDisplay);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get friendly URL for layout " +
-						layout.getLinkedToLayout(),
-					portalException);
-			}
-
-			return null;
-		}
 	}
 
 	protected String getPaginationStartParameterName() {
@@ -320,21 +269,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		return true;
 	}
 
-	private String _getDestinationURL(String friendlyURL) {
-		Layout layout = fetchLayoutByFriendlyURL(
-			_themeDisplay.getScopeGroupId(), _slashify(friendlyURL));
-
-		if (layout == null) {
-			return null;
-		}
-
-		return getLayoutFriendlyURL(layout);
-	}
-
-	private String _getURLCurrentPath() {
-		return _http.getPath(_themeDisplay.getURLCurrent());
-	}
-
 	private void _setSelectedSearchScope(
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext) {
 
@@ -350,17 +284,6 @@ public class SearchBarPortletDisplayContextBuilder {
 				true);
 		}
 	}
-
-	private String _slashify(String s) {
-		if (s.charAt(0) == CharPool.SLASH) {
-			return s;
-		}
-
-		return StringPool.SLASH.concat(s);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SearchBarPortletDisplayContextBuilder.class);
 
 	private String _destination;
 	private boolean _emptySearchEnabled;

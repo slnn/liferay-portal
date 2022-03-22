@@ -14,11 +14,18 @@
 
 package com.liferay.portal.search.web.internal.search.bar.portlet;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -85,13 +92,39 @@ public class SearchBarPortlet extends MVCPortlet {
 			new SearchBarPortletPreferencesImpl(
 				Optional.ofNullable(renderRequest.getPreferences()));
 
-		PortletSharedSearchResponse portletSharedSearchResponse =
-			portletSharedSearchRequest.search(renderRequest);
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext = null;
 
-		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			_buildDisplayContext(
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String destination = searchBarPortletPreferences.getDestinationString();
+
+		if (!Validator.isBlank(destination) &&
+			(_getDestinationURL(destination, themeDisplay) == null)) {
+
+			searchBarPortletDisplayContext =
+				new SearchBarPortletDisplayContext();
+
+			searchBarPortletDisplayContext.setDestinationUnreachable(true);
+			searchBarPortletDisplayContext.setRenderNothing(true);
+		}
+		else {
+			if (Validator.isBlank(destination)) {
+				searchBarPortletDisplayContext.setSearchURL(
+					_getURLCurrentPath(themeDisplay));
+			}
+			else {
+				searchBarPortletDisplayContext.setSearchURL(
+					_getDestinationURL(destination, themeDisplay));
+			}
+
+			PortletSharedSearchResponse portletSharedSearchResponse =
+				portletSharedSearchRequest.search(renderRequest);
+
+			searchBarPortletDisplayContext = _buildDisplayContext(
 				portletSharedSearchResponse, renderRequest,
 				searchBarPortletPreferences);
+		}
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, searchBarPortletDisplayContext);
@@ -244,6 +277,49 @@ public class SearchBarPortlet extends MVCPortlet {
 		).build();
 	}
 
+	private Layout _fetchLayoutByFriendlyURL(long groupId, String friendlyURL) {
+		Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, false, friendlyURL);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		return layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, true, friendlyURL);
+	}
+
+	private String _getDestinationURL(
+		String friendlyURL, ThemeDisplay themeDisplay) {
+
+		Layout layout = _fetchLayoutByFriendlyURL(
+			themeDisplay.getScopeGroupId(), _slashify(friendlyURL));
+
+		if (layout == null) {
+			return null;
+		}
+
+		return _getLayoutFriendlyURL(layout, themeDisplay);
+	}
+
+	private String _getLayoutFriendlyURL(
+		Layout layout, ThemeDisplay themeDisplay) {
+
+		try {
+			return portal.getLayoutFriendlyURL(layout, themeDisplay);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get friendly URL for layout " +
+						layout.getLinkedToLayout(),
+					portalException);
+			}
+
+			return null;
+		}
+	}
+
 	private SearchResponse _getSearchResponse(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		SearchBarPortletPreferences searchBarPortletPreferences) {
@@ -251,5 +327,20 @@ public class SearchBarPortlet extends MVCPortlet {
 		return portletSharedSearchResponse.getFederatedSearchResponse(
 			searchBarPortletPreferences.getFederatedSearchKeyOptional());
 	}
+
+	private String _getURLCurrentPath(ThemeDisplay themeDisplay) {
+		return http.getPath(themeDisplay.getURLCurrent());
+	}
+
+	private String _slashify(String s) {
+		if (s.charAt(0) == CharPool.SLASH) {
+			return s;
+		}
+
+		return StringPool.SLASH.concat(s);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchBarPortlet.class);
 
 }
