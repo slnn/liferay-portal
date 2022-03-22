@@ -169,14 +169,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		return this;
 	}
 
-	public SearchBarPortletDisplayContextBuilder setThemeDisplay(
-		ThemeDisplay themeDisplay) {
-
-		_themeDisplay = themeDisplay;
-
-		return this;
-	}
-
 	protected long getDisplayStyleGroupId(
 		SearchBarPortletInstanceConfiguration
 			searchBarPortletInstanceConfiguration,
@@ -282,6 +274,5 @@ public class SearchBarPortletDisplayContextBuilder {
 	private String _scopeParameterName;
 	private String _scopeParameterValue;
 	private SearchScopePreference _searchScopePreference;
-	private ThemeDisplay _themeDisplay;
 
 }
