@@ -88,6 +88,23 @@ public class SearchBarPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
+			buildDisplayContest(renderRequest);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, searchBarPortletDisplayContext);
+
+		if (searchBarPortletDisplayContext.isRenderNothing()) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	protected SearchBarPortletDisplayContext buildDisplayContest (
+		RenderRequest renderRequest) throws PortletException {
+
 		SearchBarPortletPreferences searchBarPortletPreferences =
 			new SearchBarPortletPreferencesImpl(
 				Optional.ofNullable(renderRequest.getPreferences()));
@@ -126,15 +143,7 @@ public class SearchBarPortlet extends MVCPortlet {
 				searchBarPortletPreferences);
 		}
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, searchBarPortletDisplayContext);
-
-		if (searchBarPortletDisplayContext.isRenderNothing()) {
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
-		}
-
-		super.render(renderRequest, renderResponse);
+		return searchBarPortletDisplayContext;
 	}
 
 	protected String getKeywordsParameterName(
