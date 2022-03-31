@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -331,10 +332,9 @@ public class SearchBarPortletDisplayContextBuilder {
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		ThemeDisplay themeDisplay) {
 
-		Optional<com.liferay.portal.kernel.model.Portlet>
-			headerSearchBarOptional =
-				searchBarPrecedenceHelper.findHeaderSearchBarPortletOptional(
-					themeDisplay);
+		Optional<Portlet> headerSearchBarOptional =
+			searchBarPrecedenceHelper.findHeaderSearchBarPortletOptional(
+				themeDisplay);
 
 		if (headerSearchBarOptional.isPresent()) {
 			Optional<PortletPreferences> headerPortletPreferencesOptional =
@@ -387,10 +387,9 @@ public class SearchBarPortletDisplayContextBuilder {
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		ThemeDisplay themeDisplay) {
 
-		Optional<com.liferay.portal.kernel.model.Portlet>
-			headerSearchBarOptional =
-				searchBarPrecedenceHelper.findHeaderSearchBarPortletOptional(
-					themeDisplay);
+		Optional<Portlet> headerSearchBarOptional =
+			searchBarPrecedenceHelper.findHeaderSearchBarPortletOptional(
+				themeDisplay);
 
 		if (headerSearchBarOptional.isPresent()) {
 			Optional<PortletPreferences> headerPortletPreferencesOptional =
