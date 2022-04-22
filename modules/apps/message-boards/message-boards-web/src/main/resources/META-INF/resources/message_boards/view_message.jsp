@@ -162,7 +162,9 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 </aui:script>
 
 <%
-MBThreadFlagLocalServiceUtil.addThreadFlag(themeDisplay.getUserId(), thread, new ServiceContext());
+if (enableFlags) {
+	MBThreadFlagLocalServiceUtil.addThreadFlag(themeDisplay.getUserId(), thread, new ServiceContext());
+}
 
 PortalUtil.setPageSubtitle(message.getSubject(), request);
 PortalUtil.setPageDescription(message.getSubject(), request);
