@@ -511,14 +511,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void incrementViewCounter(long threadId, int increment) {
-		if (ExportImportThreadLocal.isImportInProcess()) {
-			return;
-		}
-
-		MBThread thread = mbThreadPersistence.fetchByPrimaryKey(threadId);
-
-		if (thread == null) {
+	public void incrementViewCounter(MBThread thread, int increment) {
+		if (ExportImportThreadLocal.isImportInProcess() || (thread == null)) {
 			return;
 		}
 

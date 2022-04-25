@@ -1351,7 +1351,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getThreadId());
 
 		if (message.isApproved() && !message.isDiscussion()) {
-			_mbThreadLocalService.incrementViewCounter(thread.getThreadId(), 1);
+			_mbThreadLocalService.incrementViewCounter(thread, 1);
 
 			SocialActivityManagerUtil.addActivity(
 				userId, thread, SocialActivityConstants.TYPE_VIEW,

@@ -489,8 +489,8 @@ public class MBThreadLocalServiceUtil {
 		return getService().hasAnswerMessage(threadId);
 	}
 
-	public static void incrementViewCounter(long threadId, int increment) {
-		getService().incrementViewCounter(threadId, increment);
+	public static void incrementViewCounter(MBThread thread, int increment) {
+		getService().incrementViewCounter(thread, increment);
 	}
 
 	public static void moveDependentsToTrash(

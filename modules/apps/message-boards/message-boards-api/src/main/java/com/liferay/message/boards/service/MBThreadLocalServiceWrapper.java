@@ -556,8 +556,8 @@ public class MBThreadLocalServiceWrapper
 	}
 
 	@Override
-	public void incrementViewCounter(long threadId, int increment) {
-		_mbThreadLocalService.incrementViewCounter(threadId, increment);
+	public void incrementViewCounter(MBThread thread, int increment) {
+		_mbThreadLocalService.incrementViewCounter(thread, increment);
 	}
 
 	@Override

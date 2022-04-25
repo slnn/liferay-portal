@@ -411,7 +411,7 @@ public interface MBThreadLocalService
 	public boolean hasAnswerMessage(long threadId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void incrementViewCounter(long threadId, int increment);
+	public void incrementViewCounter(MBThread thread, int increment);
 
 	public void moveDependentsToTrash(
 			long groupId, long threadId, long trashEntryId)
