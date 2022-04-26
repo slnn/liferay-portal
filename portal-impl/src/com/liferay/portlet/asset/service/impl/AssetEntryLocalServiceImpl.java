@@ -440,8 +440,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public void incrementViewCounter(long userId, AssetEntry assetEntry)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		if (ExportImportThreadLocal.isImportInProcess() ||
 			(assetEntry.getClassPK() <= 0) || (assetEntry == null)) {
 
@@ -452,6 +450,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			assetEntry.getCompanyId(),
 			_classNameLocalService.getClassNameId(AssetEntry.class),
 			assetEntry.getEntryId(), 1);
+
+		User user = _userLocalService.getUser(userId);
 
 		if (!user.isDefaultUser()) {
 			SocialActivityManagerUtil.addActivity(
