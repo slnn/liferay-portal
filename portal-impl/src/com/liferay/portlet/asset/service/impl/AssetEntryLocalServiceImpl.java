@@ -440,8 +440,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public void incrementViewCounter(long userId, AssetEntry assetEntry)
 		throws PortalException {
 
-		if (ExportImportThreadLocal.isImportInProcess() ||
-			(assetEntry.getClassPK() <= 0) || (assetEntry == null)) {
+		if ((assetEntry == null) ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			(assetEntry.getClassPK() <= 0)) {
 
 			return;
 		}
