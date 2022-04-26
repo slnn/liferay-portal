@@ -442,9 +442,16 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		User user = _userLocalService.getUser(userId);
 
-		assetEntryLocalService.incrementViewCounter(
-			assetEntry.getCompanyId(), user.getUserId(),
-			assetEntry.getClassName(), assetEntry.getClassPK(), 1);
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			(assetEntry.getClassPK() <= 0) || (assetEntry == null)) {
+
+			return;
+		}
+
+		ViewCountManagerUtil.incrementViewCount(
+			assetEntry.getCompanyId(),
+			_classNameLocalService.getClassNameId(AssetEntry.class),
+			assetEntry.getEntryId(), 1);
 
 		if (!user.isDefaultUser()) {
 			SocialActivityManagerUtil.addActivity(
