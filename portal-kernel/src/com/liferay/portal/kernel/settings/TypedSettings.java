@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,14 +81,12 @@ public class TypedSettings {
 	public LocalizedValuesMap getLocalizedValuesMap(String key) {
 		String value = getValue(key, null);
 
-		if (JSONUtil.isValid(value)) {
-			try {
-				return _toLocalizedValuesMap(
-					JSONFactoryUtil.createJSONObject(value));
-			}
-			catch (JSONException jsonException) {
-				_log.error(jsonException);
-			}
+		try {
+			return _toLocalizedValuesMap(
+				JSONFactoryUtil.createJSONObject(value));
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
 		}
 
 		return _toLocalizedValuesMap(key, value);
