@@ -207,18 +207,16 @@ public class JSONUtil {
 		return false;
 	}
 
-	public static boolean isValid(String json) {
+	public static JSONObject isValid(String json) {
 		try {
-			_createJSONObject(json);
-
-			return true;
+			return _createJSONObject(json);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
 
-			return false;
+			return null;
 		}
 	}
 
