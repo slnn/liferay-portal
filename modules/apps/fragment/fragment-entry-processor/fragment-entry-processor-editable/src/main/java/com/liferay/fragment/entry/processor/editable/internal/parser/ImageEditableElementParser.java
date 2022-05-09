@@ -22,9 +22,13 @@ import com.liferay.info.type.WebImage;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -68,9 +72,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 			alt = fieldValueJSONObject.getString("alt");
 
-			if (Validator.isNotNull(alt) &&
-				Validator.isNotNull(JSONUtil.getValidJSONObject(alt))) {
-
+			if (Validator.isNotNull(alt) && JSONUtil.isValid(alt)) {
 				JSONObject altJSONObject = fieldValueJSONObject.getJSONObject(
 					"alt");
 
@@ -175,14 +177,20 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 		long fileEntryId = 0;
 
-		JSONObject jsonObject = JSONUtil.getValidJSONObject(value);
+		if (JSONUtil.isValid(value)) {
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
-		if (jsonObject != null) {
-			fileEntryId = jsonObject.getLong("fileEntryId");
-			value = jsonObject.getString("url");
+				fileEntryId = jsonObject.getLong("fileEntryId");
+				value = jsonObject.getString("url");
+			}
+			catch (JSONException jsonException) {
+				_log.error("Unable to parse JSON value " + value);
+
+				value = StringPool.BLANK;
+			}
 		}
 		else {
-			value = StringPool.BLANK;
 			fileEntryId = configJSONObject.getLong("fileEntryId");
 		}
 
@@ -213,9 +221,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 		String alt = configJSONObject.getString("alt");
 
-		if (Validator.isNotNull(alt) &&
-			Validator.isNotNull(JSONUtil.getValidJSONObject(alt))) {
-
+		if (Validator.isNotNull(alt) && JSONUtil.isValid(alt)) {
 			JSONObject altJSONObject = configJSONObject.getJSONObject("alt");
 
 			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
@@ -289,6 +295,9 @@ public class ImageEditableElementParser implements EditableElementParser {
 				imageConfiguration);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImageEditableElementParser.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
