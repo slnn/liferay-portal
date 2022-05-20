@@ -17,6 +17,8 @@
 <%@ include file="/image_gallery_display/init.jsp" %>
 
 <%
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(new IGRequestHelper(request));
+
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
@@ -128,10 +130,6 @@ if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 			name="num-of-entries"
 			value="<%= String.valueOf(DLAppServiceUtil.getFoldersFileEntriesCount(repositoryId, Arrays.asList(curFolder.getFolderId()), status)) %>"
 		/>
-
-		<%
-		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(new IGRequestHelper(request));
-		%>
 
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 			<liferay-ui:search-container-column-jsp
