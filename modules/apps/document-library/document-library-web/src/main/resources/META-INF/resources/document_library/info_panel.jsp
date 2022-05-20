@@ -134,16 +134,9 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolders();
 
 				<div class="autofit-col">
 					<ul class="autofit-padded-no-gutters autofit-row">
-
-						<%
-						DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-						%>
-
-						<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
-							<li class="autofit-col">
-								<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
-							</li>
-						</c:if>
+						<li class="autofit-col">
+							<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
+						</li>
 					</ul>
 				</div>
 			</div>
