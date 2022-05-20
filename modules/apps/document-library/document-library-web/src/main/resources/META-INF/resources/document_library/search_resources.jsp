@@ -47,8 +47,6 @@ EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, lifera
 
 entriesChecker.setCssClass("entry-selector");
 entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(folderId=" + String.valueOf(folderId) + ")");
-
-DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
 
 <c:if test='<%= dlAdminDisplayContext.isSearch() && ParamUtil.getBoolean(request, "showSearchInfo") %>'>
@@ -125,6 +123,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							path="/document_library/view_file_entry_descriptive.jsp"
 						/>
 
+						<%
+						DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+						%>
+
 						<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 							<liferay-ui:search-container-column-jsp
 								path="/document_library/file_entry_action.jsp"
@@ -151,11 +153,9 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							path="/document_library/view_folder_descriptive.jsp"
 						/>
 
-						<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
-							<liferay-ui:search-container-column-jsp
-								path="/document_library/folder_action.jsp"
-							/>
-						</c:if>
+						<liferay-ui:search-container-column-jsp
+							path="/document_library/folder_action.jsp"
+						/>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-icon
