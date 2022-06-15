@@ -72,6 +72,12 @@ public class SearchBarPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		try {
+			Thread.sleep(2000);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
 				new SearchBarPortletDisplayContextFactory(
