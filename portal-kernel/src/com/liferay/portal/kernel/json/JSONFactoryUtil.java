@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.json;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -74,10 +78,26 @@ public class JSONFactoryUtil {
 		return _jsonFactory.createJSONObject(map);
 	}
 
-	public static JSONObject createJSONObject(String json)
-		throws JSONException {
+	public static JSONObject createJSONObject(String json) {
+		json = json.trim();
 
-		return _jsonFactory.createJSONObject(json);
+		if ((json.length() < 2) ||
+			(json.charAt(0) != CharPool.OPEN_CURLY_BRACE) ||
+			(json.charAt(json.length() - 1) != CharPool.CLOSE_CURLY_BRACE)) {
+
+			return null;
+		}
+
+		try {
+			return _jsonFactory.createJSONObject(json);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return null;
+		}
 	}
 
 	public static JSONSerializer createJSONSerializer() {
@@ -147,6 +167,9 @@ public class JSONFactoryUtil {
 	public void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSONFactoryUtil.class);
 
 	private static JSONFactory _jsonFactory;
 
