@@ -16,11 +16,9 @@ package com.liferay.portal.kernel.json;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -206,30 +204,6 @@ public class JSONUtil {
 		}
 
 		return false;
-	}
-
-	public static boolean isValid(String json) {
-		json = json.trim();
-
-		if ((json.length() < 2) ||
-			(json.charAt(0) != CharPool.OPEN_CURLY_BRACE) ||
-			(json.charAt(json.length() - 1) != CharPool.CLOSE_CURLY_BRACE)) {
-
-			return false;
-		}
-
-		try {
-			_createJSONObject(json);
-
-			return true;
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
-			return false;
-		}
 	}
 
 	public static JSONObject merge(
@@ -1350,7 +1324,5 @@ public class JSONUtil {
 
 		return sb.toString();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(JSONUtil.class);
 
 }
