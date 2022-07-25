@@ -80,25 +80,13 @@ public class JSONFactoryUtil {
 	}
 
 	public static JSONObject createJSONObject(String json) {
-		json = json.trim();
-
-		if ((json.length() < 2) ||
-			(json.charAt(0) != CharPool.OPEN_CURLY_BRACE) ||
-			(json.charAt(json.length() - 1) != CharPool.CLOSE_CURLY_BRACE)) {
-
-			return null;
-		}
-
-		try {
-			return _jsonFactory.createJSONObject(json);
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
-			return null;
-		}
+		return createJSONObject(
+			json,
+			(JSONException jsonException) -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsonException);
+				}
+			});
 	}
 
 	public static JSONObject createJSONObject(
