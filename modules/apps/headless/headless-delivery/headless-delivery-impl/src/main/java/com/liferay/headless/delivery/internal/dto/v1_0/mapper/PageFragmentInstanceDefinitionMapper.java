@@ -497,10 +497,9 @@ public class PageFragmentInstanceDefinitionMapper {
 			return null;
 		}
 
-		if (JSONUtil.isValid(alt)) {
-			JSONObject localizedJSONObject = configJSONObject.getJSONObject(
-				"alt");
+		JSONObject localizedJSONObject = JSONFactoryUtil.createJSONObject(alt);
 
+		if (localizedJSONObject != null) {
 			Map<String, String> localizedValues = new HashMap<>();
 
 			for (String key : localizedJSONObject.keySet()) {

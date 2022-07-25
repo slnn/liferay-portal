@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -194,7 +195,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		String type = getDDMFormFieldType(ddmFormFieldValue.getName());
 
 		if (type.equals(DDMFormFieldType.LOCALIZABLE_TEXT) &&
-			!JSONUtil.isValid(value)) {
+			(JSONFactoryUtil.createJSONObject(value) == null)) {
 
 			value = String.valueOf(
 				JSONUtil.put(LocaleUtil.toLanguageId(_locale), value));

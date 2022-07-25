@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -161,13 +160,13 @@ public class LocationVariableResolverTest {
 		String json = _locationVariableResolver.resolve(
 			String.format("${language:%s}", validKey));
 
-		Assert.assertTrue(JSONUtil.isValid(json));
+		Assert.assertNotNull(JSONFactoryUtil.createJSONObject(json));
 		Assert.assertEquals(expectedValueJSONObject.toString(), json);
 
 		json = _locationVariableResolver.resolve(
 			String.format("${language:%s}", invalidKey));
 
-		Assert.assertTrue(JSONUtil.isValid(json));
+		Assert.assertNotNull(JSONFactoryUtil.createJSONObject(json));
 		Assert.assertEquals("{}", json);
 	}
 

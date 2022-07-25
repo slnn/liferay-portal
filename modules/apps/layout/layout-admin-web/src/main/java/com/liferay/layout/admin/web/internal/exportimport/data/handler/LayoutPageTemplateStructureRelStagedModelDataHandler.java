@@ -37,7 +37,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -337,16 +336,11 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 	}
 
 	private String _processReferenceStagedModels(
-			Consumer<JSONObject> consumer, String data)
-		throws Exception {
-
-		if (!JSONUtil.isValid(data)) {
-			return data;
-		}
+		Consumer<JSONObject> consumer, String data) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
 
-		if (!jsonObject.has("items")) {
+		if ((jsonObject == null) || !jsonObject.has("items")) {
 			return data;
 		}
 

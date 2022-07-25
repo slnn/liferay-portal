@@ -23,7 +23,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -220,7 +219,7 @@ public class JournalContentCompatibilityConverterImpl
 	private String _convertLinkToLayoutValue(
 		Locale defaultLocale, String value) {
 
-		if (JSONUtil.isValid(value)) {
+		if (JSONFactoryUtil.createJSONObject(value) != null) {
 			return value;
 		}
 
