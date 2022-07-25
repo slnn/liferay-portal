@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -95,6 +96,28 @@ public class JSONFactoryUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
+
+			return null;
+		}
+	}
+
+	public static JSONObject createJSONObject(
+		String json, Consumer<JSONException> consumer) {
+
+		json = json.trim();
+
+		if ((json.length() < 2) ||
+			(json.charAt(0) != CharPool.OPEN_CURLY_BRACE) ||
+			(json.charAt(json.length() - 1) != CharPool.CLOSE_CURLY_BRACE)) {
+
+			return null;
+		}
+
+		try {
+			return _jsonFactory.createJSONObject(json);
+		}
+		catch (JSONException jsonException) {
+			consumer.accept(jsonException);
 
 			return null;
 		}
