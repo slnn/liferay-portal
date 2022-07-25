@@ -89,12 +89,13 @@ public abstract class BaseEditorConfigContributor
 	}
 
 	protected JSONObject toJSONObject(String json) {
-		try {
-			return JSONFactoryUtil.createJSONObject(json);
-		}
-		catch (JSONException jsonException) {
-			_log.error(
-				"Unable to create a JSON object from: " + json, jsonException);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			json,
+			jsonException -> _log.error(
+				"Unable to create a JSON object from: " + json, jsonException));
+
+		if (jsonObject != null) {
+			return jsonObject;
 		}
 
 		return JSONFactoryUtil.createJSONObject();

@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -261,19 +260,15 @@ public abstract class BaseSocialActivityInterpreter
 			return defaultValue;
 		}
 
-		try {
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
-				json);
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+			json,
+			jsonException -> _log.error(
+				"Unable to create a JSON object from " + json, jsonException));
 
-			String value = extraDataJSONObject.getString(key);
+		String value = extraDataJSONObject.getString(key);
 
-			if (Validator.isNotNull(value)) {
-				return value;
-			}
-		}
-		catch (JSONException jsonException) {
-			_log.error(
-				"Unable to create a JSON object from " + json, jsonException);
+		if (Validator.isNotNull(value)) {
+			return value;
 		}
 
 		return defaultValue;

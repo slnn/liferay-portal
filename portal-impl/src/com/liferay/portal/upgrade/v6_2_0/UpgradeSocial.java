@@ -323,25 +323,16 @@ public class UpgradeSocial extends UpgradeProcess {
 				ResultSet resultSet, String extraData)
 			throws SQLException {
 
-			long messageId = 0;
-
-			try {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					extraData);
-
-				messageId = jsonObject.getLong("messageId");
-			}
-			catch (JSONException jsonException) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(jsonException);
-				}
-			}
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				extraData,
+				(JSONException jsonException) -> {
+					if (_log.isDebugEnabled()) {
+						_log.debug(jsonException);
+					}
+				});
 
 			return JSONUtil.put(
-				"messageId", messageId
+				"messageId", jsonObject.getLong("messageId")
 			).put(
 				"title", resultSet.getString("subject")
 			);
@@ -377,24 +368,15 @@ public class UpgradeSocial extends UpgradeProcess {
 				int type, String extraData)
 			throws SQLException {
 
-			long messageId = 0;
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				extraData,
+				(JSONException jsonException) -> {
+					if (_log.isDebugEnabled()) {
+						_log.debug(jsonException);
+					}
+				});
 
-			try {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					extraData);
-
-				messageId = jsonObject.getLong("messageId");
-			}
-			catch (JSONException jsonException) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(jsonException);
-				}
-			}
-
-			preparedStatement.setLong(1, messageId);
+			preparedStatement.setLong(1, jsonObject.getLong("messageId"));
 		}
 
 		private static final int _TYPE_ADD_COMMENT = 10005;

@@ -162,19 +162,15 @@ public abstract class BaseBackgroundTaskDisplay
 	}
 
 	protected JSONObject getStatusMessageJSONObject(Locale locale) {
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(
-				backgroundTask.getStatusMessage());
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-		}
-
-		return translateJSON(jsonObject, locale);
+		return translateJSON(
+			JSONFactoryUtil.createJSONObject(
+				backgroundTask.getStatusMessage(),
+				(JSONException jsonException) -> {
+					if (_log.isDebugEnabled()) {
+						_log.debug(jsonException);
+					}
+				}),
+			locale);
 	}
 
 	protected abstract TemplateResource getTemplateResource();

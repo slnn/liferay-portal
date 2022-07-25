@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -725,28 +724,24 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				String editableValues = resultSet.getString("editableValues");
 
-				try {
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-						editableValues);
-
-					String portletId = jsonObject.getString("portletId");
-
-					if (Objects.equals(portletId, oldRootPortletId)) {
-						jsonObject.put("portletId", newRootPortletId);
-
-						preparedStatement2.setString(1, jsonObject.toString());
-
-						preparedStatement2.setLong(
-							2, resultSet.getLong("fragmentEntryLinkId"));
-
-						preparedStatement2.addBatch();
-					}
-				}
-				catch (JSONException jsonException) {
-					_log.error(
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					editableValues,
+					jsonException -> _log.error(
 						"Unable to create a JSON object from: " +
 							editableValues,
-						jsonException);
+						jsonException));
+
+				String portletId = jsonObject.getString("portletId");
+
+				if (Objects.equals(portletId, oldRootPortletId)) {
+					jsonObject.put("portletId", newRootPortletId);
+
+					preparedStatement2.setString(1, jsonObject.toString());
+
+					preparedStatement2.setLong(
+						2, resultSet.getLong("fragmentEntryLinkId"));
+
+					preparedStatement2.addBatch();
 				}
 			}
 

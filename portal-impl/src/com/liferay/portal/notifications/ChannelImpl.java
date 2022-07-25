@@ -15,7 +15,6 @@
 package com.liferay.portal.notifications;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -549,35 +548,31 @@ public class ChannelImpl extends BaseChannelImpl {
 		for (UserNotificationEvent persistedNotificationEvent :
 				userNotificationEvents) {
 
-			try {
-				JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
-					persistedNotificationEvent.getPayload());
+			JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
+				persistedNotificationEvent.getPayload(),
+				jsonException -> _log.error(jsonException));
 
-				NotificationEvent notificationEvent =
-					NotificationEventFactoryUtil.createNotificationEvent(
-						persistedNotificationEvent.getTimestamp(),
-						persistedNotificationEvent.getType(),
-						payloadJSONObject);
-
-				notificationEvent.setDeliveryRequired(
-					persistedNotificationEvent.getDeliverBy());
-
-				notificationEvent.setUuid(persistedNotificationEvent.getUuid());
-
-				if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
-					invalidNotificationEventUuids.add(
-						notificationEvent.getUuid());
-				}
-				else {
-					unconfirmedNotificationEvents.put(
-						notificationEvent.getUuid(), notificationEvent);
-				}
-			}
-			catch (JSONException jsonException) {
-				_log.error(jsonException);
-
+			if (payloadJSONObject == null) {
 				invalidNotificationEventUuids.add(
 					persistedNotificationEvent.getUuid());
+			}
+
+			NotificationEvent notificationEvent =
+				NotificationEventFactoryUtil.createNotificationEvent(
+					persistedNotificationEvent.getTimestamp(),
+					persistedNotificationEvent.getType(), payloadJSONObject);
+
+			notificationEvent.setDeliveryRequired(
+				persistedNotificationEvent.getDeliverBy());
+
+			notificationEvent.setUuid(persistedNotificationEvent.getUuid());
+
+			if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
+				invalidNotificationEventUuids.add(notificationEvent.getUuid());
+			}
+			else {
+				unconfirmedNotificationEvents.put(
+					notificationEvent.getUuid(), notificationEvent);
 			}
 		}
 
