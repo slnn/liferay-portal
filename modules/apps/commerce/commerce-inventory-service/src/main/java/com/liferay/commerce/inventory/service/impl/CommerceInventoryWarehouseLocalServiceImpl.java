@@ -20,8 +20,11 @@ import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWareho
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.internal.search.CommerceInventoryWarehouseIndexer;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -47,17 +50,24 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+	service = AopService.class
+)
 public class CommerceInventoryWarehouseLocalServiceImpl
 	extends CommerceInventoryWarehouseLocalServiceBaseImpl {
 
@@ -497,14 +507,22 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 		}
 	}
 
+	@Reference
+	protected CommerceInventoryReplenishmentItemLocalService
+		commerceInventoryReplenishmentItemLocalService;
+
+	@Reference
+	protected CommerceInventoryWarehouseItemLocalService
+		commerceInventoryWarehouseItemLocalService;
+
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
 	};
 
-	@ServiceReference(type = CompanyLocalService.class)
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
 }
