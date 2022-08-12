@@ -264,7 +264,7 @@ public class CPDisplayLayoutLocalServiceImpl
 
 				indexer.delete(companyId, document.getUID());
 			}
-			else if (cpDisplayLayout != null) {
+			else {
 				cpDisplayLayouts.add(cpDisplayLayout);
 			}
 		}
