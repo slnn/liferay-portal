@@ -1514,9 +1514,7 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public String getUrlTitleMapAsXML(long cpDefinitionId)
-		throws PortalException {
-
+	public String getUrlTitleMapAsXML(long cpDefinitionId) {
 		try {
 			CPDefinition cpDefinition =
 				cpDefinitionPersistence.findByPrimaryKey(cpDefinitionId);
