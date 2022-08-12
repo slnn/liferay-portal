@@ -871,10 +871,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	private GroupByStep _getGroupByStep(
-			JoinStep joinStep, long classNameId, long classPK, String keywords,
-			int type, int status,
-			Expression<String> keywordsPredicateExpression)
-		throws PortalException {
+		JoinStep joinStep, long classNameId, long classPK, String keywords,
+		int type, int status, Expression<String> keywordsPredicateExpression) {
 
 		return joinStep.where(
 			CPAttachmentFileEntryTable.INSTANCE.classNameId.eq(
