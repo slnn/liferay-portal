@@ -721,9 +721,7 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getUrlTitleMap(cpDefinitionId);
 	}
 
-	public static String getUrlTitleMapAsXML(long cpDefinitionId)
-		throws PortalException {
-
+	public static String getUrlTitleMapAsXML(long cpDefinitionId) {
 		return getService().getUrlTitleMapAsXML(cpDefinitionId);
 	}
 

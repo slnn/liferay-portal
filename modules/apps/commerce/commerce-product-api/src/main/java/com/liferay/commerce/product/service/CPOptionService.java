@@ -87,9 +87,8 @@ public interface CPOptionService extends BaseService {
 		throws PortalException;
 
 	public List<CPOption> findCPOptionByCompanyId(
-			long companyId, int start, int end,
-			OrderByComparator<CPOption> orderByComparator)
-		throws PortalException;
+		long companyId, int start, int end,
+		OrderByComparator<CPOption> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption getCPOption(long cpOptionId) throws PortalException;

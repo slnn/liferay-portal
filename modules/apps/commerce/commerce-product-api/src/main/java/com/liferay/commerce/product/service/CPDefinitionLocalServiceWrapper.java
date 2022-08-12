@@ -809,9 +809,7 @@ public class CPDefinitionLocalServiceWrapper
 	}
 
 	@Override
-	public String getUrlTitleMapAsXML(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public String getUrlTitleMapAsXML(long cpDefinitionId) {
 		return _cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinitionId);
 	}
 
