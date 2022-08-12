@@ -529,9 +529,8 @@ public class CommerceChannelLocalServiceImpl
 	}
 
 	private GroupByStep _getGroupByStep(
-			JoinStep joinStep, Long companyId, String keywords,
-			Expression<String> keywordsPredicateExpression)
-		throws PortalException {
+		JoinStep joinStep, Long companyId, String keywords,
+		Expression<String> keywordsPredicateExpression) {
 
 		return joinStep.where(
 			CommerceChannelTable.INSTANCE.companyId.eq(
