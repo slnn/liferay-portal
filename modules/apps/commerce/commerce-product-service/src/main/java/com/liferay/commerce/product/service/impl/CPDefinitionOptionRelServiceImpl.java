@@ -19,7 +19,11 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionRelServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
@@ -163,7 +167,7 @@ public class CPDefinitionOptionRelServiceImpl
 				long cpInstanceId)
 		throws PortalException {
 
-		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
 		_checkCommerceCatalog(cpInstance.getCPDefinitionId(), ActionKeys.VIEW);
@@ -328,7 +332,7 @@ public class CPDefinitionOptionRelServiceImpl
 	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
 		throws PortalException {
 
-		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
 			cpDefinitionId);
 
 		if (cpDefinition == null) {
@@ -336,7 +340,7 @@ public class CPDefinitionOptionRelServiceImpl
 		}
 
 		CommerceCatalog commerceCatalog =
-			commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
+			_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
 				cpDefinition.getGroupId());
 
 		if (commerceCatalog == null) {
@@ -353,5 +357,14 @@ public class CPDefinitionOptionRelServiceImpl
 				CPDefinitionOptionRelServiceImpl.class,
 				"_commerceCatalogModelResourcePermission",
 				CommerceCatalog.class);
+
+	@BeanReference(type = CommerceCatalogLocalService.class)
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@BeanReference(type = CPDefinitionLocalService.class)
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@BeanReference(type = CPInstanceLocalService.class)
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }
