@@ -128,8 +128,7 @@ public class CPMeasurementUnitLocalServiceImpl
 
 	@Override
 	public CPMeasurementUnit fetchCPMeasurementUnitByKey(
-			long companyId, String key)
-		throws PortalException {
+		long companyId, String key) {
 
 		return cpMeasurementUnitPersistence.fetchByC_K(companyId, key);
 	}
@@ -210,17 +209,15 @@ public class CPMeasurementUnitLocalServiceImpl
 
 	@Override
 	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type)
-		throws PortalException {
+		long companyId, int type) {
 
 		return cpMeasurementUnitPersistence.findByC_T(companyId, type);
 	}
 
 	@Override
 	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type, int start, int end,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws PortalException {
+		long companyId, int type, int start, int end,
+		OrderByComparator<CPMeasurementUnit> orderByComparator) {
 
 		return cpMeasurementUnitPersistence.findByC_T(
 			companyId, type, start, end, orderByComparator);

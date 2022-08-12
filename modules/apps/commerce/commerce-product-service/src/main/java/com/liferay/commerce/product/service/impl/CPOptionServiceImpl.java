@@ -144,9 +144,8 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public List<CPOption> findCPOptionByCompanyId(
-			long companyId, int start, int end,
-			OrderByComparator<CPOption> orderByComparator)
-		throws PortalException {
+		long companyId, int start, int end,
+		OrderByComparator<CPOption> orderByComparator) {
 
 		return cpOptionLocalService.findCPOptionByCompanyId(
 			companyId, start, end, orderByComparator);
