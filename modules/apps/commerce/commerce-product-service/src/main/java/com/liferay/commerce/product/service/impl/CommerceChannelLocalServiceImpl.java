@@ -19,6 +19,7 @@ import com.liferay.commerce.product.exception.DuplicateCommerceChannelException;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelSiteGroupIdException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelTable;
+import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.service.base.CommerceChannelLocalServiceBaseImpl;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -28,6 +29,7 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -46,8 +48,11 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -75,7 +80,7 @@ public class CommerceChannelLocalServiceImpl
 			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CommerceChannel commerceChannel = null;
 
@@ -127,7 +132,8 @@ public class CommerceChannelLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(commerceChannel, serviceContext);
+		_resourceLocalService.addModelResources(
+			commerceChannel, serviceContext);
 
 		return commerceChannel;
 	}
@@ -147,7 +153,7 @@ public class CommerceChannelLocalServiceImpl
 			externalReferenceCode = null;
 		}
 		else {
-			User user = userLocalService.getUser(userId);
+			User user = _userLocalService.getUser(userId);
 
 			commerceChannel =
 				commerceChannelLocalService.fetchByExternalReferenceCode(
@@ -175,12 +181,12 @@ public class CommerceChannelLocalServiceImpl
 
 		// Commerce channel rel
 
-		commerceChannelRelLocalService.deleteCommerceChannelRels(
+		_commerceChannelRelLocalService.deleteCommerceChannelRels(
 			commerceChannel.getCommerceChannelId());
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commerceChannel, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Group
@@ -246,7 +252,7 @@ public class CommerceChannelLocalServiceImpl
 
 		return _groupLocalService.fetchGroup(
 			commerceChannel.getCompanyId(),
-			classNameLocalService.getClassNameId(
+			_classNameLocalService.getClassNameId(
 				CommerceChannel.class.getName()),
 			commerceChannelId);
 	}
@@ -542,10 +548,22 @@ public class CommerceChannelLocalServiceImpl
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
 	};
 
+	@ServiceReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = CommerceChannelRelLocalService.class)
+	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
+
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }
