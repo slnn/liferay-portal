@@ -552,8 +552,7 @@ public interface CPDefinitionLocalService
 	public Map<Locale, String> getUrlTitleMap(long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getUrlTitleMapAsXML(long cpDefinitionId)
-		throws PortalException;
+	public String getUrlTitleMapAsXML(long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasChildCPDefinitions(long cpDefinitionId);
