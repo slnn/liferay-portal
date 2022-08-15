@@ -19,7 +19,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionLinkLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
@@ -108,7 +107,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		cpDefinitionLink = cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
-		CProduct cProduct = _cProductLocalService.getCProduct(cProductId);
+		CProduct cProduct = _cProductPersistence.findByPrimaryKey(cProductId);
 
 		_cpDefinitionIndexHelper.reindexCPDefinition(
 			cProduct.getPublishedCPDefinitionId());
@@ -151,7 +150,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			cpDefinitionLink.getCPDefinitionLinkId());
 
-		CProduct cProduct = _cProductLocalService.getCProduct(
+		CProduct cProduct = _cProductPersistence.findByPrimaryKey(
 			cpDefinitionLink.getCProductId());
 
 		_cpDefinitionIndexHelper.reindexCPDefinition(
@@ -350,7 +349,8 @@ public class CPDefinitionLinkLocalServiceImpl
 				}
 			}
 
-			CProduct cProduct = _cProductLocalService.getCProduct(cProductId);
+			CProduct cProduct = _cProductPersistence.findByPrimaryKey(
+				cProductId);
 
 			_cpDefinitionIndexHelper.reindexCPDefinition(
 				cProduct.getPublishedCPDefinitionId());
@@ -396,9 +396,6 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Reference
 	private CPDefinitionPersistence _cpDefinitionPersistence;
-
-	@Reference
-	private CProductLocalService _cProductLocalService;
 
 	@Reference
 	private CProductPersistence _cProductPersistence;
