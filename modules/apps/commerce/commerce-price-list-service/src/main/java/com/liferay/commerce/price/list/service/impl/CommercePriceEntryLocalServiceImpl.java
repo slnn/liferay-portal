@@ -32,6 +32,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
+import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.FromStep;
@@ -222,10 +224,10 @@ public class CommercePriceEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
 			cpInstance.getCPDefinitionId());
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -435,12 +437,15 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(skuExternalReferenceCode)) {
-			CPInstance cpInstance =
-				_cpInstanceLocalService.getCPInstanceByExternalReferenceCode(
-					skuExternalReferenceCode, serviceContext.getCompanyId());
+			if (Validator.isBlank(skuExternalReferenceCode)) {
+				throw new NoSuchCPInstanceException();
+			}
+
+			CPInstance cpInstance = _cpInstancePersistence.findByC_ERC(
+				serviceContext.getCompanyId(), skuExternalReferenceCode);
 
 			CPDefinition cpDefinition =
-				_cpDefinitionLocalService.getCPDefinition(
+				_cpDefinitionPersistence.findByPrimaryKey(
 					cpInstance.getCPDefinitionId());
 
 			return addCommercePriceEntry(
@@ -572,7 +577,7 @@ public class CommercePriceEntryLocalServiceImpl
 	public void deleteCommercePriceEntriesByCPInstanceId(long cpInstanceId)
 		throws PortalException {
 
-		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
 		if (cpInstance != null) {
@@ -650,7 +655,7 @@ public class CommercePriceEntryLocalServiceImpl
 	public CommercePriceEntry fetchCommercePriceEntry(
 		long cpInstanceId, long commercePriceListId) {
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.fetchByPrimaryKey(
 			cpInstanceId);
 
 		if (cpInstance == null) {
@@ -669,7 +674,7 @@ public class CommercePriceEntryLocalServiceImpl
 	public CommercePriceEntry fetchCommercePriceEntry(
 		long cpInstanceId, long commercePriceListId, boolean useAncestor) {
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.fetchByPrimaryKey(
 			cpInstanceId);
 
 		if (cpInstance == null) {
@@ -807,7 +812,7 @@ public class CommercePriceEntryLocalServiceImpl
 	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
 		long cpInstanceId, int start, int end) {
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.fetchByPrimaryKey(
 			cpInstanceId);
 
 		if (cpInstance == null) {
@@ -827,7 +832,7 @@ public class CommercePriceEntryLocalServiceImpl
 		long cpInstanceId, int start, int end,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.fetchByPrimaryKey(
 			cpInstanceId);
 
 		if (cpInstance == null) {
@@ -861,7 +866,7 @@ public class CommercePriceEntryLocalServiceImpl
 	@Deprecated
 	@Override
 	public int getInstanceCommercePriceEntriesCount(long cpInstanceId) {
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.fetchByPrimaryKey(
 			cpInstanceId);
 
 		if (cpInstance == null) {
@@ -1132,10 +1137,10 @@ public class CommercePriceEntryLocalServiceImpl
 			String skuExternalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
 			cpInstance.getCPDefinitionId());
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -1505,10 +1510,10 @@ public class CommercePriceEntryLocalServiceImpl
 		_commerceTierPriceEntryLocalService;
 
 	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
+	private CPDefinitionPersistence _cpDefinitionPersistence;
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
+	private CPInstancePersistence _cpInstancePersistence;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
