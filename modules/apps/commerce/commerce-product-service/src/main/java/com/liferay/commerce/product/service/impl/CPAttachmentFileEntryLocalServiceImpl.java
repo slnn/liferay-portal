@@ -20,6 +20,7 @@ import com.liferay.commerce.product.exception.CPAttachmentFileEntryCDNURLExcepti
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryDisplayDateException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
 import com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException;
+import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryTable;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -205,7 +205,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry = cpAttachmentFileEntryPersistence.update(
 			cpAttachmentFileEntry);
 
-		reindex(classNameId, classPK);
+		_cpDefinitionIndexHelper.reindex(classNameId, classPK);
 
 		// Workflow
 
@@ -369,7 +369,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
-		reindex(
+		_cpDefinitionIndexHelper.reindex(
 			cpAttachmentFileEntry.getClassNameId(),
 			cpAttachmentFileEntry.getClassPK());
 
@@ -760,7 +760,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry = cpAttachmentFileEntryPersistence.update(
 			cpAttachmentFileEntry);
 
-		reindex(
+		_cpDefinitionIndexHelper.reindex(
 			cpAttachmentFileEntry.getClassNameId(),
 			cpAttachmentFileEntry.getClassPK());
 
@@ -808,21 +808,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					WorkflowConstants.STATUS_EXPIRED, serviceContext,
 					new HashMap<String, Serializable>());
 			}
-		}
-	}
-
-	protected void reindex(long classNameId, long classPK)
-		throws PortalException {
-
-		ClassName className = _classNameLocalService.getClassName(classNameId);
-
-		String classNameValue = className.getValue();
-
-		if (classNameValue.equals(CPDefinition.class.getName())) {
-			Indexer<CPDefinition> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
-
-			indexer.reindex(CPDefinition.class.getName(), classPK);
 		}
 	}
 
@@ -975,6 +960,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

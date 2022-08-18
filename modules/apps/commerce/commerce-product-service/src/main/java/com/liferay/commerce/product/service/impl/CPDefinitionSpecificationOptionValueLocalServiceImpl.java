@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -26,8 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -101,7 +100,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionId);
+		_cpDefinitionIndexHelper.reindexCPDefinition(cpDefinitionId);
 
 		return cpDefinitionSpecificationOptionValue;
 	}
@@ -146,7 +145,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 			cpDefinitionSpecificationOptionValue.
 				getCPDefinitionSpecificationOptionValueId());
 
-		reindexCPDefinition(
+		_cpDefinitionIndexHelper.reindexCPDefinition(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 
 		return cpDefinitionSpecificationOptionValue;
@@ -190,7 +189,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionId);
+		_cpDefinitionIndexHelper.reindexCPDefinition(cpDefinitionId);
 	}
 
 	@Override
@@ -215,7 +214,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 			// Commerce product definition
 
-			reindexCPDefinition(
+			_cpDefinitionIndexHelper.reindexCPDefinition(
 				cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 		}
 	}
@@ -333,7 +332,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(
+		_cpDefinitionIndexHelper.reindexCPDefinition(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 
 		return cpDefinitionSpecificationOptionValue;
@@ -375,20 +374,14 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(
+		_cpDefinitionIndexHelper.reindexCPDefinition(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 
 		return cpDefinitionSpecificationOptionValue;
 	}
 
-	protected void reindexCPDefinition(long cpDefinitionId)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
-	}
+	@Reference
+	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

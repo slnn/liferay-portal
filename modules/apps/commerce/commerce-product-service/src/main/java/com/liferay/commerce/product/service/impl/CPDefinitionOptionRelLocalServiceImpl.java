@@ -19,6 +19,7 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPDefinitionOptionRelPriceTypeException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionSKUContributorException;
 import com.liferay.commerce.product.exception.DuplicateCPDefinitionOptionRelKeyException;
+import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelLocalServiceHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -206,7 +207,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionId);
+		_cpDefinitionIndexHelper.reindexCPDefinition(cpDefinitionId);
 
 		return cpDefinitionOptionRel;
 	}
@@ -278,7 +279,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionRel;
 	}
@@ -676,7 +678,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionRel;
 	}
@@ -756,15 +759,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 
 		return cpDefinitionOptionRels;
-	}
-
-	protected void reindexCPDefinition(long cpDefinitionId)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
 	protected int searchCPDefinitionOptionRelsCount(SearchContext searchContext)
@@ -931,6 +925,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
