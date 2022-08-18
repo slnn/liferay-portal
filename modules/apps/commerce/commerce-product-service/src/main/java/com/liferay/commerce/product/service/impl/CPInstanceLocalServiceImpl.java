@@ -23,6 +23,7 @@ import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUui
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
+import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelLocalServiceHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionValueRelLocalServiceHelper;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
@@ -239,7 +240,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds);
 		}
 
-		reindexCPDefinition(cpDefinitionId);
+		_cpDefinitionIndexHelper.reindexCPDefinition(cpDefinitionId);
 
 		if (!_isWorkflowActionPublish(serviceContext)) {
 			return cpInstance;
@@ -660,7 +661,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.getCompanyId(), cpInstance.getGroupId(),
 			CPInstance.class.getName(), cpInstance.getCPInstanceId());
 
-		reindexCPDefinition(cpInstance.getCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpInstance.getCPDefinitionId());
 
 		return cpInstance;
 	}
@@ -1157,7 +1159,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 
-		reindexCPDefinition(cpInstance.getCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpInstance.getCPDefinitionId());
 
 		if (!_isWorkflowActionPublish(serviceContext)) {
 			return cpInstance;
@@ -1698,15 +1701,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstances;
 	}
 
-	protected void reindexCPDefinition(long cpDefinitionId)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
-	}
-
 	protected CPInstance startWorkflowInstance(
 			long userId, CPInstance cpInstance, ServiceContext serviceContext)
 		throws PortalException {
@@ -2027,6 +2021,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceLocalServiceImpl.class);
+
+	@Reference
+	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

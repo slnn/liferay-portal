@@ -20,6 +20,7 @@ import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyExcep
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelQuantityException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException;
+import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionValueRelLocalServiceHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -178,7 +179,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel);
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionValueRel;
 	}
@@ -227,7 +229,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel);
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionValueRel;
 	}
@@ -679,7 +682,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel);
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionValueRel;
 	}
@@ -802,18 +806,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		}
 
 		return cpDefinitionOptionValueRels;
-	}
-
-	protected void reindexCPDefinition(
-			CPDefinitionOptionRel cpDefinitionOptionRel)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.reindex(
-			CPDefinition.class.getName(),
-			cpDefinitionOptionRel.getCPDefinitionId());
 	}
 
 	protected BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPOptions(
@@ -1064,6 +1056,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
 	};
+
+	@Reference
+	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
