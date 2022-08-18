@@ -1677,10 +1677,46 @@ public class CPDefinitionLocalServiceImpl
 			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
 				cpDefinitionId);
 
-		if ((count <= 0) ||
-			!_cpDefinitionOptionRelLocalService.
-				hasLinkedCPInstanceCPDefinitionOptionRels(cpDefinitionId)) {
+		if (count > 0) {
+			boolean hasLinkedCPInstanceCPDefinitionOptionRels = false;
 
+			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+				_cpDefinitionOptionRelPersistence.findByCPDefinitionId(
+					cpDefinitionId);
+
+			for (CPDefinitionOptionRel cpDefinitionOptionRel :
+					cpDefinitionOptionRels) {
+
+				if (!cpDefinitionOptionRel.isPriceContributor()) {
+					continue;
+				}
+
+				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+						cpDefinitionOptionRel.
+							getCPDefinitionOptionValueRels()) {
+
+					if (Validator.isNull(
+							cpDefinitionOptionValueRel.getCPInstanceUuid())) {
+
+						continue;
+					}
+
+					CPInstance cpInstance =
+						cpDefinitionOptionValueRel.fetchCPInstance();
+
+					if (cpInstance == null) {
+						continue;
+					}
+
+					hasLinkedCPInstanceCPDefinitionOptionRels = true;
+				}
+			}
+
+			if (!hasLinkedCPInstanceCPDefinitionOptionRels) {
+				return false;
+			}
+		}
+		else {
 			return false;
 		}
 
