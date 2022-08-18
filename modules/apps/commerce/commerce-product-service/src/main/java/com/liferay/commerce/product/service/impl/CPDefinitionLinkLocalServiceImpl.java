@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CProduct;
@@ -28,8 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -111,9 +110,10 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		CProduct cProduct = _cProductLocalService.getCProduct(cProductId);
 
-		reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cProduct.getPublishedCPDefinitionId());
 
-		reindexCPDefinition(cpDefinitionId);
+		_cpDefinitionIndexHelper.reindexCPDefinition(cpDefinitionId);
 
 		return cpDefinitionLink;
 	}
@@ -154,9 +154,11 @@ public class CPDefinitionLinkLocalServiceImpl
 		CProduct cProduct = _cProductLocalService.getCProduct(
 			cpDefinitionLink.getCProductId());
 
-		reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cProduct.getPublishedCPDefinitionId());
 
-		reindexCPDefinition(cpDefinitionLink.getCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinitionLink.getCPDefinitionId());
 
 		return cpDefinitionLink;
 	}
@@ -297,12 +299,14 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		cpDefinitionLink = cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
-		reindexCPDefinition(cpDefinitionLink.getCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinitionLink.getCPDefinitionId());
 
 		CProduct cProduct = _cProductPersistence.findByPrimaryKey(
 			cpDefinitionLink.getCProductId());
 
-		reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cProduct.getPublishedCPDefinitionId());
 
 		return cpDefinitionLink;
 	}
@@ -348,10 +352,11 @@ public class CPDefinitionLinkLocalServiceImpl
 
 			CProduct cProduct = _cProductLocalService.getCProduct(cProductId);
 
-			reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+			_cpDefinitionIndexHelper.reindexCPDefinition(
+				cProduct.getPublishedCPDefinitionId());
 		}
 
-		reindexCPDefinition(cpDefinitionId);
+		_cpDefinitionIndexHelper.reindexCPDefinition(cpDefinitionId);
 	}
 
 	/**
@@ -383,14 +388,8 @@ public class CPDefinitionLinkLocalServiceImpl
 			cpDefinitionId1, cProductIds, type, serviceContext);
 	}
 
-	protected void reindexCPDefinition(long cpDefinitionId)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
-	}
+	@Reference
+	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
