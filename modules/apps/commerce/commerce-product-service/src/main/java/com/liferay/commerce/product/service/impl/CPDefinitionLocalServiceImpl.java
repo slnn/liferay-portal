@@ -35,6 +35,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
+import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
@@ -52,7 +53,6 @@ import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
-import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
@@ -86,6 +86,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -988,9 +989,56 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition specification option values
 
-		_cpDefinitionSpecificationOptionValueLocalService.
-			deleteCPDefinitionSpecificationOptionValues(
-				cpDefinition.getCPDefinitionId());
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues =
+				_cpDefinitionSpecificationOptionValuePersistence.
+					findByCPDefinitionId(
+						cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null);
+
+		for (CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue :
+					cpDefinitionSpecificationOptionValues) {
+
+			if (isVersionable(
+					cpDefinitionSpecificationOptionValue.getCPDefinitionId())) {
+
+				try {
+					CPDefinition newCPDefinition = copyCPDefinition(
+						cpDefinitionSpecificationOptionValue.
+							getCPDefinitionId());
+
+					cpDefinitionSpecificationOptionValue =
+						_cpDefinitionSpecificationOptionValuePersistence.
+							findByC_CSOVI(
+								newCPDefinition.getCPDefinitionId(),
+								cpDefinitionSpecificationOptionValue.
+									getCPDefinitionSpecificationOptionValueId());
+				}
+				catch (PortalException portalException) {
+					throw new SystemException(portalException);
+				}
+			}
+
+			// Commerce product definition specification option value
+
+			_cpDefinitionSpecificationOptionValuePersistence.remove(
+				cpDefinitionSpecificationOptionValue);
+
+			// Expando
+
+			_expandoRowLocalService.deleteRows(
+				cpDefinitionSpecificationOptionValue.
+					getCPDefinitionSpecificationOptionValueId());
+
+			_cpDefinitionIndexHelper.reindexCPDefinition(
+				cpDefinitionSpecificationOptionValue.getCPDefinitionId());
+		}
+
+		// Commerce product definition
+
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinition.getCPDefinitionId());
 
 		// Commerce product instances
 
@@ -2823,6 +2871,9 @@ public class CPDefinitionLocalServiceImpl
 	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;
 
 	@Reference
+	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
+
+	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
 
 	@Reference
@@ -2838,10 +2889,6 @@ public class CPDefinitionLocalServiceImpl
 	@Reference
 	private CPDefinitionOptionValueRelPersistence
 		_cpDefinitionOptionValueRelPersistence;
-
-	@Reference
-	private CPDefinitionSpecificationOptionValueLocalService
-		_cpDefinitionSpecificationOptionValueLocalService;
 
 	@Reference
 	private CPDefinitionSpecificationOptionValuePersistence
