@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.DuplicateCProductException;
+import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
@@ -26,8 +27,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -144,7 +143,8 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 		cProduct = cProductPersistence.update(cProduct);
 
-		reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cProduct.getPublishedCPDefinitionId());
 
 		return cProduct;
 	}
@@ -167,19 +167,11 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 		cProduct = cProductPersistence.update(cProduct);
 
-		reindexCPDefinition(originalPublishedCPDefinitionId);
-		reindexCPDefinition(publishedCPDefinitionId);
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			originalPublishedCPDefinitionId);
+		_cpDefinitionIndexHelper.reindexCPDefinition(publishedCPDefinitionId);
 
 		return cProduct;
-	}
-
-	protected void reindexCPDefinition(long cpDefinitionId)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
 	protected void validate(String externalReferenceCode, long companyId)
@@ -201,6 +193,9 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 	@Reference
 	protected CPInstancePersistence cpInstancePersistence;
+
+	@Reference
+	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
