@@ -35,6 +35,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
+import com.liferay.commerce.product.internal.helper.CPAttachmentFileEntryCheckerHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -50,7 +51,6 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
@@ -1050,8 +1050,54 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition attachment file entries
 
-		_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
-			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			_cpAttachmentFileEntryPersistence.findByC_C(
+				_classNameLocalService.getClassNameId(
+					CPDefinition.class.getName()),
+				cpDefinition.getCPDefinitionId());
+
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
+			long cpDefinitionClassNameId =
+				_classNameLocalService.getClassNameId(CPDefinition.class);
+
+			if ((cpAttachmentFileEntry.getClassNameId() ==
+					cpDefinitionClassNameId) &&
+				isVersionable(cpAttachmentFileEntry.getClassPK())) {
+
+				CPDefinition newCPDefinition = copyCPDefinition(
+					cpAttachmentFileEntry.getClassPK());
+
+				if (cpAttachmentFileEntry.isCDNEnabled()) {
+					cpAttachmentFileEntry =
+						_cpAttachmentFileEntryPersistence.findByC_C_C_First(
+							cpDefinitionClassNameId,
+							newCPDefinition.getCPDefinitionId(),
+							cpAttachmentFileEntry.getCDNURL(), null);
+				}
+				else {
+					cpAttachmentFileEntry =
+						_cpAttachmentFileEntryPersistence.findByC_C_F_First(
+							cpDefinitionClassNameId,
+							newCPDefinition.getCPDefinitionId(),
+							cpAttachmentFileEntry.getFileEntryId(), null);
+				}
+			}
+
+			// Commerce product attachment file entry
+
+			_cpAttachmentFileEntryPersistence.remove(cpAttachmentFileEntry);
+
+			// Expando
+
+			_expandoRowLocalService.deleteRows(
+				cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+
+			_cpDefinitionIndexHelper.reindex(
+				cpAttachmentFileEntry.getClassNameId(),
+				cpAttachmentFileEntry.getClassPK());
+		}
 
 		// Commerce product definition links
 
@@ -1466,7 +1512,7 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+			_cpAttachmentFileEntryPersistence.findByC_C_T_ST(
 				_classNameLocalService.getClassNameId(CPDefinition.class),
 				cpDefinitionId, CPAttachmentFileEntryConstants.TYPE_IMAGE,
 				WorkflowConstants.STATUS_APPROVED, 0, 1);
@@ -2384,7 +2430,7 @@ public class CPDefinitionLocalServiceImpl
 				new HashMap<String, Serializable>());
 
 			if (cpDefinition.isApproved()) {
-				_cpAttachmentFileEntryLocalService.
+				_cpAttachmentFileEntryCheckerHelper.
 					checkCPAttachmentFileEntriesByDisplayDate(
 						_classNameLocalService.getClassNameId(
 							cpDefinition.getModelClassName()),
@@ -2906,8 +2952,8 @@ public class CPDefinitionLocalServiceImpl
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Reference
-	private CPAttachmentFileEntryLocalService
-		_cpAttachmentFileEntryLocalService;
+	private CPAttachmentFileEntryCheckerHelper
+		_cpAttachmentFileEntryCheckerHelper;
 
 	@Reference
 	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;
