@@ -51,7 +51,6 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
-import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -1057,8 +1056,44 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition links
 
-		_cpDefinitionLinkLocalService.deleteCPDefinitionLinksByCPDefinitionId(
-			cpDefinition.getCPDefinitionId());
+		List<CPDefinitionLink> cpDefinitionLinks =
+			_cpDefinitionLinkPersistence.findByCPDefinitionId(
+				cpDefinition.getCPDefinitionId());
+
+		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
+			if (isVersionable(cpDefinitionLink.getCPDefinitionId())) {
+				try {
+					CPDefinition newCPDefinition = copyCPDefinition(
+						cpDefinitionLink.getCPDefinitionId());
+
+					cpDefinitionLink = _cpDefinitionLinkPersistence.findByC_C_T(
+						newCPDefinition.getCPDefinitionId(),
+						cpDefinitionLink.getCProductId(),
+						cpDefinitionLink.getType());
+				}
+				catch (PortalException portalException) {
+					throw new SystemException(portalException);
+				}
+			}
+
+			// Commerce product definition link
+
+			_cpDefinitionLinkPersistence.remove(cpDefinitionLink);
+
+			// Expando
+
+			_expandoRowLocalService.deleteRows(
+				cpDefinitionLink.getCPDefinitionLinkId());
+
+			CProduct cProduct = _cProductPersistence.findByPrimaryKey(
+				cpDefinitionLink.getCProductId());
+
+			_cpDefinitionIndexHelper.reindexCPDefinition(
+				cProduct.getPublishedCPDefinitionId());
+
+			_cpDefinitionIndexHelper.reindexCPDefinition(
+				cpDefinitionLink.getCPDefinitionId());
+		}
 
 		// Commerce product type
 
@@ -2872,9 +2907,6 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
-
-	@Reference
-	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
 
 	@Reference
 	private CPDefinitionLinkPersistence _cpDefinitionLinkPersistence;
