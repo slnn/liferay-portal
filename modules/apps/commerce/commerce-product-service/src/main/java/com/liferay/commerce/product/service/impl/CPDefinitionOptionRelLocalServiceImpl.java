@@ -247,8 +247,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		// Commerce product definition option value rels
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			_cpDefinitionOptionValueRelLocalService.
-				getCPDefinitionOptionValueRels(
+			_cpDefinitionOptionValueRelPersistence.
+				findByCPDefinitionOptionRelId(
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -913,8 +913,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			_cpDefinitionOptionValueRelLocalService.
-				getCPDefinitionOptionValueRels(cpDefinitionOptionRelId);
+			_cpDefinitionOptionValueRelPersistence.
+				findByCPDefinitionOptionRelId(cpDefinitionOptionRelId);
 
 		if (ListUtil.isEmpty(cpDefinitionOptionValueRels)) {
 			return;
@@ -926,9 +926,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			if (cpDefinitionOptionValueRel.getPrice() == null) {
 				cpDefinitionOptionValueRel.setPrice(BigDecimal.ZERO);
 
-				_cpDefinitionOptionValueRelLocalService.
-					updateCPDefinitionOptionValueRel(
-						cpDefinitionOptionValueRel);
+				_cpDefinitionOptionValueRelPersistence.update(
+					cpDefinitionOptionValueRel);
 			}
 		}
 	}
@@ -976,14 +975,32 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			CPDefinitionOptionRel cpDefinitionOptionRel, String priceType)
 		throws PortalException {
 
+		if (!cpDefinitionOptionRel.isNew() &&
+			cpDefinitionOptionRel.isPriceContributor() &&
+			!Objects.equals(cpDefinitionOptionRel.getPriceType(), priceType)) {
+
+			int count =
+				_cpDefinitionOptionValueRelPersistence.
+					countByCPDefinitionOptionRelId(
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+			boolean hasCPDefinitionOptionValueRels = false;
+
+			if (count > 0) {
+				hasCPDefinitionOptionValueRels = true;
+			}
+
+			if (!hasCPDefinitionOptionValueRels ||
+				Objects.equals(
+					priceType, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
+
+				return;
+			}
+		}
+
 		if (cpDefinitionOptionRel.isNew() ||
 			!cpDefinitionOptionRel.isPriceContributor() ||
-			Objects.equals(cpDefinitionOptionRel.getPriceType(), priceType) ||
-			!_cpDefinitionOptionValueRelLocalService.
-				hasCPDefinitionOptionValueRels(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId()) ||
-			Objects.equals(
-				priceType, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
+			Objects.equals(cpDefinitionOptionRel.getPriceType(), priceType)) {
 
 			return;
 		}
