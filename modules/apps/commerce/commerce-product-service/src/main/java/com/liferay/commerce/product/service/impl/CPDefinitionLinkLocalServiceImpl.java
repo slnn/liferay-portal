@@ -19,7 +19,6 @@ import com.liferay.commerce.product.internal.helper.CPDefinitionLocalServiceHelp
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CProduct;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionLinkLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
@@ -391,9 +390,6 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Reference
 	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionLocalServiceHelper _cpDefinitionLocalServiceHelper;
