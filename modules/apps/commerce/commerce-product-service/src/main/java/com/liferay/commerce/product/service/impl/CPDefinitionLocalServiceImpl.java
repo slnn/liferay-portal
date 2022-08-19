@@ -1222,6 +1222,36 @@ public class CPDefinitionLocalServiceImpl
 		}
 	}
 
+	public void updateCPDefinitionIgnoreSKUCombinations(
+		long cpDefintionId, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (_hasCPDefinitionSKUContributorCPDefinitionOptionRel(
+			cpDefintionId)) {
+
+			cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+				cpDefintionId, false, serviceContext);
+
+			return;
+		}
+
+		cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefintionId, true, serviceContext);
+	}
+
+	private boolean _hasCPDefinitionSKUContributorCPDefinitionOptionRel(
+		long cpDefinitionId) {
+
+		int cpDefinitionOptionRelsCount =
+			_cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
+
+		if (cpDefinitionOptionRelsCount > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public void deleteCPDefinitions(long cProductId, int status) {
 		cpDefinitionPersistence.removeByC_S(cProductId, status);

@@ -206,7 +206,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		_cpInstanceLocalService.inactivateIncompatibleCPInstances(
 			user.getUserId(), cpDefinitionId);
 
-		_updateCPDefinitionIgnoreSKUCombinations(
+		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
 			cpDefinitionId, serviceContext);
 
 		// Commerce product definition
@@ -278,7 +278,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRel.getCPDefinitionId(),
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
-		_updateCPDefinitionIgnoreSKUCombinations(
+		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
 			cpDefinitionOptionRel.getCPDefinitionId(), new ServiceContext());
 
 		// Commerce product definition
@@ -709,7 +709,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			serviceContext.getUserId(),
 			cpDefinitionOptionRel.getCPDefinitionId());
 
-		_updateCPDefinitionIgnoreSKUCombinations(
+		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
 			cpDefinitionOptionRel.getCPDefinitionId(), serviceContext);
 
 		// Commerce product definition
@@ -860,19 +860,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
 	}
 
-	private boolean _hasCPDefinitionSKUContributorCPDefinitionOptionRel(
-		long cpDefinitionId) {
-
-		int cpDefinitionOptionRelsCount =
-			cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
-
-		if (cpDefinitionOptionRelsCount > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _hasCustomAttributes(CPOptionValue cpOptionValue)
 		throws PortalException {
 
@@ -884,23 +871,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		catch (Exception exception) {
 			throw new PortalException(exception);
 		}
-	}
-
-	private void _updateCPDefinitionIgnoreSKUCombinations(
-			long cpDefintionId, ServiceContext serviceContext)
-		throws PortalException {
-
-		if (_hasCPDefinitionSKUContributorCPDefinitionOptionRel(
-				cpDefintionId)) {
-
-			_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-				cpDefintionId, false, serviceContext);
-
-			return;
-		}
-
-		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefintionId, true, serviceContext);
 	}
 
 	private void _updateCPDefinitionOptionValueRels(

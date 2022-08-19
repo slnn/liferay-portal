@@ -670,6 +670,10 @@ public interface CPDefinitionLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void updateCPDefinitionIgnoreSKUCombinations(
+			long cpDefintionId, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CPDefinitionLocalization updateCPDefinitionLocalization(
 			CPDefinition cpDefinition, String languageId, String name,
 			String shortDescription, String description, String metaTitle,

@@ -911,6 +911,15 @@ public class CPDefinitionLocalServiceUtil {
 			cpDefinitionId, ignoreSKUCombinations, serviceContext);
 	}
 
+	public static void updateCPDefinitionIgnoreSKUCombinations(
+			long cpDefintionId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().updateCPDefinitionIgnoreSKUCombinations(
+			cpDefintionId, serviceContext);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinitionLocalization
 			updateCPDefinitionLocalization(
 				CPDefinition cpDefinition, String languageId, String name,
