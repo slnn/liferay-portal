@@ -148,9 +148,14 @@ public class CPDefinitionLocalServiceHelper {
 			((status != originalCPDefinition.getStatus()) ||
 			 (status == WorkflowConstants.STATUS_APPROVED))) {
 
-			newCPDefinition.setVersion(
-				_cProductLocalService.increment(
-					originalCPDefinition.getCProductId()));
+			CProduct cProduct = _cProductPersistence.findByPrimaryKey(
+				originalCPDefinition.getCProductId());
+
+			cProduct.setLatestVersion(cProduct.getLatestVersion() + 1);
+
+			cProduct = _cProductPersistence.update(cProduct);
+
+			newCPDefinition.setVersion(cProduct.getLatestVersion());
 
 			if (status == WorkflowConstants.STATUS_APPROVED) {
 				CPDefinition publishedCPDefinition =
@@ -162,9 +167,29 @@ public class CPDefinitionLocalServiceHelper {
 				publishedCPDefinition = _cpDefinitionPersistence.update(
 					publishedCPDefinition);
 
-				_cProductLocalService.updatePublishedCPDefinitionId(
-					publishedCPDefinition.getCProductId(),
-					newCPDefinition.getCPDefinitionId());
+				long publishedCPDefinitionId =
+					newCPDefinition.getCPDefinitionId();
+
+				CProduct publishedCProduct =
+					_cProductPersistence.findByPrimaryKey(
+						publishedCPDefinition.getCProductId());
+
+				long originalPublishedCPDefinitionId =
+					publishedCProduct.getPublishedCPDefinitionId();
+
+				if (originalPublishedCPDefinitionId !=
+						publishedCPDefinitionId) {
+
+					publishedCProduct.setPublishedCPDefinitionId(
+						publishedCPDefinitionId);
+
+					_cProductPersistence.update(cProduct);
+
+					_cpDefinitionIndexHelper.reindexCPDefinition(
+						originalPublishedCPDefinitionId);
+					_cpDefinitionIndexHelper.reindexCPDefinition(
+						publishedCPDefinitionId);
+				}
 
 				long cProductId = publishedCPDefinition.getCProductId();
 
@@ -871,7 +896,7 @@ public class CPDefinitionLocalServiceHelper {
 	}
 
 	public boolean isPublishedCPDefinition(CPDefinition cpDefinition) {
-		CProduct cProduct = _cProductLocalService.fetchCProduct(
+		CProduct cProduct = _cProductPersistence.fetchByPrimaryKey(
 			cpDefinition.getCProductId());
 
 		if ((cProduct != null) &&
