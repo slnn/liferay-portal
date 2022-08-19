@@ -408,10 +408,6 @@ public interface CPDefinitionOptionValueRelLocalService
 	public boolean hasPreselectedCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId);
 
-	public void importCPDefinitionOptionRels(
-			long cpDefinitionOptionRelId, ServiceContext serviceContext)
-		throws PortalException;
-
 	public CPDefinitionOptionValueRel resetCPInstanceCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId)
 		throws PortalException;

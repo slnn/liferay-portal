@@ -526,6 +526,15 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 			cpDefinitionId);
 	}
 
+	public static void importCPDefinitionOptionRels(
+			long cpDefinitionOptionRelId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().importCPDefinitionOptionRels(
+			cpDefinitionOptionRelId, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.search.Hits search(
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 

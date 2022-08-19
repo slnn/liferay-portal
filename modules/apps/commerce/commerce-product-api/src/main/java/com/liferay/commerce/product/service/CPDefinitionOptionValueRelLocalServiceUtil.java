@@ -492,15 +492,6 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 			cpDefinitionOptionRelId);
 	}
 
-	public static void importCPDefinitionOptionRels(
-			long cpDefinitionOptionRelId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		getService().importCPDefinitionOptionRels(
-			cpDefinitionOptionRelId, serviceContext);
-	}
-
 	public static CPDefinitionOptionValueRel
 			resetCPInstanceCPDefinitionOptionValueRel(
 				long cpDefinitionOptionValueRelId)

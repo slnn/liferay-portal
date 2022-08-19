@@ -595,6 +595,16 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 	}
 
 	@Override
+	public void importCPDefinitionOptionRels(
+			long cpDefinitionOptionRelId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpDefinitionOptionRelLocalService.importCPDefinitionOptionRels(
+			cpDefinitionOptionRelId, serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.Hits search(
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 

@@ -27,13 +27,17 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionRelLocalServiceBaseImpl;
+import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -67,6 +71,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.io.Serializable;
 
@@ -192,9 +197,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		// Commerce product definition option value rels
 
 		if (importOptionValue) {
-			_cpDefinitionOptionValueRelLocalService.
-				importCPDefinitionOptionRels(
-					cpDefinitionOptionRelId, serviceContext);
+			importCPDefinitionOptionRels(
+				cpDefinitionOptionRelId, serviceContext);
 		}
 
 		// Commerce product instances
@@ -539,6 +543,38 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
+	public void importCPDefinitionOptionRels(
+			long cpDefinitionOptionRelId, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelPersistence.findByPrimaryKey(
+				cpDefinitionOptionRelId);
+
+		CPOption cpOption = _cpOptionLocalService.fetchCPOption(
+			cpDefinitionOptionRel.getCPOptionId());
+
+		if (cpOption == null) {
+			return;
+		}
+
+		List<CPOptionValue> cpOptionValues =
+			_cpOptionValueLocalService.getCPOptionValues(
+				cpOption.getCPOptionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			serviceContext.getExpandoBridgeAttributes();
+
+		try {
+			_addCPDefinitionOptionValueRel(
+				cpDefinitionOptionRelId, cpOptionValues, serviceContext);
+		}
+		finally {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) {
 		try {
 			Indexer<CPDefinitionOptionRel> indexer =
@@ -793,6 +829,29 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
+	private void _addCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId, List<CPOptionValue> cpOptionValues,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		for (CPOptionValue cpOptionValue : cpOptionValues) {
+			if (_hasCustomAttributes(cpOptionValue)) {
+				ExpandoBridge expandoBridge = cpOptionValue.getExpandoBridge();
+
+				serviceContext.setExpandoBridgeAttributes(
+					expandoBridge.getAttributes());
+			}
+			else {
+				serviceContext.setExpandoBridgeAttributes(
+					Collections.emptyMap());
+			}
+
+			_cpDefinitionOptionValueRelLocalService.
+				addCPDefinitionOptionValueRel(
+					cpDefinitionOptionRelId, cpOptionValue, serviceContext);
+		}
+	}
+
 	private CPOptionConfiguration _getCPOptionConfiguration()
 		throws ConfigurationException {
 
@@ -812,6 +871,19 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private boolean _hasCustomAttributes(CPOptionValue cpOptionValue)
+		throws PortalException {
+
+		try {
+			return CustomAttributesUtil.hasCustomAttributes(
+				cpOptionValue.getCompanyId(), CPOptionValue.class.getName(),
+				cpOptionValue.getCPOptionValueId(), null);
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
 	}
 
 	private void _updateCPDefinitionIgnoreSKUCombinations(
@@ -937,6 +1009,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		_cpDefinitionOptionRelLocalServiceHelper;
 
 	@Reference
+	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
+
+	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
 
@@ -953,6 +1028,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
+
+	@Reference
+	private CPOptionValueLocalService _cpOptionValueLocalService;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;

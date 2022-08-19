@@ -428,6 +428,10 @@ public interface CPDefinitionOptionRelLocalService
 	public boolean hasLinkedCPInstanceCPDefinitionOptionRels(
 		long cpDefinitionId);
 
+	public void importCPDefinitionOptionRels(
+			long cpDefinitionOptionRelId, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);
 

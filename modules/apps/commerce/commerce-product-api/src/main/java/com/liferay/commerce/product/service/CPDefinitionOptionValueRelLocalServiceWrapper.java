@@ -564,16 +564,6 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 	}
 
 	@Override
-	public void importCPDefinitionOptionRels(
-			long cpDefinitionOptionRelId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_cpDefinitionOptionValueRelLocalService.importCPDefinitionOptionRels(
-			cpDefinitionOptionRelId, serviceContext);
-	}
-
-	@Override
 	public CPDefinitionOptionValueRel resetCPInstanceCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
