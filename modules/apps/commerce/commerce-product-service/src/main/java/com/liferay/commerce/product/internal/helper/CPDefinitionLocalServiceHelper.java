@@ -1263,9 +1263,6 @@ public class CPDefinitionLocalServiceHelper {
 	private CPInstancePersistence _cpInstancePersistence;
 
 	@Reference
-	private CProductLocalService _cProductLocalService;
-
-	@Reference
 	private CProductPersistence _cProductPersistence;
 
 	@Reference
