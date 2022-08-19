@@ -549,7 +549,57 @@ public class CPDefinitionLocalServiceHelper {
 		if (!isVersioningEnabled() ||
 			(isVersioningEnabled() && (cpDefinitionsCount == 1))) {
 
-			_cProductLocalService.deleteCProduct(cpDefinition.getCProductId());
+			CProduct deleteCProduct = _cProductPersistence.findByPrimaryKey(
+				cpDefinition.getCProductId());
+
+			_cpDefinitionPersistence.removeByC_S(
+				deleteCProduct.getCProductId(), WorkflowConstants.STATUS_ANY);
+
+			// Commerce product definition links
+
+			List<CPDefinitionLink> cpDefinitionLinks =
+				_cpDefinitionLinkPersistence.findByCProductId(
+					deleteCProduct.getCProductId());
+
+			for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
+				if (isVersionable(cpDefinitionLink.getCPDefinitionId())) {
+					try {
+						CPDefinition newCPDefinition = copyCPDefinition(
+							cpDefinitionLink.getCPDefinitionId());
+
+						cpDefinitionLink =
+							_cpDefinitionLinkPersistence.findByC_C_T(
+								newCPDefinition.getCPDefinitionId(),
+								cpDefinitionLink.getCProductId(),
+								cpDefinitionLink.getType());
+					}
+					catch (PortalException portalException) {
+						throw new SystemException(portalException);
+					}
+				}
+
+				// Commerce product definition link
+
+				_cpDefinitionLinkPersistence.remove(cpDefinitionLink);
+
+				// Expando
+
+				_expandoRowLocalService.deleteRows(
+					cpDefinitionLink.getCPDefinitionLinkId());
+
+				CProduct cProduct = _cProductPersistence.findByPrimaryKey(
+					cpDefinitionLink.getCProductId());
+
+				_cpDefinitionIndexHelper.reindexCPDefinition(
+					cProduct.getPublishedCPDefinitionId());
+
+				_cpDefinitionIndexHelper.reindexCPDefinition(
+					cpDefinitionLink.getCPDefinitionId());
+			}
+
+			// Commerce product
+
+			_cProductPersistence.remove(deleteCProduct);
 		}
 
 		// Commerce product definition specification option values
