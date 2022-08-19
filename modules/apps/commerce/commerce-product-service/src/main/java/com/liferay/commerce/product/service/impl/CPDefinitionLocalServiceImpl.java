@@ -37,6 +37,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.internal.helper.CPAttachmentFileEntryCheckerHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.CPDefinitionOptionValueRelLocalServiceHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
@@ -541,7 +542,7 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition copyCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
 		return cpDefinitionLocalService.copyCPDefinition(
@@ -561,7 +562,7 @@ public class CPDefinitionLocalServiceImpl
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CPDefinition originalCPDefinition =
-			cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+			cpDefinitionPersistence.findByPrimaryKey(cpDefinitionId);
 
 		CPDefinition newCPDefinition =
 			(CPDefinition)originalCPDefinition.clone();
@@ -589,7 +590,7 @@ public class CPDefinitionLocalServiceImpl
 
 			if (status == WorkflowConstants.STATUS_APPROVED) {
 				CPDefinition publishedCPDefinition =
-					cpDefinitionLocalService.getCPDefinition(
+					cpDefinitionPersistence.findByPrimaryKey(
 						originalCProduct.getPublishedCPDefinitionId());
 
 				publishedCPDefinition.setPublished(false);
@@ -1040,8 +1041,44 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product instances
 
-		_cpInstanceLocalService.deleteCPInstances(
-			cpDefinition.getCPDefinitionId());
+		List<CPInstance> cpInstances =
+			_cpInstancePersistence.findByCPDefinitionId(
+				cpDefinition.getCPDefinitionId());
+
+		for (CPInstance cpInstance : cpInstances) {
+			if (isVersionable(cpInstance.getCPDefinitionId())) {
+				CPDefinition newCPDefinition = copyCPDefinition(
+					cpInstance.getCPDefinitionId());
+
+				cpInstance = _cpInstancePersistence.findByC_C(
+					newCPDefinition.getCPDefinitionId(),
+					cpInstance.getCPInstanceUuid());
+			}
+
+			// Commerce product instance
+
+			_cpInstancePersistence.remove(cpInstance);
+
+			_cpInstanceOptionValueRelPersistence.removeByCPInstanceId(
+				cpInstance.getCPInstanceId());
+
+			_cpDefinitionOptionValueRelLocalServiceHelper.
+				resetCPInstanceCPDefinitionOptionValueRels(
+					cpInstance.getCPInstanceUuid());
+
+			// Expando
+
+			_expandoRowLocalService.deleteRows(cpInstance.getCPInstanceId());
+
+			// Workflow
+
+			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+				cpInstance.getCompanyId(), cpInstance.getGroupId(),
+				CPInstance.class.getName(), cpInstance.getCPInstanceId());
+
+			_cpDefinitionIndexHelper.reindexCPDefinition(
+				cpInstance.getCPDefinitionId());
+		}
 
 		// Commerce product definition option rels
 
@@ -1093,10 +1130,40 @@ public class CPDefinitionLocalServiceImpl
 
 			// Commerce product instances
 
-			_cpInstanceLocalService.inactivateCPDefinitionOptionRelCPInstances(
-				PrincipalThreadLocal.getUserId(),
-				cpDefinitionOptionRel.getCPDefinitionId(),
-				cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+			List<CPInstance> cpInstanceList =
+				_cpInstancePersistence.findByCPDefinitionId(
+					cpDefinitionOptionRel.getCPDefinitionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			long userId = PrincipalThreadLocal.getUserId();
+
+			for (CPInstance cpInstanceItem : cpInstanceList) {
+				if (cpInstanceItem.isInactive() ||
+					!_cpInstanceOptionValueRelLocalService.
+						hasCPInstanceCPDefinitionOptionRel(
+							cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+							cpInstanceItem.getCPInstanceId())) {
+
+					continue;
+				}
+
+				if (userId <= 0) {
+					userId = cpInstanceItem.getUserId();
+				}
+
+				User user = _userLocalService.getUser(userId);
+				Date date = new Date();
+
+				CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
+					cpInstanceItem.getCPInstanceId());
+
+				cpInstance.setStatus(WorkflowConstants.STATUS_INACTIVE);
+				cpInstance.setStatusByUserId(user.getUserId());
+				cpInstance.setStatusByUserName(user.getFullName());
+				cpInstance.setStatusDate(date);
+
+				_cpInstancePersistence.update(cpInstance);
+			}
 
 			updateCPDefinitionIgnoreSKUCombinations(
 				cpDefinitionOptionRel.getCPDefinitionId(),
@@ -1799,7 +1866,7 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public boolean isPublishedCPDefinition(long cpDefinitionId) {
-		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(
+		CPDefinition cpDefinition = cpDefinitionPersistence.fetchByPrimaryKey(
 			cpDefinitionId);
 
 		if (cpDefinition == null) {
@@ -2589,9 +2656,8 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (ignoreSKUCombinations) {
-			int cpInstancesCount =
-				_cpInstanceLocalService.getCPDefinitionInstancesCount(
-					cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
+			int cpInstancesCount = _cpInstancePersistence.countByC_ST(
+				cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
 
 			if (cpInstancesCount <= 1) {
 				return;
@@ -2607,18 +2673,27 @@ public class CPDefinitionLocalServiceImpl
 			return;
 		}
 
-		List<CPInstance> cpInstances =
-			_cpInstanceLocalService.getCPDefinitionInstances(
-				cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<CPInstance> cpInstances = _cpInstancePersistence.findByC_ST(
+			cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (CPInstance cpInstance : cpInstances) {
 			if (!_cpInstanceOptionValueRelLocalService.
 					hasCPInstanceOptionValueRel(cpInstance.getCPInstanceId())) {
 
-				_cpInstanceLocalService.updateStatus(
-					userId, cpInstance.getCPInstanceId(),
-					WorkflowConstants.STATUS_INACTIVE);
+				User user = _userLocalService.getUser(userId);
+				Date date = new Date();
+
+				CPInstance cpInstanceFromDB =
+					_cpInstancePersistence.findByPrimaryKey(
+						cpInstance.getCPInstanceId());
+
+				cpInstanceFromDB.setStatus(WorkflowConstants.STATUS_INACTIVE);
+				cpInstanceFromDB.setStatusByUserId(user.getUserId());
+				cpInstanceFromDB.setStatusByUserName(user.getFullName());
+				cpInstanceFromDB.setStatusDate(date);
+
+				_cpInstancePersistence.update(cpInstanceFromDB);
 			}
 		}
 	}
@@ -3090,6 +3165,10 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
+
+	@Reference
+	private CPDefinitionOptionValueRelLocalServiceHelper
+		_cpDefinitionOptionValueRelLocalServiceHelper;
 
 	@Reference
 	private CPDefinitionOptionValueRelPersistence
