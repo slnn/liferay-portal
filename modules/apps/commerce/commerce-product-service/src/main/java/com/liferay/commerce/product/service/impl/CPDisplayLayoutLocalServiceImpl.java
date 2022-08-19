@@ -16,9 +16,9 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPDisplayLayoutEntryException;
 import com.liferay.commerce.product.exception.CPDisplayLayoutLayoutUuidException;
+import com.liferay.commerce.product.internal.helper.CPDefinitionLocalServiceHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CPDisplayLayoutLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -79,11 +79,11 @@ public class CPDisplayLayoutLocalServiceImpl
 				groupId, classNameId, classPK);
 
 		if ((clazz == CPDefinition.class) &&
-			_cpDefinitionLocalService.isVersionable(classPK)) {
+			_cpDefinitionLocalServiceHelper.isVersionable(classPK)) {
 
 			try {
 				CPDefinition newCPDefinition =
-					_cpDefinitionLocalService.copyCPDefinition(classPK);
+					_cpDefinitionLocalServiceHelper.copyCPDefinition(classPK);
 
 				classPK = newCPDefinition.getCPDefinitionId();
 			}
@@ -124,9 +124,9 @@ public class CPDisplayLayoutLocalServiceImpl
 	public CPDisplayLayout deleteCPDisplayLayout(Class<?> clazz, long classPK) {
 		try {
 			if ((clazz == CPDefinition.class) &&
-				_cpDefinitionLocalService.isVersionable(classPK)) {
+				_cpDefinitionLocalServiceHelper.isVersionable(classPK)) {
 
-				_cpDefinitionLocalService.copyCPDefinition(classPK);
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(classPK);
 			}
 		}
 		catch (PortalException portalException) {
@@ -314,7 +314,7 @@ public class CPDisplayLayoutLocalServiceImpl
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
+	private CPDefinitionLocalServiceHelper _cpDefinitionLocalServiceHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

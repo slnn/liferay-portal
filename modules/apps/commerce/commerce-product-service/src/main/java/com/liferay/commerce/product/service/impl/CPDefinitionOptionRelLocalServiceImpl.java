@@ -20,6 +20,7 @@ import com.liferay.commerce.product.exception.CPDefinitionOptionRelPriceTypeExce
 import com.liferay.commerce.product.exception.CPDefinitionOptionSKUContributorException;
 import com.liferay.commerce.product.exception.DuplicateCPDefinitionOptionRelKeyException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.CPDefinitionLocalServiceHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelLocalServiceHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -28,7 +29,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
@@ -160,11 +160,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		_validatePriceType(cpDefinitionOptionRel, priceType);
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpDefinitionId, serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
+					cpDefinitionId);
 
 			cpDefinitionId = newCPDefinition.getCPDefinitionId();
 
@@ -206,7 +207,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		_cpInstanceLocalService.inactivateIncompatibleCPInstances(
 			user.getUserId(), cpDefinitionId);
 
-		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+		_cpDefinitionLocalServiceHelper.updateCPDefinitionIgnoreSKUCombinations(
 			cpDefinitionId, serviceContext);
 
 		// Commerce product definition
@@ -232,11 +233,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpDefinitionOptionRel.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
 					cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = cpDefinitionOptionRelPersistence.findByC_C(
@@ -278,7 +279,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRel.getCPDefinitionId(),
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
-		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+		_cpDefinitionLocalServiceHelper.updateCPDefinitionIgnoreSKUCombinations(
 			cpDefinitionOptionRel.getCPDefinitionId(), new ServiceContext());
 
 		// Commerce product definition
@@ -674,12 +675,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		_validatePriceType(cpDefinitionOptionRel, priceType);
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpDefinitionOptionRel.getCPDefinitionId(),
 				serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
 					cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = cpDefinitionOptionRelPersistence.findByC_C(
@@ -709,7 +710,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			serviceContext.getUserId(),
 			cpDefinitionOptionRel.getCPDefinitionId());
 
-		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+		_cpDefinitionLocalServiceHelper.updateCPDefinitionIgnoreSKUCombinations(
 			cpDefinitionOptionRel.getCPDefinitionId(), serviceContext);
 
 		// Commerce product definition
@@ -989,7 +990,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
 
 	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
+	private CPDefinitionLocalServiceHelper _cpDefinitionLocalServiceHelper;
 
 	@Reference
 	private CPDefinitionOptionRelLocalServiceHelper
