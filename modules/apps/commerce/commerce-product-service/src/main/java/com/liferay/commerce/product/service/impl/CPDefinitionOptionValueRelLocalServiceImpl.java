@@ -29,10 +29,12 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
+import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -67,6 +69,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -74,6 +77,7 @@ import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -217,10 +221,43 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
 
-		_cpInstanceLocalService.inactivateCPDefinitionOptionValueRelCPInstances(
-			PrincipalThreadLocal.getUserId(),
-			cpDefinitionOptionRel.getCPDefinitionId(),
-			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+		List<CPInstance> cpInstances =
+			_cpInstancePersistence.findByCPDefinitionId(
+				cpDefinitionOptionRel.getCPDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		long userId = PrincipalThreadLocal.getUserId();
+
+		long cpDefinitionOptionValueRelId =
+			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId();
+
+		for (CPInstance cpInstanceItem : cpInstances) {
+			if (cpInstanceItem.isInactive() ||
+				!_cpInstanceOptionValueRelLocalService.
+					hasCPInstanceCPDefinitionOptionValueRel(
+						cpDefinitionOptionValueRelId,
+						cpInstanceItem.getCPInstanceId())) {
+
+				continue;
+			}
+
+			if (userId <= 0) {
+				userId = cpInstanceItem.getUserId();
+			}
+
+			User user = _userLocalService.getUser(userId);
+			Date date = new Date();
+
+			CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
+				cpInstanceItem.getCPInstanceId());
+
+			cpInstance.setStatus(WorkflowConstants.STATUS_INACTIVE);
+			cpInstance.setStatusByUserId(user.getUserId());
+			cpInstance.setStatusByUserName(user.getFullName());
+			cpInstance.setStatusDate(date);
+
+			_cpInstancePersistence.update(cpInstance);
+		}
 
 		// Commerce product definition
 
@@ -835,7 +872,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			return cpDefinitionOptionValueRel;
 		}
 
-		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
 		cpDefinitionOptionValueRel.setCPInstanceUuid(
@@ -943,9 +980,16 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			throw new CPDefinitionOptionValueRelPriceException();
 		}
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
-			cpDefinitionOptionValueRel.getCProductId(),
-			cpDefinitionOptionValueRel.getCPInstanceUuid());
+		CPInstance cpInstance = null;
+
+		CProduct cProduct = _cProductPersistence.fetchByPrimaryKey(
+			cpDefinitionOptionValueRel.getCProductId());
+
+		if (cProduct != null) {
+			cpInstance = _cpInstancePersistence.fetchByC_C(
+				cProduct.getPublishedCPDefinitionId(),
+				cpDefinitionOptionValueRel.getCPInstanceUuid());
+		}
 
 		if (((cpInstance == null) ||
 			 (cpDefinitionOptionValueRel.getPrice() != null)) &&
@@ -998,11 +1042,14 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		_cpDefinitionOptionValueRelLocalServiceHelper;
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@Reference
 	private CPInstanceOptionValueRelLocalService
 		_cpInstanceOptionValueRelLocalService;
+
+	@Reference
+	private CPInstancePersistence _cpInstancePersistence;
+
+	@Reference
+	private CProductPersistence _cProductPersistence;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
