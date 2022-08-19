@@ -51,7 +51,6 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -106,6 +105,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1045,8 +1045,68 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition option rels
 
-		_cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRels(
-			cpDefinition.getCPDefinitionId());
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelPersistence.findByCPDefinitionId(
+				cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			if (isVersionable(cpDefinitionOptionRel.getCPDefinitionId())) {
+				CPDefinition newCPDefinition = copyCPDefinition(
+					cpDefinitionOptionRel.getCPDefinitionId());
+
+				cpDefinitionOptionRel =
+					_cpDefinitionOptionRelPersistence.findByC_C(
+						newCPDefinition.getCPDefinitionId(),
+						cpDefinitionOptionRel.getCPOptionId());
+			}
+
+			// Commerce product definition option value rels
+
+			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+				_cpDefinitionOptionValueRelPersistence.
+					findByCPDefinitionOptionRelId(
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+					cpDefinitionOptionValueRels) {
+
+				_cpDefinitionOptionValueRelPersistence.remove(
+					cpDefinitionOptionValueRel);
+
+				_expandoRowLocalService.deleteRows(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId());
+			}
+
+			// Commerce product definition option rel
+
+			_cpDefinitionOptionRelPersistence.remove(cpDefinitionOptionRel);
+
+			// Expando
+
+			_expandoRowLocalService.deleteRows(
+				cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+			// Commerce product instances
+
+			_cpInstanceLocalService.inactivateCPDefinitionOptionRelCPInstances(
+				PrincipalThreadLocal.getUserId(),
+				cpDefinitionOptionRel.getCPDefinitionId(),
+				cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+			updateCPDefinitionIgnoreSKUCombinations(
+				cpDefinitionOptionRel.getCPDefinitionId(),
+				new ServiceContext());
+
+			// Commerce product definition
+
+			_cpDefinitionIndexHelper.reindexCPDefinition(
+				cpDefinitionOptionRel.getCPDefinitionId());
+		}
 
 		// Commerce product definition attachment file entries
 
@@ -1220,36 +1280,6 @@ public class CPDefinitionLocalServiceImpl
 		for (CPDefinition cpDefinition : cpDefinitions) {
 			cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
 		}
-	}
-
-	public void updateCPDefinitionIgnoreSKUCombinations(
-		long cpDefintionId, ServiceContext serviceContext)
-		throws PortalException {
-
-		if (_hasCPDefinitionSKUContributorCPDefinitionOptionRel(
-			cpDefintionId)) {
-
-			cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-				cpDefintionId, false, serviceContext);
-
-			return;
-		}
-
-		cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefintionId, true, serviceContext);
-	}
-
-	private boolean _hasCPDefinitionSKUContributorCPDefinitionOptionRel(
-		long cpDefinitionId) {
-
-		int cpDefinitionOptionRelsCount =
-			_cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
-
-		if (cpDefinitionOptionRelsCount > 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
@@ -2221,6 +2251,23 @@ public class CPDefinitionLocalServiceImpl
 		return cpDefinitionPersistence.update(cpDefinition);
 	}
 
+	public void updateCPDefinitionIgnoreSKUCombinations(
+			long cpDefintionId, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (_hasCPDefinitionSKUContributorCPDefinitionOptionRel(
+				cpDefintionId)) {
+
+			cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+				cpDefintionId, false, serviceContext);
+
+			return;
+		}
+
+		cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefintionId, true, serviceContext);
+	}
+
 	@Override
 	public void updateCPDefinitionsByCPTaxCategoryId(long cpTaxCategoryId)
 		throws PortalException {
@@ -2905,6 +2952,19 @@ public class CPDefinitionLocalServiceImpl
 		return newURLTitleMap;
 	}
 
+	private boolean _hasCPDefinitionSKUContributorCPDefinitionOptionRel(
+		long cpDefinitionId) {
+
+		int cpDefinitionOptionRelsCount =
+			_cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
+
+		if (cpDefinitionOptionRelsCount > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isVersioningEnabled() {
 		try {
 			CProductVersionConfiguration cProductVersionConfiguration =
@@ -3027,10 +3087,6 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CPDefinitionLinkPersistence _cpDefinitionLinkPersistence;
-
-	@Reference
-	private CPDefinitionOptionRelLocalService
-		_cpDefinitionOptionRelLocalService;
 
 	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
