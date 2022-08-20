@@ -20,6 +20,7 @@ import com.liferay.commerce.product.exception.CPDefinitionOptionRelPriceTypeExce
 import com.liferay.commerce.product.exception.CPDefinitionOptionSKUContributorException;
 import com.liferay.commerce.product.exception.DuplicateCPDefinitionOptionRelKeyException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelCPDefinitionOptionValueRelHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -33,15 +34,11 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionRelLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
-import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -338,69 +335,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				long cpDefinitionId, boolean skuContributorsOnly, String json)
 		throws PortalException {
 
-		if (_jsonHelper.isEmpty(json)) {
-			return Collections.emptyMap();
-		}
-
-		Map<Long, List<Long>>
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds =
-				new HashMap<>();
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		if (_jsonHelper.isArray(json)) {
-			jsonArray = _jsonFactory.createJSONArray(json);
-		}
-		else {
-			jsonArray.put(_jsonFactory.createJSONObject(json));
-		}
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			CPDefinitionOptionRel cpDefinitionOptionRel =
-				cpDefinitionOptionRelPersistence.fetchByC_K(
-					cpDefinitionId, jsonObject.getString("key"));
-
-			if ((cpDefinitionOptionRel == null) ||
-				(skuContributorsOnly &&
-				 !cpDefinitionOptionRel.isSkuContributor())) {
-
-				continue;
-			}
-
-			JSONArray valueJSONArray = _jsonHelper.getValueAsJSONArray(
-				"value", jsonObject);
-
-			for (int j = 0; j < valueJSONArray.length(); j++) {
-				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-					_cpDefinitionOptionValueRelPersistence.fetchByC_K(
-						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-						valueJSONArray.getString(j));
-
-				if (cpDefinitionOptionValueRel == null) {
-					continue;
-				}
-
-				List<Long> cpDefinitionOptionValueRelIds =
-					cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.get(
-						cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-
-				if (cpDefinitionOptionValueRelIds == null) {
-					cpDefinitionOptionValueRelIds = new ArrayList<>();
-
-					cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.put(
-						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-						cpDefinitionOptionValueRelIds);
-				}
-
-				cpDefinitionOptionValueRelIds.add(
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId());
-			}
-		}
-
-		return cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds;
+		return _cpDefinitionOptionRelCPDefinitionOptionValueRelHelper.
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				cpDefinitionId, skuContributorsOnly, json);
 	}
 
 	@Override
@@ -1013,6 +950,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
+	private CPDefinitionOptionRelCPDefinitionOptionValueRelHelper
+		_cpDefinitionOptionRelCPDefinitionOptionValueRelHelper;
+
+	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
 
@@ -1032,12 +973,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private JsonHelper _jsonHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;
