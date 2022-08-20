@@ -32,6 +32,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(enabled = false, service = InactiveCPInstanceHelper.class)
 public class InactiveCPInstanceHelper {
 
+	public void inactivateCPDefinitionOptionRelCPInstances(
+			long userId, long cpDefinitionId, long cpDefinitionOptionRelId)
+		throws PortalException {
+
+		_inactivateCPDefinitionOptionRelCPInstances(
+			userId, cpDefinitionOptionRelId,
+			_cpInstancePersistence.findByCPDefinitionId(
+				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+	}
+
 	public void inactivateCPDefinitionOptionValueRelCPInstances(
 			long userId, long cpDefinitionId, long cpDefinitionOptionValueRelId)
 		throws PortalException {
@@ -40,6 +50,52 @@ public class InactiveCPInstanceHelper {
 			userId, cpDefinitionOptionValueRelId,
 			_cpInstancePersistence.findByCPDefinitionId(
 				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+	}
+
+	public void inactivateIncompatibleCPInstances(
+			long userId, long cpDefinitionId)
+		throws PortalException {
+
+		List<CPInstance> cpInstances = _cpInstancePersistence.findByC_ST(
+			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
+
+		for (CPInstance curCPInstance : cpInstances) {
+			if (_cpInstanceOptionValueRelLocalService.
+					matchesCPDefinitionOptionRels(
+						cpDefinitionId, curCPInstance.getCPInstanceId())) {
+
+				continue;
+			}
+
+			_updateCPInstanceStatusHelper.updateStatus(
+				userId, curCPInstance.getCPInstanceId(),
+				WorkflowConstants.STATUS_INACTIVE);
+		}
+	}
+
+	private void _inactivateCPDefinitionOptionRelCPInstances(
+			long userId, long cpDefinitionOptionRelId,
+			List<CPInstance> cpInstances)
+		throws PortalException {
+
+		for (CPInstance cpInstance : cpInstances) {
+			if (cpInstance.isInactive() ||
+				!_cpInstanceOptionValueRelLocalService.
+					hasCPInstanceCPDefinitionOptionRel(
+						cpDefinitionOptionRelId,
+						cpInstance.getCPInstanceId())) {
+
+				continue;
+			}
+
+			if (userId <= 0) {
+				userId = cpInstance.getUserId();
+			}
+
+			_updateCPInstanceStatusHelper.updateStatus(
+				userId, cpInstance.getCPInstanceId(),
+				WorkflowConstants.STATUS_INACTIVE);
+		}
 	}
 
 	private void _inactivateCPDefinitionOptionValueRelCPInstances(
