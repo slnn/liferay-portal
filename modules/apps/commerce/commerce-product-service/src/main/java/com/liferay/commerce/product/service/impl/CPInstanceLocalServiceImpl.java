@@ -24,6 +24,7 @@ import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelCPDefinitionOptionValueRelHelper;
 import com.liferay.commerce.product.internal.helper.CPInstanceCPDefinitionOptionValueRelHelper;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -33,9 +34,9 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
+import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -472,7 +473,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable,
-			_cpDefinitionOptionRelLocalService.
+			_cpDefinitionOptionRelCPDefinitionOptionValueRelHelper.
 				getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 					cpDefinitionId, false, json),
 			width, height, depth, weight, price, promoPrice, cost, published,
@@ -1832,8 +1833,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws NoSuchSkuContributorCPDefinitionOptionRelException {
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
-				cpDefinitionId, true);
+			_cpDefinitionOptionRelPersistence.findByC_SC(cpDefinitionId, true);
 
 		if (cpDefinitionOptionRels.isEmpty()) {
 			throw new NoSuchSkuContributorCPDefinitionOptionRelException();
@@ -2029,8 +2029,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CPDefinitionOptionRelLocalService
-		_cpDefinitionOptionRelLocalService;
+	private CPDefinitionOptionRelCPDefinitionOptionValueRelHelper
+		_cpDefinitionOptionRelCPDefinitionOptionValueRelHelper;
+
+	@Reference
+	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
 
 	@Reference
 	private CPInstanceCPDefinitionOptionValueRelHelper
