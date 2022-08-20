@@ -21,6 +21,7 @@ import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceExc
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelQuantityException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.CPInstanceCPDefinitionOptionValueRelHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -505,21 +506,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	public void resetCPInstanceCPDefinitionOptionValueRels(
 		String cpInstanceUuid) {
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			cpDefinitionOptionValueRelPersistence.findByCPInstanceUuid(
-				cpInstanceUuid);
-
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
-
-			cpDefinitionOptionValueRel.setCPInstanceUuid(null);
-			cpDefinitionOptionValueRel.setCProductId(0);
-			cpDefinitionOptionValueRel.setQuantity(0);
-			cpDefinitionOptionValueRel.setPrice(BigDecimal.ZERO);
-
-			cpDefinitionOptionValueRelPersistence.update(
-				cpDefinitionOptionValueRel);
-		}
+		_cpInstanceCPDefinitionOptionValueRelHelper.
+			resetCPInstanceCPDefinitionOptionValueRels(cpInstanceUuid);
 	}
 
 	@Override
@@ -1077,6 +1065,10 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
+
+	@Reference
+	private CPInstanceCPDefinitionOptionValueRelHelper
+		_cpInstanceCPDefinitionOptionValueRelHelper;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
