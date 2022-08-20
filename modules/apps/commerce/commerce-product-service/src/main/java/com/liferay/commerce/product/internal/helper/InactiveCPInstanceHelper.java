@@ -15,8 +15,8 @@
 package com.liferay.commerce.product.internal.helper;
 
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
+import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -38,9 +38,8 @@ public class InactiveCPInstanceHelper {
 
 		_inactivateCPDefinitionOptionValueRelCPInstances(
 			userId, cpDefinitionOptionValueRelId,
-			_cpInstanceLocalService.getCPDefinitionInstances(
-				cpDefinitionId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null));
+			_cpInstancePersistence.findByCPDefinitionId(
+				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 	}
 
 	private void _inactivateCPDefinitionOptionValueRelCPInstances(
@@ -62,17 +61,20 @@ public class InactiveCPInstanceHelper {
 				userId = cpInstance.getUserId();
 			}
 
-			_cpInstanceLocalService.updateStatus(
+			_updateCPInstanceStatusHelper.updateStatus(
 				userId, cpInstance.getCPInstanceId(),
 				WorkflowConstants.STATUS_INACTIVE);
 		}
 	}
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@Reference
 	private CPInstanceOptionValueRelLocalService
 		_cpInstanceOptionValueRelLocalService;
+
+	@Reference
+	private CPInstancePersistence _cpInstancePersistence;
+
+	@Reference
+	private UpdateCPInstanceStatusHelper _updateCPInstanceStatusHelper;
 
 }
