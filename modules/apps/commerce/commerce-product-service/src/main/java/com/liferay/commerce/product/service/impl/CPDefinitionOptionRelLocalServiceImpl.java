@@ -359,9 +359,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
-				cpDefinitionOptionRelLocalService.
-					fetchCPDefinitionOptionRelByKey(
-						cpDefinitionId, jsonObject.getString("key"));
+				cpDefinitionOptionRelPersistence.fetchByC_K(
+					cpDefinitionId, jsonObject.getString("key"));
 
 			if ((cpDefinitionOptionRel == null) ||
 				(skuContributorsOnly &&
