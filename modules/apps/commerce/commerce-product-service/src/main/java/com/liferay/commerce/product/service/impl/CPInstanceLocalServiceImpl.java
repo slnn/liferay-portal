@@ -27,6 +27,7 @@ import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelCPDefinitionOptionValueRelHelper;
 import com.liferay.commerce.product.internal.helper.CPInstanceCPDefinitionOptionValueRelHelper;
 import com.liferay.commerce.product.internal.helper.InactiveCPInstanceHelper;
+import com.liferay.commerce.product.internal.helper.UpdateCPInstanceStatusHelper;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -1317,54 +1318,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance updateStatus(long userId, long cpInstanceId, int status)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-		Date date = new Date();
-
-		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
-			cpInstanceId);
-
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
-		if (!cpDefinition.isIgnoreSKUCombinations() &&
-			!_cpInstanceOptionValueRelLocalService.hasCPInstanceOptionValueRel(
-				cpInstance.getCPInstanceId())) {
-
-			status = WorkflowConstants.STATUS_INACTIVE;
-		}
-
-		if ((status == WorkflowConstants.STATUS_APPROVED) &&
-			(cpInstance.getDisplayDate() != null) &&
-			date.before(cpInstance.getDisplayDate())) {
-
-			status = WorkflowConstants.STATUS_SCHEDULED;
-		}
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			Date expirationDate = cpInstance.getExpirationDate();
-
-			if ((expirationDate != null) && expirationDate.before(date)) {
-				cpInstance.setExpirationDate(null);
-			}
-		}
-
-		if (status == WorkflowConstants.STATUS_EXPIRED) {
-			cpInstance.setExpirationDate(date);
-		}
-
-		if ((cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
-			(status != WorkflowConstants.STATUS_APPROVED)) {
-
-			_cpInstanceCPDefinitionOptionValueRelHelper.
-				resetCPInstanceCPDefinitionOptionValueRels(
-					cpInstance.getCPInstanceUuid());
-		}
-
-		cpInstance.setStatus(status);
-		cpInstance.setStatusByUserId(user.getUserId());
-		cpInstance.setStatusByUserName(user.getFullName());
-		cpInstance.setStatusDate(date);
-
-		return cpInstancePersistence.update(cpInstance);
+		return _updateCPInstanceStatusHelper.updateStatus(
+			userId, cpInstanceId, status);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -2035,6 +1990,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Reference
 	private PortalUUID _portalUUID;
+
+	@Reference
+	private UpdateCPInstanceStatusHelper _updateCPInstanceStatusHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;
