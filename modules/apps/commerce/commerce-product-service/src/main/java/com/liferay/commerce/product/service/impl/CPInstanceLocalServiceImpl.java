@@ -846,11 +846,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long userId, long cpDefinitionId, long cpDefinitionOptionRelId)
 		throws PortalException {
 
-		_inactivateCPDefinitionOptionRelCPInstances(
-			userId, cpDefinitionOptionRelId,
-			cpInstanceLocalService.getCPDefinitionInstances(
-				cpDefinitionId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null));
+		_inactiveCPInstanceHelper.inactivateCPDefinitionOptionRelCPInstances(
+			userId, cpDefinitionId, cpDefinitionOptionRelId);
 	}
 
 	@Override
@@ -868,21 +865,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long userId, long cpDefinitionId)
 		throws PortalException {
 
-		List<CPInstance> cpInstances = cpInstancePersistence.findByC_ST(
-			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
-
-		for (CPInstance curCPInstance : cpInstances) {
-			if (_cpInstanceOptionValueRelLocalService.
-					matchesCPDefinitionOptionRels(
-						cpDefinitionId, curCPInstance.getCPInstanceId())) {
-
-				continue;
-			}
-
-			cpInstanceLocalService.updateStatus(
-				userId, curCPInstance.getCPInstanceId(),
-				WorkflowConstants.STATUS_INACTIVE);
-		}
+		_inactiveCPInstanceHelper.inactivateIncompatibleCPInstances(
+			userId, cpDefinitionId);
 	}
 
 	@Override
@@ -1815,31 +1799,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return new SKUCombinationsIterator(combinationGeneratorMap);
-	}
-
-	private void _inactivateCPDefinitionOptionRelCPInstances(
-			long userId, long cpDefinitionOptionRelId,
-			List<CPInstance> cpInstances)
-		throws PortalException {
-
-		for (CPInstance cpInstance : cpInstances) {
-			if (cpInstance.isInactive() ||
-				!_cpInstanceOptionValueRelLocalService.
-					hasCPInstanceCPDefinitionOptionRel(
-						cpDefinitionOptionRelId,
-						cpInstance.getCPInstanceId())) {
-
-				continue;
-			}
-
-			if (userId <= 0) {
-				userId = cpInstance.getUserId();
-			}
-
-			cpInstanceLocalService.updateStatus(
-				userId, cpInstance.getCPInstanceId(),
-				WorkflowConstants.STATUS_INACTIVE);
-		}
 	}
 
 	private void _inactivateNoOptionSiblingCPInstances(
