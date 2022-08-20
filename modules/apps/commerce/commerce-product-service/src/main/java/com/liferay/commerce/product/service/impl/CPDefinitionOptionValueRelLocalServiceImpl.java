@@ -28,6 +28,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
@@ -35,6 +36,8 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
+import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
@@ -899,7 +902,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			return cpDefinitionOptionValueRel;
 		}
 
-		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
 		cpDefinitionOptionValueRel.setCPInstanceUuid(
@@ -1007,9 +1010,16 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			throw new CPDefinitionOptionValueRelPriceException();
 		}
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
-			cpDefinitionOptionValueRel.getCProductId(),
-			cpDefinitionOptionValueRel.getCPInstanceUuid());
+		CPInstance cpInstance = null;
+
+		CProduct cProduct = _cProductPersistence.fetchByPrimaryKey(
+			cpDefinitionOptionValueRel.getCProductId());
+
+		if (cProduct != null) {
+			cpInstance = _cpInstancePersistence.fetchByC_C(
+				cProduct.getPublishedCPDefinitionId(),
+				cpDefinitionOptionValueRel.getCPInstanceUuid());
+		}
 
 		if (((cpInstance == null) ||
 			 (cpDefinitionOptionValueRel.getPrice() != null)) &&
@@ -1065,10 +1075,16 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		_cpInstanceOptionValueRelLocalService;
 
 	@Reference
+	private CPInstancePersistence _cpInstancePersistence;
+
+	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
 
 	@Reference
 	private CPOptionValueLocalService _cpOptionValueLocalService;
+
+	@Reference
+	private CProductPersistence _cProductPersistence;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
