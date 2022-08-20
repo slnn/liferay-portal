@@ -21,6 +21,7 @@ import com.liferay.commerce.product.exception.CPDefinitionOptionSKUContributorEx
 import com.liferay.commerce.product.exception.DuplicateCPDefinitionOptionRelKeyException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelCPDefinitionOptionValueRelHelper;
+import com.liferay.commerce.product.internal.helper.InactiveCPInstanceHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -29,11 +30,11 @@ import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionRelLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
+import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -199,7 +200,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product instances
 
-		_cpInstanceLocalService.inactivateIncompatibleCPInstances(
+		_inactiveCPInstanceHelper.inactivateIncompatibleCPInstances(
 			user.getUserId(), cpDefinitionId);
 
 		_updateCPDefinitionIgnoreSKUCombinations(
@@ -269,7 +270,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product instances
 
-		_cpInstanceLocalService.inactivateCPDefinitionOptionRelCPInstances(
+		_inactiveCPInstanceHelper.inactivateCPDefinitionOptionRelCPInstances(
 			PrincipalThreadLocal.getUserId(),
 			cpDefinitionOptionRel.getCPDefinitionId(),
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
@@ -357,7 +358,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				long cpInstanceId)
 		throws PortalException {
 
-		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+		CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
 		if (cpInstance.isInactive()) {
@@ -669,7 +670,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product instances
 
-		_cpInstanceLocalService.inactivateIncompatibleCPInstances(
+		_inactiveCPInstanceHelper.inactivateIncompatibleCPInstances(
 			serviceContext.getUserId(),
 			cpDefinitionOptionRel.getCPDefinitionId());
 
@@ -962,17 +963,20 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		_cpDefinitionOptionValueRelPersistence;
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@Reference
 	private CPInstanceOptionValueRelPersistence
 		_cpInstanceOptionValueRelPersistence;
+
+	@Reference
+	private CPInstancePersistence _cpInstancePersistence;
 
 	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference
+	private InactiveCPInstanceHelper _inactiveCPInstanceHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;
