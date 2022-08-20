@@ -21,6 +21,7 @@ import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceExc
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelQuantityException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.InactiveCPInstanceHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -30,7 +31,6 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
@@ -224,10 +224,11 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
 
-		_cpInstanceLocalService.inactivateCPDefinitionOptionValueRelCPInstances(
-			PrincipalThreadLocal.getUserId(),
-			cpDefinitionOptionRel.getCPDefinitionId(),
-			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+		_inactiveCPInstanceHelper.
+			inactivateCPDefinitionOptionValueRelCPInstances(
+				PrincipalThreadLocal.getUserId(),
+				cpDefinitionOptionRel.getCPDefinitionId(),
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
 
 		// Commerce product definition
 
@@ -1068,9 +1069,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@Reference
 	private CPInstanceOptionValueRelLocalService
 		_cpInstanceOptionValueRelLocalService;
 
@@ -1091,6 +1089,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@Reference
+	private InactiveCPInstanceHelper _inactiveCPInstanceHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;
