@@ -26,6 +26,7 @@ import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOp
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelCPDefinitionOptionValueRelHelper;
 import com.liferay.commerce.product.internal.helper.CPInstanceCPDefinitionOptionValueRelHelper;
+import com.liferay.commerce.product.internal.helper.InactiveCPInstanceHelper;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -856,11 +857,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long userId, long cpDefinitionId, long cpDefinitionOptionValueRelId)
 		throws PortalException {
 
-		_inactivateCPDefinitionOptionValueRelCPInstances(
-			userId, cpDefinitionOptionValueRelId,
-			cpInstanceLocalService.getCPDefinitionInstances(
-				cpDefinitionId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null));
+		_inactiveCPInstanceHelper.
+			inactivateCPDefinitionOptionValueRelCPInstances(
+				userId, cpDefinitionId, cpDefinitionOptionValueRelId);
 	}
 
 	@Override
@@ -1888,31 +1887,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 	}
 
-	private void _inactivateCPDefinitionOptionValueRelCPInstances(
-			long userId, long cpDefinitionOptionValueRelId,
-			List<CPInstance> cpInstances)
-		throws PortalException {
-
-		for (CPInstance cpInstance : cpInstances) {
-			if (cpInstance.isInactive() ||
-				!_cpInstanceOptionValueRelLocalService.
-					hasCPInstanceCPDefinitionOptionValueRel(
-						cpDefinitionOptionValueRelId,
-						cpInstance.getCPInstanceId())) {
-
-				continue;
-			}
-
-			if (userId <= 0) {
-				userId = cpInstance.getUserId();
-			}
-
-			cpInstanceLocalService.updateStatus(
-				userId, cpInstance.getCPInstanceId(),
-				WorkflowConstants.STATUS_INACTIVE);
-		}
-	}
-
 	private void _inactivateNoOptionSiblingCPInstances(
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
@@ -2052,6 +2026,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference
+	private InactiveCPInstanceHelper _inactiveCPInstanceHelper;
 
 	@Reference
 	private Portal _portal;
