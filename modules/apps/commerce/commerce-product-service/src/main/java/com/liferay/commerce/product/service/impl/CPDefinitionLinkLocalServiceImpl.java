@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -75,17 +76,15 @@ public class CPDefinitionLinkLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinition cpDefinition;
+		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
 
 		if (_cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
 			cpDefinition = _cpDefinitionLocalService.copyCPDefinition(
-				cpDefinitionId);
+				cpDefinitionId, cpDefinition.getGroupId(),
+				WorkflowConstants.STATUS_DRAFT);
 
 			cpDefinitionId = cpDefinition.getCPDefinitionId();
-		}
-		else {
-			cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
-				cpDefinitionId);
 		}
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
