@@ -245,11 +245,10 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		else {
 			cpAttachmentFileEntry =
 				cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
-					userId, cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-					fileEntryId, cdnEnabled, cdnURL, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
+					userId, cpAttachmentFileEntry, fileEntryId, cdnEnabled,
+					cdnURL, displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, titleMap, json, priority,
 					type, serviceContext);
 		}
@@ -612,10 +611,10 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
-			long userId, long cpAttachmentFileEntryId, long fileEntryId,
-			boolean cdnEnabled, String cdnURL, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			long userId, CPAttachmentFileEntry cpAttachmentFileEntry,
+			long fileEntryId, boolean cdnEnabled, String cdnURL,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
@@ -623,10 +622,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
-
-		CPAttachmentFileEntry cpAttachmentFileEntry =
-			cpAttachmentFileEntryPersistence.findByPrimaryKey(
-				cpAttachmentFileEntryId);
 
 		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
 			CPDefinition.class);
