@@ -662,14 +662,6 @@ public class CPDefinitionLocalServiceUtil {
 			cProductId, status, start, end);
 	}
 
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntry
-			getDefaultImageCPAttachmentFileEntry(long cpDefinitionId)
-		throws PortalException {
-
-		return getService().getDefaultImageCPAttachmentFileEntry(
-			cpDefinitionId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

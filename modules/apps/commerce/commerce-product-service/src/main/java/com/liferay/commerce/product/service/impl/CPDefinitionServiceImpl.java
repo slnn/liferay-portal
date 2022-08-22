@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
@@ -375,8 +376,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
 
-		return cpDefinitionLocalService.getDefaultImageCPAttachmentFileEntry(
-			cpDefinitionId);
+		return _cpAttachmentFileEntryLocalService.
+			getDefaultImageCPAttachmentFileEntry(cpDefinitionId);
 	}
 
 	/**
@@ -698,6 +699,10 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;
+
+	@Reference
+	private CPAttachmentFileEntryLocalService
+		_cpAttachmentFileEntryLocalService;
 
 	@Reference
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
