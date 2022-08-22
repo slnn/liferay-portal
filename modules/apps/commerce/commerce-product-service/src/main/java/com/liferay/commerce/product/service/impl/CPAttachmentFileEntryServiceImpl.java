@@ -403,12 +403,14 @@ public class CPAttachmentFileEntryServiceImpl
 		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 
 		return cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
-			getUserId(), cpAttachmentFileEntryId, fileEntryId, cdnEnabled,
-			cdnURL, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, titleMap, json, priority, type,
-			serviceContext);
+			getUserId(),
+			cpAttachmentFileEntryPersistence.findByPrimaryKey(
+				cpAttachmentFileEntryId),
+			fileEntryId, cdnEnabled, cdnURL, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
+			json, priority, type, serviceContext);
 	}
 
 	protected void checkCPAttachmentFileEntryPermissions(

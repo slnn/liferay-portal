@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -256,7 +257,7 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 			importedCPAttachmentFileEntry =
 				_cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
 					cpAttachmentFileEntry.getUserId(),
-					existingCPAttachmentFileEntry.getCPAttachmentFileEntryId(),
+					existingCPAttachmentFileEntry,
 					cpAttachmentFileEntry.getFileEntryId(),
 					cpAttachmentFileEntry.isCDNEnabled(),
 					cpAttachmentFileEntry.getCDNURL(), displayDateMonth,
@@ -303,6 +304,9 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
