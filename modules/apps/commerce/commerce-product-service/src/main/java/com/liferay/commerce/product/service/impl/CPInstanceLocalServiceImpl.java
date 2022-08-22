@@ -39,6 +39,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -248,7 +249,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			return cpInstance;
 		}
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
 		if (cpDefinition.isIgnoreSKUCombinations()) {
@@ -1922,6 +1923,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
+
+	@Reference
+	private CPDefinitionPersistence _cpDefinitionPersistence;
 
 	@Reference
 	private CPInstanceCPDefinitionOptionValueRelHelper
