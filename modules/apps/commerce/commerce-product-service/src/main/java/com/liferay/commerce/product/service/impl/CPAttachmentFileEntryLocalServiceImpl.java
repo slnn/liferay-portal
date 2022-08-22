@@ -323,33 +323,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			CPAttachmentFileEntry cpAttachmentFileEntry)
 		throws PortalException {
 
-		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
-		if ((cpAttachmentFileEntry.getClassNameId() ==
-				cpDefinitionClassNameId) &&
-			_cpDefinitionLocalService.isVersionable(
-				cpAttachmentFileEntry.getClassPK())) {
-
-			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
-					cpAttachmentFileEntry.getClassPK());
-
-			if (cpAttachmentFileEntry.isCDNEnabled()) {
-				cpAttachmentFileEntry =
-					cpAttachmentFileEntryPersistence.findByC_C_C_First(
-						cpDefinitionClassNameId,
-						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getCDNURL(), null);
-			}
-			else {
-				cpAttachmentFileEntry =
-					cpAttachmentFileEntryPersistence.findByC_C_F_First(
-						cpDefinitionClassNameId,
-						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getFileEntryId(), null);
-			}
-		}
+		cpAttachmentFileEntry =
+			_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
+				cpAttachmentFileEntry);
 
 		// Commerce product attachment file entry
 
@@ -801,6 +777,42 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			CPAttachmentFileEntry.class.getName(),
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
 			cpAttachmentFileEntry, serviceContext, workflowContext);
+	}
+
+	private CPAttachmentFileEntry
+			_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
+				CPAttachmentFileEntry cpAttachmentFileEntry)
+		throws PortalException {
+
+		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		if ((cpAttachmentFileEntry.getClassNameId() ==
+				cpDefinitionClassNameId) &&
+			_cpDefinitionLocalService.isVersionable(
+				cpAttachmentFileEntry.getClassPK())) {
+
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(
+					cpAttachmentFileEntry.getClassPK());
+
+			if (cpAttachmentFileEntry.isCDNEnabled()) {
+				cpAttachmentFileEntry =
+					cpAttachmentFileEntryPersistence.findByC_C_C_First(
+						cpDefinitionClassNameId,
+						newCPDefinition.getCPDefinitionId(),
+						cpAttachmentFileEntry.getCDNURL(), null);
+			}
+			else {
+				cpAttachmentFileEntry =
+					cpAttachmentFileEntryPersistence.findByC_C_F_First(
+						cpDefinitionClassNameId,
+						newCPDefinition.getCPDefinitionId(),
+						cpAttachmentFileEntry.getFileEntryId(), null);
+			}
+		}
+
+		return cpAttachmentFileEntry;
 	}
 
 	private long _getFileEntryId(
