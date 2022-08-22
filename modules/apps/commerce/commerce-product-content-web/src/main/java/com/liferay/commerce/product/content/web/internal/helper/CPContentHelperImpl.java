@@ -286,8 +286,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 		}
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpDefinitionLocalService.getDefaultImageCPAttachmentFileEntry(
-				cpDefinitionId);
+			_cpAttachmentFileEntryLocalService.
+				getDefaultImageCPAttachmentFileEntry(cpDefinitionId);
 
 		if (cpAttachmentFileEntry != null) {
 			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
