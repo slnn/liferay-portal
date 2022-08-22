@@ -623,34 +623,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
-		if ((cpAttachmentFileEntry.getClassNameId() ==
-				cpDefinitionClassNameId) &&
-			_cpDefinitionLocalService.isVersionable(
-				cpAttachmentFileEntry.getClassPK())) {
-
-			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
-					cpAttachmentFileEntry.getClassPK());
-
-			if (cdnEnabled) {
-				cpAttachmentFileEntry =
-					cpAttachmentFileEntryPersistence.findByC_C_C_First(
-						cpDefinitionClassNameId,
-						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getCDNURL(), null);
-			}
-			else {
-				cpAttachmentFileEntry =
-					cpAttachmentFileEntryPersistence.findByC_C_F_First(
-						cpDefinitionClassNameId,
-						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getFileEntryId(), null);
-			}
-		}
-
 		FileEntry fileEntry = null;
 
 		if (!cdnEnabled) {

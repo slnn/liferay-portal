@@ -254,12 +254,44 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 					cpAttachmentFileEntry.getType(), serviceContext);
 		}
 		else {
+			CPAttachmentFileEntry existedCPAttachmentFileEntry =
+				existingCPAttachmentFileEntry;
+
+			long cpDefinitionClassNameId =
+				_classNameLocalService.getClassNameId(CPDefinition.class);
+
+			boolean cdnEnabled = cpAttachmentFileEntry.isCDNEnabled();
+
+			if ((existedCPAttachmentFileEntry.getClassNameId() ==
+					cpDefinitionClassNameId) &&
+				_cpDefinitionLocalService.isVersionable(
+					existedCPAttachmentFileEntry.getClassPK())) {
+
+				CPDefinition newCPDefinition =
+					_cpDefinitionLocalService.copyCPDefinition(
+						existedCPAttachmentFileEntry.getClassPK());
+
+				if (cdnEnabled) {
+					existedCPAttachmentFileEntry =
+						_cpAttachmentFileEntryPersistence.findByC_C_C_First(
+							cpDefinitionClassNameId,
+							newCPDefinition.getCPDefinitionId(),
+							cpAttachmentFileEntry.getCDNURL(), null);
+				}
+				else {
+					existedCPAttachmentFileEntry =
+						_cpAttachmentFileEntryPersistence.findByC_C_F_First(
+							cpDefinitionClassNameId,
+							newCPDefinition.getCPDefinitionId(),
+							cpAttachmentFileEntry.getFileEntryId(), null);
+				}
+			}
+
 			importedCPAttachmentFileEntry =
 				_cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
 					cpAttachmentFileEntry.getUserId(),
-					existingCPAttachmentFileEntry,
-					cpAttachmentFileEntry.getFileEntryId(),
-					cpAttachmentFileEntry.isCDNEnabled(),
+					existedCPAttachmentFileEntry,
+					cpAttachmentFileEntry.getFileEntryId(), cdnEnabled,
 					cpAttachmentFileEntry.getCDNURL(), displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,

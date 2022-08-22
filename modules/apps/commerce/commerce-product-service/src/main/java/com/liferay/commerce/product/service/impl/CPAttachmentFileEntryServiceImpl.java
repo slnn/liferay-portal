@@ -402,15 +402,44 @@ public class CPAttachmentFileEntryServiceImpl
 
 		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 
-		return cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
-			getUserId(),
+		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryPersistence.findByPrimaryKey(
-				cpAttachmentFileEntryId),
-			fileEntryId, cdnEnabled, cdnURL, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-			json, priority, type, serviceContext);
+				cpAttachmentFileEntryId);
+
+		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		if ((cpAttachmentFileEntry.getClassNameId() ==
+				cpDefinitionClassNameId) &&
+			_cpDefinitionLocalService.isVersionable(
+				cpAttachmentFileEntry.getClassPK())) {
+
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(
+					cpAttachmentFileEntry.getClassPK());
+
+			if (cdnEnabled) {
+				cpAttachmentFileEntry =
+					cpAttachmentFileEntryPersistence.findByC_C_C_First(
+						cpDefinitionClassNameId,
+						newCPDefinition.getCPDefinitionId(),
+						cpAttachmentFileEntry.getCDNURL(), null);
+			}
+			else {
+				cpAttachmentFileEntry =
+					cpAttachmentFileEntryPersistence.findByC_C_F_First(
+						cpDefinitionClassNameId,
+						newCPDefinition.getCPDefinitionId(),
+						cpAttachmentFileEntry.getFileEntryId(), null);
+			}
+		}
+
+		return cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
+			getUserId(), cpAttachmentFileEntry, fileEntryId, cdnEnabled, cdnURL,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, titleMap, json, priority, type, serviceContext);
 	}
 
 	protected void checkCPAttachmentFileEntryPermissions(
