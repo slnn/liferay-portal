@@ -27,6 +27,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -36,6 +37,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -160,12 +162,25 @@ public class CommerceMediaResolverTest {
 		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
 			dlFolder.getFolderId());
 
+		long classNameId = PortalUtil.getClassNameId(
+			CPDefinition.class.getName());
+		long classPK = cpDefinition.getCPDefinitionId();
+
+		if ((classNameId == _classNameLocalService.getClassNameId(
+				CPDefinition.class)) &&
+			_cpDefinitionLocalService.isVersionable(classPK)) {
+
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(classPK);
+
+			classPK = newCPDefinition.getCPDefinitionId();
+		}
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
-				null, _user.getUserId(), _group.getGroupId(),
-				PortalUtil.getClassNameId(CPDefinition.class.getName()),
-				cpDefinition.getCPDefinitionId(), dlFileEntry.getFileEntryId(),
-				false, null, displayDateMonth, displayDateDay, displayDateYear,
+				null, _user.getUserId(), _group.getGroupId(), classNameId,
+				classPK, dlFileEntry.getFileEntryId(), false, null,
+				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, true,
@@ -189,6 +204,9 @@ public class CommerceMediaResolverTest {
 
 	private static User _user;
 
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
 	private CommerceAccount _commerceAccount;
 
 	@Inject
@@ -202,6 +220,9 @@ public class CommerceMediaResolverTest {
 	@Inject
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	private Group _group;
 	private ServiceContext _serviceContext;

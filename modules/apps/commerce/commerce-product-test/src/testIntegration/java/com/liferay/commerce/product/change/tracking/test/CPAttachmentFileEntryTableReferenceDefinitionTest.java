@@ -20,6 +20,7 @@ import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
@@ -31,6 +32,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -107,13 +109,26 @@ public class CPAttachmentFileEntryTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
+		long classNameId = PortalUtil.getClassNameId(
+			CPDefinition.class.getName());
+		long classPK = _cpDefinition.getCPDefinitionId();
+
+		if ((classNameId == _classNameLocalService.getClassNameId(
+				CPDefinition.class)) &&
+			_cpDefinitionLocalService.isVersionable(classPK)) {
+
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(classPK);
+
+			classPK = newCPDefinition.getCPDefinitionId();
+		}
+
 		return _cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
-			null, TestPropsValues.getUserId(), group.getGroupId(),
-			PortalUtil.getClassNameId(CPDefinition.class.getName()),
-			_cpDefinition.getCPDefinitionId(), _dlFileEntry.getFileEntryId(),
-			false, null, 1, 1, 2020, 1, 1, 2, 2, 2021, 2, 2, true,
-			RandomTestUtil.randomLocaleStringMap(), null, 0D,
-			CPAttachmentFileEntryConstants.TYPE_IMAGE, _serviceContext);
+			null, TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+			classPK, _dlFileEntry.getFileEntryId(), false, null, 1, 1, 2020, 1,
+			1, 2, 2, 2021, 2, 2, true, RandomTestUtil.randomLocaleStringMap(),
+			null, 0D, CPAttachmentFileEntryConstants.TYPE_IMAGE,
+			_serviceContext);
 	}
 
 	@Inject
@@ -123,6 +138,9 @@ public class CPAttachmentFileEntryTableReferenceDefinitionTest
 	private static DLFolderLocalService _dlFolderLocalService;
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
@@ -130,6 +148,10 @@ public class CPAttachmentFileEntryTableReferenceDefinitionTest
 		_cpAttachmentFileEntryLocalService;
 
 	private CPDefinition _cpDefinition;
+
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
 	private DLFileEntry _dlFileEntry;
 	private ServiceContext _serviceContext;
 

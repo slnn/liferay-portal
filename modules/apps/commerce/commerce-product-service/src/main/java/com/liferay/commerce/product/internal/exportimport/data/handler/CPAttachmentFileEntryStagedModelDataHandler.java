@@ -17,7 +17,9 @@ package com.liferay.commerce.product.internal.exportimport.data.handler;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -26,6 +28,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -221,12 +224,23 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 				newPrimaryKeysMap, cpAttachmentFileEntry.getClassPK(),
 				cpAttachmentFileEntry.getClassPK());
 
+			long classNameId = cpAttachmentFileEntry.getClassNameId();
+
+			if ((classNameId == _classNameLocalService.getClassNameId(
+					CPDefinition.class)) &&
+				_cpDefinitionLocalService.isVersionable(classPK)) {
+
+				CPDefinition newCPDefinition =
+					_cpDefinitionLocalService.copyCPDefinition(classPK);
+
+				classPK = newCPDefinition.getCPDefinitionId();
+			}
+
 			importedCPAttachmentFileEntry =
 				_cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
 					externalReferenceCode, cpAttachmentFileEntry.getUserId(),
-					portletDataContext.getScopeGroupId(),
-					cpAttachmentFileEntry.getClassNameId(), classPK,
-					cpAttachmentFileEntry.getFileEntryId(),
+					classNameId, cpAttachmentFileEntry.getClassNameId(),
+					classPK, cpAttachmentFileEntry.getFileEntryId(),
 					cpAttachmentFileEntry.isCDNEnabled(),
 					cpAttachmentFileEntry.getCDNURL(), displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
@@ -284,8 +298,14 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

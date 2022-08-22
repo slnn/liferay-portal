@@ -166,16 +166,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryPersistence.create(cpAttachmentFileEntryId);
 
-		if ((classNameId == _classNameLocalService.getClassNameId(
-				CPDefinition.class)) &&
-			_cpDefinitionLocalService.isVersionable(classPK)) {
-
-			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(classPK);
-
-			classPK = newCPDefinition.getCPDefinitionId();
-		}
-
 		cpAttachmentFileEntry.setExternalReferenceCode(externalReferenceCode);
 		cpAttachmentFileEntry.setGroupId(groupId);
 		cpAttachmentFileEntry.setCompanyId(user.getCompanyId());

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -76,6 +77,16 @@ public class CPAttachmentFileEntryServiceImpl
 
 		checkCPAttachmentFileEntryPermissions(
 			serviceContext.getScopeGroupId(), classNameId, classPK, type);
+
+		if ((classNameId == _classNameLocalService.getClassNameId(
+				CPDefinition.class)) &&
+			_cpDefinitionLocalService.isVersionable(classPK)) {
+
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(classPK);
+
+			classPK = newCPDefinition.getCPDefinitionId();
+		}
 
 		return cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
 			null, getUserId(), groupId, classNameId, classPK, fileEntryId,
@@ -474,6 +485,9 @@ public class CPAttachmentFileEntryServiceImpl
 		_commerceCatalogModelResourcePermission.check(
 			getPermissionChecker(), commerceCatalog, actionId);
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;

@@ -15,7 +15,9 @@
 package com.liferay.commerce.initializer.util;
 
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -174,10 +177,21 @@ public class CPAttachmentFileEntryCreator {
 
 		long classPK = GetterUtil.getLong(classedModel.getPrimaryKeyObj());
 
+		long classNameId = _portal.getClassNameId(classedModel.getModelClass());
+
+		if ((classNameId == _classNameLocalService.getClassNameId(
+				CPDefinition.class)) &&
+			_cpDefinitionLocalService.isVersionable(classPK)) {
+
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(classPK);
+
+			classPK = newCPDefinition.getCPDefinitionId();
+		}
+
 		return _cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
 			StringPool.BLANK, serviceContext.getUserId(),
-			fileEntry.getGroupId(),
-			_portal.getClassNameId(classedModel.getModelClass()), classPK,
+			fileEntry.getGroupId(), classNameId, classPK,
 			fileEntry.getFileEntryId(), false, null, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -189,8 +203,14 @@ public class CPAttachmentFileEntryCreator {
 		CPAttachmentFileEntryCreator.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;
