@@ -26,7 +26,6 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
-import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
@@ -1369,24 +1368,6 @@ public class CPDefinitionLocalServiceImpl
 
 		return cpDefinitionPersistence.findByC_S(
 			cProductId, status, start, end);
-	}
-
-	@Override
-	public CPAttachmentFileEntry getDefaultImageCPAttachmentFileEntry(
-			long cpDefinitionId)
-		throws PortalException {
-
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				_classNameLocalService.getClassNameId(CPDefinition.class),
-				cpDefinitionId, CPAttachmentFileEntryConstants.TYPE_IMAGE,
-				WorkflowConstants.STATUS_APPROVED, 0, 1);
-
-		if (cpAttachmentFileEntries.isEmpty()) {
-			return null;
-		}
-
-		return cpAttachmentFileEntries.get(0);
 	}
 
 	@Override
