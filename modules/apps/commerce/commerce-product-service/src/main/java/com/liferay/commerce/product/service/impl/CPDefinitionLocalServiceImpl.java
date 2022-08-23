@@ -54,7 +54,6 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
-import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -1125,8 +1124,14 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product display layouts
 
-		_cpDisplayLayoutLocalService.deleteCPDisplayLayouts(
-			CPDefinition.class, cpDefinition.getCPDefinitionId());
+		List<CPDisplayLayout> cpDisplayLayouts =
+			_cpDisplayLayoutPersistence.findByC_C(
+				_classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinition.getCPDefinitionId());
+
+		for (CPDisplayLayout cpDisplayLayout : cpDisplayLayouts) {
+			_cpDisplayLayoutPersistence.remove(cpDisplayLayout);
+		}
 
 		// Commerce product version contributors
 
@@ -1537,8 +1542,10 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public String getLayoutUuid(long groupId, long cpDefinitionId) {
 		CPDisplayLayout cpDisplayLayout =
-			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, CPDefinition.class, cpDefinitionId);
+			_cpDisplayLayoutPersistence.fetchByG_C_C(
+				groupId,
+				_classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinitionId);
 
 		if (cpDisplayLayout == null) {
 			return null;
@@ -2916,9 +2923,6 @@ public class CPDefinitionLocalServiceImpl
 	@Reference
 	private CPDefinitionSpecificationOptionValuePersistence
 		_cpDefinitionSpecificationOptionValuePersistence;
-
-	@Reference
-	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
 
 	@Reference
 	private CPDisplayLayoutPersistence _cpDisplayLayoutPersistence;
