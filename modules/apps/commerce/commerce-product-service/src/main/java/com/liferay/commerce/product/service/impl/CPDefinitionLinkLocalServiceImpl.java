@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionLinkHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CProduct;
@@ -22,7 +23,6 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionLinkLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -121,25 +121,8 @@ public class CPDefinitionLinkLocalServiceImpl
 			CPDefinitionLink cpDefinitionLink)
 		throws PortalException {
 
-		// Commerce product definition link
-
-		cpDefinitionLinkPersistence.remove(cpDefinitionLink);
-
-		// Expando
-
-		_expandoRowLocalService.deleteRows(
-			cpDefinitionLink.getCPDefinitionLinkId());
-
-		CProduct cProduct = _cProductPersistence.findByPrimaryKey(
-			cpDefinitionLink.getCProductId());
-
-		_cpDefinitionIndexHelper.reindexCPDefinition(
-			cProduct.getPublishedCPDefinitionId());
-
-		_cpDefinitionIndexHelper.reindexCPDefinition(
-			cpDefinitionLink.getCPDefinitionId());
-
-		return cpDefinitionLink;
+		return _deleteCPDefinitionLinkHelper.deleteCPDefinitionLink(
+			cpDefinitionLink);
 	}
 
 	@Override
@@ -406,7 +389,7 @@ public class CPDefinitionLinkLocalServiceImpl
 	private CProductPersistence _cProductPersistence;
 
 	@Reference
-	private ExpandoRowLocalService _expandoRowLocalService;
+	private DeleteCPDefinitionLinkHelper _deleteCPDefinitionLinkHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;
