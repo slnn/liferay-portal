@@ -83,8 +83,6 @@ public class CPDefinitionLinkLocalServiceImpl
 			cpDefinition = _cpDefinitionLocalService.copyCPDefinition(
 				cpDefinitionId, cpDefinition.getGroupId(),
 				WorkflowConstants.STATUS_DRAFT);
-
-			cpDefinitionId = cpDefinition.getCPDefinitionId();
 		}
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
@@ -111,7 +109,8 @@ public class CPDefinitionLinkLocalServiceImpl
 		_cpDefinitionIndexHelper.reindexCPDefinition(
 			cProduct.getPublishedCPDefinitionId());
 
-		_cpDefinitionIndexHelper.reindexCPDefinition(cpDefinitionId);
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinition.getCPDefinitionId());
 
 		return cpDefinitionLink;
 	}
