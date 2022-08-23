@@ -34,6 +34,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
+import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionLinkHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
@@ -49,7 +50,6 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
-import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
@@ -85,6 +85,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1007,8 +1008,29 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition links
 
-		_cpDefinitionLinkLocalService.deleteCPDefinitionLinksByCPDefinitionId(
-			cpDefinition.getCPDefinitionId());
+		List<CPDefinitionLink> cpDefinitionLinks =
+			_cpDefinitionLinkPersistence.findByCPDefinitionId(
+				cpDefinition.getCPDefinitionId());
+
+		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
+			if (isVersionable(cpDefinitionLink.getCPDefinitionId())) {
+				try {
+					CPDefinition newCPDefinition = copyCPDefinition(
+						cpDefinitionLink.getCPDefinitionId());
+
+					cpDefinitionLink = _cpDefinitionLinkPersistence.findByC_C_T(
+						newCPDefinition.getCPDefinitionId(),
+						cpDefinitionLink.getCProductId(),
+						cpDefinitionLink.getType());
+				}
+				catch (PortalException portalException) {
+					throw new SystemException(portalException);
+				}
+			}
+
+			_deleteCPDefinitionLinkHelper.deleteCPDefinitionLink(
+				cpDefinitionLink);
+		}
 
 		// Commerce product type
 
@@ -2803,9 +2825,6 @@ public class CPDefinitionLocalServiceImpl
 	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;
 
 	@Reference
-	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
-
-	@Reference
 	private CPDefinitionLinkPersistence _cpDefinitionLinkPersistence;
 
 	@Reference
@@ -2858,6 +2877,9 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DeleteCPDefinitionLinkHelper _deleteCPDefinitionLinkHelper;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
