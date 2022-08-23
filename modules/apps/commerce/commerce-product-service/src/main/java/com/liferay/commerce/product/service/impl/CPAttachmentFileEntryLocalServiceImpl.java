@@ -322,7 +322,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				cpAttachmentFileEntries) {
 
 			cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
-				cpAttachmentFileEntry);
+				_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
+					cpAttachmentFileEntry));
 		}
 	}
 
@@ -332,10 +333,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
 			CPAttachmentFileEntry cpAttachmentFileEntry)
 		throws PortalException {
-
-		cpAttachmentFileEntry =
-			_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
-				cpAttachmentFileEntry);
 
 		// Commerce product attachment file entry
 
@@ -363,7 +360,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				cpAttachmentFileEntryId);
 
 		return cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
-			cpAttachmentFileEntry);
+			_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
+				cpAttachmentFileEntry));
 	}
 
 	@Override
