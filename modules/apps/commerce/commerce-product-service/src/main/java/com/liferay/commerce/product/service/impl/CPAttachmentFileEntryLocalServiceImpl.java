@@ -25,7 +25,6 @@ import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryTable;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.util.JsonHelper;
@@ -300,23 +299,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 	}
 
-	@Override
-	public void deleteCPAttachmentFileEntries(String className, long classPK)
-		throws PortalException {
-
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			cpAttachmentFileEntryPersistence.findByC_C(
-				_classNameLocalService.getClassNameId(className), classPK);
-
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				cpAttachmentFileEntries) {
-
-			cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
-				_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
-					cpAttachmentFileEntry));
-		}
-	}
-
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -338,20 +320,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry.getClassPK());
 
 		return cpAttachmentFileEntry;
-	}
-
-	@Override
-	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
-			long cpAttachmentFileEntryId)
-		throws PortalException {
-
-		CPAttachmentFileEntry cpAttachmentFileEntry =
-			cpAttachmentFileEntryPersistence.findByPrimaryKey(
-				cpAttachmentFileEntryId);
-
-		return cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
-			_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
-				cpAttachmentFileEntry));
 	}
 
 	@Override
@@ -777,42 +745,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry, serviceContext, workflowContext);
 	}
 
-	private CPAttachmentFileEntry
-			_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
-				CPAttachmentFileEntry cpAttachmentFileEntry)
-		throws PortalException {
-
-		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
-		if ((cpAttachmentFileEntry.getClassNameId() ==
-				cpDefinitionClassNameId) &&
-			_cpDefinitionLocalService.isVersionable(
-				cpAttachmentFileEntry.getClassPK())) {
-
-			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
-					cpAttachmentFileEntry.getClassPK());
-
-			if (cpAttachmentFileEntry.isCDNEnabled()) {
-				cpAttachmentFileEntry =
-					cpAttachmentFileEntryPersistence.findByC_C_C_First(
-						cpDefinitionClassNameId,
-						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getCDNURL(), null);
-			}
-			else {
-				cpAttachmentFileEntry =
-					cpAttachmentFileEntryPersistence.findByC_C_F_First(
-						cpDefinitionClassNameId,
-						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getFileEntryId(), null);
-			}
-		}
-
-		return cpAttachmentFileEntry;
-	}
-
 	private long _getFileEntryId(
 			FileEntry fileEntry, long userId, long groupId, String className,
 			long classPK)
@@ -950,9 +882,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@Reference
 	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionPersistence _cpDefinitionPersistence;
