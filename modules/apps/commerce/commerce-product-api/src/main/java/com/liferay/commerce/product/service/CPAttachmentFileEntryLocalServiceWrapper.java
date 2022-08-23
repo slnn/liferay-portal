@@ -150,14 +150,6 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 			primaryKeyObj);
 	}
 
-	@Override
-	public void deleteCPAttachmentFileEntries(String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
-			className, classPK);
-	}
-
 	/**
 	 * Deletes the cp attachment file entry from the database. Also notifies the appropriate model listeners.
 	 *

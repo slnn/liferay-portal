@@ -141,13 +141,6 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteCPAttachmentFileEntries(
-			String className, long classPK)
-		throws PortalException {
-
-		getService().deleteCPAttachmentFileEntries(className, classPK);
-	}
-
 	/**
 	 * Deletes the cp attachment file entry from the database. Also notifies the appropriate model listeners.
 	 *

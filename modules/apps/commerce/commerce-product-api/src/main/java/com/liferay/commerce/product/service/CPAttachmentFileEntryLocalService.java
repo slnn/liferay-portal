@@ -137,9 +137,6 @@ public interface CPAttachmentFileEntryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteCPAttachmentFileEntries(String className, long classPK)
-		throws PortalException;
-
 	/**
 	 * Deletes the cp attachment file entry from the database. Also notifies the appropriate model listeners.
 	 *
