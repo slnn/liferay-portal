@@ -15,8 +15,12 @@
 package com.liferay.commerce.product.internal.model.listener;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
+import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,11 +28,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -63,8 +69,19 @@ public class AssetCategoryModelListener
 	@Override
 	public void onBeforeRemove(AssetCategory assetCategory) {
 		try {
-			_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
-				AssetCategory.class.getName(), assetCategory.getCategoryId());
+			List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+				_cpAttachmentFileEntryPersistence.findByC_C(
+					_classNameLocalService.getClassNameId(
+						AssetCategory.class.getName()),
+					assetCategory.getCategoryId());
+
+			for (CPAttachmentFileEntry cpAttachmentFileEntry :
+					cpAttachmentFileEntries) {
+
+				_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
+					_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
+						cpAttachmentFileEntry));
+			}
 
 			_cpDisplayLayoutLocalService.deleteCPDisplayLayouts(
 				AssetCategory.class, assetCategory.getCategoryId());
@@ -78,6 +95,42 @@ public class AssetCategoryModelListener
 				_log.warn(portalException);
 			}
 		}
+	}
+
+	private CPAttachmentFileEntry
+			_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
+				CPAttachmentFileEntry cpAttachmentFileEntry)
+		throws PortalException {
+
+		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		if ((cpAttachmentFileEntry.getClassNameId() ==
+				cpDefinitionClassNameId) &&
+			_cpDefinitionLocalService.isVersionable(
+				cpAttachmentFileEntry.getClassPK())) {
+
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(
+					cpAttachmentFileEntry.getClassPK());
+
+			if (cpAttachmentFileEntry.isCDNEnabled()) {
+				cpAttachmentFileEntry =
+					_cpAttachmentFileEntryPersistence.findByC_C_C_First(
+						cpDefinitionClassNameId,
+						newCPDefinition.getCPDefinitionId(),
+						cpAttachmentFileEntry.getCDNURL(), null);
+			}
+			else {
+				cpAttachmentFileEntry =
+					_cpAttachmentFileEntryPersistence.findByC_C_F_First(
+						cpDefinitionClassNameId,
+						newCPDefinition.getCPDefinitionId(),
+						cpAttachmentFileEntry.getFileEntryId(), null);
+			}
+		}
+
+		return cpAttachmentFileEntry;
 	}
 
 	private Map<String, String> _getUniqueUrlTitles(AssetCategory assetCategory)
@@ -104,8 +157,17 @@ public class AssetCategoryModelListener
 		AssetCategoryModelListener.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;

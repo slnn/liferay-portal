@@ -1002,8 +1002,19 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition attachment file entries
 
-		_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
-			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			_cpAttachmentFileEntryPersistence.findByC_C(
+				_classNameLocalService.getClassNameId(
+					CPDefinition.class.getName()),
+				cpDefinition.getCPDefinitionId());
+
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
+			_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
+				_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
+					cpAttachmentFileEntry));
+		}
 
 		// Commerce product definition links
 
@@ -2648,6 +2659,42 @@ public class CPDefinitionLocalServiceImpl
 
 		return cpDefinitionLocalizationPersistence.update(
 			cpDefinitionLocalization);
+	}
+
+	private CPAttachmentFileEntry
+			_copyCPDefinitionAndPrepareCPAttachmentFileEntry(
+				CPAttachmentFileEntry cpAttachmentFileEntry)
+		throws PortalException {
+
+		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		if ((cpAttachmentFileEntry.getClassNameId() ==
+				cpDefinitionClassNameId) &&
+			cpDefinitionLocalService.isVersionable(
+				cpAttachmentFileEntry.getClassPK())) {
+
+			CPDefinition newCPDefinition =
+				cpDefinitionLocalService.copyCPDefinition(
+					cpAttachmentFileEntry.getClassPK());
+
+			if (cpAttachmentFileEntry.isCDNEnabled()) {
+				cpAttachmentFileEntry =
+					_cpAttachmentFileEntryPersistence.findByC_C_C_First(
+						cpDefinitionClassNameId,
+						newCPDefinition.getCPDefinitionId(),
+						cpAttachmentFileEntry.getCDNURL(), null);
+			}
+			else {
+				cpAttachmentFileEntry =
+					_cpAttachmentFileEntryPersistence.findByC_C_F_First(
+						cpDefinitionClassNameId,
+						newCPDefinition.getCPDefinitionId(),
+						cpAttachmentFileEntry.getFileEntryId(), null);
+			}
+		}
+
+		return cpAttachmentFileEntry;
 	}
 
 	private String _getIndexFieldName(String optionKey, String languageId) {
