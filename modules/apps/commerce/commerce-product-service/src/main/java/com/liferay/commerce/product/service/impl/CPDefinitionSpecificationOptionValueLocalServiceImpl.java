@@ -142,10 +142,6 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 					cpDefinitionSpecificationOptionValue)
 		throws PortalException {
 
-		cpDefinitionSpecificationOptionValue =
-			copyCPDefinitionAndPrepareCPDefinitionSpecificationOptionValue(
-				cpDefinitionSpecificationOptionValue);
-
 		// Commerce product definition specification option value
 
 		cpDefinitionSpecificationOptionValuePersistence.remove(
@@ -176,7 +172,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			deleteCPDefinitionSpecificationOptionValue(
-				cpDefinitionSpecificationOptionValue);
+				copyCPDefinitionAndPrepareCPDefinitionSpecificationOptionValue(
+					cpDefinitionSpecificationOptionValue));
 	}
 
 	@Override
@@ -196,7 +193,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 			cpDefinitionSpecificationOptionValueLocalService.
 				deleteCPDefinitionSpecificationOptionValue(
-					cpDefinitionSpecificationOptionValue);
+					copyCPDefinitionAndPrepareCPDefinitionSpecificationOptionValue(
+						cpDefinitionSpecificationOptionValue));
 		}
 
 		// Commerce product definition
@@ -222,7 +220,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 			cpDefinitionSpecificationOptionValueLocalService.
 				deleteCPDefinitionSpecificationOptionValue(
-					cpDefinitionSpecificationOptionValue);
+					copyCPDefinitionAndPrepareCPDefinitionSpecificationOptionValue(
+						cpDefinitionSpecificationOptionValue));
 
 			// Commerce product definition
 

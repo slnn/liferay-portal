@@ -83,7 +83,9 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 
 		cpDefinitionSpecificationOptionValueLocalService.
 			deleteCPDefinitionSpecificationOptionValue(
-				cpDefinitionSpecificationOptionValue);
+				cpDefinitionSpecificationOptionValueLocalService.
+					copyCPDefinitionAndPrepareCPDefinitionSpecificationOptionValue(
+						cpDefinitionSpecificationOptionValue));
 	}
 
 	@Override
