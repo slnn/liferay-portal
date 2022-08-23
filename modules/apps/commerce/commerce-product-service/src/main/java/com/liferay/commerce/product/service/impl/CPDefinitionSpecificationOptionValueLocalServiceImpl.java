@@ -15,12 +15,12 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionSpecificationOptionValueHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionSpecificationOptionValueLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -142,21 +142,9 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 					cpDefinitionSpecificationOptionValue)
 		throws PortalException {
 
-		// Commerce product definition specification option value
-
-		cpDefinitionSpecificationOptionValuePersistence.remove(
-			cpDefinitionSpecificationOptionValue);
-
-		// Expando
-
-		_expandoRowLocalService.deleteRows(
-			cpDefinitionSpecificationOptionValue.
-				getCPDefinitionSpecificationOptionValueId());
-
-		_cpDefinitionIndexHelper.reindexCPDefinition(
-			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
-
-		return cpDefinitionSpecificationOptionValue;
+		return _deleteCPDefinitionSpecificationOptionValueHelper.
+			deleteCPDefinitionSpecificationOptionValue(
+				cpDefinitionSpecificationOptionValue);
 	}
 
 	@Override
@@ -401,7 +389,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 	private CPDefinitionPersistence _cpDefinitionPersistence;
 
 	@Reference
-	private ExpandoRowLocalService _expandoRowLocalService;
+	private DeleteCPDefinitionSpecificationOptionValueHelper
+		_deleteCPDefinitionSpecificationOptionValueHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;
