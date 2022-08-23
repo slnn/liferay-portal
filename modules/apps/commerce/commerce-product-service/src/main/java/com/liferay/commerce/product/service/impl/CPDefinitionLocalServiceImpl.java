@@ -34,6 +34,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
+import com.liferay.commerce.product.internal.helper.DeleteCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionLinkHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -1003,8 +1004,44 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition attachment file entries
 
-		_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
-			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			_cpAttachmentFileEntryPersistence.findByC_C(
+				_classNameLocalService.getClassNameId(
+					CPDefinition.class.getName()),
+				cpDefinition.getCPDefinitionId());
+
+		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
+			if ((cpAttachmentFileEntry.getClassNameId() ==
+					cpDefinitionClassNameId) &&
+				isVersionable(cpAttachmentFileEntry.getClassPK())) {
+
+				CPDefinition newCPDefinition = copyCPDefinition(
+					cpAttachmentFileEntry.getClassPK());
+
+				if (cpAttachmentFileEntry.isCDNEnabled()) {
+					cpAttachmentFileEntry =
+						_cpAttachmentFileEntryPersistence.findByC_C_C_First(
+							cpDefinitionClassNameId,
+							newCPDefinition.getCPDefinitionId(),
+							cpAttachmentFileEntry.getCDNURL(), null);
+				}
+				else {
+					cpAttachmentFileEntry =
+						_cpAttachmentFileEntryPersistence.findByC_C_F_First(
+							cpDefinitionClassNameId,
+							newCPDefinition.getCPDefinitionId(),
+							cpAttachmentFileEntry.getFileEntryId(), null);
+				}
+			}
+
+			_deleteCPAttachmentFileEntryHelper.deleteCPAttachmentFileEntry(
+				cpAttachmentFileEntry);
+		}
 
 		// Commerce product definition links
 
@@ -2877,6 +2914,10 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DeleteCPAttachmentFileEntryHelper
+		_deleteCPAttachmentFileEntryHelper;
 
 	@Reference
 	private DeleteCPDefinitionLinkHelper _deleteCPDefinitionLinkHelper;
