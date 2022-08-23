@@ -121,9 +121,6 @@ public class CPDefinitionLinkLocalServiceImpl
 			CPDefinitionLink cpDefinitionLink)
 		throws PortalException {
 
-		cpDefinitionLink = _copyCPDefinitionAndPrepareCPDefinitionLink(
-			cpDefinitionLink);
-
 		// Commerce product definition link
 
 		cpDefinitionLinkPersistence.remove(cpDefinitionLink);
@@ -153,7 +150,7 @@ public class CPDefinitionLinkLocalServiceImpl
 			cpDefinitionLinkPersistence.findByPrimaryKey(cpDefinitionLinkId);
 
 		return cpDefinitionLinkLocalService.deleteCPDefinitionLink(
-			cpDefinitionLink);
+			_copyCPDefinitionAndPrepareCPDefinitionLink(cpDefinitionLink));
 	}
 
 	/**
@@ -183,7 +180,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
 			cpDefinitionLinkLocalService.deleteCPDefinitionLink(
-				cpDefinitionLink);
+				_copyCPDefinitionAndPrepareCPDefinitionLink(cpDefinitionLink));
 		}
 	}
 
@@ -196,7 +193,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
 			cpDefinitionLinkLocalService.deleteCPDefinitionLink(
-				cpDefinitionLink);
+				_copyCPDefinitionAndPrepareCPDefinitionLink(cpDefinitionLink));
 		}
 	}
 
@@ -311,7 +308,8 @@ public class CPDefinitionLinkLocalServiceImpl
 					cProductIds, cpDefinitionLink.getCProductId())) {
 
 				cpDefinitionLinkLocalService.deleteCPDefinitionLink(
-					cpDefinitionLink);
+					_copyCPDefinitionAndPrepareCPDefinitionLink(
+						cpDefinitionLink));
 			}
 		}
 
