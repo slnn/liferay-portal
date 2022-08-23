@@ -34,6 +34,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
+import com.liferay.commerce.product.internal.helper.CheckCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionLinkHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -50,7 +51,6 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
@@ -2333,7 +2333,7 @@ public class CPDefinitionLocalServiceImpl
 				new HashMap<String, Serializable>());
 
 			if (cpDefinition.isApproved()) {
-				_cpAttachmentFileEntryLocalService.
+				_checkCPAttachmentFileEntryHelper.
 					checkCPAttachmentFileEntriesByDisplayDate(
 						_classNameLocalService.getClassNameId(
 							cpDefinition.getModelClassName()),
@@ -2839,6 +2839,9 @@ public class CPDefinitionLocalServiceImpl
 	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
+	private CheckCPAttachmentFileEntryHelper _checkCPAttachmentFileEntryHelper;
+
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
@@ -2853,10 +2856,6 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
-
-	@Reference
-	private CPAttachmentFileEntryLocalService
-		_cpAttachmentFileEntryLocalService;
 
 	@Reference
 	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;

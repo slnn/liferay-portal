@@ -22,6 +22,7 @@ import com.liferay.commerce.product.exception.CPAttachmentFileEntryDisplayDateEx
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
 import com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.CheckCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryTable;
@@ -277,37 +278,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			long classNameId, long classPK)
 		throws PortalException {
 
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries = null;
-
-		if (classPK > 0) {
-			cpAttachmentFileEntries =
-				cpAttachmentFileEntryPersistence.findByC_C_LtD_S(
-					classNameId, classPK, new Date(),
-					WorkflowConstants.STATUS_SCHEDULED);
-		}
-		else {
-			cpAttachmentFileEntries =
-				cpAttachmentFileEntryPersistence.findByLtD_S(
-					new Date(), WorkflowConstants.STATUS_SCHEDULED);
-		}
-
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				cpAttachmentFileEntries) {
-
-			long userId = _portal.getValidUserId(
-				cpAttachmentFileEntry.getCompanyId(),
-				cpAttachmentFileEntry.getUserId());
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCommand(Constants.UPDATE);
-			serviceContext.setScopeGroupId(cpAttachmentFileEntry.getGroupId());
-
-			cpAttachmentFileEntryLocalService.updateStatus(
-				userId, cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext,
-				new HashMap<String, Serializable>());
-		}
+		_checkCPAttachmentFileEntryHelper.
+			checkCPAttachmentFileEntriesByDisplayDate(classNameId, classPK);
 	}
 
 	@Override
@@ -705,47 +677,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-		Date now = new Date();
-
-		CPAttachmentFileEntry cpAttachmentFileEntry =
-			cpAttachmentFileEntryPersistence.findByPrimaryKey(
-				cpAttachmentFileEntryId);
-
-		if ((status == WorkflowConstants.STATUS_APPROVED) &&
-			(cpAttachmentFileEntry.getDisplayDate() != null) &&
-			now.before(cpAttachmentFileEntry.getDisplayDate())) {
-
-			status = WorkflowConstants.STATUS_SCHEDULED;
-		}
-
-		Date modifiedDate = serviceContext.getModifiedDate(now);
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			Date expirationDate = cpAttachmentFileEntry.getExpirationDate();
-
-			if ((expirationDate != null) && expirationDate.before(now)) {
-				cpAttachmentFileEntry.setExpirationDate(null);
-			}
-		}
-
-		if (status == WorkflowConstants.STATUS_EXPIRED) {
-			cpAttachmentFileEntry.setExpirationDate(now);
-		}
-
-		cpAttachmentFileEntry.setStatus(status);
-		cpAttachmentFileEntry.setStatusByUserId(user.getUserId());
-		cpAttachmentFileEntry.setStatusByUserName(user.getFullName());
-		cpAttachmentFileEntry.setStatusDate(modifiedDate);
-
-		cpAttachmentFileEntry = cpAttachmentFileEntryPersistence.update(
-			cpAttachmentFileEntry);
-
-		_cpDefinitionIndexHelper.reindex(
-			cpAttachmentFileEntry.getClassNameId(),
-			cpAttachmentFileEntry.getClassPK());
-
-		return cpAttachmentFileEntry;
+		return _checkCPAttachmentFileEntryHelper.updateStatus(
+			userId, cpAttachmentFileEntryId, status, serviceContext,
+			workflowContext);
 	}
 
 	protected void checkCPAttachmentFileEntriesByDisplayDate()
@@ -974,6 +908,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPAttachmentFileEntryLocalServiceImpl.class);
+
+	@Reference
+	private CheckCPAttachmentFileEntryHelper _checkCPAttachmentFileEntryHelper;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
