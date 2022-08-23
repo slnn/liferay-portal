@@ -121,23 +121,8 @@ public class CPDefinitionLinkLocalServiceImpl
 			CPDefinitionLink cpDefinitionLink)
 		throws PortalException {
 
-		if (_cpDefinitionLocalService.isVersionable(
-				cpDefinitionLink.getCPDefinitionId())) {
-
-			try {
-				CPDefinition newCPDefinition =
-					_cpDefinitionLocalService.copyCPDefinition(
-						cpDefinitionLink.getCPDefinitionId());
-
-				cpDefinitionLink = cpDefinitionLinkPersistence.findByC_C_T(
-					newCPDefinition.getCPDefinitionId(),
-					cpDefinitionLink.getCProductId(),
-					cpDefinitionLink.getType());
-			}
-			catch (PortalException portalException) {
-				throw new SystemException(portalException);
-			}
-		}
+		cpDefinitionLink = _copyCPDefinitionAndPrepareCPDefinitionLink(
+			cpDefinitionLink);
 
 		// Commerce product definition link
 
@@ -384,6 +369,30 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		cpDefinitionLinkLocalService.updateCPDefinitionLinkCProductIds(
 			cpDefinitionId1, cProductIds, type, serviceContext);
+	}
+
+	private CPDefinitionLink _copyCPDefinitionAndPrepareCPDefinitionLink(
+		CPDefinitionLink cpDefinitionLink) {
+
+		if (_cpDefinitionLocalService.isVersionable(
+				cpDefinitionLink.getCPDefinitionId())) {
+
+			try {
+				CPDefinition newCPDefinition =
+					_cpDefinitionLocalService.copyCPDefinition(
+						cpDefinitionLink.getCPDefinitionId());
+
+				cpDefinitionLink = cpDefinitionLinkPersistence.findByC_C_T(
+					newCPDefinition.getCPDefinitionId(),
+					cpDefinitionLink.getCProductId(),
+					cpDefinitionLink.getType());
+			}
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
+			}
+		}
+
+		return cpDefinitionLink;
 	}
 
 	@Reference
