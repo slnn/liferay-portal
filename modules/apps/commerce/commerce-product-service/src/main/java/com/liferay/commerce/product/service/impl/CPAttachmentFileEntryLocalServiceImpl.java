@@ -22,6 +22,7 @@ import com.liferay.commerce.product.exception.CPAttachmentFileEntryDisplayDateEx
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
 import com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
+import com.liferay.commerce.product.internal.helper.DeleteCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryTable;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -30,7 +31,6 @@ import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServi
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
@@ -334,20 +334,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			CPAttachmentFileEntry cpAttachmentFileEntry)
 		throws PortalException {
 
-		// Commerce product attachment file entry
-
-		cpAttachmentFileEntryPersistence.remove(cpAttachmentFileEntry);
-
-		// Expando
-
-		_expandoRowLocalService.deleteRows(
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-
-		_cpDefinitionIndexHelper.reindex(
-			cpAttachmentFileEntry.getClassNameId(),
-			cpAttachmentFileEntry.getClassPK());
-
-		return cpAttachmentFileEntry;
+		return _deleteCPAttachmentFileEntryHelper.deleteCPAttachmentFileEntry(
+			cpAttachmentFileEntry);
 	}
 
 	@Override
@@ -1000,10 +988,11 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	private CustomSQL _customSQL;
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private DeleteCPAttachmentFileEntryHelper
+		_deleteCPAttachmentFileEntryHelper;
 
 	@Reference
-	private ExpandoRowLocalService _expandoRowLocalService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;
