@@ -39,6 +39,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -601,7 +602,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 			CPDefinition cpDefinition =
-				_cpDefinitionLocalService.getCPDefinition(
+				_cpDefinitionPersistence.findByPrimaryKey(
 					cpInstance.getCPDefinitionId());
 
 			if (cpDefinition.isIgnoreSKUCombinations()) {
@@ -615,7 +616,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					cpInstance.getCPInstanceId(), serviceContext);
 			}
 
-			cpInstanceLocalService.updateStatus(
+			_updateCPInstanceStatusHelper.updateStatus(
 				userId, cpInstance.getCPInstanceId(),
 				WorkflowConstants.STATUS_APPROVED);
 		}
@@ -1672,7 +1673,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				continue;
 			}
 
-			cpInstanceLocalService.updateStatus(
+			_updateCPInstanceStatusHelper.updateStatus(
 				serviceContext.getUserId(), cpInstance.getCPInstanceId(),
 				WorkflowConstants.STATUS_EXPIRED);
 		}
@@ -1699,7 +1700,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				continue;
 			}
 
-			cpInstanceLocalService.updateStatus(
+			_updateCPInstanceStatusHelper.updateStatus(
 				serviceContext.getUserId(), curCPInstance.getCPInstanceId(),
 				WorkflowConstants.STATUS_EXPIRED);
 		}
@@ -1904,6 +1905,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
+
+	@Reference
+	private CPDefinitionPersistence _cpDefinitionPersistence;
 
 	@Reference
 	private CPInstanceOptionValueRelLocalService
