@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
+import com.liferay.commerce.product.internal.helper.CheckCPInstancesHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
@@ -158,6 +159,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
+
+		_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, sku);
 
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
@@ -627,6 +630,9 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		_commerceCatalogModelResourcePermission.check(
 			getPermissionChecker(), commerceCatalog, actionId);
 	}
+
+	@Reference
+	private CheckCPInstancesHelper _checkCPInstancesHelper;
 
 	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
