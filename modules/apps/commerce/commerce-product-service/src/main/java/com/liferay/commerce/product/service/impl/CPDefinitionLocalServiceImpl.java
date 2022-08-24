@@ -1642,12 +1642,7 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public boolean hasChildCPDefinitions(long cpDefinitionId) {
-		int count =
-			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
-				cpDefinitionId);
-
-		if ((count <= 0) ||
-			!_cpDefinitionOptionRelLocalService.
+		if (!_cpDefinitionOptionRelLocalService.
 				hasLinkedCPInstanceCPDefinitionOptionRels(cpDefinitionId)) {
 
 			return false;
