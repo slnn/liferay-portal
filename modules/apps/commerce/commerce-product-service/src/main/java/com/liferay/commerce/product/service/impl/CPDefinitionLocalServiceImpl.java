@@ -315,6 +315,12 @@ public class CPDefinitionLocalServiceImpl
 
 			_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, defaultSku);
 
+			if (isVersionable(cpDefinitionId)) {
+				CPDefinition newCPDefinition = copyCPDefinition(cpDefinitionId);
+
+				cpDefinitionId = newCPDefinition.getCPDefinitionId();
+			}
+
 			_cpInstanceLocalService.addCPInstance(
 				externalReferenceCode, cpDefinitionId, groupId, defaultSku,
 				null, null, published, null, cpDefinition.getWidth(),
