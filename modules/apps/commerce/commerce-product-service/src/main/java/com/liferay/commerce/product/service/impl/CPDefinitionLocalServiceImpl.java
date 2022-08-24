@@ -35,6 +35,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CheckCPAttachmentFileEntryHelper;
+import com.liferay.commerce.product.internal.helper.CheckCPInstancesHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionLinkHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionSpecificationOptionValueHelper;
@@ -2105,7 +2106,7 @@ public class CPDefinitionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_cpInstanceLocalService.checkCPInstances(
+		_checkCPInstancesHelper.checkCPInstances(
 			serviceContext.getUserId(), cpDefinitionId, ignoreSKUCombinations);
 
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
@@ -2396,7 +2397,7 @@ public class CPDefinitionLocalServiceImpl
 							cpDefinition.getModelClassName()),
 						cpDefinition.getCPDefinitionId());
 
-				_cpInstanceLocalService.checkCPInstancesByDisplayDate(
+				_checkCPInstancesHelper.checkCPInstancesByDisplayDate(
 					cpDefinition.getCPDefinitionId());
 			}
 		}
@@ -2857,6 +2858,9 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CheckCPAttachmentFileEntryHelper _checkCPAttachmentFileEntryHelper;
+
+	@Reference
+	private CheckCPInstancesHelper _checkCPInstancesHelper;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
