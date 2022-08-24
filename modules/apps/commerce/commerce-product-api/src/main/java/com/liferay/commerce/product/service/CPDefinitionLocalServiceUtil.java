@@ -717,10 +717,6 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getUrlTitleMapAsXML(cpDefinitionId);
 	}
 
-	public static boolean hasChildCPDefinitions(long cpDefinitionId) {
-		return getService().hasChildCPDefinitions(cpDefinitionId);
-	}
-
 	public static boolean isPublishedCPDefinition(CPDefinition cpDefinition) {
 		return getService().isPublishedCPDefinition(cpDefinition);
 	}

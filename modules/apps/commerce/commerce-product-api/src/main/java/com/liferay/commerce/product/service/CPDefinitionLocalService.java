@@ -549,9 +549,6 @@ public interface CPDefinitionLocalService
 	public String getUrlTitleMapAsXML(long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasChildCPDefinitions(long cpDefinitionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isPublishedCPDefinition(CPDefinition cpDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
