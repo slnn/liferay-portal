@@ -38,6 +38,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -235,7 +236,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			return cpInstance;
 		}
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
 		if (cpDefinition.isIgnoreSKUCombinations()) {
@@ -247,7 +248,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			if (!_cpInstanceOptionValueRelLocalService.
 					hasCPInstanceOptionValueRel(cpInstanceId)) {
 
-				cpInstance = cpInstanceLocalService.updateStatus(
+				cpInstance = _updateCPInstanceStatusHelper.updateStatus(
 					user.getUserId(), cpInstance.getCPInstanceId(),
 					WorkflowConstants.STATUS_INACTIVE);
 			}
@@ -1807,6 +1808,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
+
+	@Reference
+	private CPDefinitionPersistence _cpDefinitionPersistence;
 
 	@Reference
 	private CPInstanceOptionValueRelLocalService
