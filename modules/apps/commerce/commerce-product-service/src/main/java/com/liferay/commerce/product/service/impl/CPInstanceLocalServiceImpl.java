@@ -649,8 +649,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance deleteCPInstance(CPInstance cpInstance)
 		throws PortalException {
 
-		cpInstance = copyCPDefinitionAndPrepareCPInstance(cpInstance);
-
 		// Commerce product instance
 
 		cpInstancePersistence.remove(cpInstance);
@@ -685,7 +683,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		return cpInstanceLocalService.deleteCPInstance(cpInstance);
+		return cpInstanceLocalService.deleteCPInstance(
+			copyCPDefinitionAndPrepareCPInstance(cpInstance));
 	}
 
 	@Override
@@ -694,7 +693,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstancePersistence.findByCPDefinitionId(cpDefinitionId);
 
 		for (CPInstance cpInstance : cpInstances) {
-			cpInstanceLocalService.deleteCPInstance(cpInstance);
+			cpInstanceLocalService.deleteCPInstance(
+				copyCPDefinitionAndPrepareCPInstance(cpInstance));
 		}
 	}
 
