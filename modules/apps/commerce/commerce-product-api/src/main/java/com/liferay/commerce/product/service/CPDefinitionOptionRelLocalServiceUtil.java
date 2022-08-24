@@ -111,6 +111,14 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 			cpDefinitionId, cpOptionId, serviceContext);
 	}
 
+	public static CPDefinitionOptionRel copyAndPrepareCPDefinitionOptionRel(
+			CPDefinitionOptionRel cpDefinitionOptionRel)
+		throws PortalException {
+
+		return getService().copyAndPrepareCPDefinitionOptionRel(
+			cpDefinitionOptionRel);
+	}
+
 	/**
 	 * Creates a new cp definition option rel with the primary key. Does not add the cp definition option rel to the database.
 	 *
