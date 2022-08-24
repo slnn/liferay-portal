@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.internal.helper;
 
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
+import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -141,6 +143,28 @@ public class CheckCPInstancesHelper {
 				serviceContext.getUserId(), cpInstance.getCPInstanceId(),
 				WorkflowConstants.STATUS_EXPIRED);
 		}
+	}
+
+	public void validateSku(long cpDefinitionId, long cpInstanceId, String sku)
+		throws CPInstanceSkuException {
+
+		if (Validator.isNull(sku)) {
+			throw new CPInstanceSkuException(
+				"SKU value required for product definition ID " +
+					cpDefinitionId);
+		}
+
+		CPInstance cpInstance = _cpInstancePersistence.fetchByCPDI_SKU(
+			cpDefinitionId, sku);
+
+		if ((cpInstance == null) ||
+			(cpInstanceId == cpInstance.getCPInstanceId())) {
+
+			return;
+		}
+
+		throw new CPInstanceSkuException(
+			"Duplicate SKU value for product definition ID " + cpDefinitionId);
 	}
 
 	private void _expireApprovedSiblingMatchingCPInstances(
