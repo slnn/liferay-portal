@@ -581,9 +581,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (ignoreSKUCombinations) {
-			int cpInstancesCount =
-				cpInstanceLocalService.getCPDefinitionInstancesCount(
-					cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
+			int cpInstancesCount = cpInstancePersistence.countByC_ST(
+				cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
 
 			if (cpInstancesCount <= 1) {
 				return;
@@ -599,16 +598,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			return;
 		}
 
-		List<CPInstance> cpInstances =
-			cpInstanceLocalService.getCPDefinitionInstances(
-				cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<CPInstance> cpInstances = cpInstancePersistence.findByC_ST(
+			cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (CPInstance cpInstance : cpInstances) {
 			if (!_cpInstanceOptionValueRelLocalService.
 					hasCPInstanceOptionValueRel(cpInstance.getCPInstanceId())) {
 
-				cpInstanceLocalService.updateStatus(
+				_updateCPInstanceStatusHelper.updateStatus(
 					userId, cpInstance.getCPInstanceId(),
 					WorkflowConstants.STATUS_INACTIVE);
 			}
