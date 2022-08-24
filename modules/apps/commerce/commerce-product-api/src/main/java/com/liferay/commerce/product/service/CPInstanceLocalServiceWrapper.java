@@ -347,6 +347,15 @@ public class CPInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public void checkCPInstances(
+			long userId, long cpDefinitionId, boolean ignoreSKUCombinations)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpInstanceLocalService.checkCPInstances(
+			userId, cpDefinitionId, ignoreSKUCombinations);
+	}
+
+	@Override
 	public void checkCPInstancesByDisplayDate(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -339,6 +339,14 @@ public class CPInstanceLocalServiceUtil {
 		getService().checkCPInstances(cpDefinitionId);
 	}
 
+	public static void checkCPInstances(
+			long userId, long cpDefinitionId, boolean ignoreSKUCombinations)
+		throws PortalException {
+
+		getService().checkCPInstances(
+			userId, cpDefinitionId, ignoreSKUCombinations);
+	}
+
 	public static void checkCPInstancesByDisplayDate(long cpDefinitionId)
 		throws PortalException {
 

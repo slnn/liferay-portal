@@ -29,7 +29,6 @@ import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
-import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
@@ -2106,7 +2105,7 @@ public class CPDefinitionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		checkCPInstances(
+		_cpInstanceLocalService.checkCPInstances(
 			serviceContext.getUserId(), cpDefinitionId, ignoreSKUCombinations);
 
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
@@ -2429,46 +2428,6 @@ public class CPDefinitionLocalServiceImpl
 					userId, cpDefinition.getCPDefinitionId(),
 					WorkflowConstants.STATUS_EXPIRED, serviceContext,
 					new HashMap<String, Serializable>());
-			}
-		}
-	}
-
-	protected void checkCPInstances(
-			long userId, long cpDefinitionId, boolean ignoreSKUCombinations)
-		throws PortalException {
-
-		if (ignoreSKUCombinations) {
-			int cpInstancesCount =
-				_cpInstanceLocalService.getCPDefinitionInstancesCount(
-					cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
-
-			if (cpInstancesCount <= 1) {
-				return;
-			}
-
-			throw new CPDefinitionIgnoreSKUCombinationsException();
-		}
-
-		int cpDefinitionOptionRelsCount =
-			_cpDefinitionOptionRelPersistence.countByC_SC(
-				cpDefinitionId, true);
-
-		if (cpDefinitionOptionRelsCount == 0) {
-			return;
-		}
-
-		List<CPInstance> cpInstances =
-			_cpInstanceLocalService.getCPDefinitionInstances(
-				cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		for (CPInstance cpInstance : cpInstances) {
-			if (!_cpInstanceOptionValueRelLocalService.
-					hasCPInstanceOptionValueRel(cpInstance.getCPInstanceId())) {
-
-				_cpInstanceLocalService.updateStatus(
-					userId, cpInstance.getCPInstanceId(),
-					WorkflowConstants.STATUS_INACTIVE);
 			}
 		}
 	}

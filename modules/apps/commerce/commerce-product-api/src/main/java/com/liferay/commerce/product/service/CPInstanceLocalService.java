@@ -257,6 +257,10 @@ public interface CPInstanceLocalService
 
 	public void checkCPInstances(long cpDefinitionId) throws PortalException;
 
+	public void checkCPInstances(
+			long userId, long cpDefinitionId, boolean ignoreSKUCombinations)
+		throws PortalException;
+
 	public void checkCPInstancesByDisplayDate(long cpDefinitionId)
 		throws PortalException;
 
