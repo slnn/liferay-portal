@@ -20,7 +20,6 @@ import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException;
 import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException;
-import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
@@ -134,7 +133,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validateSku(cpDefinitionId, 0, sku);
+		_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, sku);
 
 		// Commerce product instance
 
@@ -1018,7 +1017,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		_validateSku(cpInstance.getCPDefinitionId(), cpInstanceId, sku);
+		_checkCPInstancesHelper.validateSku(
+			cpInstance.getCPDefinitionId(), cpInstanceId, sku);
 
 		_validateReplacementCPInstance(
 			cpInstance, replacementCPInstanceUuid, replacementCProductId);
@@ -1774,29 +1774,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		_checkReplacementCPInstance(
 			cpInstance.getCPInstanceUuid(), cpDefinition.getCProductId(),
 			replacementCPInstanceUuid, replacementCProductId);
-	}
-
-	private void _validateSku(
-			long cpDefinitionId, long cpInstanceId, String sku)
-		throws CPInstanceSkuException {
-
-		if (Validator.isNull(sku)) {
-			throw new CPInstanceSkuException(
-				"SKU value required for product definition ID " +
-					cpDefinitionId);
-		}
-
-		CPInstance cpInstance = cpInstancePersistence.fetchByCPDI_SKU(
-			cpDefinitionId, sku);
-
-		if ((cpInstance == null) ||
-			(cpInstanceId == cpInstance.getCPInstanceId())) {
-
-			return;
-		}
-
-		throw new CPInstanceSkuException(
-			"Duplicate SKU value for product definition ID " + cpDefinitionId);
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {
