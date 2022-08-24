@@ -565,7 +565,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public boolean hasChildCPDefinitions(long cpDefinitionId) {
-		return _cpDefinitionLocalService.hasChildCPDefinitions(cpDefinitionId);
+		return _cpDefinitionOptionRelLocalService.
+			hasLinkedCPInstanceCPDefinitionOptionRels(cpDefinitionId);
 	}
 
 	@Override

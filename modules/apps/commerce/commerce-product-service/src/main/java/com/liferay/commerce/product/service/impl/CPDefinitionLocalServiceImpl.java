@@ -1641,17 +1641,6 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public boolean hasChildCPDefinitions(long cpDefinitionId) {
-		if (!_cpDefinitionOptionRelLocalService.
-				hasLinkedCPInstanceCPDefinitionOptionRels(cpDefinitionId)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public boolean isPublishedCPDefinition(CPDefinition cpDefinition) {
 		CProduct cProduct = _cProductPersistence.fetchByPrimaryKey(
 			cpDefinition.getCProductId());
