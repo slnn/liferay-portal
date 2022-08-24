@@ -1648,7 +1648,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				continue;
 			}
 
-			cpInstanceLocalService.updateStatus(
+			_updateCPInstanceStatusHelper.updateStatus(
 				serviceContext.getUserId(), curCPInstance.getCPInstanceId(),
 				WorkflowConstants.STATUS_EXPIRED);
 		}
@@ -1722,7 +1722,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				continue;
 			}
 
-			cpInstanceLocalService.updateStatus(
+			_updateCPInstanceStatusHelper.updateStatus(
 				serviceContext.getUserId(), curCPInstance.getCPInstanceId(),
 				WorkflowConstants.STATUS_INACTIVE);
 		}
