@@ -160,13 +160,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		CPInstance cpInstance = cpInstancePersistence.create(cpInstanceId);
 
-		if (_cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
-			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
-
-			cpDefinitionId = newCPDefinition.getCPDefinitionId();
-		}
-
 		cpInstance.setExternalReferenceCode(externalReferenceCode);
 		cpInstance.setGroupId(groupId);
 		cpInstance.setCompanyId(user.getCompanyId());
@@ -307,6 +300,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws PortalException {
 
 		_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, sku);
+
+		if (_cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
+
+			cpDefinitionId = newCPDefinition.getCPDefinitionId();
+		}
 
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
@@ -469,6 +469,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, sku);
+
+		if (_cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
+
+			cpDefinitionId = newCPDefinition.getCPDefinitionId();
+		}
 
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,

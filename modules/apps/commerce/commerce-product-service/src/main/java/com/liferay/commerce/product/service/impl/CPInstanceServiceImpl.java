@@ -162,6 +162,13 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, sku);
 
+		if (_cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
+			CPDefinition newCPDefinition =
+				_cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
+
+			cpDefinitionId = newCPDefinition.getCPDefinitionId();
+		}
+
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable,
