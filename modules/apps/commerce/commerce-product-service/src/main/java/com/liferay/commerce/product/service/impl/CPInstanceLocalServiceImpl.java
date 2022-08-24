@@ -265,8 +265,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		// Workflow
 
 		if (cpInstance.getStatus() == WorkflowConstants.STATUS_DRAFT) {
-			cpInstance = startWorkflowInstance(
-				user.getUserId(), cpInstance, serviceContext);
+			cpInstance = WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				cpInstance.getCompanyId(), cpInstance.getGroupId(),
+				user.getUserId(), CPInstance.class.getName(),
+				cpInstance.getCPInstanceId(), cpInstance, serviceContext,
+				new HashMap<>());
 		}
 
 		return cpInstance;
@@ -1127,8 +1130,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		if ((cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) ||
 			_isWorkflowActionPublish(serviceContext)) {
 
-			cpInstance = startWorkflowInstance(
-				user.getUserId(), cpInstance, serviceContext);
+			cpInstance = WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				cpInstance.getCompanyId(), cpInstance.getGroupId(),
+				user.getUserId(), CPInstance.class.getName(),
+				cpInstance.getCPInstanceId(), cpInstance, serviceContext,
+				new HashMap<>());
 		}
 
 		return cpInstance;
@@ -1589,16 +1595,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return cpInstances;
-	}
-
-	protected CPInstance startWorkflowInstance(
-			long userId, CPInstance cpInstance, ServiceContext serviceContext)
-		throws PortalException {
-
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			cpInstance.getCompanyId(), cpInstance.getGroupId(), userId,
-			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
-			cpInstance, serviceContext, new HashMap<>());
 	}
 
 	private void _checkReplacementCPInstance(
