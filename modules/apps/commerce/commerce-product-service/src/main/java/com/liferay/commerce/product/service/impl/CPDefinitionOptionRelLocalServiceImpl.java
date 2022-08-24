@@ -809,15 +809,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		int cpDefinitionOptionRelsCount =
 			cpDefinitionOptionRelPersistence.countByC_SC(cpDefintionId, true);
 
-		if (cpDefinitionOptionRelsCount > 0) {
-			_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-				cpDefintionId, false, serviceContext);
-
-			return;
-		}
-
 		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefintionId, true, serviceContext);
+			cpDefintionId, cpDefinitionOptionRelsCount <= 0, serviceContext);
 	}
 
 	private void _updateCPDefinitionOptionValueRels(
