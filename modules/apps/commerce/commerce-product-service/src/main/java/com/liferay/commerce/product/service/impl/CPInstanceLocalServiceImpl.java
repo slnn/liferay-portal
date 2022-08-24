@@ -1595,12 +1595,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long userId, CPInstance cpInstance, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			cpInstance.getCompanyId(), cpInstance.getGroupId(), userId,
 			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
-			cpInstance, serviceContext, workflowContext);
+			cpInstance, serviceContext, new HashMap<>());
 	}
 
 	private void _checkReplacementCPInstance(
