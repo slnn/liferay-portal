@@ -802,26 +802,14 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
 	}
 
-	private boolean _hasCPDefinitionSKUContributorCPDefinitionOptionRel(
-		long cpDefinitionId) {
-
-		int cpDefinitionOptionRelsCount =
-			cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
-
-		if (cpDefinitionOptionRelsCount > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private void _updateCPDefinitionIgnoreSKUCombinations(
 			long cpDefintionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (_hasCPDefinitionSKUContributorCPDefinitionOptionRel(
-				cpDefintionId)) {
+		int cpDefinitionOptionRelsCount =
+			cpDefinitionOptionRelPersistence.countByC_SC(cpDefintionId, true);
 
+		if (cpDefinitionOptionRelsCount > 0) {
 			_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
 				cpDefintionId, false, serviceContext);
 
