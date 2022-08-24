@@ -204,7 +204,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			user.getUserId(), cpDefinitionId);
 
 		_updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionId, serviceContext);
+			cpDefinitionId,
+			cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true),
+			serviceContext);
 
 		// Commerce product definition
 
@@ -276,7 +278,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
 		_updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionOptionRel.getCPDefinitionId(), new ServiceContext());
+			cpDefinitionOptionRel.getCPDefinitionId(),
+			cpDefinitionOptionRelPersistence.countByC_SC(
+				cpDefinitionOptionRel.getCPDefinitionId(), true),
+			new ServiceContext());
 
 		// Commerce product definition
 
@@ -675,7 +680,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRel.getCPDefinitionId());
 
 		_updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionOptionRel.getCPDefinitionId(), serviceContext);
+			cpDefinitionOptionRel.getCPDefinitionId(),
+			cpDefinitionOptionRelPersistence.countByC_SC(
+				cpDefinitionOptionRel.getCPDefinitionId(), true),
+			serviceContext);
 
 		// Commerce product definition
 
@@ -803,11 +811,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	private void _updateCPDefinitionIgnoreSKUCombinations(
-			long cpDefintionId, ServiceContext serviceContext)
+			long cpDefintionId, int cpDefinitionOptionRelsCount,
+			ServiceContext serviceContext)
 		throws PortalException {
-
-		int cpDefinitionOptionRelsCount =
-			cpDefinitionOptionRelPersistence.countByC_SC(cpDefintionId, true);
 
 		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
 			cpDefintionId, cpDefinitionOptionRelsCount <= 0, serviceContext);
