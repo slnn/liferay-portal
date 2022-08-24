@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.constants.CommercePriceConstants;
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException;
@@ -573,6 +574,45 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public void checkCPInstances(long cpDefinitionId) throws PortalException {
 		checkCPInstancesByDisplayDate(cpDefinitionId);
 		checkCPInstancesByExpirationDate();
+	}
+
+	public void checkCPInstances(
+			long userId, long cpDefinitionId, boolean ignoreSKUCombinations)
+		throws PortalException {
+
+		if (ignoreSKUCombinations) {
+			int cpInstancesCount =
+				cpInstanceLocalService.getCPDefinitionInstancesCount(
+					cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
+
+			if (cpInstancesCount <= 1) {
+				return;
+			}
+
+			throw new CPDefinitionIgnoreSKUCombinationsException();
+		}
+
+		int cpDefinitionOptionRelsCount =
+			_cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
+
+		if (cpDefinitionOptionRelsCount == 0) {
+			return;
+		}
+
+		List<CPInstance> cpInstances =
+			cpInstanceLocalService.getCPDefinitionInstances(
+				cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (CPInstance cpInstance : cpInstances) {
+			if (!_cpInstanceOptionValueRelLocalService.
+					hasCPInstanceOptionValueRel(cpInstance.getCPInstanceId())) {
+
+				cpInstanceLocalService.updateStatus(
+					userId, cpInstance.getCPInstanceId(),
+					WorkflowConstants.STATUS_INACTIVE);
+			}
+		}
 	}
 
 	@Override
