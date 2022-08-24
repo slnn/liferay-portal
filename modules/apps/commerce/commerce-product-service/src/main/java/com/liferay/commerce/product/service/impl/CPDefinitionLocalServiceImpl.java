@@ -2450,7 +2450,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		int cpDefinitionOptionRelsCount =
-			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
+			_cpDefinitionOptionRelPersistence.countByC_SC(
 				cpDefinitionId, true);
 
 		if (cpDefinitionOptionRelsCount == 0) {
