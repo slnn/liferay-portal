@@ -39,6 +39,7 @@ import com.liferay.commerce.product.internal.helper.CheckCPAttachmentFileEntryHe
 import com.liferay.commerce.product.internal.helper.DeleteCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionLinkHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionSpecificationOptionValueHelper;
+import com.liferay.commerce.product.internal.helper.DeleteCPInstanceHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
@@ -1029,8 +1030,22 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product instances
 
-		_cpInstanceLocalService.deleteCPInstances(
-			cpDefinition.getCPDefinitionId());
+		List<CPInstance> cpInstances =
+			_cpInstancePersistence.findByCPDefinitionId(
+				cpDefinition.getCPDefinitionId());
+
+		for (CPInstance cpInstance : cpInstances) {
+			if (isVersionable(cpInstance.getCPDefinitionId())) {
+				CPDefinition newCPDefinition = copyCPDefinition(
+					cpInstance.getCPDefinitionId());
+
+				cpInstance = _cpInstancePersistence.findByC_C(
+					newCPDefinition.getCPDefinitionId(),
+					cpInstance.getCPInstanceUuid());
+			}
+
+			_deleteCPInstanceHelper.deleteCPInstance(cpInstance);
+		}
 
 		// Commerce product definition option rels
 
@@ -2963,6 +2978,9 @@ public class CPDefinitionLocalServiceImpl
 	@Reference
 	private DeleteCPDefinitionSpecificationOptionValueHelper
 		_deleteCPDefinitionSpecificationOptionValueHelper;
+
+	@Reference
+	private DeleteCPInstanceHelper _deleteCPInstanceHelper;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;

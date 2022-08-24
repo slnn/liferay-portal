@@ -25,7 +25,7 @@ import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelCPDefinitionOptionValueRelHelper;
-import com.liferay.commerce.product.internal.helper.CPInstanceCPDefinitionOptionValueRelHelper;
+import com.liferay.commerce.product.internal.helper.DeleteCPInstanceHelper;
 import com.liferay.commerce.product.internal.helper.InactiveCPInstanceHelper;
 import com.liferay.commerce.product.internal.helper.UpdateCPInstanceStatusHelper;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
@@ -39,9 +39,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
-import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -67,7 +65,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -649,31 +646,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance deleteCPInstance(CPInstance cpInstance)
 		throws PortalException {
 
-		// Commerce product instance
-
-		cpInstancePersistence.remove(cpInstance);
-
-		_cpInstanceOptionValueRelPersistence.removeByCPInstanceId(
-			cpInstance.getCPInstanceId());
-
-		_cpInstanceCPDefinitionOptionValueRelHelper.
-			resetCPInstanceCPDefinitionOptionValueRels(
-				cpInstance.getCPInstanceUuid());
-
-		// Expando
-
-		_expandoRowLocalService.deleteRows(cpInstance.getCPInstanceId());
-
-		// Workflow
-
-		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-			cpInstance.getCompanyId(), cpInstance.getGroupId(),
-			CPInstance.class.getName(), cpInstance.getCPInstanceId());
-
-		_cpDefinitionIndexHelper.reindexCPDefinition(
-			cpInstance.getCPDefinitionId());
-
-		return cpInstance;
+		return _deleteCPInstanceHelper.deleteCPInstance(cpInstance);
 	}
 
 	@Override
@@ -1933,22 +1906,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
 
 	@Reference
-	private CPInstanceCPDefinitionOptionValueRelHelper
-		_cpInstanceCPDefinitionOptionValueRelHelper;
-
-	@Reference
 	private CPInstanceOptionValueRelLocalService
 		_cpInstanceOptionValueRelLocalService;
-
-	@Reference
-	private CPInstanceOptionValueRelPersistence
-		_cpInstanceOptionValueRelPersistence;
 
 	@Reference
 	private CProductPersistence _cProductPersistence;
 
 	@Reference
-	private ExpandoRowLocalService _expandoRowLocalService;
+	private DeleteCPInstanceHelper _deleteCPInstanceHelper;
 
 	@Reference
 	private InactiveCPInstanceHelper _inactiveCPInstanceHelper;
@@ -1964,8 +1929,5 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }
