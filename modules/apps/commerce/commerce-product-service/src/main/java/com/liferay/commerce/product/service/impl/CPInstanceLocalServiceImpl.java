@@ -16,7 +16,6 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.constants.CommercePriceConstants;
 import com.liferay.commerce.product.constants.CPField;
-import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException;
@@ -26,6 +25,7 @@ import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelCPDefinitionOptionValueRelHelper;
+import com.liferay.commerce.product.internal.helper.CheckCPInstancesHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPInstanceHelper;
 import com.liferay.commerce.product.internal.helper.InactiveCPInstanceHelper;
 import com.liferay.commerce.product.internal.helper.UpdateCPInstanceStatusHelper;
@@ -34,13 +34,11 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
-import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -251,7 +249,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpDefinitionId);
 
 		if (cpDefinition.isIgnoreSKUCombinations()) {
-			_expireApprovedSiblingCPInstances(
+			_checkCPInstancesHelper.expireApprovedSiblingCPInstances(
 				cpDefinition.getCPDefinitionId(), cpInstance.getCPInstanceId(),
 				serviceContext);
 		}
@@ -576,88 +574,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		checkCPInstancesByExpirationDate();
 	}
 
-	public void checkCPInstances(
-			long userId, long cpDefinitionId, boolean ignoreSKUCombinations)
-		throws PortalException {
-
-		if (ignoreSKUCombinations) {
-			int cpInstancesCount = cpInstancePersistence.countByC_ST(
-				cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
-
-			if (cpInstancesCount <= 1) {
-				return;
-			}
-
-			throw new CPDefinitionIgnoreSKUCombinationsException();
-		}
-
-		int cpDefinitionOptionRelsCount =
-			_cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
-
-		if (cpDefinitionOptionRelsCount == 0) {
-			return;
-		}
-
-		List<CPInstance> cpInstances = cpInstancePersistence.findByC_ST(
-			cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		for (CPInstance cpInstance : cpInstances) {
-			if (!_cpInstanceOptionValueRelLocalService.
-					hasCPInstanceOptionValueRel(cpInstance.getCPInstanceId())) {
-
-				_updateCPInstanceStatusHelper.updateStatus(
-					userId, cpInstance.getCPInstanceId(),
-					WorkflowConstants.STATUS_INACTIVE);
-			}
-		}
-	}
-
 	@Override
 	public void checkCPInstancesByDisplayDate(long cpDefinitionId)
 		throws PortalException {
 
-		List<CPInstance> cpInstances = null;
-
-		if (cpDefinitionId > 0) {
-			cpInstances = cpInstancePersistence.findByC_LtD_S(
-				cpDefinitionId, new Date(), WorkflowConstants.STATUS_SCHEDULED);
-		}
-		else {
-			cpInstances = cpInstancePersistence.findByLtD_S(
-				new Date(), WorkflowConstants.STATUS_SCHEDULED);
-		}
-
-		for (CPInstance cpInstance : cpInstances) {
-			long userId = _portal.getValidUserId(
-				cpInstance.getCompanyId(), cpInstance.getUserId());
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCommand(Constants.UPDATE);
-			serviceContext.setScopeGroupId(cpInstance.getGroupId());
-			serviceContext.setUserId(userId);
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-			CPDefinition cpDefinition =
-				_cpDefinitionPersistence.findByPrimaryKey(
-					cpInstance.getCPDefinitionId());
-
-			if (cpDefinition.isIgnoreSKUCombinations()) {
-				_expireApprovedSiblingCPInstances(
-					cpInstance.getCPDefinitionId(),
-					cpInstance.getCPInstanceId(), serviceContext);
-			}
-			else {
-				_expireApprovedSiblingMatchingCPInstances(
-					cpInstance.getCPDefinitionId(),
-					cpInstance.getCPInstanceId(), serviceContext);
-			}
-
-			_updateCPInstanceStatusHelper.updateStatus(
-				userId, cpInstance.getCPInstanceId(),
-				WorkflowConstants.STATUS_APPROVED);
-		}
+		_checkCPInstancesHelper.checkCPInstancesByDisplayDate(cpDefinitionId);
 	}
 
 	public CPInstance copyCPDefinitionAndPrepareCPInstance(
@@ -1175,7 +1096,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.getCPDefinitionId());
 
 		if (cpDefinition.isIgnoreSKUCombinations()) {
-			_expireApprovedSiblingCPInstances(
+			_checkCPInstancesHelper.expireApprovedSiblingCPInstances(
 				cpDefinition.getCPDefinitionId(), cpInstanceId, serviceContext);
 		}
 		else {
@@ -1698,52 +1619,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			replacementCPInstance.getReplacementCProductId());
 	}
 
-	private void _expireApprovedSiblingCPInstances(
-			long cpDefinitionId, long siblingCPInstanceId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		List<CPInstance> cpInstances = cpInstancePersistence.findByC_ST(
-			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
-
-		for (CPInstance cpInstance : cpInstances) {
-			if (cpInstance.getCPInstanceId() == siblingCPInstanceId) {
-				continue;
-			}
-
-			_updateCPInstanceStatusHelper.updateStatus(
-				serviceContext.getUserId(), cpInstance.getCPInstanceId(),
-				WorkflowConstants.STATUS_EXPIRED);
-		}
-	}
-
-	private void _expireApprovedSiblingMatchingCPInstances(
-			long cpDefinitionId, long cpInstanceId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		List<CPInstance> cpInstances = cpInstancePersistence.findByC_ST(
-			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
-
-		List<CPInstanceOptionValueRel> cpInstanceCPInstanceOptionValueRels =
-			_cpInstanceOptionValueRelLocalService.
-				getCPInstanceCPInstanceOptionValueRels(cpInstanceId);
-
-		for (CPInstance curCPInstance : cpInstances) {
-			if (!_cpInstanceOptionValueRelLocalService.
-					matchesCPInstanceOptionValueRels(
-						curCPInstance.getCPInstanceId(),
-						cpInstanceCPInstanceOptionValueRels)) {
-
-				continue;
-			}
-
-			_updateCPInstanceStatusHelper.updateStatus(
-				serviceContext.getUserId(), curCPInstance.getCPInstanceId(),
-				WorkflowConstants.STATUS_EXPIRED);
-		}
-	}
-
 	private void _expireApprovedSiblingMatchingCPInstances(
 			long cpDefinitionId,
 			Map<Long, List<Long>>
@@ -1932,6 +1807,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstanceLocalServiceImpl.class);
 
 	@Reference
+	private CheckCPInstancesHelper _checkCPInstancesHelper;
+
+	@Reference
 	private CPDefinitionIndexHelper _cpDefinitionIndexHelper;
 
 	@Reference
@@ -1943,9 +1821,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
-
-	@Reference
-	private CPDefinitionPersistence _cpDefinitionPersistence;
 
 	@Reference
 	private CPInstanceOptionValueRelLocalService
