@@ -251,9 +251,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
-		cpDefinitionOptionRel = copyAndPrepareCPDefinitionOptionRel(
-			cpDefinitionOptionRel);
-
 		// Commerce product definition option value rels
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
@@ -281,27 +278,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
-		// Commerce product instances
-
-		_inactiveCPInstanceHelper.inactivateCPDefinitionOptionRelCPInstances(
-			PrincipalThreadLocal.getUserId(),
-			cpDefinitionOptionRel.getCPDefinitionId(),
-			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-
-		int cpDefinitionOptionRelsCount =
-			cpDefinitionOptionRelPersistence.countByC_SC(
-				cpDefinitionOptionRel.getCPDefinitionId(), true);
-
-		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionOptionRel.getCPDefinitionId(),
-			cpDefinitionOptionRelsCount <= 0, new ServiceContext());
-
-		// Commerce product definition
-
-		_cpDefinitionIndexHelper.reindexCPDefinition(
-			cpDefinitionOptionRel.getCPDefinitionId());
-
-		return cpDefinitionOptionRel;
+		return processCPDefinitionAndCPInstanceAfterDeleteCPDefinitionOptionRel(
+			cpDefinitionOptionRel);
 	}
 
 	@Override
@@ -314,7 +292,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRelId);
 
 		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
-			cpDefinitionOptionRel);
+			copyAndPrepareCPDefinitionOptionRel(cpDefinitionOptionRel));
 	}
 
 	@Override
@@ -329,7 +307,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRels) {
 
 			cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
-				cpDefinitionOptionRel);
+				copyAndPrepareCPDefinitionOptionRel(cpDefinitionOptionRel));
 		}
 	}
 
@@ -555,6 +533,34 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	public CPDefinitionOptionRel
+			processCPDefinitionAndCPInstanceAfterDeleteCPDefinitionOptionRel(
+				CPDefinitionOptionRel cpDefinitionOptionRel)
+		throws PortalException {
+
+		// Commerce product instances
+
+		_inactiveCPInstanceHelper.inactivateCPDefinitionOptionRelCPInstances(
+			PrincipalThreadLocal.getUserId(),
+			cpDefinitionOptionRel.getCPDefinitionId(),
+			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		int cpDefinitionOptionRelsCount =
+			cpDefinitionOptionRelPersistence.countByC_SC(
+				cpDefinitionOptionRel.getCPDefinitionId(), true);
+
+		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinitionOptionRel.getCPDefinitionId(),
+			cpDefinitionOptionRelsCount <= 0, new ServiceContext());
+
+		// Commerce product definition
+
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinitionOptionRel.getCPDefinitionId());
+
+		return cpDefinitionOptionRel;
 	}
 
 	@Override

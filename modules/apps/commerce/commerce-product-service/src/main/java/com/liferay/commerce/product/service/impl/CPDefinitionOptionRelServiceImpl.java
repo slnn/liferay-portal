@@ -112,7 +112,8 @@ public class CPDefinitionOptionRelServiceImpl
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
-			cpDefinitionOptionRel);
+			cpDefinitionOptionRelLocalService.
+				copyAndPrepareCPDefinitionOptionRel(cpDefinitionOptionRel));
 	}
 
 	@Override
