@@ -133,8 +133,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, sku);
-
 		// Commerce product instance
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
@@ -308,6 +306,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, sku);
+
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable,
@@ -467,6 +467,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					discontinuedDateYear, serviceContext);
 			}
 		}
+
+		_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, sku);
 
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,

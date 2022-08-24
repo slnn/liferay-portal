@@ -313,6 +313,8 @@ public class CPDefinitionLocalServiceImpl
 			cpInstanceServiceContext.setScopeGroupId(groupId);
 			cpInstanceServiceContext.setUserId(userId);
 
+			_checkCPInstancesHelper.validateSku(cpDefinitionId, 0, defaultSku);
+
 			_cpInstanceLocalService.addCPInstance(
 				externalReferenceCode, cpDefinitionId, groupId, defaultSku,
 				null, null, published, null, cpDefinition.getWidth(),
