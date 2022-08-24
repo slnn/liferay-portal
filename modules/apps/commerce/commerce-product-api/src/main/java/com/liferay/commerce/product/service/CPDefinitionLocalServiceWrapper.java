@@ -805,11 +805,6 @@ public class CPDefinitionLocalServiceWrapper
 	}
 
 	@Override
-	public boolean hasChildCPDefinitions(long cpDefinitionId) {
-		return _cpDefinitionLocalService.hasChildCPDefinitions(cpDefinitionId);
-	}
-
-	@Override
 	public boolean isPublishedCPDefinition(CPDefinition cpDefinition) {
 		return _cpDefinitionLocalService.isPublishedCPDefinition(cpDefinition);
 	}
