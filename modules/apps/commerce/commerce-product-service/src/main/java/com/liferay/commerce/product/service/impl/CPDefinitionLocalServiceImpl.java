@@ -33,6 +33,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
+import com.liferay.commerce.product.internal.helper.AddCPInstanceHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CheckCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.internal.helper.CheckCPInstancesHelper;
@@ -55,7 +56,6 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
@@ -321,7 +321,7 @@ public class CPDefinitionLocalServiceImpl
 				cpDefinitionId = newCPDefinition.getCPDefinitionId();
 			}
 
-			_cpInstanceLocalService.addCPInstance(
+			_addCPInstanceHelper.addCPInstance(
 				externalReferenceCode, cpDefinitionId, groupId, defaultSku,
 				null, null, published, null, cpDefinition.getWidth(),
 				cpDefinition.getHeight(), cpDefinition.getDepth(),
@@ -2859,6 +2859,9 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinitionLocalServiceImpl.class);
 
 	@Reference
+	private AddCPInstanceHelper _addCPInstanceHelper;
+
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
@@ -2912,9 +2915,6 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CPDisplayLayoutPersistence _cpDisplayLayoutPersistence;
-
-	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CPInstanceOptionValueRelLocalService
