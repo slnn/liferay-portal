@@ -203,10 +203,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		_inactiveCPInstanceHelper.inactivateIncompatibleCPInstances(
 			user.getUserId(), cpDefinitionId);
 
-		_updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionId,
-			cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true),
-			serviceContext);
+		int cpDefinitionOptionRelsCount =
+			cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
+
+		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinitionId, cpDefinitionOptionRelsCount <= 0, serviceContext);
 
 		// Commerce product definition
 
@@ -277,11 +278,13 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRel.getCPDefinitionId(),
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
-		_updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionOptionRel.getCPDefinitionId(),
+		int cpDefinitionOptionRelsCount =
 			cpDefinitionOptionRelPersistence.countByC_SC(
-				cpDefinitionOptionRel.getCPDefinitionId(), true),
-			new ServiceContext());
+				cpDefinitionOptionRel.getCPDefinitionId(), true);
+
+		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinitionOptionRel.getCPDefinitionId(),
+			cpDefinitionOptionRelsCount <= 0, new ServiceContext());
 
 		// Commerce product definition
 
@@ -679,11 +682,13 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			serviceContext.getUserId(),
 			cpDefinitionOptionRel.getCPDefinitionId());
 
-		_updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionOptionRel.getCPDefinitionId(),
+		int cpDefinitionOptionRelsCount =
 			cpDefinitionOptionRelPersistence.countByC_SC(
-				cpDefinitionOptionRel.getCPDefinitionId(), true),
-			serviceContext);
+				cpDefinitionOptionRel.getCPDefinitionId(), true);
+
+		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinitionOptionRel.getCPDefinitionId(),
+			cpDefinitionOptionRelsCount <= 0, serviceContext);
 
 		// Commerce product definition
 
@@ -808,15 +813,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return _configurationProvider.getConfiguration(
 			CPOptionConfiguration.class,
 			new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
-	}
-
-	private void _updateCPDefinitionIgnoreSKUCombinations(
-			long cpDefintionId, int cpDefinitionOptionRelsCount,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefintionId, cpDefinitionOptionRelsCount <= 0, serviceContext);
 	}
 
 	private void _updateCPDefinitionOptionValueRels(
