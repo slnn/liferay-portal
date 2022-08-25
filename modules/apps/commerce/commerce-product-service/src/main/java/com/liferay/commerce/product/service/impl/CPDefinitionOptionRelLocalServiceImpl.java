@@ -252,9 +252,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
-		cpDefinitionOptionRel = copyCPDefinitionAndPrepareCPDefinitionOptionRel(
-			cpDefinitionOptionRel);
-
 		// Commerce product definition option value rels
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
@@ -315,7 +312,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRelId);
 
 		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
-			cpDefinitionOptionRel);
+			copyCPDefinitionAndPrepareCPDefinitionOptionRel(
+				cpDefinitionOptionRel));
 	}
 
 	@Override
@@ -330,7 +328,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRels) {
 
 			cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
-				cpDefinitionOptionRel);
+				copyCPDefinitionAndPrepareCPDefinitionOptionRel(
+					cpDefinitionOptionRel));
 		}
 	}
 
