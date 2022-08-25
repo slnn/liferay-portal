@@ -266,9 +266,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
-		_cpDefinitionLocalService.processCPInstanceAndCPDefinition(
-			cpDefinitionOptionRel);
-
 		return cpDefinitionOptionRel;
 	}
 
@@ -281,9 +278,15 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionRelId);
 
-		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
-			copyCPDefinitionAndPrepareCPDefinitionOptionRel(
-				cpDefinitionOptionRel));
+		cpDefinitionOptionRel =
+			cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+				copyCPDefinitionAndPrepareCPDefinitionOptionRel(
+					cpDefinitionOptionRel));
+
+		_cpDefinitionLocalService.processCPInstanceAndCPDefinition(
+			cpDefinitionOptionRel);
+
+		return cpDefinitionOptionRel;
 	}
 
 	@Override
@@ -300,6 +303,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
 				copyCPDefinitionAndPrepareCPDefinitionOptionRel(
 					cpDefinitionOptionRel));
+
+			_cpDefinitionLocalService.processCPInstanceAndCPDefinition(
+				cpDefinitionOptionRel);
 		}
 	}
 

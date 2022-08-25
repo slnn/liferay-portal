@@ -115,6 +115,9 @@ public class CPDefinitionOptionRelServiceImpl
 			cpDefinitionOptionRelLocalService.
 				copyCPDefinitionAndPrepareCPDefinitionOptionRel(
 					cpDefinitionOptionRel));
+
+		_cpDefinitionLocalService.processCPInstanceAndCPDefinition(
+			cpDefinitionOptionRel);
 	}
 
 	@Override
