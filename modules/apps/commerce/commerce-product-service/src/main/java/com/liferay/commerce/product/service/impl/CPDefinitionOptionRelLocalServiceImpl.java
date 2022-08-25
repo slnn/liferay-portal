@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
@@ -198,20 +197,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 					cpDefinitionOptionRelId, serviceContext);
 		}
 
-		// Commerce product instances
-
-		_inactiveCPInstanceHelper.inactivateIncompatibleCPInstances(
-			user.getUserId(), cpDefinitionId);
-
-		int cpDefinitionOptionRelsCount =
-			cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
-
-		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionId, cpDefinitionOptionRelsCount <= 0, serviceContext);
-
-		// Commerce product definition
-
-		_cpDefinitionIndexHelper.reindexCPDefinition(cpDefinitionId);
+		_cpDefinitionLocalService.processCPInstanceAndCPDefinition(
+			cpDefinitionOptionRel);
 
 		return cpDefinitionOptionRel;
 	}
@@ -279,25 +266,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
-		// Commerce product instances
-
-		_inactiveCPInstanceHelper.inactivateCPDefinitionOptionRelCPInstances(
-			PrincipalThreadLocal.getUserId(),
-			cpDefinitionOptionRel.getCPDefinitionId(),
-			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-
-		int cpDefinitionOptionRelsCount =
-			cpDefinitionOptionRelPersistence.countByC_SC(
-				cpDefinitionOptionRel.getCPDefinitionId(), true);
-
-		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionOptionRel.getCPDefinitionId(),
-			cpDefinitionOptionRelsCount <= 0, new ServiceContext());
-
-		// Commerce product definition
-
-		_cpDefinitionIndexHelper.reindexCPDefinition(
-			cpDefinitionOptionRel.getCPDefinitionId());
+		_cpDefinitionLocalService.processCPInstanceAndCPDefinition(
+			cpDefinitionOptionRel);
 
 		return cpDefinitionOptionRel;
 	}

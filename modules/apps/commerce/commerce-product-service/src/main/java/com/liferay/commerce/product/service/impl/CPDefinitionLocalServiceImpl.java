@@ -41,6 +41,7 @@ import com.liferay.commerce.product.internal.helper.DeleteCPAttachmentFileEntryH
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionLinkHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionSpecificationOptionValueHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPInstanceHelper;
+import com.liferay.commerce.product.internal.helper.InactiveCPInstanceHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
@@ -109,6 +110,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1739,6 +1741,31 @@ public class CPDefinitionLocalServiceImpl
 		}
 	}
 
+	public void processCPInstanceAndCPDefinition(
+			CPDefinitionOptionRel cpDefinitionOptionRel)
+		throws PortalException {
+
+		// Commerce product instances
+
+		_inactiveCPInstanceHelper.inactivateCPDefinitionOptionRelCPInstances(
+			PrincipalThreadLocal.getUserId(),
+			cpDefinitionOptionRel.getCPDefinitionId(),
+			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		int cpDefinitionOptionRelsCount =
+			_cpDefinitionOptionRelPersistence.countByC_SC(
+				cpDefinitionOptionRel.getCPDefinitionId(), true);
+
+		cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinitionOptionRel.getCPDefinitionId(),
+			cpDefinitionOptionRelsCount <= 0, new ServiceContext());
+
+		// Commerce product definition
+
+		_cpDefinitionIndexHelper.reindexCPDefinition(
+			cpDefinitionOptionRel.getCPDefinitionId());
+	}
+
 	@Override
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
 			long companyId, long[] groupIds, String keywords, int status,
@@ -2945,6 +2972,9 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InactiveCPInstanceHelper _inactiveCPInstanceHelper;
 
 	@Reference
 	private Language _language;
