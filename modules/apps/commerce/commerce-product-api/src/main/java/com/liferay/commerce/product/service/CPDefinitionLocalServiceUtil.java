@@ -746,6 +746,14 @@ public class CPDefinitionLocalServiceUtil {
 		getService().maintainVersionThreshold(cProductId);
 	}
 
+	public static void processCPInstanceAndCPDefinition(
+			com.liferay.commerce.product.model.CPDefinitionOptionRel
+				cpDefinitionOptionRel)
+		throws PortalException {
+
+		getService().processCPInstanceAndCPDefinition(cpDefinitionOptionRel);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDefinition> searchCPDefinitions(
 				long companyId, long[] groupIds, String keywords, int status,

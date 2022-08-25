@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -565,6 +566,10 @@ public interface CPDefinitionLocalService
 		long cpDefinitionId, HttpServletRequest httpServletRequest);
 
 	public void maintainVersionThreshold(long cProductId)
+		throws PortalException;
+
+	public void processCPInstanceAndCPDefinition(
+			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

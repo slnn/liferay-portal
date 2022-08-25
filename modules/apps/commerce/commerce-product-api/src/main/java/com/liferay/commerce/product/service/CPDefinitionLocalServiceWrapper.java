@@ -842,6 +842,16 @@ public class CPDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public void processCPInstanceAndCPDefinition(
+			com.liferay.commerce.product.model.CPDefinitionOptionRel
+				cpDefinitionOptionRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpDefinitionLocalService.processCPInstanceAndCPDefinition(
+			cpDefinitionOptionRel);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<CPDefinition>
 			searchCPDefinitions(
 				long companyId, long[] groupIds, String keywords, int status,
