@@ -225,11 +225,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionId, cpOptionId, true, serviceContext);
 	}
 
-	@Indexable(type = IndexableType.DELETE)
-	@Override
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
-			CPDefinitionOptionRel cpDefinitionOptionRel)
+	public CPDefinitionOptionRel
+			copyCPDefinitionAndPrepareCPDefinitionOptionRel(
+				CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
 		if (_cpDefinitionLocalService.isVersionable(
@@ -243,6 +241,19 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				newCPDefinition.getCPDefinitionId(),
 				cpDefinitionOptionRel.getCPOptionId());
 		}
+
+		return cpDefinitionOptionRel;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
+			CPDefinitionOptionRel cpDefinitionOptionRel)
+		throws PortalException {
+
+		cpDefinitionOptionRel = copyCPDefinitionAndPrepareCPDefinitionOptionRel(
+			cpDefinitionOptionRel);
 
 		// Commerce product definition option value rels
 
