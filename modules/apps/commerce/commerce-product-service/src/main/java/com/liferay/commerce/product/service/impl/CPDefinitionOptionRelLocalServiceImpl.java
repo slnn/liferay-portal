@@ -21,6 +21,7 @@ import com.liferay.commerce.product.exception.CPDefinitionOptionSKUContributorEx
 import com.liferay.commerce.product.exception.DuplicateCPDefinitionOptionRelKeyException;
 import com.liferay.commerce.product.internal.helper.CPDefinitionIndexHelper;
 import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelCPDefinitionOptionValueRelHelper;
+import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionOptionRelHelper;
 import com.liferay.commerce.product.internal.helper.InactiveCPInstanceHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -35,7 +36,6 @@ import com.liferay.commerce.product.service.base.CPDefinitionOptionRelLocalServi
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -239,34 +239,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
-		// Commerce product definition option value rels
-
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			_cpDefinitionOptionValueRelPersistence.
-				findByCPDefinitionOptionRelId(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
-
-			_cpDefinitionOptionValueRelPersistence.remove(
-				cpDefinitionOptionValueRel);
-
-			_expandoRowLocalService.deleteRows(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
-		}
-
-		// Commerce product definition option rel
-
-		cpDefinitionOptionRelPersistence.remove(cpDefinitionOptionRel);
-
-		// Expando
-
-		_expandoRowLocalService.deleteRows(
-			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-
-		return cpDefinitionOptionRel;
+		return _deleteCPDefinitionOptionRelHelper.deleteCPDefinitionOptionRel(
+			cpDefinitionOptionRel);
 	}
 
 	@Override
@@ -942,7 +916,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	private CPOptionLocalService _cpOptionLocalService;
 
 	@Reference
-	private ExpandoRowLocalService _expandoRowLocalService;
+	private DeleteCPDefinitionOptionRelHelper
+		_deleteCPDefinitionOptionRelHelper;
 
 	@Reference
 	private InactiveCPInstanceHelper _inactiveCPInstanceHelper;

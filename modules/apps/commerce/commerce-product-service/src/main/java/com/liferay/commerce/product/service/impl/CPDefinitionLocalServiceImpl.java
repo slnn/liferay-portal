@@ -39,6 +39,7 @@ import com.liferay.commerce.product.internal.helper.CheckCPAttachmentFileEntryHe
 import com.liferay.commerce.product.internal.helper.CheckCPInstancesHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPAttachmentFileEntryHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionLinkHelper;
+import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionOptionRelHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPDefinitionSpecificationOptionValueHelper;
 import com.liferay.commerce.product.internal.helper.DeleteCPInstanceHelper;
 import com.liferay.commerce.product.internal.helper.InactiveCPInstanceHelper;
@@ -56,7 +57,6 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
@@ -1059,8 +1059,29 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition option rels
 
-		_cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRels(
-			cpDefinition.getCPDefinitionId());
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelPersistence.findByCPDefinitionId(
+				cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			if (isVersionable(cpDefinitionOptionRel.getCPDefinitionId())) {
+				CPDefinition newCPDefinition = copyCPDefinition(
+					cpDefinitionOptionRel.getCPDefinitionId());
+
+				cpDefinitionOptionRel =
+					_cpDefinitionOptionRelPersistence.findByC_C(
+						newCPDefinition.getCPDefinitionId(),
+						cpDefinitionOptionRel.getCPOptionId());
+			}
+
+			_deleteCPDefinitionOptionRelHelper.deleteCPDefinitionOptionRel(
+				cpDefinitionOptionRel);
+
+			processCPInstanceAndCPDefinition(cpDefinitionOptionRel);
+		}
 
 		// Commerce product definition attachment file entries
 
@@ -2910,10 +2931,6 @@ public class CPDefinitionLocalServiceImpl
 	private CPDefinitionLinkPersistence _cpDefinitionLinkPersistence;
 
 	@Reference
-	private CPDefinitionOptionRelLocalService
-		_cpDefinitionOptionRelLocalService;
-
-	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
 
 	@Reference
@@ -2956,6 +2973,10 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private DeleteCPDefinitionLinkHelper _deleteCPDefinitionLinkHelper;
+
+	@Reference
+	private DeleteCPDefinitionOptionRelHelper
+		_deleteCPDefinitionOptionRelHelper;
 
 	@Reference
 	private DeleteCPDefinitionSpecificationOptionValueHelper
