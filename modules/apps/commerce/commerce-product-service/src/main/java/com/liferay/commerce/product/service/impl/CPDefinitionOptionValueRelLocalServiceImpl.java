@@ -962,11 +962,10 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			return;
 		}
 
-		if (_cpDefinitionOptionRelLocalService.
-				hasCPDefinitionRequiredCPDefinitionOptionRels(
-					cpInstance.getCPDefinitionId()) ||
-			(cpInstance.getCPSubscriptionInfo() != null)) {
+		long count = _cpDefinitionOptionRelPersistence.countByCPDI_R(
+			cpInstance.getCPDefinitionId(), true);
 
+		if ((count != 0) || (cpInstance.getCPSubscriptionInfo() != null)) {
 			throw new CPDefinitionOptionValueRelCPInstanceException();
 		}
 
