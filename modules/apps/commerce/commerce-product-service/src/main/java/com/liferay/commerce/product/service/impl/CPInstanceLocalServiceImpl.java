@@ -23,6 +23,7 @@ import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUui
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
+import com.liferay.commerce.product.internal.helper.CPDefinitionOptionRelCPDefinitionOptionValueRelHelper;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -456,7 +458,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable,
-			cpDefinitionOptionRelLocalService.
+			_cpDefinitionOptionRelCPDefinitionOptionValueRelHelper.
 				getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 					cpDefinitionId, false, json),
 			width, height, depth, weight, price, promoPrice, cost, published,
@@ -2011,6 +2013,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceLocalServiceImpl.class);
+
+	@ServiceReference(type = ConfigurationProvider.class)
+	private CPDefinitionOptionRelCPDefinitionOptionValueRelHelper
+		_cpDefinitionOptionRelCPDefinitionOptionValueRelHelper;
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
