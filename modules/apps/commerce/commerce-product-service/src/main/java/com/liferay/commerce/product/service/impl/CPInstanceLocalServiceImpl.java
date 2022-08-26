@@ -1823,8 +1823,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws NoSuchSkuContributorCPDefinitionOptionRelException {
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
-				cpDefinitionId, true);
+			cpDefinitionOptionRelPersistence.findByC_SC(cpDefinitionId, true);
 
 		if (cpDefinitionOptionRels.isEmpty()) {
 			throw new NoSuchSkuContributorCPDefinitionOptionRelException();
