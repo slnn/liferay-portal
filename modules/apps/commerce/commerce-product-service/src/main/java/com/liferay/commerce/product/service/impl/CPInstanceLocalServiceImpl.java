@@ -458,7 +458,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			manufacturerPartNumber, purchasable,
 			cpDefinitionOptionRelLocalService.
 				getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
-					cpDefinitionId, json),
+					cpDefinitionId, false, json),
 			width, height, depth, weight, price, promoPrice, cost, published,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
