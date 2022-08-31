@@ -1026,8 +1026,14 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product display layouts
 
-		_cpDisplayLayoutLocalService.deleteCPDisplayLayouts(
-			CPDefinition.class, cpDefinition.getCPDefinitionId());
+		List<CPDisplayLayout> cpDisplayLayouts =
+			_cpDisplayLayoutPersistence.findByC_C(
+				_classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinition.getCPDefinitionId());
+
+		for (CPDisplayLayout cpDisplayLayout : cpDisplayLayouts) {
+			_cpDisplayLayoutPersistence.remove(cpDisplayLayout);
+		}
 
 		// Commerce product version contributors
 
@@ -1456,8 +1462,10 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public String getLayoutUuid(long groupId, long cpDefinitionId) {
 		CPDisplayLayout cpDisplayLayout =
-			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, CPDefinition.class, cpDefinitionId);
+			_cpDisplayLayoutPersistence.fetchByG_C_C(
+				groupId,
+				_classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinitionId);
 
 		if (cpDisplayLayout == null) {
 			return null;
