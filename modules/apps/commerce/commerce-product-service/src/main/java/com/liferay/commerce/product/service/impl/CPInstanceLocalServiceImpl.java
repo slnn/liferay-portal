@@ -23,6 +23,7 @@ import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUui
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
+import com.liferay.commerce.product.internal.helper.GetCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -31,7 +32,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -316,7 +316,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable,
-			_cpDefinitionOptionRelLocalService.
+			_getCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper.
 				getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 					cpDefinitionId, false, json),
 			width, height, depth, weight, price, promoPrice, cost, published,
@@ -1673,10 +1673,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@BeanReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@BeanReference(type = CPDefinitionOptionRelLocalService.class)
-	private CPDefinitionOptionRelLocalService
-		_cpDefinitionOptionRelLocalService;
-
 	@BeanReference(type = CPDefinitionOptionRelPersistence.class)
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
 
@@ -1697,6 +1693,12 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(
+		type = GetCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper.class
+	)
+	private GetCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper
+		_getCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper;
 
 	@ServiceReference(type = UserLocalService.class)
 	private UserLocalService _userLocalService;
