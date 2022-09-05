@@ -344,16 +344,6 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 
 	public static Map<Long, List<Long>>
 			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
-				long cpDefinitionId, boolean skuContributorsOnly, String json)
-		throws PortalException {
-
-		return getService().
-			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
-				cpDefinitionId, skuContributorsOnly, json);
-	}
-
-	public static Map<Long, List<Long>>
-			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 				long cpDefinitionId, String json)
 		throws PortalException {
 

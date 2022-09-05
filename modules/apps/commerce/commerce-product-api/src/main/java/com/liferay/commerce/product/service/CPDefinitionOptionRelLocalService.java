@@ -304,12 +304,6 @@ public interface CPDefinitionOptionRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Long, List<Long>>
 			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
-				long cpDefinitionId, boolean skuContributorsOnly, String json)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, List<Long>>
-			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 				long cpDefinitionId, String json)
 		throws PortalException;
 
