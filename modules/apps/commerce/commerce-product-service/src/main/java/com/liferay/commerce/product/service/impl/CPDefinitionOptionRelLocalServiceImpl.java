@@ -325,17 +325,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	@Override
 	public Map<Long, List<Long>>
 			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
-				long cpDefinitionId, boolean skuContributorsOnly, String json)
-		throws PortalException {
-
-		return _getCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper.
-			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
-				cpDefinitionId, skuContributorsOnly, json);
-	}
-
-	@Override
-	public Map<Long, List<Long>>
-			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 				long cpDefinitionId, String json)
 		throws PortalException {
 
