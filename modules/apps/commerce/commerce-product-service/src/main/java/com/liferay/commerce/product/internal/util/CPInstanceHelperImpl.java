@@ -26,6 +26,7 @@ import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.internal.catalog.CPSkuImpl;
+import com.liferay.commerce.product.internal.helper.GetCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper;
 import com.liferay.commerce.product.internal.util.comparator.CPDefinitionOptionRelComparator;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -635,7 +636,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		Map<Long, List<Long>>
 			cpDefinitionOptionRelCPDefinitionOptionValueRelIds =
-				_cpDefinitionOptionRelLocalService.
+				_getCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper.
 					getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 						cpDefinitionId, true, json);
 
@@ -812,6 +813,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Reference
 	private DDMFormValuesHelper _ddmFormValuesHelper;
+
+	@Reference
+	private GetCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper
+		_getCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -70,10 +70,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-
 import java.math.BigDecimal;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -81,8 +80,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
@@ -339,7 +336,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				long cpDefinitionId, String json)
 		throws PortalException {
 
-		return cpDefinitionOptionRelLocalService.
+		return _getCPDefinitionOptionRelCPDefinitionOptionValueRelIdsHelper.
 			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 				cpDefinitionId, false, json);
 	}
