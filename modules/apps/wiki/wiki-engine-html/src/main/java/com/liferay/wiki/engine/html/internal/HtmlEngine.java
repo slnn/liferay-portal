@@ -107,15 +107,11 @@ public class HtmlEngine extends BaseWikiEngine {
 		return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")",
-		unbind = "-"
-	)
-	protected void setFriendlyURLMapper(FriendlyURLMapper friendlyURLMapper) {
+	protected void setFriendlyURLMapper() {
 		_friendlyURLMapping =
-			Portal.FRIENDLY_URL_SEPARATOR + friendlyURLMapper.getMapping();
+			Portal.FRIENDLY_URL_SEPARATOR + _friendlyURLMapper.getMapping();
 
-		_router = friendlyURLMapper.getRouter();
+		_router = _friendlyURLMapper.getRouter();
 	}
 
 	@Reference
