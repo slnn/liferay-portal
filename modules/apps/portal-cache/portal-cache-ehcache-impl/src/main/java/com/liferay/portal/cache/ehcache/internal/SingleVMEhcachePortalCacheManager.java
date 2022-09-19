@@ -45,6 +45,15 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		portalCacheListenerFactory = _portalCacheListenerFactory;
+
+		portalCacheManagerListenerFactory = _portalCacheManagerListenerFactory;
+
+		props = _props;
+
+		baseEhcachePortalCacheManagerConfigurator =
+			_singleVMEhcachePortalCacheManagerConfigurator;
+
 		this.bundleContext = bundleContext;
 
 		setConfigFile(props.get(PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
@@ -63,40 +72,24 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 		destroy();
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortalCacheListenerFactory(
-		PortalCacheListenerFactory portalCacheListenerFactory) {
-
-		this.portalCacheListenerFactory = portalCacheListenerFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalCacheManagerListenerFactory(
-		PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
-			portalCacheManagerListenerFactory) {
-
-		this.portalCacheManagerListenerFactory =
-			portalCacheManagerListenerFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		this.props = props;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSingleVMEhcachePortalCacheManagerConfigurator(
-		SingleVMEhcachePortalCacheManagerConfigurator
-			singleVMEhcachePortalCacheManagerConfigurator) {
-
-		baseEhcachePortalCacheManagerConfigurator =
-			singleVMEhcachePortalCacheManagerConfigurator;
-	}
-
 	private static final String _DEFAULT_CONFIG_FILE_NAME =
 		"/ehcache/liferay-single-vm.xml";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SingleVMEhcachePortalCacheManager.class);
+
+	@Reference
+	private PortalCacheListenerFactory _portalCacheListenerFactory;
+
+	@Reference
+	private PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+		_portalCacheManagerListenerFactory;
+
+	@Reference
+	private Props _props;
+
+	@Reference
+	private SingleVMEhcachePortalCacheManagerConfigurator
+		_singleVMEhcachePortalCacheManagerConfigurator;
 
 }
