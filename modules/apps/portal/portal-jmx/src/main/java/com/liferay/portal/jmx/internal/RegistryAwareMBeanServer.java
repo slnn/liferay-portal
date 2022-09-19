@@ -42,6 +42,7 @@ import javax.management.QueryExp;
 import javax.management.ReflectionException;
 import javax.management.loading.ClassLoaderRepository;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -364,8 +365,8 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 		_mBeanRegistry.unregister(objectName.getCanonicalName(), objectName);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBeanRegistry(MBeanRegistry mBeanRegistry) {
+	@Activate
+	protected void activate() {
 		_mBeanServer = _mBeanRegistry.getMBeanServer();
 	}
 
