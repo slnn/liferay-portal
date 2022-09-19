@@ -366,8 +366,6 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 
 	@Reference(unbind = "-")
 	protected void setMBeanRegistry(MBeanRegistry mBeanRegistry) {
-		_mBeanRegistry = mBeanRegistry;
-
 		_mBeanServer = _mBeanRegistry.getMBeanServer();
 	}
 
@@ -382,7 +380,9 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 		return platformObjectName;
 	}
 
+	@Reference
 	private MBeanRegistry _mBeanRegistry;
+
 	private MBeanServer _mBeanServer;
 
 }
