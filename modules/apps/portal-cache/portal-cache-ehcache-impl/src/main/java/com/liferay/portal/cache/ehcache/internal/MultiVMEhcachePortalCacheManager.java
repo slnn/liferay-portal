@@ -71,7 +71,7 @@ public class MultiVMEhcachePortalCacheManager
 			multiVMEhcachePortalCacheManagerConfigurator) {
 
 		baseEhcachePortalCacheManagerConfigurator =
-			multiVMEhcachePortalCacheManagerConfigurator;
+			_multiVMEhcachePortalCacheManagerConfigurator;
 	}
 
 	@Reference(unbind = "-")
@@ -100,5 +100,9 @@ public class MultiVMEhcachePortalCacheManager
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MultiVMEhcachePortalCacheManager.class);
+
+	@Reference
+	private MultiVMEhcachePortalCacheManagerConfigurator
+		_multiVMEhcachePortalCacheManagerConfigurator;
 
 }
