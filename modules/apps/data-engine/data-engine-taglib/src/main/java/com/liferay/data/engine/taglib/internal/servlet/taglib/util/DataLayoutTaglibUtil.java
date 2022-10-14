@@ -32,7 +32,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
-import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
@@ -700,9 +699,6 @@ public class DataLayoutTaglibUtil {
 
 	@Reference
 	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
-
-	@Reference
-	private DDMFormValuesFactory _ddmFormValuesFactory;
 
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
