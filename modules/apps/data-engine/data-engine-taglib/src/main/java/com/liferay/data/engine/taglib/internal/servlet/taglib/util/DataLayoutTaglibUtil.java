@@ -27,7 +27,6 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
-import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -685,9 +684,6 @@ public class DataLayoutTaglibUtil {
 
 	@Reference
 	private DataRecordResource.Factory _dataRecordResourceFactory;
-
-	@Reference
-	private DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
 
 	@Reference
 	private DDMFormBuilderSettingsRetrieverHelper
