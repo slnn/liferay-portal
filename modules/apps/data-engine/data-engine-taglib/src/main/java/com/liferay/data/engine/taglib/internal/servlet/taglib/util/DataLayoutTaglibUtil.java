@@ -32,7 +32,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
@@ -705,9 +704,6 @@ public class DataLayoutTaglibUtil {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference(target = "(ddm.form.deserializer.type=json)")
-	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Reference(target = "(ddm.form.layout.deserializer.type=json)")
 	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;
