@@ -268,9 +268,7 @@ public class CookiesManagerImpl implements CookiesManager {
 	}
 
 	@Override
-	public List<ConsentCookieType> getOptionalConsentCookieTypes(long groupId)
-		throws Exception {
-
+	public List<ConsentCookieType> getOptionalConsentCookieTypes(long groupId) {
 		return ListUtil.fromArray(
 			new ConsentCookieType(
 				_cookiesConsentConfiguration.functionalCookiesDescription(),
