@@ -271,23 +271,20 @@ public class CookiesManagerImpl implements CookiesManager {
 	public List<ConsentCookieType> getOptionalConsentCookieTypes(long groupId)
 		throws Exception {
 
-		CookiesConsentConfiguration cookiesConsentConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				CookiesConsentConfiguration.class, groupId);
-
 		return ListUtil.fromArray(
 			new ConsentCookieType(
-				cookiesConsentConfiguration.functionalCookiesDescription(),
+				_cookiesConsentConfiguration.functionalCookiesDescription(),
 				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
-				cookiesConsentConfiguration.functionalCookiesPrechecked()),
+				_cookiesConsentConfiguration.functionalCookiesPrechecked()),
 			new ConsentCookieType(
-				cookiesConsentConfiguration.performanceCookiesDescription(),
+				_cookiesConsentConfiguration.performanceCookiesDescription(),
 				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-				cookiesConsentConfiguration.performanceCookiesPrechecked()),
+				_cookiesConsentConfiguration.performanceCookiesPrechecked()),
 			new ConsentCookieType(
-				cookiesConsentConfiguration.personalizationCookiesDescription(),
+				_cookiesConsentConfiguration.
+					personalizationCookiesDescription(),
 				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
-				cookiesConsentConfiguration.
+				_cookiesConsentConfiguration.
 					personalizationCookiesPrechecked()));
 	}
 
