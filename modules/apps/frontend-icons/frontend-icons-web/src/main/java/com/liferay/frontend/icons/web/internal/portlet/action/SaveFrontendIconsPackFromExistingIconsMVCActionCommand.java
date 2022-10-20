@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -169,8 +168,5 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Portal _portal;
 
 }
