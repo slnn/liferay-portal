@@ -19,7 +19,6 @@ import com.liferay.commerce.notification.exception.CommerceNotificationTemplateN
 import com.liferay.commerce.notification.exception.CommerceNotificationTemplateTypeException;
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateException;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
-import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
@@ -194,17 +192,10 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
-	private CommerceNotificationTemplateCommerceAccountGroupRelService
-		_commerceNotificationTemplateCommerceAccountGroupRelService;
-
-	@Reference
 	private CommerceNotificationTemplateService
 		_commerceNotificationTemplateService;
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private Portal _portal;
 
 }
