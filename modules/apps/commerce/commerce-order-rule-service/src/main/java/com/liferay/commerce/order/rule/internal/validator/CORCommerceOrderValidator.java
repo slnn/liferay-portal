@@ -311,10 +311,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 
 	@Reference
 	private COREntryLocalService _corEntryLocalService;
-
-	@Reference
-	private COREntryRelLocalService _corEntryRelLocalService;
-
+	
 	@Reference
 	private COREntryTypeRegistry _corEntryTypeRegistry;
 
