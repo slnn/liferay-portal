@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -202,8 +201,5 @@ public class EditCommercePriceModifierMVCActionCommand
 
 	@Reference
 	private CommercePriceModifierService _commercePriceModifierService;
-
-	@Reference
-	private Portal _portal;
 
 }
