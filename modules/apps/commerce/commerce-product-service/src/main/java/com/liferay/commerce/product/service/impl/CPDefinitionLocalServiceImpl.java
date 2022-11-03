@@ -443,9 +443,8 @@ public class CPDefinitionLocalServiceImpl
 			externalReferenceCode = null;
 		}
 		else {
-			CProduct cProduct =
-				_cProductLocalService.fetchCProductByExternalReferenceCode(
-					serviceContext.getCompanyId(), externalReferenceCode);
+			CProduct cProduct = _cProductPersistence.fetchByC_ERC(
+				serviceContext.getCompanyId(), externalReferenceCode);
 
 			if (cProduct != null) {
 				CPDefinition cpDefinition =
@@ -1322,7 +1321,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		if (cpDefinitionsCount > 1) {
-			CProduct cProduct = _cProductLocalService.getCProduct(
+			CProduct cProduct = _cProductPersistence.findByPrimaryKey(
 				cpDefinition.getCProductId());
 
 			long publishedCPDefinitionId =
@@ -1481,9 +1480,8 @@ public class CPDefinitionLocalServiceImpl
 			return null;
 		}
 
-		CProduct cProduct =
-			_cProductLocalService.fetchCProductByExternalReferenceCode(
-				companyId, externalReferenceCode);
+		CProduct cProduct = _cProductPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
 
 		if (cProduct == null) {
 			return null;
@@ -1502,7 +1500,7 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public CPDefinition fetchCPDefinitionByCProductId(long cProductId) {
-		CProduct cProduct = _cProductLocalService.fetchCProduct(cProductId);
+		CProduct cProduct = _cProductPersistence.fetchByPrimaryKey(cProductId);
 
 		if (cProduct == null) {
 			return null;
@@ -1952,7 +1950,7 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public boolean isPublishedCPDefinition(CPDefinition cpDefinition) {
-		CProduct cProduct = _cProductLocalService.fetchCProduct(
+		CProduct cProduct = _cProductPersistence.fetchByPrimaryKey(
 			cpDefinition.getCProductId());
 
 		if ((cProduct != null) &&
@@ -2172,7 +2170,7 @@ public class CPDefinitionLocalServiceImpl
 			groupId, ddmStructureKey, metaTitleMap, metaDescriptionMap,
 			metaKeywordsMap, displayDate, expirationDate, productTypeName);
 
-		CProduct cProduct = _cProductLocalService.getCProduct(
+		CProduct cProduct = _cProductPersistence.findByPrimaryKey(
 			cpDefinition.getCProductId());
 
 		if (cpDefinitionLocalService.isVersionable(
