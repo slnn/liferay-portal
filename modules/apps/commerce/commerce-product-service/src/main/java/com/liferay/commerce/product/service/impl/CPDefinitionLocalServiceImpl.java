@@ -1934,9 +1934,8 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public boolean hasChildCPDefinitions(long cpDefinitionId) {
-		int count =
-			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
-				cpDefinitionId);
+		int count = _cpDefinitionOptionRelPersistence.countByCPDefinitionId(
+			cpDefinitionId);
 
 		if ((count <= 0) ||
 			!_cpDefinitionOptionRelLocalService.
@@ -2882,8 +2881,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		int cpDefinitionOptionRelsCount =
-			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
-				cpDefinitionId, true);
+			_cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
 
 		if (cpDefinitionOptionRelsCount == 0) {
 			return;
