@@ -25,6 +25,7 @@ import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.TransactionalPortalCache;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
+import com.liferay.portal.cache.ehcache.internal.event.ConfigurableEhcachePortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -95,7 +97,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 					_portalCacheManagerConfiguration.
 						getPortalCacheConfiguration(portalCacheName);
 
-				value = createPortalCache(portalCacheConfiguration, sharded);
+				value = _createPortalCache(portalCacheConfiguration, sharded);
 
 				_initPortalCacheListeners(value, portalCacheConfiguration);
 
@@ -157,7 +159,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		doRemoveShardedPortalCache(companyId, shardedPortalCaches);
+		_removeShardedPortalCache(companyId, shardedPortalCaches);
 	}
 
 	public void setClusterAware(boolean clusterAware) {
@@ -193,15 +195,9 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		aggregatedPortalCacheManagerListener.clearAll();
 	}
 
-	protected abstract PortalCache<K, V> createPortalCache(
-		PortalCacheConfiguration portalCacheConfiguration, boolean sharded);
-
 	protected abstract void doDestroy();
 
 	protected abstract void doRemovePortalCache(PortalCache<K, V> portalCache);
-
-	protected abstract void doRemoveShardedPortalCache(
-		long companyId, Set<PortalCache<K, V>> shardedPortalCaches);
 
 	protected abstract PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration();
@@ -254,14 +250,11 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 				continue;
 			}
 
-			removeConfigurableEhcachePortalCacheListeners(portalCache);
+			_removeConfigurableEhcachePortalCacheListeners(portalCache);
 
 			_initPortalCacheListeners(portalCache, portalCacheConfiguration);
 		}
 	}
-
-	protected abstract void removeConfigurableEhcachePortalCacheListeners(
-		PortalCache<K, V> portalCache);
 
 	protected final AggregatedPortalCacheManagerListener
 		aggregatedPortalCacheManagerListener =
@@ -269,6 +262,20 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
+
+	private PortalCache<K, V> _createPortalCache(
+		PortalCacheConfiguration portalCacheConfiguration, boolean sharded) {
+
+		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration =
+			(EhcachePortalCacheConfiguration)portalCacheConfiguration;
+
+		if (sharded) {
+			return new ShardedEhcachePortalCache<>(
+				this, ehcachePortalCacheConfiguration);
+		}
+
+		return new EhcachePortalCache<>(this, ehcachePortalCacheConfiguration);
+	}
 
 	private void _initPortalCacheListeners(
 		PortalCache<K, V> portalCache,
@@ -314,6 +321,39 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		}
 
 		return false;
+	}
+
+	private void _removeConfigurableEhcachePortalCacheListeners(
+		PortalCache<K, V> portalCache) {
+
+		BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
+			EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
+
+		Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
+			portalCacheListeners =
+				baseEhcachePortalCache.getPortalCacheListeners();
+
+		for (PortalCacheListener<K, V> portalCacheListener :
+				portalCacheListeners.keySet()) {
+
+			if (portalCacheListener instanceof
+					ConfigurableEhcachePortalCacheListener) {
+
+				portalCache.unregisterPortalCacheListener(portalCacheListener);
+			}
+		}
+	}
+
+	private void _removeShardedPortalCache(
+		long companyId, Set<PortalCache<K, V>> shardedPortalCaches) {
+
+		for (PortalCache<K, V> shardedPortalCache : shardedPortalCaches) {
+			ShardedEhcachePortalCache<K, V> shardedEhcachePortalCache =
+				(ShardedEhcachePortalCache<K, V>)
+					EhcacheUnwrapUtil.getWrappedPortalCache(shardedPortalCache);
+
+			shardedEhcachePortalCache.removeEhcache(companyId);
+		}
 	}
 
 	private void _verifyMVCCPortalCache(
