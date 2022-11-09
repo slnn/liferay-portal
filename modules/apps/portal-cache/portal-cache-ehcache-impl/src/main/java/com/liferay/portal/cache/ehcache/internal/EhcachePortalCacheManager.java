@@ -73,6 +73,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public String getPortalCacheManagerName() {
+		return portalCacheManagerName;
+	}
+
+	@Override
 	public void reconfigurePortalCaches(
 		URL configurationURL, ClassLoader classLoader) {
 
@@ -94,6 +99,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	public void setDefaultConfigFile(String defaultConfigFile) {
 		_defaultConfigFile = defaultConfigFile;
+	}
+
+	public void setPortalCacheManagerName(String portalCacheManagerName) {
+		this.portalCacheManagerName = portalCacheManagerName;
 	}
 
 	@Override

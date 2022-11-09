@@ -125,11 +125,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public String getPortalCacheManagerName() {
-		return _portalCacheManagerName;
-	}
-
-	@Override
 	public boolean isClusterAware() {
 		return _clusterAware;
 	}
@@ -184,10 +179,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		_clusterAware = clusterAware;
 	}
 
-	public void setPortalCacheManagerName(String portalCacheManagerName) {
-		_portalCacheManagerName = portalCacheManagerName;
-	}
-
 	public void setTransactionalPortalCacheEnabled(
 		boolean transactionalPortalCacheEnabled) {
 
@@ -220,7 +211,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		if (Validator.isNull(_portalCacheManagerName)) {
+		if (Validator.isNull(portalCacheManagerName)) {
 			throw new IllegalArgumentException(
 				"Portal cache manager name is not specified");
 		}
@@ -274,6 +265,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration portalCacheManagerConfiguration;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
+	protected String portalCacheManagerName;
 
 	private PortalCache<K, V> _createPortalCache(
 		PortalCacheConfiguration portalCacheConfiguration, boolean sharded) {
@@ -380,7 +372,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		sb.append("Unable to get portal cache ");
 		sb.append(portalCache.getPortalCacheName());
 		sb.append(" from portal cache manager ");
-		sb.append(_portalCacheManagerName);
+		sb.append(portalCacheManagerName);
 		sb.append(" as a ");
 
 		if (mvcc) {
@@ -416,7 +408,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		sb.append("Unable to get portal cache ");
 		sb.append(portalCache.getPortalCacheName());
 		sb.append(" from portal cache manager ");
-		sb.append(_portalCacheManagerName);
+		sb.append(portalCacheManagerName);
 		sb.append(" as a ");
 
 		if (sharded) {
@@ -444,7 +436,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		BasePortalCacheManager.class);
 
 	private boolean _clusterAware;
-	private String _portalCacheManagerName;
 	private final ConcurrentMap<String, PortalCache<K, V>> _portalCaches =
 		new ConcurrentHashMap<>();
 	private boolean _transactionalPortalCacheEnabled;
