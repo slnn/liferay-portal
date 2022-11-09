@@ -112,13 +112,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected PortalCacheManagerConfiguration
-		getPortalCacheManagerConfiguration() {
-
-		return _portalCacheManagerConfiguration;
-	}
-
-	@Override
 	protected void initPortalCacheManager() {
 		setTransactionalPortalCacheEnabled(
 			GetterUtil.getBoolean(
@@ -153,7 +146,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		_cacheManager = new CacheManager(configurationObjectValuePair.getKey());
 
-		_portalCacheManagerConfiguration =
+		portalCacheManagerConfiguration =
 			configurationObjectValuePair.getValue();
 
 		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
@@ -260,7 +253,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private String _defaultConfigFile;
 	private ServiceTracker<MBeanServer, ManagementService>
 		_mBeanServerServiceTracker;
-	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private boolean _usingDefault;
 
 }

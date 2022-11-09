@@ -96,8 +96,8 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 				}
 
 				PortalCacheConfiguration portalCacheConfiguration =
-					_portalCacheManagerConfiguration.
-						getPortalCacheConfiguration(portalCacheName);
+					portalCacheManagerConfiguration.getPortalCacheConfiguration(
+						portalCacheName);
 
 				value = _createPortalCache(portalCacheConfiguration, sharded);
 
@@ -215,11 +215,8 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	protected abstract void doDestroy();
 
-	protected abstract PortalCacheManagerConfiguration
-		getPortalCacheManagerConfiguration();
-
 	protected void initialize() {
-		if (_portalCacheManagerConfiguration != null) {
+		if (portalCacheManagerConfiguration != null) {
 			return;
 		}
 
@@ -230,10 +227,8 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 		initPortalCacheManager();
 
-		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
-
 		for (Properties properties :
-				_portalCacheManagerConfiguration.
+				portalCacheManagerConfiguration.
 					getPortalCacheManagerListenerPropertiesSet()) {
 
 			PortalCacheManagerListener portalCacheManagerListener =
@@ -257,7 +252,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 				portalCacheManagerConfiguration.getPortalCacheConfiguration(
 					portalCacheName);
 
-			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
+			this.portalCacheManagerConfiguration.putPortalCacheConfiguration(
 				portalCacheName, portalCacheConfiguration);
 
 			PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
@@ -276,6 +271,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
+	protected PortalCacheManagerConfiguration portalCacheManagerConfiguration;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
 
@@ -448,7 +444,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		BasePortalCacheManager.class);
 
 	private boolean _clusterAware;
-	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private String _portalCacheManagerName;
 	private final ConcurrentMap<String, PortalCache<K, V>> _portalCaches =
 		new ConcurrentHashMap<>();
