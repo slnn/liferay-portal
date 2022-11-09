@@ -21,7 +21,6 @@ import com.liferay.portal.cache.AggregatedPortalCacheManagerListener;
 import com.liferay.portal.cache.LowLevelCache;
 import com.liferay.portal.cache.MVCCPortalCache;
 import com.liferay.portal.cache.PortalCacheListenerFactory;
-import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.TransactionalPortalCache;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -206,33 +204,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	protected abstract void doDestroy();
 
-	protected void initialize() {
-		if (portalCacheManagerConfiguration != null) {
-			return;
-		}
-
-		if (Validator.isNull(portalCacheManagerName)) {
-			throw new IllegalArgumentException(
-				"Portal cache manager name is not specified");
-		}
-
-		initPortalCacheManager();
-
-		for (Properties properties :
-				portalCacheManagerConfiguration.
-					getPortalCacheManagerListenerPropertiesSet()) {
-
-			PortalCacheManagerListener portalCacheManagerListener =
-				portalCacheManagerListenerFactory.create(this, properties);
-
-			if (portalCacheManagerListener != null) {
-				registerPortalCacheManagerListener(portalCacheManagerListener);
-			}
-		}
-	}
-
-	protected abstract void initPortalCacheManager();
-
 	protected void reconfigPortalCache(
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 
@@ -263,8 +234,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			new AggregatedPortalCacheManagerListener();
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
 	protected PortalCacheManagerConfiguration portalCacheManagerConfiguration;
-	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
-		portalCacheManagerListenerFactory;
 	protected String portalCacheManagerName;
 
 	private PortalCache<K, V> _createPortalCache(
