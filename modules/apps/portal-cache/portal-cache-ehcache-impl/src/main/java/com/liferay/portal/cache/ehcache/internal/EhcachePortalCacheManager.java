@@ -112,25 +112,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemovePortalCache(PortalCache<K, V> portalCache) {
-		if (portalCache == null) {
-			return;
-		}
-
-		BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
-			EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
-
-		if (baseEhcachePortalCache != null) {
-			baseEhcachePortalCache.dispose();
-		}
-		else {
-			_log.error(
-				"Unable to dispose cache with name " +
-					portalCache.getPortalCacheName());
-		}
-	}
-
-	@Override
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 

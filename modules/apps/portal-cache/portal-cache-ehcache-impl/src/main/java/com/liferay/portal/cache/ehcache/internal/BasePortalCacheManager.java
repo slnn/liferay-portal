@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -142,7 +144,23 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void removePortalCache(String portalCacheName) {
-		doRemovePortalCache(_portalCaches.remove(portalCacheName));
+		PortalCache<K, V> portalCache = _portalCaches.remove(portalCacheName);
+
+		if (portalCache == null) {
+			return;
+		}
+
+		BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
+			EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
+
+		if (baseEhcachePortalCache != null) {
+			baseEhcachePortalCache.dispose();
+		}
+		else {
+			_log.error(
+				"Unable to dispose cache with name " +
+					portalCache.getPortalCacheName());
+		}
 	}
 
 	@Override
@@ -196,8 +214,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	}
 
 	protected abstract void doDestroy();
-
-	protected abstract void doRemovePortalCache(PortalCache<K, V> portalCache);
 
 	protected abstract PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration();
@@ -427,6 +443,9 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 		throw new IllegalStateException(sb.toString());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasePortalCacheManager.class);
 
 	private boolean _clusterAware;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
