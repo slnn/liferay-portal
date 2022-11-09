@@ -147,8 +147,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				}
 
 				PortalCacheConfiguration portalCacheConfiguration =
-					portalCacheManagerConfiguration.getPortalCacheConfiguration(
-						portalCacheName);
+					_portalCacheManagerConfiguration.
+						getPortalCacheConfiguration(portalCacheName);
 
 				value = _createPortalCache(portalCacheConfiguration, sharded);
 
@@ -171,13 +171,13 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public Set<PortalCacheManagerListener> getPortalCacheManagerListeners() {
-		return aggregatedPortalCacheManagerListener.
+		return _aggregatedPortalCacheManagerListener.
 			getPortalCacheManagerListeners();
 	}
 
 	@Override
 	public String getPortalCacheManagerName() {
-		return portalCacheManagerName;
+		return _portalCacheManagerName;
 	}
 
 	@Override
@@ -196,16 +196,16 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 						getPortalCacheManagerName(), configurationURL,
 						classLoader, _usingDefault);
 
-		reconfigEhcache(configurationObjectValuePair.getKey());
+		_reconfigEhcache(configurationObjectValuePair.getKey());
 
-		reconfigPortalCache(configurationObjectValuePair.getValue());
+		_reconfigPortalCache(configurationObjectValuePair.getValue());
 	}
 
 	@Override
 	public boolean registerPortalCacheManagerListener(
 		PortalCacheManagerListener portalCacheManagerListener) {
 
-		return aggregatedPortalCacheManagerListener.addPortalCacheListener(
+		return _aggregatedPortalCacheManagerListener.addPortalCacheListener(
 			portalCacheManagerListener);
 	}
 
@@ -260,7 +260,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	public void setPortalCacheManagerName(String portalCacheManagerName) {
-		this.portalCacheManagerName = portalCacheManagerName;
+		_portalCacheManagerName = portalCacheManagerName;
 	}
 
 	public void setTransactionalPortalCacheEnabled(
@@ -279,21 +279,21 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	public boolean unregisterPortalCacheManagerListener(
 		PortalCacheManagerListener portalCacheManagerListener) {
 
-		return aggregatedPortalCacheManagerListener.removePortalCacheListener(
+		return _aggregatedPortalCacheManagerListener.removePortalCacheListener(
 			portalCacheManagerListener);
 	}
 
 	@Override
 	public void unregisterPortalCacheManagerListeners() {
-		aggregatedPortalCacheManagerListener.clearAll();
+		_aggregatedPortalCacheManagerListener.clearAll();
 	}
 
 	protected void initialize() {
-		if (portalCacheManagerConfiguration != null) {
+		if (_portalCacheManagerConfiguration != null) {
 			return;
 		}
 
-		if (Validator.isNull(portalCacheManagerName)) {
+		if (Validator.isNull(_portalCacheManagerName)) {
 			throw new IllegalArgumentException(
 				"Portal cache manager name is not specified");
 		}
@@ -301,7 +301,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_initPortalCacheManager();
 
 		for (Properties properties :
-				portalCacheManagerConfiguration.
+				_portalCacheManagerConfiguration.
 					getPortalCacheManagerListenerPropertiesSet()) {
 
 			PortalCacheManagerListener portalCacheManagerListener =
@@ -313,84 +313,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	protected void reconfigEhcache(Configuration configuration) {
-		Map<String, CacheConfiguration> cacheConfigurations =
-			configuration.getCacheConfigurations();
-
-		for (CacheConfiguration cacheConfiguration :
-				cacheConfigurations.values()) {
-
-			String portalCacheName = cacheConfiguration.getName();
-
-			synchronized (_cacheManager) {
-				if (_cacheManager.cacheExists(portalCacheName)) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Overriding existing cache " + portalCacheName);
-					}
-
-					PortalCache<K, V> portalCache = fetchPortalCache(
-						portalCacheName);
-
-					if (portalCache != null) {
-						BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
-							EhcacheUnwrapUtil.getWrappedPortalCache(
-								portalCache);
-
-						if (baseEhcachePortalCache != null) {
-							baseEhcachePortalCache.resetEhcache();
-						}
-						else {
-							_log.error(
-								"Unable to reconfigure cache with name " +
-									portalCacheName);
-						}
-					}
-
-					_cacheManager.removeCache(portalCacheName);
-				}
-
-				_cacheManager.addCache(new Cache(cacheConfiguration));
-			}
-		}
-	}
-
-	protected void reconfigPortalCache(
-		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
-
-		for (String portalCacheName :
-				portalCacheManagerConfiguration.getPortalCacheNames()) {
-
-			PortalCacheConfiguration portalCacheConfiguration =
-				portalCacheManagerConfiguration.getPortalCacheConfiguration(
-					portalCacheName);
-
-			this.portalCacheManagerConfiguration.putPortalCacheConfiguration(
-				portalCacheName, portalCacheConfiguration);
-
-			PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
-
-			if (portalCache == null) {
-				continue;
-			}
-
-			_removeConfigurableEhcachePortalCacheListeners(portalCache);
-
-			_initPortalCacheListeners(portalCache, portalCacheConfiguration);
-		}
-	}
-
-	protected final AggregatedPortalCacheManagerListener
-		aggregatedPortalCacheManagerListener =
-			new AggregatedPortalCacheManagerListener();
 	protected BaseEhcachePortalCacheManagerConfigurator
 		baseEhcachePortalCacheManagerConfigurator;
 	protected BundleContext bundleContext;
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
-	protected PortalCacheManagerConfiguration portalCacheManagerConfiguration;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
-	protected String portalCacheManagerName;
 	protected volatile Props props;
 
 	private PortalCache<K, V> _createPortalCache(
@@ -474,7 +402,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		_cacheManager = new CacheManager(configurationObjectValuePair.getKey());
 
-		portalCacheManagerConfiguration =
+		_portalCacheManagerConfiguration =
 			configurationObjectValuePair.getValue();
 
 		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
@@ -482,7 +410,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		cacheManagerEventListenerRegistry.registerListener(
 			new PortalCacheManagerEventListener(
-				aggregatedPortalCacheManagerListener));
+				_aggregatedPortalCacheManagerListener));
 
 		if (!GetterUtil.getBoolean(
 				props.get(
@@ -538,6 +466,73 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return false;
 	}
 
+	private void _reconfigEhcache(Configuration configuration) {
+		Map<String, CacheConfiguration> cacheConfigurations =
+			configuration.getCacheConfigurations();
+
+		for (CacheConfiguration cacheConfiguration :
+				cacheConfigurations.values()) {
+
+			String portalCacheName = cacheConfiguration.getName();
+
+			synchronized (_cacheManager) {
+				if (_cacheManager.cacheExists(portalCacheName)) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Overriding existing cache " + portalCacheName);
+					}
+
+					PortalCache<K, V> portalCache = fetchPortalCache(
+						portalCacheName);
+
+					if (portalCache != null) {
+						BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
+							EhcacheUnwrapUtil.getWrappedPortalCache(
+								portalCache);
+
+						if (baseEhcachePortalCache != null) {
+							baseEhcachePortalCache.resetEhcache();
+						}
+						else {
+							_log.error(
+								"Unable to reconfigure cache with name " +
+									portalCacheName);
+						}
+					}
+
+					_cacheManager.removeCache(portalCacheName);
+				}
+
+				_cacheManager.addCache(new Cache(cacheConfiguration));
+			}
+		}
+	}
+
+	private void _reconfigPortalCache(
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
+
+		for (String portalCacheName :
+				portalCacheManagerConfiguration.getPortalCacheNames()) {
+
+			PortalCacheConfiguration portalCacheConfiguration =
+				portalCacheManagerConfiguration.getPortalCacheConfiguration(
+					portalCacheName);
+
+			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
+				portalCacheName, portalCacheConfiguration);
+
+			PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
+
+			if (portalCache == null) {
+				continue;
+			}
+
+			_removeConfigurableEhcachePortalCacheListeners(portalCache);
+
+			_initPortalCacheListeners(portalCache, portalCacheConfiguration);
+		}
+	}
+
 	private void _removeConfigurableEhcachePortalCacheListeners(
 		PortalCache<K, V> portalCache) {
 
@@ -583,7 +578,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		sb.append("Unable to get portal cache ");
 		sb.append(portalCache.getPortalCacheName());
 		sb.append(" from portal cache manager ");
-		sb.append(portalCacheManagerName);
+		sb.append(_portalCacheManagerName);
 		sb.append(" as a ");
 
 		if (mvcc) {
@@ -619,7 +614,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		sb.append("Unable to get portal cache ");
 		sb.append(portalCache.getPortalCacheName());
 		sb.append(" from portal cache manager ");
-		sb.append(portalCacheManagerName);
+		sb.append(_portalCacheManagerName);
 		sb.append(" as a ");
 
 		if (sharded) {
@@ -646,6 +641,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);
 
+	private final AggregatedPortalCacheManagerListener
+		_aggregatedPortalCacheManagerListener =
+			new AggregatedPortalCacheManagerListener();
 	private CacheManager _cacheManager;
 	private boolean _clusterAware;
 	private String _configFile;
@@ -653,6 +651,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private String _defaultConfigFile;
 	private ServiceTracker<MBeanServer, ManagementService>
 		_mBeanServerServiceTracker;
+	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
+	private String _portalCacheManagerName;
 	private final ConcurrentMap<String, PortalCache<K, V>> _portalCaches =
 		new ConcurrentHashMap<>();
 	private boolean _transactionalPortalCacheEnabled;
