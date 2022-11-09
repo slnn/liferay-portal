@@ -94,7 +94,17 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	public void destroy() {
 		_portalCaches.clear();
 
-		doDestroy();
+		_cacheManager.shutdown();
+
+		if (_configuratorSettingsServiceTracker != null) {
+			_configuratorSettingsServiceTracker.close();
+
+			_configuratorSettingsServiceTracker = null;
+		}
+
+		if (_mBeanServerServiceTracker != null) {
+			_mBeanServerServiceTracker.close();
+		}
 	}
 
 	@Override
@@ -276,20 +286,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	@Override
 	public void unregisterPortalCacheManagerListeners() {
 		aggregatedPortalCacheManagerListener.clearAll();
-	}
-
-	protected void doDestroy() {
-		_cacheManager.shutdown();
-
-		if (_configuratorSettingsServiceTracker != null) {
-			_configuratorSettingsServiceTracker.close();
-
-			_configuratorSettingsServiceTracker = null;
-		}
-
-		if (_mBeanServerServiceTracker != null) {
-			_mBeanServerServiceTracker.close();
-		}
 	}
 
 	protected void initialize() {
