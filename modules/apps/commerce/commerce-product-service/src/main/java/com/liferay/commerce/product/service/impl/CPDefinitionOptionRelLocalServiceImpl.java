@@ -19,13 +19,13 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPDefinitionOptionRelPriceTypeException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionSKUContributorException;
 import com.liferay.commerce.product.exception.DuplicateCPDefinitionOptionRelKeyException;
+import com.liferay.commerce.product.internal.circular.dependency.CPDefinitionLocalServiceHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
@@ -156,11 +156,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		_validatePriceType(cpDefinitionOptionRel, priceType);
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpDefinitionId, serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
+					cpDefinitionId);
 
 			cpDefinitionId = newCPDefinition.getCPDefinitionId();
 
@@ -229,11 +230,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpDefinitionOptionRel.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
 					cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = cpDefinitionOptionRelPersistence.findByC_C(
@@ -672,12 +673,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		_validatePriceType(cpDefinitionOptionRel, priceType);
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpDefinitionOptionRel.getCPDefinitionId(),
 				serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
 					cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = cpDefinitionOptionRelPersistence.findByC_C(
@@ -863,13 +864,14 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		if (_hasCPDefinitionSKUContributorCPDefinitionOptionRel(
 				cpDefintionId)) {
 
-			_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-				cpDefintionId, false, serviceContext);
+			_cpDefinitionLocalServiceHelper.
+				updateCPDefinitionIgnoreSKUCombinations(
+					cpDefintionId, false, serviceContext);
 
 			return;
 		}
 
-		_cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+		_cpDefinitionLocalServiceHelper.updateCPDefinitionIgnoreSKUCombinations(
 			cpDefintionId, true, serviceContext);
 	}
 
@@ -969,7 +971,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
+	private CPDefinitionLocalServiceHelper _cpDefinitionLocalServiceHelper;
 
 	@Reference
 	private CPDefinitionOptionValueRelLocalService
