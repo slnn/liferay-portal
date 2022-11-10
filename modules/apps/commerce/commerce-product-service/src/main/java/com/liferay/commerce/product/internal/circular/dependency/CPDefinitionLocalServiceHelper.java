@@ -17,6 +17,7 @@ package com.liferay.commerce.product.internal.circular.dependency;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,16 @@ public class CPDefinitionLocalServiceHelper {
 
 		return _cpDefinitionLocalService.isVersionable(
 			cpDefinitionId, httpServletRequest);
+	}
+
+	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
+			long cpDefinitionId, boolean ignoreSKUCombinations,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _cpDefinitionLocalService.
+			updateCPDefinitionIgnoreSKUCombinations(
+				cpDefinitionId, ignoreSKUCombinations, serviceContext);
 	}
 
 	private static volatile CPDefinitionLocalService _cpDefinitionLocalService =
