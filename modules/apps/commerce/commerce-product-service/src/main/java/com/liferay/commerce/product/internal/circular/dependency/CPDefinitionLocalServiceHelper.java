@@ -19,6 +19,8 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -35,6 +37,13 @@ public class CPDefinitionLocalServiceHelper {
 
 	public boolean isVersionable(long cpDefinitionId) {
 		return _cpDefinitionLocalService.isVersionable(cpDefinitionId);
+	}
+
+	public boolean isVersionable(
+		long cpDefinitionId, HttpServletRequest httpServletRequest) {
+
+		return _cpDefinitionLocalService.isVersionable(
+			cpDefinitionId, httpServletRequest);
 	}
 
 	private static volatile CPDefinitionLocalService _cpDefinitionLocalService =
