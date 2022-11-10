@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
@@ -989,14 +990,18 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
 	};
 
+	private static volatile CPInstanceLocalService _cpInstanceLocalService =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			CPInstanceLocalService.class,
+			CPDefinitionOptionValueRelLocalServiceImpl.class,
+			"_cpInstanceLocalService",
+			"(model.class.name=" + CPInstance.class.getName() + ")", true);
+
 	@Reference
 	private CPDefinitionLocalServiceHelper _cpDefinitionLocalServiceHelper;
 
 	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
-
-	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CPInstanceOptionValueRelLocalService
