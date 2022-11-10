@@ -24,6 +24,7 @@ import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.DuplicateCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
+import com.liferay.commerce.product.internal.circular.dependency.CPDefinitionLocalServiceHelper;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -31,12 +32,12 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
+import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -159,9 +160,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		CPInstance cpInstance = cpInstancePersistence.create(cpInstanceId);
 
-		if (_cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
+		if (_cpDefinitionLocalServiceHelper.isVersionable(cpDefinitionId)) {
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
+					cpDefinitionId);
 
 			cpDefinitionId = newCPDefinition.getCPDefinitionId();
 		}
@@ -241,7 +243,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			return cpInstance;
 		}
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
 		if (cpDefinition.isIgnoreSKUCombinations()) {
@@ -338,7 +340,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
 		boolean neverExpire = false;
@@ -450,7 +452,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 			CPDefinition cpDefinition =
-				_cpDefinitionLocalService.getCPDefinition(
+				_cpDefinitionPersistence.findByPrimaryKey(
 					cpInstance.getCPDefinitionId());
 
 			if (cpDefinition.isIgnoreSKUCombinations()) {
@@ -486,10 +488,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (makeCopy &&
-			_cpDefinitionLocalService.isVersionable(
+			_cpDefinitionLocalServiceHelper.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
-			_cpDefinitionLocalService.copyCPDefinition(
+			_cpDefinitionLocalServiceHelper.copyCPDefinition(
 				cpInstance.getCPDefinitionId());
 		}
 
@@ -842,11 +844,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
@@ -909,7 +911,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			return cpInstance;
 		}
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
 			cpInstance.getCPDefinitionId());
 
 		if (cpDefinition.isIgnoreSKUCombinations()) {
@@ -959,11 +961,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
@@ -987,11 +989,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
@@ -1078,11 +1080,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		if (_cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalServiceHelper.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalServiceHelper.copyCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
@@ -1678,7 +1680,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstanceLocalServiceImpl.class);
 
 	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
+	private CPDefinitionLocalServiceHelper _cpDefinitionLocalServiceHelper;
 
 	@Reference
 	private CPDefinitionOptionRelLocalService
@@ -1687,6 +1689,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
+
+	@Reference
+	private CPDefinitionPersistence _cpDefinitionPersistence;
 
 	@Reference
 	private CPInstanceOptionValueRelLocalService
