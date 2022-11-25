@@ -39,7 +39,7 @@ import org.osgi.service.url.URLStreamHandlerService;
 /**
  * @author Shuyang Zhou
  */
-@Component(service = BytesURLProtocolSupport.class)
+@Component(immediate = true, service = BytesURLProtocolSupport.class)
 public class BytesURLProtocolSupport {
 
 	public URL putBytes(String id, byte[] bytes) {

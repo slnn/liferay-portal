@@ -90,7 +90,7 @@ import org.osgi.util.tracker.BundleTracker;
 /**
  * @author Shuyang Zhou
  */
-@Component(service = LPKGDeployer.class)
+@Component(immediate = true, service = LPKGDeployer.class)
 public class DefaultLPKGDeployer implements LPKGDeployer {
 
 	@Override
