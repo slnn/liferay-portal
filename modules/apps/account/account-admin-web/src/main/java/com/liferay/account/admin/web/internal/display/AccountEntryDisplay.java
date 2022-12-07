@@ -14,11 +14,16 @@
 
 package com.liferay.account.admin.web.internal.display;
 
-import com.liferay.account.admin.web.internal.util.CurrentAccountEntryManagerUtil;
+import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Drew Brokke
@@ -65,15 +70,30 @@ public class AccountEntryDisplay extends AccountEntryWrapper {
 			return false;
 		}
 
-		long currentAccountEntryId =
-			CurrentAccountEntryManagerUtil.getCurrentAccountEntryId(
-				groupId, userId);
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		if (currentAccountEntryId == getAccountEntryId()) {
-			return true;
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceReference<CurrentAccountEntryManager> serviceReference =
+			bundleContext.getServiceReference(CurrentAccountEntryManager.class);
+
+		try {
+			CurrentAccountEntryManager currentAccountEntryManager =
+				bundleContext.getService(serviceReference);
+
+			long currentAccountEntryId =
+				currentAccountEntryManager.getCurrentAccountEntryId(
+					groupId, userId);
+
+			if (currentAccountEntryId == getAccountEntryId()) {
+				return true;
+			}
+
+			return false;
 		}
-
-		return false;
+		finally {
+			bundleContext.ungetService(serviceReference);
+		}
 	}
 
 	public boolean isValidateUserEmailAddress() {
