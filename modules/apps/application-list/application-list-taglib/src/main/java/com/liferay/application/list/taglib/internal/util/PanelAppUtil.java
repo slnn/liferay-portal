@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Objects;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -55,6 +56,29 @@ public class PanelAppUtil {
 				PortalUtil.getPortletTitle(
 					portlet, ServletContextUtil.getServletContext(),
 					themeDisplay.getLocale()));
+		}
+
+		return label;
+	}
+
+	public static String getLabel(
+		HttpServletRequest httpServletRequest, PanelApp panelApp,
+		ServletContext servletContext) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String label = HtmlUtil.escape(
+			panelApp.getLabel(themeDisplay.getLocale()));
+
+		if (Validator.isNull(label)) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), panelApp.getPortletId());
+
+			label = HtmlUtil.escape(
+				PortalUtil.getPortletTitle(
+					portlet, servletContext, themeDisplay.getLocale()));
 		}
 
 		return label;
