@@ -201,16 +201,13 @@ public class DocumentDTOConverter
 			return new AdaptedImage[0];
 		}
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+		return TransformUtil.transformToArray(
 			_amImageFinder.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
 				).withConfigurationStatus(
 					AMImageQueryBuilder.ConfigurationStatus.ANY
-				).done());
-
-		return TransformUtil.transformToArray(
-			adaptiveMediaList,
+				).done()),
 			adaptiveMedia -> _toAdaptedImage(
 				adaptiveMedia, dtoConverterContext.getUriInfoOptional()),
 			AdaptedImage.class);
