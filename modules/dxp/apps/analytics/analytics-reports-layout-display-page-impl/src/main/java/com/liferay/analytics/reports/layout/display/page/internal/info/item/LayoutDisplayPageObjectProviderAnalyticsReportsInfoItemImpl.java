@@ -224,7 +224,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 						infoField.getInfoFieldType(),
 						DateInfoFieldType.INSTANCE)) {
 
-					date = InfoFieldValue.getValue();
+					date = (Date)infoFieldValue.getValue();
 				}
 			}
 		}
