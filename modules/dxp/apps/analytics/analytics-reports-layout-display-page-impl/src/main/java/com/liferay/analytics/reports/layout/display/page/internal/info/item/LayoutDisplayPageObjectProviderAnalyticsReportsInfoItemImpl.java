@@ -112,13 +112,8 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 			return Collections.singletonList(LocaleUtil.getDefault());
 		}
 
-		long groupId = group.getGroupId();
-
-		if (groupId == null) {
-			return Collections.singletonList(LocaleUtil.getDefault());
-		}
-
-		Set<Locale> availableLocales = _language.getAvailableLocales(groupId);
+		Set<Locale> availableLocales = _language.getAvailableLocales(
+			group.getGroupId());
 
 		if (availableLocales == null) {
 			return Collections.singletonList(LocaleUtil.getDefault());
