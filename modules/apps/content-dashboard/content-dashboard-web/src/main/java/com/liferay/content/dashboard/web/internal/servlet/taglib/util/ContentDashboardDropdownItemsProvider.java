@@ -71,7 +71,7 @@ public class ContentDashboardDropdownItemsProvider {
 						ContentDashboardItemAction.Type.EDIT),
 				contentDashboardItemAction -> _toDropdownItem(
 					contentDashboardItemAction, locale),
-				DropdownItem.class));
+				DropdownItem[].class));
 
 		dropdownItemList.addAll(
 			DropdownItemList.of(
