@@ -152,8 +152,8 @@ public class BulkDocumentRequestExecutorImpl
 
 		modifiableSolrParams.set(
 			"ids",
-			TransformUtil.transformToArray(
-				getDocumentRequests, GetDocumentRequest::getId, String.class));
+			(String[])TransformUtil.transformToArray(
+				getDocumentRequests, GetDocumentRequest::getId, String[].class));
 
 		return new QueryRequest(modifiableSolrParams);
 	}
