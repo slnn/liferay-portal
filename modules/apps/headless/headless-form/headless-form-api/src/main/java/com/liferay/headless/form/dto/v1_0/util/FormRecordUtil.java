@@ -60,7 +60,7 @@ public class FormRecordUtil {
 				draft =
 					ddmFormInstanceRecord.getStatus() ==
 						WorkflowConstants.STATUS_DRAFT;
-				formFieldValues = TransformUtil.transformToArray(
+				formFieldValues = (FormFieldValue[])TransformUtil.transformToArray(
 					ddmFormValues.getDDMFormFieldValues(),
 					ddmFormFieldValue -> {
 						Value localizedValue = ddmFormFieldValue.getValue();
@@ -79,7 +79,7 @@ public class FormRecordUtil {
 							}
 						};
 					},
-					FormFieldValue.class);
+					FormFieldValue[].class);
 				id = ddmFormInstanceRecord.getFormInstanceRecordId();
 			}
 		};

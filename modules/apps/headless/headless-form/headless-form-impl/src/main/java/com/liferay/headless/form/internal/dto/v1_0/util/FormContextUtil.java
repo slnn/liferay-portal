@@ -57,9 +57,9 @@ public class FormContextUtil {
 
 		return new FormContext() {
 			{
-				formPageContexts = TransformUtil.transformToArray(
+				formPageContexts = (FormPageContext[])TransformUtil.transformToArray(
 					_getMaps(ddmFormTemplateContext, "pages"),
-					FormContextUtil::_toFormPageContext, FormPageContext.class);
+					FormContextUtil::_toFormPageContext, FormPageContext[].class);
 				readOnly = _getBoolean(ddmFormTemplateContext, "readOnly");
 				showRequiredFieldsWarning = _getBoolean(
 					ddmFormTemplateContext, "showRequiredFieldsWarning");
@@ -113,7 +113,7 @@ public class FormContextUtil {
 
 				Stream<Map<String, Object>> stream = maps.stream();
 
-				formFieldContexts = TransformUtil.transformToArray(
+				formFieldContexts = (FormFieldContext)TransformUtil.transformToArray(
 					stream.map(
 						row -> _getMaps(row, "columns")
 					).flatMap(
@@ -126,7 +126,7 @@ public class FormContextUtil {
 						Collectors.toList()
 					),
 					FormContextUtil::_toFormFieldContext,
-					FormFieldContext.class);
+					FormFieldContext[].class);
 
 				showRequiredFieldsWarning = _getBoolean(
 					formPageContext, "showRequiredFieldsWarning");

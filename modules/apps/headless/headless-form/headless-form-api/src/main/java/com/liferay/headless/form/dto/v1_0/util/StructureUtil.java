@@ -81,12 +81,12 @@ public class StructureUtil {
 				description = ddmStructure.getDescription(locale);
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, ddmStructure.getDescriptionMap());
-				formPages = TransformUtil.transformToArray(
+				formPages = (FormPage[])TransformUtil.transformToArray(
 					ddmFormLayout.getDDMFormLayoutPages(),
 					ddmFormLayoutPage -> _toFormPage(
 						acceptAllLanguages, ddmFormLayoutPage, ddmStructure,
 						locale),
-					FormPage.class);
+					FormPage[].class);
 				id = ddmStructure.getStructureId();
 				name = ddmStructure.getName(locale);
 				name_i18n = LocalizedMapUtil.getI18nMap(

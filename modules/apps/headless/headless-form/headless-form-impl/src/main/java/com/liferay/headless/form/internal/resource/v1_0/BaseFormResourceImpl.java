@@ -519,7 +519,7 @@ public abstract class BaseFormResourceImpl
 		return TransformUtil.transform(array, unsafeFunction, clazz);
 	}
 
-	protected <T, R, E extends Throwable> R[] transformToArray(
+	protected <T, R, E extends Throwable> Object transformToArray(
 		Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction,
 		Class<?> clazz) {
 
