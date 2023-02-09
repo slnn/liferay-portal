@@ -124,9 +124,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				getAccountEntryOrganizationRelsByOrganizationIdCount(
 					organization.getOrganizationId()));
 
-		String[] externalReferenceCodes = TransformUtil.transformToArray(
+		String[] externalReferenceCodes = (String[])TransformUtil.transformToArray(
 			accountEntries.subList(1, accountEntries.size()),
-			AccountEntryModel::getExternalReferenceCode, String.class);
+			AccountEntryModel::getExternalReferenceCode, String[].class);
 
 		accountResource.deleteOrganizationAccountsByExternalReferenceCode(
 			organization.getOrganizationId(), externalReferenceCodes);
@@ -249,9 +249,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				getAccountEntryOrganizationRelsByOrganizationIdCount(
 					organization2.getOrganizationId()));
 
-		String[] externalReferenceCodes = TransformUtil.transformToArray(
+		String[] externalReferenceCodes = (String[])TransformUtil.transformToArray(
 			accountEntries, AccountEntryModel::getExternalReferenceCode,
-			String.class);
+				String[].class);
 
 		accountResource.patchOrganizationMoveAccountsByExternalReferenceCode(
 			organization1.getOrganizationId(),
@@ -347,9 +347,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		List<AccountEntry> accountEntries = Arrays.asList(
 			_addAccountEntry(), _addAccountEntry(), _addAccountEntry());
 
-		String[] externalReferenceCodes = TransformUtil.transformToArray(
+		String[] externalReferenceCodes = (String[])TransformUtil.transformToArray(
 			accountEntries, AccountEntryModel::getExternalReferenceCode,
-			String.class);
+				String[].class);
 
 		accountResource.postOrganizationAccountsByExternalReferenceCode(
 			organization.getOrganizationId(), externalReferenceCodes);

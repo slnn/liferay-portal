@@ -538,8 +538,8 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	private String[] _toEmailAddresses(List<User> users) {
-		return TransformUtil.transformToArray(
-			users, User::getEmailAddress, String.class);
+		return (String[])TransformUtil.transformToArray(
+			users, User::getEmailAddress, String[].class);
 	}
 
 	private Organization _toOrganization(

@@ -115,13 +115,13 @@ public class UserResourceDTOConverter
 
 		return new UserAccount() {
 			{
-				accountBriefs = TransformUtil.transformToArray(
+				accountBriefs = (AccountBrief[])TransformUtil.transformToArray(
 					_accountEntryUserRelService.
 						getAccountEntryUserRelsByAccountUserId(
 							user.getUserId()),
 					accountEntryUserRel -> _toAccountBrief(
 						accountEntryUserRel, dtoConverterContext, user),
-					AccountBrief.class);
+					AccountBrief[].class);
 				actions = dtoConverterContext.getActions();
 				additionalName = user.getMiddleName();
 				alternateName = user.getScreenName();
@@ -152,52 +152,53 @@ public class UserResourceDTOConverter
 					AssetTag.NAME_ACCESSOR);
 				lastLoginDate = user.getLastLoginDate();
 				name = user.getFullName();
-				organizationBriefs = TransformUtil.transformToArray(
+				organizationBriefs =
+						(OrganizationBrief[])TransformUtil.transformToArray(
 					user.getOrganizations(),
 					organization -> _toOrganizationBrief(
 						dtoConverterContext, organization, user),
-					OrganizationBrief.class);
-				roleBriefs = TransformUtil.transformToArray(
+					OrganizationBrief[].class);
+				roleBriefs = (RoleBrief[])TransformUtil.transformToArray(
 					_roleLocalService.getUserRoles(user.getUserId()),
 					role -> _toRoleBrief(dtoConverterContext, role),
-					RoleBrief.class);
-				siteBriefs = TransformUtil.transformToArray(
+					RoleBrief[].class);
+				siteBriefs = (SiteBrief[])TransformUtil.transformToArray(
 					_groupLocalService.getGroups(
 						user.getCompanyId(),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID, true),
 					group -> _toSiteBrief(dtoConverterContext, group),
-					SiteBrief.class);
+					SiteBrief[].class);
 				userAccountContactInformation =
 					new UserAccountContactInformation() {
 						{
-							emailAddresses = TransformUtil.transformToArray(
+							emailAddresses = (EmailAddress[])TransformUtil.transformToArray(
 								user.getEmailAddresses(),
 								EmailAddressUtil::toEmailAddress,
-								EmailAddress.class);
+								EmailAddress[].class);
 							facebook = contact.getFacebookSn();
 							jabber = contact.getJabberSn();
-							postalAddresses = TransformUtil.transformToArray(
+							postalAddresses = (PostalAddress[])TransformUtil.transformToArray(
 								user.getAddresses(),
 								address -> PostalAddressUtil.toPostalAddress(
 									dtoConverterContext.isAcceptAllLanguages(),
 									address, user.getCompanyId(),
 									dtoConverterContext.getLocale()),
-								PostalAddress.class);
+								PostalAddress[].class);
 							skype = contact.getSkypeSn();
 							sms = contact.getSmsSn();
-							telephones = TransformUtil.transformToArray(
+							telephones = (Phone[])TransformUtil.transformToArray(
 								user.getPhones(), PhoneUtil::toPhone,
-								Phone.class);
+								Phone[].class);
 							twitter = contact.getTwitterSn();
-							webUrls = TransformUtil.transformToArray(
+							webUrls = (WebUrl[])TransformUtil.transformToArray(
 								user.getWebsites(), WebUrlUtil::toWebUrl,
-								WebUrl.class);
+								WebUrl[].class);
 						}
 					};
-				userGroupBriefs = TransformUtil.transformToArray(
+				userGroupBriefs = (UserGroupBrief[])TransformUtil.transformToArray(
 					_userGroupLocalService.getUserUserGroups(user.getUserId()),
 					userGroup -> _toUserGroupBrief(userGroup),
-					UserGroupBrief.class);
+					UserGroupBrief[].class);
 
 				setDashboardURL(
 					() -> {
@@ -269,12 +270,12 @@ public class UserResourceDTOConverter
 				externalReferenceCode = accountEntry.getExternalReferenceCode();
 				id = accountEntry.getAccountEntryId();
 				name = accountEntry.getName();
-				roleBriefs = TransformUtil.transformToArray(
+				roleBriefs = (RoleBrief[])TransformUtil.transformToArray(
 					_accountRoleLocalService.getAccountRoles(
 						accountEntry.getAccountEntryId(), user.getUserId()),
 					accountRole -> _toRoleBrief(
 						accountRole, dtoConverterContext),
-					RoleBrief.class);
+					RoleBrief[].class);
 			}
 		};
 	}
@@ -288,11 +289,11 @@ public class UserResourceDTOConverter
 			{
 				id = organization.getOrganizationId();
 				name = organization.getName();
-				roleBriefs = TransformUtil.transformToArray(
+				roleBriefs = (RoleBrief[])TransformUtil.transformToArray(
 					_roleLocalService.getUserGroupRoles(
 						user.getUserId(), organization.getGroupId()),
 					role -> _toRoleBrief(dtoConverterContext, role),
-					RoleBrief.class);
+					RoleBrief[].class);
 			}
 		};
 	}

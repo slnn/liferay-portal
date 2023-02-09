@@ -100,11 +100,11 @@ public class AccountResourceDTOConverter
 						_accountEntryUserRelLocalService.
 							getAccountEntryUserRelsCountByAccountEntryId(
 								accountEntry.getAccountEntryId());
-				organizationIds = TransformUtil.transformToArray(
+				organizationIds = (Long[])TransformUtil.transformToArray(
 					_accountEntryOrganizationRelLocalService.
 						getAccountEntryOrganizationRels(
 							accountEntry.getAccountEntryId()),
-					AccountEntryOrganizationRel::getOrganizationId, Long.class);
+					AccountEntryOrganizationRel::getOrganizationId, Long[].class);
 				parentAccountId = accountEntry.getParentAccountEntryId();
 				status = accountEntry.getStatus();
 				type = Account.Type.create(accountEntry.getType());

@@ -195,38 +195,38 @@ public class OrganizationResourceDTOConverter
 				organizationContactInformation =
 					new OrganizationContactInformation() {
 						{
-							emailAddresses = TransformUtil.transformToArray(
+							emailAddresses = (EmailAddress[])TransformUtil.transformToArray(
 								_emailAddressService.getEmailAddresses(
 									organization.getModelClassName(),
 									organization.getOrganizationId()),
 								EmailAddressUtil::toEmailAddress,
-								EmailAddress.class);
-							postalAddresses = TransformUtil.transformToArray(
+								EmailAddress[].class);
+							postalAddresses = (PostalAddress[])TransformUtil.transformToArray(
 								organization.getAddresses(),
 								address -> PostalAddressUtil.toPostalAddress(
 									dtoConverterContext.isAcceptAllLanguages(),
 									address, organization.getCompanyId(),
 									dtoConverterContext.getLocale()),
-								PostalAddress.class);
-							telephones = TransformUtil.transformToArray(
+								PostalAddress[].class);
+							telephones = (Phone[])TransformUtil.transformToArray(
 								_phoneService.getPhones(
 									organization.getModelClassName(),
 									organization.getOrganizationId()),
-								PhoneUtil::toPhone, Phone.class);
-							webUrls = TransformUtil.transformToArray(
+								PhoneUtil::toPhone, Phone[].class);
+							webUrls = (WebUrl[])TransformUtil.transformToArray(
 								_websiteService.getWebsites(
 									organization.getModelClassName(),
 									organization.getOrganizationId()),
-								WebUrlUtil::toWebUrl, WebUrl.class);
+								WebUrlUtil::toWebUrl, WebUrl[].class);
 						}
 					};
 				parentOrganization = organizationResourceDTOConverter.toDTO(
 					dtoConverterContext, organization.getParentOrganization());
-				services = TransformUtil.transformToArray(
+				services = (Service[])TransformUtil.transformToArray(
 					_orgLaborService.getOrgLabors(
 						organization.getOrganizationId()),
 					OrganizationResourceDTOConverter.this::_toService,
-					Service.class);
+					Service[].class);
 
 				setImage(
 					() -> {
