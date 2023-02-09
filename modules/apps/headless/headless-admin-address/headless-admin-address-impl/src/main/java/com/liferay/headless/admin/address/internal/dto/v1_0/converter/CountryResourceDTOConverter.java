@@ -69,12 +69,12 @@ public class CountryResourceDTOConverter
 				name = serviceBuilderCountry.getName();
 				number = Integer.valueOf(serviceBuilderCountry.getNumber());
 				position = serviceBuilderCountry.getPosition();
-				regions = TransformUtil.transformToArray(
+				regions = (Region[])TransformUtil.transformToArray(
 					_regionService.getRegions(
 						serviceBuilderCountry.getCountryId()),
 					serviceBuilderRegion -> _regionResourceDTOConverter.toDTO(
 						serviceBuilderRegion),
-					Region.class);
+					Region[].class);
 				shippingAllowed = serviceBuilderCountry.getShippingAllowed();
 				subjectToVAT = serviceBuilderCountry.getSubjectToVAT();
 				title_i18n = serviceBuilderCountry.getLanguageIdToTitleMap();
