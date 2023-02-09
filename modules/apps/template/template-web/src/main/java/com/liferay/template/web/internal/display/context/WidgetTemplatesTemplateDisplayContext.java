@@ -67,11 +67,11 @@ public class WidgetTemplatesTemplateDisplayContext
 			return _classNameIds;
 		}
 
-		Long[] classNameIds = TransformUtil.transformToArray(
+		Long[] classNameIds = (Long[])TransformUtil.transformToArray(
 			_portletDisplayTemplate.getPortletDisplayTemplateHandlers(),
 			templateHandler -> PortalUtil.getClassNameId(
 				templateHandler.getClassName()),
-			Long.class);
+				Long[].class);
 
 		return ArrayUtil.toArray(classNameIds);
 	}
