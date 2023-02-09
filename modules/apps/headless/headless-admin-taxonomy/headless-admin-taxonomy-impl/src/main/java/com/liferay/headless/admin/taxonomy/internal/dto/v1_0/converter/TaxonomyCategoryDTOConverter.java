@@ -144,12 +144,12 @@ public class TaxonomyCategoryDTOConverter
 					}
 				};
 				siteId = assetCategory.getGroupId();
-				taxonomyCategoryProperties = TransformUtil.transformToArray(
+				taxonomyCategoryProperties = (TaxonomyCategoryProperty[])TransformUtil.transformToArray(
 					_assetCategoryPropertyLocalService.getCategoryProperties(
 						assetCategory.getCategoryId()),
 					assetCategoryProperties -> _toTaxonomyCategoryProperty(
 						assetCategoryProperties),
-					TaxonomyCategoryProperty.class);
+					TaxonomyCategoryProperty[].class);
 				taxonomyVocabularyId = assetCategory.getVocabularyId();
 
 				setParentTaxonomyCategory(
