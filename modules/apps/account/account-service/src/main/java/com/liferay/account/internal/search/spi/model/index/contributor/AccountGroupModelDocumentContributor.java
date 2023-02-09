@@ -48,10 +48,10 @@ public class AccountGroupModelDocumentContributor
 	}
 
 	private Long[] _getAccountEntryIds(AccountGroup accountGroup) {
-		return TransformUtil.transformToArray(
+		return (Long[])TransformUtil.transformToArray(
 			_accountGroupRelLocalService.getAccountGroupRels(
 				accountGroup.getAccountGroupId(), AccountEntry.class.getName()),
-			AccountGroupRel::getClassPK, Long.class);
+			AccountGroupRel::getClassPK, Long[].class);
 	}
 
 	@Reference
