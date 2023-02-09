@@ -89,9 +89,9 @@ public class ElasticsearchSortFieldTranslator
 		GeoDistanceSortBuilder geoDistanceSortBuilder =
 			SortBuilders.geoDistanceSort(
 				geoDistanceSort.getField(),
-				TransformUtil.transformToArray(
+				(GeoPoint[])TransformUtil.transformToArray(
 					geoDistanceSort.getGeoLocationPoints(),
-					GeoLocationPointTranslator::translate, GeoPoint.class));
+					GeoLocationPointTranslator::translate, GeoPoint[].class));
 
 		geoDistanceSortBuilder.order(translate(geoDistanceSort.getSortOrder()));
 

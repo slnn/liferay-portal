@@ -48,13 +48,13 @@ public class FunctionScoreQueryTranslatorImpl
 		FunctionScoreQueryBuilder functionScoreQueryBuilder =
 			QueryBuilders.functionScoreQuery(
 				queryBuilder,
-				TransformUtil.transformToArray(
+					(FilterFunctionBuilder[])TransformUtil.transformToArray(
 					functionScoreQuery.getFilterQueryScoreFunctionHolders(),
 					filterQueryScoreFunctionHolder -> _translateFilterFunction(
 						filterQueryScoreFunctionHolder, queryTranslator,
 						_translateScoreFunction(
 							filterQueryScoreFunctionHolder.getScoreFunction())),
-					FilterFunctionBuilder.class));
+					FilterFunctionBuilder[].class));
 
 		if (functionScoreQuery.getMinScore() != null) {
 			functionScoreQueryBuilder.setMinScore(
