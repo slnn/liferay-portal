@@ -197,10 +197,10 @@ public class DataLayoutUtil {
 			return new DataLayoutColumn[0];
 		}
 
-		return TransformUtil.transformToArray(
+		return (DataLayoutColumn[])TransformUtil.transformToArray(
 			ddmFormLayoutColumns,
 			ddmFormLayoutColumn -> _toDataLayoutColumn(ddmFormLayoutColumn),
-			DataLayoutColumn.class);
+			DataLayoutColumn[].class);
 	}
 
 	private static Map<String, Object> _toDataLayoutFields(
@@ -268,10 +268,10 @@ public class DataLayoutUtil {
 			return new DataLayoutPage[0];
 		}
 
-		return TransformUtil.transformToArray(
+		return (DataLayoutPage[])TransformUtil.transformToArray(
 			ddmFormLayoutPages,
 			ddmFormLayoutPage -> _toDataLayoutPage(ddmFormLayoutPage),
-			DataLayoutPage.class);
+			DataLayoutPage[].class);
 	}
 
 	private static DataLayoutRow _toDataLayoutRow(
@@ -288,10 +288,10 @@ public class DataLayoutUtil {
 	private static DataLayoutRow[] _toDataLayoutRows(
 		List<DDMFormLayoutRow> ddmFormLayoutRows) {
 
-		return TransformUtil.transformToArray(
+		return (DataLayoutRow[])TransformUtil.transformToArray(
 			ddmFormLayoutRows,
 			ddmFormLayoutRow -> _toDataLayoutRow(ddmFormLayoutRow),
-			DataLayoutRow.class);
+			DataLayoutRow[].class);
 	}
 
 	private static DataRule[] _toDataRules(
@@ -308,22 +308,22 @@ public class DataLayoutUtil {
 			Gson gson = new Gson();
 
 			dataRule.setActions(
-				TransformUtil.transformToArray(
+				(Map[])TransformUtil.transformToArray(
 					spiDDMFormRule.getSPIDDMFormRuleActions(),
 					spiDDMFormRuleAction -> gson.fromJson(
 						JSONFactoryUtil.looseSerializeDeep(
 							spiDDMFormRuleAction),
 						Map.class),
-					Map.class));
+					Map[].class));
 
 			dataRule.setConditions(
-				TransformUtil.transformToArray(
+				(Map[])TransformUtil.transformToArray(
 					spiDDMFormRule.getSPIDDMFormRuleConditions(),
 					spiDDMFormRuleCondition -> gson.fromJson(
 						JSONFactoryUtil.looseSerializeDeep(
 							spiDDMFormRuleCondition),
 						Map.class),
-					Map.class));
+						Map[].class));
 
 			dataRule.setLogicalOperator(spiDDMFormRule.getLogicalOperator());
 			dataRule.setName(
