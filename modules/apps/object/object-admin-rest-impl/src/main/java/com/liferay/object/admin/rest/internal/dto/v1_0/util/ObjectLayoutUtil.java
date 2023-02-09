@@ -62,11 +62,11 @@ public class ObjectLayoutUtil {
 					objectDefinition.getExternalReferenceCode();
 				objectDefinitionId =
 					serviceBuilderObjectLayout.getObjectDefinitionId();
-				objectLayoutTabs = TransformUtil.transformToArray(
+				objectLayoutTabs = (ObjectLayoutTab[])TransformUtil.transformToArray(
 					serviceBuilderObjectLayout.getObjectLayoutTabs(),
 					objectLayoutTab -> toObjectLayoutTab(
 						objectFieldLocalService, objectLayoutTab),
-					ObjectLayoutTab.class);
+					ObjectLayoutTab[].class);
 			}
 		};
 
@@ -88,11 +88,11 @@ public class ObjectLayoutUtil {
 				id = objectLayoutTab.getObjectLayoutTabId();
 				name = LocalizedMapUtil.getLanguageIdMap(
 					objectLayoutTab.getNameMap());
-				objectLayoutBoxes = TransformUtil.transformToArray(
+				objectLayoutBoxes = (ObjectLayoutBox[])TransformUtil.transformToArray(
 					objectLayoutTab.getObjectLayoutBoxes(),
 					objectLayoutBox -> _toObjectLayoutBox(
 						objectFieldLocalService, objectLayoutBox),
-					ObjectLayoutBox.class);
+					ObjectLayoutBox[].class);
 				objectRelationshipId =
 					objectLayoutTab.getObjectRelationshipId();
 				priority = objectLayoutTab.getPriority();
@@ -114,11 +114,12 @@ public class ObjectLayoutUtil {
 				id = objectLayoutBox.getObjectLayoutBoxId();
 				name = LocalizedMapUtil.getLanguageIdMap(
 					objectLayoutBox.getNameMap());
-				objectLayoutRows = TransformUtil.transformToArray(
+				objectLayoutRows =
+						(ObjectLayoutRow[])TransformUtil.transformToArray(
 					objectLayoutBox.getObjectLayoutRows(),
 					objectLayoutRow -> _toObjectLayoutRow(
 						objectFieldLocalService, objectLayoutRow),
-					ObjectLayoutRow.class);
+					ObjectLayoutRow[].class);
 				priority = objectLayoutBox.getPriority();
 				type = ObjectLayoutBox.Type.create(objectLayoutBox.getType());
 			}
@@ -159,11 +160,11 @@ public class ObjectLayoutUtil {
 		return new ObjectLayoutRow() {
 			{
 				id = serviceBuilderObjectLayoutRow.getObjectLayoutRowId();
-				objectLayoutColumns = TransformUtil.transformToArray(
+				objectLayoutColumns = (ObjectLayoutColumn[])TransformUtil.transformToArray(
 					serviceBuilderObjectLayoutRow.getObjectLayoutColumns(),
 					objectLayoutColumn -> _toObjectLayoutColumn(
 						objectFieldLocalService, objectLayoutColumn),
-					ObjectLayoutColumn.class);
+					ObjectLayoutColumn[].class);
 				priority = serviceBuilderObjectLayoutRow.getPriority();
 			}
 		};

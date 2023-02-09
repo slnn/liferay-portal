@@ -185,10 +185,10 @@ public class PredicateExpressionVisitorImpl
 			Column<?, Object> column = _getColumn(left, _objectDefinitionId);
 
 			return column.in(
-				TransformUtil.transformToArray(
+				(Object[])TransformUtil.transformToArray(
 					rights,
 					right -> _getValue(left, _objectDefinitionId, right),
-					Object.class));
+					Object[].class));
 		}
 
 		throw new UnsupportedOperationException(

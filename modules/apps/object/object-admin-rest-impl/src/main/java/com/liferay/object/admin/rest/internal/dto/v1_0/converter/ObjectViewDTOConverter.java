@@ -76,22 +76,23 @@ public class ObjectViewDTOConverter
 				objectDefinitionExternalReferenceCode =
 					objectDefinition.getExternalReferenceCode();
 				objectDefinitionId = objectView.getObjectDefinitionId();
-				objectViewColumns = TransformUtil.transformToArray(
+				objectViewColumns = (ObjectViewColumn[])TransformUtil.transformToArray(
 					objectView.getObjectViewColumns(),
 					objectViewColumn -> _toObjectViewColumn(objectViewColumn),
-					ObjectViewColumn.class);
-				objectViewFilterColumns = TransformUtil.transformToArray(
+					ObjectViewColumn[].class);
+				objectViewFilterColumns = (ObjectViewFilterColumn[])TransformUtil.transformToArray(
 					objectView.getObjectViewFilterColumns(),
 					objectViewFilterColumn -> _toObjectViewFilterColumn(
 						dtoConverterContext.getLocale(),
 						objectView.getObjectDefinitionId(),
 						objectViewFilterColumn),
-					ObjectViewFilterColumn.class);
-				objectViewSortColumns = TransformUtil.transformToArray(
+					ObjectViewFilterColumn[].class);
+				objectViewSortColumns =
+						(ObjectViewSortColumn[])TransformUtil.transformToArray(
 					objectView.getObjectViewSortColumns(),
 					objectViewSortColumn -> _toObjectViewSortColumn(
 						objectViewSortColumn),
-					ObjectViewSortColumn.class);
+					ObjectViewSortColumn[].class);
 			}
 		};
 	}

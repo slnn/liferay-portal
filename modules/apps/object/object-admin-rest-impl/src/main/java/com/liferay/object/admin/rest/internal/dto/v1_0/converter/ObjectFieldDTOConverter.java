@@ -68,12 +68,12 @@ public class ObjectFieldDTOConverter
 					objectField.getLabelMap());
 				listTypeDefinitionId = objectField.getListTypeDefinitionId();
 				name = objectField.getName();
-				objectFieldSettings = TransformUtil.transformToArray(
+				objectFieldSettings = (ObjectFieldSetting[])TransformUtil.transformToArray(
 					objectField.getObjectFieldSettings(),
 					objectFieldSetting ->
 						ObjectFieldSettingUtil.toObjectFieldSetting(
 							objectField.getBusinessType(), objectFieldSetting),
-					ObjectFieldSetting.class);
+					ObjectFieldSetting[].class);
 				relationshipType = ObjectField.RelationshipType.create(
 					objectField.getRelationshipType());
 				required = objectField.isRequired();

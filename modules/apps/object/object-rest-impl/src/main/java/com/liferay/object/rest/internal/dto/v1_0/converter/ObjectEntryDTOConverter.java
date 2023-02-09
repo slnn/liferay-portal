@@ -337,7 +337,7 @@ public class ObjectEntryDTOConverter
 		DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
 		List<com.liferay.object.model.ObjectEntry> objectEntries) {
 
-		return TransformUtil.transformToArray(
+		return (ObjectEntry[])TransformUtil.transformToArray(
 			objectEntries,
 			objectEntry -> {
 				try {
@@ -355,7 +355,7 @@ public class ObjectEntryDTOConverter
 					return null;
 				}
 			},
-			ObjectEntry.class);
+			ObjectEntry[].class);
 	}
 
 	private Map<String, Object> _toProperties(

@@ -34,11 +34,11 @@ public class ObjectStateFlowUtil {
 		return new ObjectStateFlow() {
 			{
 				id = objectStateFlow.getObjectStateFlowId();
-				objectStates = TransformUtil.transformToArray(
+				objectStates = (com.liferay.object.admin.rest.dto.v1_0.ObjectState[])TransformUtil.transformToArray(
 					ObjectStateLocalServiceUtil.getObjectStateFlowObjectStates(
 						objectStateFlow.getObjectStateFlowId()),
 					ObjectStateFlowUtil::_toObjectState,
-					com.liferay.object.admin.rest.dto.v1_0.ObjectState.class);
+					com.liferay.object.admin.rest.dto.v1_0.ObjectState[].class);
 			}
 		};
 	}
@@ -55,11 +55,11 @@ public class ObjectStateFlowUtil {
 			{
 				id = objectState.getObjectStateId();
 				key = listTypeEntry.getKey();
-				objectStateTransitions = TransformUtil.transformToArray(
+				objectStateTransitions = (ObjectStateTransition[])TransformUtil.transformToArray(
 					ObjectStateLocalServiceUtil.getNextObjectStates(
 						objectState.getObjectStateId()),
 					ObjectStateFlowUtil::_toObjectStateTransition,
-					ObjectStateTransition.class);
+					ObjectStateTransition[].class);
 			}
 		};
 	}
