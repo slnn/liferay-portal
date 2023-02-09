@@ -16,6 +16,7 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.listener.BaseEntityModelListener;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -46,15 +47,8 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 	public long[] getMembershipIds(User user) throws Exception {
 		List<Group> groups = user.getSiteGroups();
 
-		long[] groupIds = new long[groups.size()];
-
-		for (int i = 0; i < groups.size(); i++) {
-			Group group = groups.get(i);
-
-			groupIds[i] = group.getGroupId();
-		}
-
-		return groupIds;
+		return (long[])TransformUtil.transformToPrimitiveArray(
+			groups, Group::getGroupId, long[].class);
 	}
 
 	@Override
