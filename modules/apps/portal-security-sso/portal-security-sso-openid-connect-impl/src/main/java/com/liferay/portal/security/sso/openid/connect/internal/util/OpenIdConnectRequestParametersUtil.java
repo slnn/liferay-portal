@@ -62,10 +62,10 @@ public class OpenIdConnectRequestParametersUtil {
 			return new URI[0];
 		}
 
-		return TransformUtil.transformToArray(
+		return (URI[])TransformUtil.transformToArray(
 			JSONObjectUtils.getStringList(
 				requestParametersJSONObject, "resource"),
-			resource -> URI.create(resource), URI.class);
+			resource -> URI.create(resource), URI[].class);
 	}
 
 	public static ResponseType getResponseType(
