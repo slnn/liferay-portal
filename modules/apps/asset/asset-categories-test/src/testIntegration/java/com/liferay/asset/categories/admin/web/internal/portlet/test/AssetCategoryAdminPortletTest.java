@@ -184,10 +184,10 @@ public class AssetCategoryAdminPortletTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 		mockLiferayPortletActionRequest.addParameter(
 			"categoryIds",
-			TransformUtil.transformToArray(
+			(String[])TransformUtil.transformToArray(
 				assetCategories,
 				assetCategory -> String.valueOf(assetCategory.getCategoryId()),
-				String.class));
+				String[].class));
 		mockLiferayPortletActionRequest.addParameter(
 			"displayPageType",
 			String.valueOf(AssetDisplayPageConstants.TYPE_SPECIFIC));

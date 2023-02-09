@@ -122,8 +122,8 @@ public class AssetTagDocumentContributor
 	}
 
 	private String[] _getNames(List<AssetTag> assetTags) {
-		return TransformUtil.transformToArray(
-			assetTags, assetTag -> assetTag.getName(), String.class);
+		return (String[])TransformUtil.transformToArray(
+			assetTags, assetTag -> assetTag.getName(), String[].class);
 	}
 
 	private Locale _getSiteDefaultLocale(long groupId) {
@@ -136,8 +136,8 @@ public class AssetTagDocumentContributor
 	}
 
 	private Long[] _getTagIds(List<AssetTag> assetTags) {
-		return TransformUtil.transformToArray(
-			assetTags, assetTag -> assetTag.getTagId(), Long.class);
+		return (Long[])TransformUtil.transformToArray(
+			assetTags, assetTag -> assetTag.getTagId(), Long[].class);
 	}
 
 	@Reference
