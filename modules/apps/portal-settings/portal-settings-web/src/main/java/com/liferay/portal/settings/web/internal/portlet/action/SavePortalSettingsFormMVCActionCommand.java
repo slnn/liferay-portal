@@ -108,10 +108,10 @@ public class SavePortalSettingsFormMVCActionCommand
 			return null;
 		}
 
-		return TransformUtil.transformToArray(
+		return (String[])TransformUtil.transformToArray(
 			StringUtil.split(value),
 			index -> getString(actionRequest, name.concat(index)),
-			String.class);
+				String[].class);
 	}
 
 	private void _storeSettings(
