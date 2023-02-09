@@ -68,12 +68,12 @@ public class ProductOptionDTOConverter
 			{
 				key = cpDefinitionOptionRel.getKey();
 				optionKey = cpOption.getKey();
-				values = TransformUtil.transformToArray(
+				values = (Map[])TransformUtil.transformToArray(
 					cpDefinitionOptionRel.getCPDefinitionOptionValueRels(),
 					cpDefinitionOptionValueRel ->
 						LanguageUtils.getLanguageIdMap(
 							cpDefinitionOptionValueRel.getNameMap()),
-					Map.class);
+					Map[].class);
 			}
 		};
 	}

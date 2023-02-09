@@ -76,11 +76,11 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 				id = commerceOrder.getCommerceOrderId();
 				modifiedDate = commerceOrder.getModifiedDate();
 				orderDate = commerceOrder.getOrderDate();
-				orderItems = TransformUtil.transformToArray(
+				orderItems = (OrderItem[])TransformUtil.transformToArray(
 					commerceOrder.getCommerceOrderItems(),
 					commerceOrderItem -> _orderItemDTOConverter.toDTO(
 						commerceOrderItem),
-					OrderItem.class);
+					OrderItem[].class);
 				orderStatus = commerceOrder.getOrderStatus();
 				orderTypeId = commerceOrder.getCommerceOrderTypeId();
 				paymentMethod = commerceOrder.getCommercePaymentMethodKey();

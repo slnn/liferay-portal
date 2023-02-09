@@ -82,11 +82,11 @@ public class ProductDTOConverter
 		return new Product() {
 			{
 				catalogId = commerceCatalog.getCommerceCatalogId();
-				categoryIds = TransformUtil.transformToArray(
+				categoryIds = (Long[])TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						cpDefinition.getModelClassName(),
 						cpDefinition.getCPDefinitionId()),
-					AssetCategory::getCategoryId, Long.class);
+					AssetCategory::getCategoryId, Long[].class);
 				createDate = cpDefinition.getCreateDate();
 				customFields = expandoBridge.getAttributes();
 				description = LanguageUtils.getLanguageIdMap(
@@ -104,7 +104,7 @@ public class ProductDTOConverter
 				modifiedDate = cpDefinition.getModifiedDate();
 				name = LanguageUtils.getLanguageIdMap(
 					cpDefinition.getNameMap());
-				productChannelIds = TransformUtil.transformToArray(
+				productChannelIds = (Long[])TransformUtil.transformToArray(
 					_commerceChannelRelLocalService.getCommerceChannelRels(
 						cpDefinition.getModelClassName(),
 						cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
@@ -115,31 +115,31 @@ public class ProductDTOConverter
 
 						return commerceChannel.getGroupId();
 					},
-					Long.class);
+					Long[].class);
 				productId = cProduct.getCProductId();
-				productOptions = TransformUtil.transformToArray(
+				productOptions = (ProductOption[])TransformUtil.transformToArray(
 					cpDefinition.getCPDefinitionOptionRels(),
 					cpDefinitionOptionRel -> _productOptionDTOConverter.toDTO(
 						cpDefinitionOptionRel),
-					ProductOption.class);
-				productSpecifications = TransformUtil.transformToArray(
+					ProductOption[].class);
+				productSpecifications = (ProductSpecification[])TransformUtil.transformToArray(
 					cpDefinition.getCPDefinitionSpecificationOptionValues(),
 					cpDefinitionSpecificationOptionValue ->
 						_productSpecificationDTOConverter.toDTO(
 							cpDefinitionSpecificationOptionValue),
-					ProductSpecification.class);
+					ProductSpecification[].class);
 				productType = cpType.getName();
-				skus = TransformUtil.transformToArray(
+				skus = (Sku[])TransformUtil.transformToArray(
 					cpDefinition.getCPInstances(),
 					cpInstance -> _skuDTOConverter.toDTO(cpInstance),
-					Sku.class);
+					Sku[].class);
 				status = cpDefinition.getStatus();
 				subscriptionEnabled = cpDefinition.isSubscriptionEnabled();
-				tags = TransformUtil.transformToArray(
+				tags = (String[])TransformUtil.transformToArray(
 					_assetTagLocalService.getTags(
 						CPDefinition.class.getName(),
 						cpDefinition.getCPDefinitionId()),
-					AssetTag::getName, String.class);
+					AssetTag::getName, String[].class);
 				urls = LanguageUtils.getLanguageIdMap(
 					cpDefinition.getUrlTitleMap());
 			}
