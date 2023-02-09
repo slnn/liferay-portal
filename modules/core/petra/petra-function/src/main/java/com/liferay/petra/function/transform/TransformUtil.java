@@ -49,7 +49,7 @@ public class TransformUtil {
 		}
 	}
 
-	public static <T, R, E extends Throwable> R[] transformToArray(
+	public static <T, R, E extends Throwable> Object transformToArray(
 		Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction,
 		Class<?> clazz) {
 
@@ -102,14 +102,21 @@ public class TransformUtil {
 		return list.toArray((R[])Array.newInstance(clazz, 0));
 	}
 
-	public static <T, R, E extends Throwable> R[] unsafeTransformToArray(
+	public static <T, R, E extends Throwable> Object unsafeTransformToArray(
 			Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction,
 			Class<?> clazz)
 		throws E {
 
 		List<R> list = unsafeTransform(collection, unsafeFunction);
 
-		return list.toArray((R[])Array.newInstance(clazz, 0));
+		Object array = clazz.cast(
+			Array.newInstance(clazz.getComponentType(), list.size()));
+
+		for (int i = 0; i < list.size(); i++) {
+			Array.set(array, i, list.get(i));
+		}
+
+		return array;
 	}
 
 	public static <T, R, E extends Throwable> List<R> unsafeTransformToList(
