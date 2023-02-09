@@ -99,12 +99,12 @@ public class ProductDTOConverter
 				actions = dtoConverterContext.getActions();
 				active = !cpDefinition.isInactive();
 				catalogId = _getCommerceCatalogId(cpDefinition);
-				categories = TransformUtil.transformToArray(
+				categories = (Category[])TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						cpDefinition.getModelClassName(),
 						cpDefinition.getCPDefinitionId()),
 					assetCategory -> _toCategory(assetCategory),
-					Category.class);
+					Category[].class);
 				createDate = cpDefinition.getCreateDate();
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
