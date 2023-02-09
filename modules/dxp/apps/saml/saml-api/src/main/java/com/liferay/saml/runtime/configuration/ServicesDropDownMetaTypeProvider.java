@@ -102,9 +102,9 @@ public class ServicesDropDownMetaTypeProvider
 
 	@Override
 	public String[] getLocales() {
-		return TransformUtil.transformToArray(
+		return (String[])TransformUtil.transformToArray(
 			LanguageUtil.getAvailableLocales(), Locale::toLanguageTag,
-			String.class);
+			String[].class);
 	}
 
 	public String getMetatypePID() {

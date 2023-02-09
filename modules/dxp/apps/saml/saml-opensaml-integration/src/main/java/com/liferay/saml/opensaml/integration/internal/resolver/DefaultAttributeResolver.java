@@ -184,8 +184,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 			attributePublisher.publish(
 				name, nameFormat,
-				TransformUtil.transformToArray(
-					groups, Group::getName, String.class));
+				(String[])TransformUtil.transformToArray(
+					groups, Group::getName, String[].class));
 		}
 		catch (Exception exception) {
 			String message = StringBundler.concat(
@@ -271,7 +271,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 				attributePublisher.publish(
 					name, nameFormat,
-					TransformUtil.transformToArray(
+					R[]TransformUtil.transformToArray(
 						roles, Role::getName, String.class));
 			}
 		}
@@ -313,7 +313,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 			publisher.publish(
 				name, nameFormat,
-				TransformUtil.transformToArray(
+				R[]TransformUtil.transformToArray(
 					organizations, Organization::getName, String.class));
 		}
 		catch (Exception exception) {
@@ -398,7 +398,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 			attributePublisher.publish(
 				name, nameFormat,
-				TransformUtil.transformToArray(
+				R[]TransformUtil.transformToArray(
 					uniqueRoles, Role::getName, String.class));
 		}
 		catch (Exception exception) {
@@ -516,7 +516,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 				attributePublisher.publish(
 					name, nameFormat,
-					TransformUtil.transformToArray(
+					R[]TransformUtil.transformToArray(
 						roles, Role::getName, String.class));
 			}
 		}
@@ -610,7 +610,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 			attributePublisher.publish(
 				name, nameFormat,
-				TransformUtil.transformToArray(
+				R[]TransformUtil.transformToArray(
 					userGroups, UserGroup::getName, String.class));
 		}
 		catch (Exception exception) {
