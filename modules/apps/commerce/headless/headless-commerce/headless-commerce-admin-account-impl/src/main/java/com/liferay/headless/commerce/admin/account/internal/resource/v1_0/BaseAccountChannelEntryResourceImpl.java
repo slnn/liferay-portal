@@ -2764,7 +2764,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 			Class<?> clazz)
 		throws E {
 
-		return TransformUtil.unsafeTransformToArray(
+		return R[]TransformUtil.unsafeTransformToArray(
 			collection, unsafeFunction, clazz);
 	}
 

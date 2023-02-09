@@ -1058,7 +1058,7 @@ public abstract class BaseDataRecordResourceImpl
 			Class<?> clazz)
 		throws E {
 
-		return TransformUtil.unsafeTransformToArray(
+		return R[]TransformUtil.unsafeTransformToArray(
 			collection, unsafeFunction, clazz);
 	}
 

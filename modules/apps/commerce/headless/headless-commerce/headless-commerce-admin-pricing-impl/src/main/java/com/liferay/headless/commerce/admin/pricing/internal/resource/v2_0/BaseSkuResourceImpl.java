@@ -272,7 +272,7 @@ public abstract class BaseSkuResourceImpl implements SkuResource {
 			Class<?> clazz)
 		throws E {
 
-		return TransformUtil.unsafeTransformToArray(
+		return R[]TransformUtil.unsafeTransformToArray(
 			collection, unsafeFunction, clazz);
 	}
 

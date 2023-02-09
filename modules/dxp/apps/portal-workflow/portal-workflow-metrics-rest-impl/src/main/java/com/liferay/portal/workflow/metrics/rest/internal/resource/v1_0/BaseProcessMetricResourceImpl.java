@@ -505,7 +505,7 @@ public abstract class BaseProcessMetricResourceImpl
 			Class<?> clazz)
 		throws E {
 
-		return TransformUtil.unsafeTransformToArray(
+		return R[]TransformUtil.unsafeTransformToArray(
 			collection, unsafeFunction, clazz);
 	}
 

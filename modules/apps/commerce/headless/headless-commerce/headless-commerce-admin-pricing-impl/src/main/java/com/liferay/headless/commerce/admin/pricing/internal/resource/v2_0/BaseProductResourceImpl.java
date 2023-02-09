@@ -304,7 +304,7 @@ public abstract class BaseProductResourceImpl implements ProductResource {
 			Class<?> clazz)
 		throws E {
 
-		return TransformUtil.unsafeTransformToArray(
+		return R[]TransformUtil.unsafeTransformToArray(
 			collection, unsafeFunction, clazz);
 	}
 

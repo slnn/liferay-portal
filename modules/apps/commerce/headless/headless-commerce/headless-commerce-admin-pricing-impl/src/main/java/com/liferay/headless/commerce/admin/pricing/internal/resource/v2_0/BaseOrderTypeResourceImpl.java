@@ -274,7 +274,7 @@ public abstract class BaseOrderTypeResourceImpl implements OrderTypeResource {
 			Class<?> clazz)
 		throws E {
 
-		return TransformUtil.unsafeTransformToArray(
+		return R[]TransformUtil.unsafeTransformToArray(
 			collection, unsafeFunction, clazz);
 	}
 

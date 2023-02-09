@@ -274,7 +274,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			Class<?> clazz)
 		throws E {
 
-		return TransformUtil.unsafeTransformToArray(
+		return R[]TransformUtil.unsafeTransformToArray(
 			collection, unsafeFunction, clazz);
 	}
 
