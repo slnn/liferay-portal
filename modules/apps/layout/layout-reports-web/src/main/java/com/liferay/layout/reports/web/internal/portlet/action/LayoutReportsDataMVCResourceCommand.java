@@ -304,7 +304,7 @@ public class LayoutReportsDataMVCResourceCommand
 						"url", url
 					).build();
 				},
-				Object.class));
+				Object[].class));
 	}
 
 	private String _getResourceURL(
