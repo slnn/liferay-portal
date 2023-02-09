@@ -122,13 +122,13 @@ public abstract class BaseNotificationType implements NotificationType {
 	public Object[] toRecipients(
 		List<NotificationRecipientSetting> notificationRecipientSettings) {
 
-		return TransformUtil.transformToArray(
+		return (Object[])TransformUtil.transformToArray(
 			notificationRecipientSettings,
 			notificationRecipientSetting -> HashMapBuilder.put(
 				notificationRecipientSetting.getName(),
 				notificationRecipientSetting.getValue()
 			).build(),
-			Object.class);
+			Object[].class);
 	}
 
 	@Override
