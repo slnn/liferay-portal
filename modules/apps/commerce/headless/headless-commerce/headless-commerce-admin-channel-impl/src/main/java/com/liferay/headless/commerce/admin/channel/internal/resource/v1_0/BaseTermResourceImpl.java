@@ -237,7 +237,7 @@ public abstract class BaseTermResourceImpl implements TermResource {
 		return TransformUtil.transform(collection, unsafeFunction);
 	}
 
-	protected <T, R, E extends Throwable> R[] transform(
+	protected <T, R, E extends Throwable> Object transform(
 		T[] array, UnsafeFunction<T, R, E> unsafeFunction, Class<?> clazz) {
 
 		return TransformUtil.transform(array, unsafeFunction, clazz);
