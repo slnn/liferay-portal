@@ -108,13 +108,13 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 					dtoConverterContext, layout,
 					_layoutPageTemplateEntryLocalService, _portal);
 				siteId = layout.getGroupId();
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = (TaxonomyCategoryBrief[])TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						Layout.class.getName(), layout.getPlid()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 							assetCategory, dtoConverterContext),
-					TaxonomyCategoryBrief.class);
+					TaxonomyCategoryBrief[].class);
 				title = layout.getName(dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),

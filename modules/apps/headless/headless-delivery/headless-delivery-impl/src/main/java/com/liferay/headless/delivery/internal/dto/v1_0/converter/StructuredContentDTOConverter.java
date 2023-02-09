@@ -186,14 +186,14 @@ public class StructuredContentDTOConverter
 					dtoConverterContext.getUserId(),
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey());
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = (TaxonomyCategoryBrief[])TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 							assetCategory, dtoConverterContext),
-					TaxonomyCategoryBrief.class);
+					TaxonomyCategoryBrief[].class);
 				title = journalArticle.getTitle(
 					dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(
@@ -242,12 +242,12 @@ public class StructuredContentDTOConverter
 
 		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
 
-		return TransformUtil.transformToArray(
+		return (ContentField[])TransformUtil.transformToArray(
 			ddmFormValues.getDDMFormFieldValues(),
 			ddmFormFieldValue -> ContentFieldUtil.toContentField(
 				ddmFormFieldValue, dlAppService, dlURLHelper,
 				dtoConverterContext, journalArticleService, layoutLocalService),
-			ContentField.class);
+			ContentField[].class);
 	}
 
 	private RenderedContent[] _toRenderedContents(
@@ -267,7 +267,7 @@ public class StructuredContentDTOConverter
 		Locale locale = dtoConverterContext.getLocale();
 		UriInfo uriInfo = uriInfoOptional.get();
 
-		RenderedContent[] renderedContents = TransformUtil.transformToArray(
+		RenderedContent[] renderedContents = (RenderedContent[])TransformUtil.transformToArray(
 			ddmStructure.getTemplates(),
 			ddmTemplate -> new RenderedContent() {
 				{
@@ -320,7 +320,7 @@ public class StructuredContentDTOConverter
 						});
 				}
 			},
-			RenderedContent.class);
+			RenderedContent[].class);
 
 		RenderedContent[] displayPagesRenderedContents =
 			DisplayPageRendererUtil.getRenderedContent(

@@ -123,13 +123,13 @@ public class BlogPostingDTOConverter
 					blogsEntry.getModelClassName(), blogsEntry.getEntryId(),
 					dtoConverterContext.getLocale());
 				siteId = blogsEntry.getGroupId();
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = (TaxonomyCategoryBrief[])TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 							assetCategory, dtoConverterContext),
-					TaxonomyCategoryBrief.class);
+					TaxonomyCategoryBrief[].class);
 				viewableBy = ViewableBy.ANYONE;
 
 				setDescription(

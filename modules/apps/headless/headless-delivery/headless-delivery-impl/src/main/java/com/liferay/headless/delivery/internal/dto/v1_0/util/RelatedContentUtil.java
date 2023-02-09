@@ -42,12 +42,12 @@ public class RelatedContentUtil {
 			return null;
 		}
 
-		return TransformUtil.transformToArray(
+		return (RelatedContent[])TransformUtil.transformToArray(
 			assetLinkLocalService.getDirectLinks(assetEntry.getEntryId()),
 			assetLink -> _toRelatedContent(
 				assetEntryLocalService.getEntry(assetLink.getEntryId2()),
 				dtoConverterRegistry, locale),
-			RelatedContent.class);
+			RelatedContent[].class);
 	}
 
 	private static RelatedContent _toRelatedContent(

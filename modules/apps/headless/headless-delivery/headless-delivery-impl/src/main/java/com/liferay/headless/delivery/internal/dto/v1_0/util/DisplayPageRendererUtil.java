@@ -82,7 +82,7 @@ public class DisplayPageRendererUtil {
 
 		UriInfo uriInfo = uriInfoOptional.get();
 
-		return TransformUtil.transformToArray(
+		return (RenderedContent[])TransformUtil.transformToArray(
 			layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				groupId, PortalUtil.getClassNameId(itemClassName),
 				itemClassTypeId,
@@ -131,7 +131,7 @@ public class DisplayPageRendererUtil {
 						});
 				}
 			},
-			RenderedContent.class);
+			RenderedContent[].class);
 	}
 
 	public static String toHTML(

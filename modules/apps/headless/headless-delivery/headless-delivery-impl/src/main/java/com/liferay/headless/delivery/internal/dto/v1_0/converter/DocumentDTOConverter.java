@@ -166,14 +166,15 @@ public class DocumentDTOConverter
 					dtoConverterContext.getLocale());
 				siteId = GroupUtil.getSiteId(group);
 				sizeInBytes = fileEntry.getSize();
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs =
+						(TaxonomyCategoryBrief[])TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 							assetCategory, dtoConverterContext),
-					TaxonomyCategoryBrief.class);
+					TaxonomyCategoryBrief[].class);
 				title = fileEntry.getTitle();
 
 				setRenderedContents(
@@ -201,7 +202,7 @@ public class DocumentDTOConverter
 			return new AdaptedImage[0];
 		}
 
-		return TransformUtil.transformToArray(
+		return (AdaptedImage[])TransformUtil.transformToArray(
 			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
@@ -210,7 +211,7 @@ public class DocumentDTOConverter
 				).done()),
 			adaptiveMedia -> _toAdaptedImage(
 				adaptiveMedia, dtoConverterContext.getUriInfoOptional()),
-			AdaptedImage.class);
+			AdaptedImage[].class);
 	}
 
 	private List<DDMFormValues> _getDDMFormValues(
@@ -346,7 +347,7 @@ public class DocumentDTOConverter
 								ddmFormValue.getDDMFormFieldValues());
 						}
 
-						return TransformUtil.transformToArray(
+						return (ContentField[])TransformUtil.transformToArray(
 							ddmFormFieldValues,
 							ddmFormFieldValue ->
 								ContentFieldUtil.toContentField(
@@ -354,7 +355,7 @@ public class DocumentDTOConverter
 									_dlURLHelper, dtoConverterContext,
 									_journalArticleService,
 									_layoutLocalService),
-							ContentField.class);
+							ContentField[].class);
 					});
 			}
 		};

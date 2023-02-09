@@ -101,12 +101,12 @@ public class ContentFieldUtil {
 					dtoConverterContext.isAcceptAllLanguages(),
 					localizedValue.getValues());
 				name = ddmFormField.getFieldReference();
-				nestedContentFields = TransformUtil.transformToArray(
+				nestedContentFields = (ContentField[])TransformUtil.transformToArray(
 					ddmFormFieldValue.getNestedDDMFormFieldValues(),
 					value -> toContentField(
 						value, dlAppService, dlURLHelper, dtoConverterContext,
 						journalArticleService, layoutLocalService),
-					ContentField.class);
+					ContentField[].class);
 				repeatable = ddmFormField.isRepeatable();
 
 				setContentFieldValue_i18n(

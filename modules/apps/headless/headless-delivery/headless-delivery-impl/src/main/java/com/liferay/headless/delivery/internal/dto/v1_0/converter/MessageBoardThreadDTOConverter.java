@@ -138,13 +138,13 @@ public class MessageBoardThreadDTOConverter
 				subscribed = _subscriptionLocalService.isSubscribed(
 					mbMessage.getCompanyId(), dtoConverterContext.getUserId(),
 					MBThread.class.getName(), mbMessage.getThreadId());
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = (TaxonomyCategoryBrief[])TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						MBMessage.class.getName(), mbThread.getRootMessageId()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 							assetCategory, dtoConverterContext),
-					TaxonomyCategoryBrief.class);
+					TaxonomyCategoryBrief[].class);
 				threadType = _toThreadType(
 					languageId, mbThread.getGroupId(), mbThread.getPriority());
 				viewCount = mbThread.getViewCount();

@@ -116,13 +116,13 @@ public class KnowledgeBaseArticleDTOConverter
 				subscribed = _subscriptionLocalService.isSubscribed(
 					kbArticle.getCompanyId(), dtoConverterContext.getUserId(),
 					KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = (TaxonomyCategoryBrief[])TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 							assetCategory, dtoConverterContext),
-					TaxonomyCategoryBrief.class);
+					TaxonomyCategoryBrief[].class);
 				title = kbArticle.getTitle();
 
 				setNumberOfAttachments(

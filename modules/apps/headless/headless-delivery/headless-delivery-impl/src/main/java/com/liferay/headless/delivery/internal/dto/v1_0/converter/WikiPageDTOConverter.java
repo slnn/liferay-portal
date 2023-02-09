@@ -111,7 +111,8 @@ public class WikiPageDTOConverter
 					wikiPage.getCompanyId(), dtoConverterContext.getUserId(),
 					com.liferay.wiki.model.WikiPage.class.getName(),
 					wikiPage.getResourcePrimKey());
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs =
+						(TaxonomyCategoryBrief[])TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						com.liferay.wiki.model.WikiPage.class.getName(),
 						wikiPage.getPageId()),
@@ -126,7 +127,7 @@ public class WikiPageDTOConverter
 								dtoConverterContext.getLocale(),
 								uriInfoOptional.orElse(null),
 								dtoConverterContext.getUser())),
-					TaxonomyCategoryBrief.class);
+					TaxonomyCategoryBrief[].class);
 				wikiNodeId = wikiPage.getNodeId();
 
 				setNumberOfWikiPages(

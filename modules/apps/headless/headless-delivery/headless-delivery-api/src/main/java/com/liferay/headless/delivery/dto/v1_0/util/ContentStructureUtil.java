@@ -60,12 +60,12 @@ public class ContentStructureUtil {
 				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					ddmStructure.getAvailableLanguageIds());
-				contentStructureFields = TransformUtil.transformToArray(
+				contentStructureFields = (ContentStructureField[])TransformUtil.transformToArray(
 					ddmStructure.getRootFieldNames(),
 					fieldName -> _toContentStructureField(
 						acceptAllLanguages,
 						ddmStructure.getDDMFormField(fieldName), locale),
-					ContentStructureField.class);
+					ContentStructureField[].class);
 				creator = CreatorUtil.toCreator(
 					portal, Optional.empty(),
 					userLocalService.fetchUser(ddmStructure.getUserId()));
@@ -144,11 +144,11 @@ public class ContentStructureUtil {
 				localizable = ddmFormField.isLocalizable();
 				multiple = ddmFormField.isMultiple();
 				name = ddmFormField.getFieldReference();
-				nestedContentStructureFields = TransformUtil.transformToArray(
+				nestedContentStructureFields = (ContentStructureField[])TransformUtil.transformToArray(
 					ddmFormField.getNestedDDMFormFields(),
 					ddmFormField -> _toContentStructureField(
 						acceptAllLanguage, ddmFormField, locale),
-					ContentStructureField.class);
+					ContentStructureField[].class);
 				predefinedValue = _toString(predefinedLocalizedValue, locale);
 				predefinedValue_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguage, predefinedLocalizedValue.getValues());
@@ -168,7 +168,7 @@ public class ContentStructureUtil {
 						Map<String, LocalizedValue> map =
 							ddmFormFieldOptions.getOptions();
 
-						return TransformUtil.transformToArray(
+						return (Option[])TransformUtil.transformToArray(
 							map.entrySet(),
 							entry -> new Option() {
 								{
@@ -184,7 +184,7 @@ public class ContentStructureUtil {
 									setValue(entry.getKey());
 								}
 							},
-							Option.class);
+							Option[].class);
 					});
 			}
 		};
