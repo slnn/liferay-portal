@@ -32,13 +32,13 @@ public class DSEnvelopeUtil {
 
 		return new DSEnvelope() {
 			{
-				dsDocument = TransformUtil.transformToArray(
+				dsDocument = (DSDocument[])TransformUtil.transformToArray(
 					dsEnvelope.getDSDocuments(),
-					dsDocument -> _toDSDocument(dsDocument), DSDocument.class);
-				dsRecipient = TransformUtil.transformToArray(
+					dsDocument -> _toDSDocument(dsDocument), DSDocument[].class);
+				dsRecipient = (DSRecipient[])TransformUtil.transformToArray(
 					dsEnvelope.getDSRecipients(),
 					dsRecipient -> _toDSRecipient(dsRecipient),
-					DSRecipient.class);
+					DSRecipient[].class);
 				emailBlurb = dsEnvelope.getEmailBlurb();
 				emailSubject = dsEnvelope.getEmailSubject();
 				id = dsEnvelope.getDSEnvelopeId();
