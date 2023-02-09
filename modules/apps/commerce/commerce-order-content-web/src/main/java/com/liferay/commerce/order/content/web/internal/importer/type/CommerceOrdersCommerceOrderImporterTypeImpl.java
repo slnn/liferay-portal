@@ -168,11 +168,11 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 			long commerceChannelGroupId, CommerceOrder commerceOrder)
 		throws Exception {
 
-		return TransformUtil.transformToArray(
+		return (CommerceOrderImporterItemImpl[])TransformUtil.transformToArray(
 			commerceOrder.getCommerceOrderItems(),
 			commerceOrderItem -> _toCommerceOrderImporterItemImpl(
 				commerceChannelGroupId, commerceOrderItem),
-			CommerceOrderImporterItemImpl.class);
+			CommerceOrderImporterItemImpl[].class);
 	}
 
 	private CommerceOrderImporterItemImpl _toCommerceOrderImporterItemImpl(

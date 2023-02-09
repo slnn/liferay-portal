@@ -109,13 +109,13 @@ public class CommerceOrderImporterTypeUtil {
 							(CommerceOrderValidatorException)exception;
 
 					commerceOrderImporterItemImpl.setErrorMessages(
-						TransformUtil.transformToArray(
+						(String[])TransformUtil.transformToArray(
 							commerceOrderValidatorException.
 								getCommerceOrderValidatorResults(),
 							commerceOrderValidatorResult ->
 								commerceOrderValidatorResult.
 									getLocalizedMessage(),
-							String.class));
+							String[].class));
 				}
 
 				if (exception instanceof PrincipalException) {

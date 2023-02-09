@@ -209,11 +209,11 @@ public class CSVCommerceOrderImporterTypeImpl
 
 		CSVParser csvParser = _getCSVParser(fileEntry);
 
-		return TransformUtil.transformToArray(
+		return (CommerceOrderImporterItemImpl[])TransformUtil.transformToArray(
 			csvParser.getRecords(),
 			csvRecord -> _toCommerceOrderImporterItemImpl(
 				companyId, commerceChannelGroupId, csvRecord),
-			CommerceOrderImporterItemImpl.class);
+			CommerceOrderImporterItemImpl[].class);
 	}
 
 	private CSVParser _getCSVParser(FileEntry fileEntry) throws Exception {

@@ -171,13 +171,13 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			long commerceChannelGroupId, CommerceWishList commerceWishList)
 		throws Exception {
 
-		return TransformUtil.transformToArray(
+		return (CommerceOrderImporterItemImpl[])TransformUtil.transformToArray(
 			_commerceWishListItemService.getCommerceWishListItems(
 				commerceWishList.getCommerceWishListId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null),
 			commerceWishListItem -> _toCommerceOrderImporterItemImpl(
 				commerceChannelGroupId, commerceWishListItem),
-			CommerceOrderImporterItemImpl.class);
+			CommerceOrderImporterItemImpl[].class);
 	}
 
 	private CommerceOrderImporterItemImpl _toCommerceOrderImporterItemImpl(
