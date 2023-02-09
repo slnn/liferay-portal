@@ -127,8 +127,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		List<BatchPlannerMapping> batchPlannerMappings,
 		UnsafeFunction<BatchPlannerMapping, String, Exception> unsafeFunction) {
 
-		return TransformUtil.transformToArray(
-			batchPlannerMappings, unsafeFunction, String.class);
+		return (String[])TransformUtil.transformToArray(
+			batchPlannerMappings, unsafeFunction, String[].class);
 	}
 
 	private String _getImportErrorStrategy(BatchPlannerPlan batchPlannerPlan)
