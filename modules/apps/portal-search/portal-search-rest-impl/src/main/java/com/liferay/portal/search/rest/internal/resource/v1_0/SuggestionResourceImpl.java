@@ -111,7 +111,7 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 								contextAcceptLanguage.getPreferredLocale(),
 								suggestionsContributorResult.
 									getDisplayGroupName());
-							suggestions = transformToArray(
+							suggestions = (Suggestion[])transformToArray(
 								suggestionsContributorResult.getSuggestions(),
 								suggestion -> new Suggestion() {
 									{
@@ -120,7 +120,7 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 										text = suggestion.getText();
 									}
 								},
-								Suggestion.class);
+								Suggestion[].class);
 						}
 					}));
 	}
