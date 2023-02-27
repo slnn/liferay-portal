@@ -681,10 +681,6 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_VERSION_COUNT;
 	}
 
-	public int getMaxLanguagePageCount() {
-		return BenchmarksPropsValues.MAX_LANGUAGE_PAGE_COUNT;
-	}
-
 	public int getMaxLanguagePortletCount() {
 		return BenchmarksPropsValues.MAX_LANGUAGE_PORTLET_COUNT;
 	}
@@ -4505,6 +4501,22 @@ public class DataFactory {
 
 		return newLayoutModel(
 			groupId, name, false, "2_columns_ii", column1, column2);
+	}
+
+	public List<LayoutModel> newLayoutModels(long groupId) {
+		List<LayoutModel> layoutModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_LANGUAGE_PAGE_COUNT);
+
+		for (int i = 0; i < BenchmarksPropsValues.MAX_LANGUAGE_PAGE_COUNT;
+			 i++) {
+
+			layoutModels.add(
+				newLayoutModel(
+					groupId, groupId + "_language_page_" + i, "",
+					getLanguageLayoutColumn()));
+		}
+
+		return layoutModels;
 	}
 
 	public LayoutPageTemplateStructureModel newLayoutPageTemplateStructureModel(
