@@ -681,10 +681,6 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_VERSION_COUNT;
 	}
 
-	public int getMaxLanguagePortletCount() {
-		return BenchmarksPropsValues.MAX_LANGUAGE_PORTLET_COUNT;
-	}
-
 	public int getMaxSegmentsEntryCount() {
 		return BenchmarksPropsValues.MAX_SEGMENTS_ENTRY_COUNT;
 	}
