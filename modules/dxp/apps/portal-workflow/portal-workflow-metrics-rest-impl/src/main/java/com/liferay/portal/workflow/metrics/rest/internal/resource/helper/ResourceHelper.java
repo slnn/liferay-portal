@@ -34,6 +34,7 @@ import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggreg
 import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.GapPolicy;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -54,7 +55,6 @@ import java.io.IOException;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -386,22 +386,40 @@ public class ResourceHelper {
 
 		searchSearchRequest.setSelectedFieldNames("version");
 
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::parallelStream
-		).map(
-			SearchHit::getDocument
-		).findFirst(
-		).map(
-			document -> document.getString("version")
-		).orElseGet(
-			() -> StringPool.BLANK
-		);
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		if (searchHits == null) {
+			return StringPool.BLANK;
+		}
+
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
+
+		if (ListUtil.isEmpty(searchHitList)) {
+			return StringPool.BLANK;
+		}
+
+		SearchHit firstSearchHit = searchHitList.get(0);
+
+		if (firstSearchHit == null) {
+			return StringPool.BLANK;
+		}
+
+		Document document = firstSearchHit.getDocument();
+
+		if (document == null) {
+			return StringPool.BLANK;
+		}
+
+		String string = document.getString("version");
+
+		if (string == null) {
+			return StringPool.BLANK;
+		}
+
+		return string;
 	}
 
 	public long getOnTimeInstanceCount(Bucket bucket) {
