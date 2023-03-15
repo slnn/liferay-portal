@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.helper;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,8 +54,6 @@ import java.io.IOException;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
@@ -238,52 +237,45 @@ public class ResourceHelper {
 		scriptedMetricAggregation.setParameters(
 			HashMapBuilder.<String, Object>put(
 				"assigneeIds",
-				() -> Optional.ofNullable(
-					assigneeIds
-				).filter(
-					ListUtil::isNotEmpty
-				).map(
-					List::parallelStream
-				).map(
-					stream -> stream.map(
-						String::valueOf
-					).collect(
-						Collectors.toList()
-					)
-				).orElse(
-					null
-				)
+				() -> {
+					if (ListUtil.isEmpty(assigneeIds)) {
+						return null;
+					}
+
+					return TransformUtil.transform(
+						assigneeIds, String::valueOf);
+				}
 			).put(
 				"assigneeType", Role.class.getName()
 			).put(
 				"completed", () -> completed
 			).put(
 				"endDate",
-				() -> Optional.ofNullable(
-					dateEnd
-				).map(
-					Date::getTime
-				).orElse(
-					null
-				)
+				() -> {
+					if (dateEnd == null) {
+						return null;
+					}
+
+					return dateEnd.getTime();
+				}
 			).put(
 				"startDate",
-				() -> Optional.ofNullable(
-					dateStart
-				).map(
-					Date::getTime
-				).orElse(
-					null
-				)
+				() -> {
+					if (dateStart == null) {
+						return null;
+					}
+
+					return dateStart.getTime();
+				}
 			).put(
 				"taskNames",
-				() -> Optional.ofNullable(
-					taskNames
-				).filter(
-					ListUtil::isNotEmpty
-				).orElse(
-					null
-				)
+				() -> {
+					if (taskNames.isEmpty()) {
+						return null;
+					}
+
+					return taskNames;
+				}
 			).build());
 		scriptedMetricAggregation.setReduceScript(
 			_workflowMetricsInstanceCountReduceScript);
@@ -307,41 +299,34 @@ public class ResourceHelper {
 		scriptedMetricAggregation.setParameters(
 			HashMapBuilder.<String, Object>put(
 				"assigneeIds",
-				() -> Optional.ofNullable(
-					assigneeIds
-				).filter(
-					ListUtil::isNotEmpty
-				).map(
-					List::parallelStream
-				).map(
-					stream -> stream.map(
-						String::valueOf
-					).collect(
-						Collectors.toList()
-					)
-				).orElse(
-					null
-				)
+				() -> {
+					if (assigneeIds.isEmpty()) {
+						return null;
+					}
+
+					return TransformUtil.transform(
+						assigneeIds, String::valueOf);
+				}
 			).put(
 				"assigneeType", Role.class.getName()
 			).put(
 				"slaStatuses",
-				() -> Optional.ofNullable(
-					slaStatuses
-				).filter(
-					ListUtil::isNotEmpty
-				).orElse(
-					null
-				)
+				() -> {
+					if (ListUtil.isEmpty(slaStatuses)) {
+						return null;
+					}
+
+					return slaStatuses;
+				}
 			).put(
 				"taskNames",
-				() -> Optional.ofNullable(
-					taskNames
-				).filter(
-					ListUtil::isNotEmpty
-				).orElse(
-					null
-				)
+				() -> {
+					if (ListUtil.isEmpty(taskNames)) {
+						return null;
+					}
+
+					return taskNames;
+				}
 			).build());
 		scriptedMetricAggregation.setReduceScript(
 			_workflowMetricsTaskCountReduceScript);
