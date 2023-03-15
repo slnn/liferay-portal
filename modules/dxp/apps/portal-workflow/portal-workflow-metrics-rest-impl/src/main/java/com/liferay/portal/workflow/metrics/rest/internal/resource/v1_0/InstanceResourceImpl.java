@@ -216,32 +216,26 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 
-		return () -> {
-			SearchHits searchHits = searchSearchResponse.getSearchHits();
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-			if (searchHits == null) {
-				throw new NoSuchInstanceException(
-					"No instance exists with the instance ID " + instanceId);
-			}
+		if (searchHits == null) {
+			throw new NoSuchInstanceException(
+				"No instance exists with the instance ID " + instanceId);
+		}
 
-			List<SearchHit> searchHitList = searchHits.getSearchHits();
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
 
-			if (ListUtil.isEmpty(searchHitList)) {
-				throw new NoSuchInstanceException(
-					"No instance exists with the instance ID " + instanceId);
-			}
+		if (ListUtil.isEmpty(searchHitList)) {
+			throw new NoSuchInstanceException(
+				"No instance exists with the instance ID " + instanceId);
+		}
 
-			Instance instance = null;
+		Instance instance = null;
 
-			for (SearchHit searchHit : searchHitList) {
-				Document document = searchHit.getDocument();
+		for (SearchHit searchHit : searchHitList) {
+			Document document = searchHit.getDocument();
 
-				if (document == null) {
-					throw new NoSuchInstanceException(
-						"No instance exists with the instance ID " +
-							instanceId);
-				}
-
+			if (document != null) {
 				String uuid = document.getString("uid");
 
 				if (uuid.startsWith("WorkflowMetricsInstance")) {
@@ -250,49 +244,49 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					break;
 				}
 			}
+		}
 
-			if (instance == null) {
-				throw new NoSuchInstanceException(
-					"No instance exists with the instance ID " + instanceId);
-			}
+		if (instance == null) {
+			throw new NoSuchInstanceException(
+				"No instance exists with the instance ID " + instanceId);
+		}
 
-			Map<String, AggregationResult> aggregationResultsMap =
-				searchSearchResponse.getAggregationResultsMap();
+		Map<String, AggregationResult> aggregationResultsMap =
+			searchSearchResponse.getAggregationResultsMap();
 
-			TermsAggregationResult termsAggregationResult =
-				(TermsAggregationResult)aggregationResultsMap.get("instanceId");
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)aggregationResultsMap.get("instanceId");
 
-			if (termsAggregationResult == null) {
-				return instance;
-			}
-
-			Collection<Bucket> buckets = termsAggregationResult.getBuckets();
-
-			if (buckets == null) {
-				return instance;
-			}
-
-			Bucket firstBucket = null;
-
-			for (Bucket bucket : buckets) {
-				firstBucket = bucket;
-
-				if (firstBucket != null) {
-					break;
-				}
-			}
-
-			if (firstBucket == null) {
-				return instance;
-			}
-
-			_setAssignees(firstBucket, instance);
-			_setSLAResults(firstBucket, instance);
-			_setTaskNames(firstBucket, instance);
-			_setTransitions(instance);
-
+		if (termsAggregationResult == null) {
 			return instance;
-		};
+		}
+
+		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
+
+		if ((buckets == null) || buckets.isEmpty()) {
+			return instance;
+		}
+
+		Bucket firstBucket = null;
+
+		for (Bucket bucket : buckets) {
+			firstBucket = bucket;
+
+			if (firstBucket != null) {
+				break;
+			}
+		}
+
+		if (firstBucket == null) {
+			return instance;
+		}
+
+		_setAssignees(firstBucket, instance);
+		_setSLAResults(firstBucket, instance);
+		_setTaskNames(firstBucket, instance);
+		_setTransitions(instance);
+
+		return instance;
 	}
 
 	@Override
@@ -691,43 +685,39 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.setSize(1);
 		searchSearchRequest.setStart(9999);
 
-		return () -> {
-			SearchSearchResponse searchSearchResponse =
-				_searchRequestExecutor.executeSearchRequest(
-					searchSearchRequest);
+		SearchSearchResponse searchSearchResponse = _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 
-			SearchHits searchHits = searchSearchResponse.getSearchHits();
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-			if (searchHits == null) {
-				return startInstanceId;
-			}
+		if (searchHits == null) {
+			return startInstanceId;
+		}
 
-			List<SearchHit> searchHitList = searchHits.getSearchHits();
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
 
-			if (ListUtil.isEmpty(searchHitList)) {
-				return startInstanceId;
-			}
+		if (ListUtil.isEmpty(searchHitList)) {
+			return startInstanceId;
+		}
 
-			SearchHit firstSearchHit = searchHitList.get(0);
+		SearchHit firstSearchHit = searchHitList.get(0);
 
-			if (firstSearchHit == null) {
-				return startInstanceId;
-			}
+		if (firstSearchHit == null) {
+			return startInstanceId;
+		}
 
-			Document document = firstSearchHit.getDocument();
+		Document document = firstSearchHit.getDocument();
 
-			if (document == null) {
-				return startInstanceId;
-			}
+		if (document == null) {
+			return startInstanceId;
+		}
 
-			Long instanceId = document.getLong("instanceId");
+		Long instanceId = document.getLong("instanceId");
 
-			if (instanceId == null) {
-				return startInstanceId;
-			}
+		if (instanceId == null) {
+			return startInstanceId;
+		}
 
-			return instanceId;
-		};
+		return instanceId;
 	}
 
 	private Collection<Instance> _getInstances(
