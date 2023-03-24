@@ -36,6 +36,7 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -74,8 +75,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletResponse;
 
@@ -149,11 +148,8 @@ public class FileEntryContentDashboardItem
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		Stream<FileVersion> stream = _fileEntry.getFileVersions(
-			status
-		).stream();
-
-		return stream.map(
+		return TransformUtil.transform(
+			_fileEntry.getFileVersions(status),
 			fileVersion -> new ContentDashboardItemVersion(
 				fileVersion.getChangeLog(),
 				_getContentDashboardItemVersionActions(
@@ -165,10 +161,7 @@ public class FileEntryContentDashboardItem
 				themeDisplay.getLocale(),
 				WorkflowConstants.getStatusStyle(fileVersion.getStatus()),
 				fileVersion.getUserName(),
-				String.valueOf(fileVersion.getVersion()))
-		).collect(
-			Collectors.toList()
-		);
+				String.valueOf(fileVersion.getVersion())));
 	}
 
 	@Override
@@ -178,14 +171,10 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public List<AssetCategory> getAssetCategories(long assetVocabularyId) {
-		Stream<AssetCategory> stream = _assetCategories.stream();
-
-		return stream.filter(
+		return ListUtil.filter(
+			ListUtil.copy(_assetCategories),
 			assetCategory ->
-				assetCategory.getVocabularyId() == assetVocabularyId
-		).collect(
-			Collectors.toList()
-		);
+				assetCategory.getVocabularyId() == assetVocabularyId);
 	}
 
 	@Override
@@ -203,22 +192,15 @@ public class FileEntryContentDashboardItem
 		HttpServletRequest httpServletRequest,
 		ContentDashboardItemAction.Type... types) {
 
-		List<ContentDashboardItemActionProvider>
-			contentDashboardItemActionProviders =
-				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviders(
-						FileEntry.class.getName(), types);
-
-		Stream<ContentDashboardItemActionProvider> stream =
-			contentDashboardItemActionProviders.stream();
-
-		return stream.map(
+		return TransformUtil.transform(
+			_contentDashboardItemActionProviderRegistry.
+				getContentDashboardItemActionProviders(
+					FileEntry.class.getName(), types),
 			contentDashboardItemActionProvider -> {
 				try {
-					return Optional.ofNullable(
-						contentDashboardItemActionProvider.
-							getContentDashboardItemAction(
-								_fileEntry, httpServletRequest));
+					return contentDashboardItemActionProvider.
+						getContentDashboardItemAction(
+							_fileEntry, httpServletRequest);
 				}
 				catch (ContentDashboardItemActionException
 							contentDashboardItemActionException) {
@@ -226,15 +208,8 @@ public class FileEntryContentDashboardItem
 					_log.error(contentDashboardItemActionException);
 				}
 
-				return Optional.<ContentDashboardItemAction>empty();
-			}
-		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).collect(
-			Collectors.toList()
-		);
+				return null;
+			});
 	}
 
 	@Override
@@ -355,19 +330,15 @@ public class FileEntryContentDashboardItem
 				fileVersions.add(latestFileVersion);
 			}
 
-			Stream<FileVersion> stream = fileVersions.stream();
+			List<ContentDashboardItemVersion> contentDashboardItemVersions =
+				TransformUtil.transform(
+					fileVersions,
+					fileVersion -> _toVersion(fileVersion, locale));
 
-			return stream.map(
-				fileVersion -> _toVersionOptional(fileVersion, locale)
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			).sorted(
-				Comparator.comparing(ContentDashboardItemVersion::getVersion)
-			).collect(
-				Collectors.toList()
-			);
+			contentDashboardItemVersions.sort(
+				Comparator.comparing(ContentDashboardItemVersion::getVersion));
+
+			return contentDashboardItemVersions;
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -696,23 +667,20 @@ public class FileEntryContentDashboardItem
 		}
 	}
 
-	private Optional<ContentDashboardItemVersion> _toVersionOptional(
+	private ContentDashboardItemVersion _toVersion(
 		FileVersion fileVersion, Locale locale) {
 
-		return Optional.ofNullable(
-			fileVersion
-		).map(
-			curFileVersion -> new ContentDashboardItemVersion(
-				curFileVersion.getChangeLog(), null,
-				curFileVersion.getCreateDate(),
-				_language.get(
-					locale,
-					WorkflowConstants.getStatusLabel(
-						curFileVersion.getStatus())),
-				null,
-				WorkflowConstants.getStatusStyle(curFileVersion.getStatus()),
-				curFileVersion.getUserName(), curFileVersion.getVersion())
-		);
+		if (fileVersion == null) {
+			return null;
+		}
+
+		return new ContentDashboardItemVersion(
+			fileVersion.getChangeLog(), null, fileVersion.getCreateDate(),
+			_language.get(
+				locale,
+				WorkflowConstants.getStatusLabel(fileVersion.getStatus())),
+			null, WorkflowConstants.getStatusStyle(fileVersion.getStatus()),
+			fileVersion.getUserName(), fileVersion.getVersion());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
