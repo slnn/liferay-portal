@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -74,7 +75,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.portlet.PortletResponse;
 
@@ -354,26 +354,30 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public String getScopeName(Locale locale) {
-		return Optional.ofNullable(
-			_group
-		).map(
-			group -> {
-				try {
-					return Optional.ofNullable(
-						group.getDescriptiveName(locale)
-					).orElseGet(
-						() -> group.getName(locale)
-					);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
+		if (_group == null) {
+			return StringPool.BLANK;
+		}
 
-					return group.getName(locale);
-				}
+		String scopeName = null;
+
+		try {
+			scopeName = _group.getDescriptiveName(locale);
+
+			if (scopeName == null) {
+				scopeName = _group.getName(locale);
 			}
-		).orElse(
-			StringPool.BLANK
-		);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			scopeName = _group.getName(locale);
+		}
+
+		if (scopeName == null) {
+			return StringPool.BLANK;
+		}
+
+		return scopeName;
 	}
 
 	@Override
@@ -576,36 +580,42 @@ public class FileEntryContentDashboardItem
 	}
 
 	private URL _getLatestVersionURL() {
-		return Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).map(
-			ServiceContext::getLiferayPortletRequest
-		).map(
-			portletRequest -> {
-				List<ContentDashboardItemAction> contentDashboardItemActions =
-					getContentDashboardItemActions(
-						_portal.getHttpServletRequest(portletRequest),
-						ContentDashboardItemAction.Type.PREVIEW);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-				if (!contentDashboardItemActions.isEmpty()) {
-					ContentDashboardItemAction contentDashboardItemAction =
-						contentDashboardItemActions.get(0);
+		if (serviceContext == null) {
+			return null;
+		}
 
-					try {
-						return new URL(contentDashboardItemAction.getURL());
-					}
-					catch (MalformedURLException malformedURLException) {
-						_log.error(malformedURLException);
+		LiferayPortletRequest liferayPortletRequest =
+			serviceContext.getLiferayPortletRequest();
 
-						return null;
-					}
-				}
+		if (liferayPortletRequest == null) {
+			return null;
+		}
 
-				return null;
+		URL url = null;
+
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			getContentDashboardItemActions(
+				_portal.getHttpServletRequest(liferayPortletRequest),
+				ContentDashboardItemAction.Type.PREVIEW);
+
+		if (!contentDashboardItemActions.isEmpty()) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				contentDashboardItemActions.get(0);
+
+			try {
+				url = new URL(contentDashboardItemAction.getURL());
 			}
-		).orElse(
-			null
-		);
+			catch (MalformedURLException malformedURLException) {
+				_log.error(malformedURLException);
+
+				url = null;
+			}
+		}
+
+		return url;
 	}
 
 	private String _getSize(Locale locale) {
@@ -616,38 +626,53 @@ public class FileEntryContentDashboardItem
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 
-		return Optional.ofNullable(
-			infoItemFieldValues.getInfoFieldValue(infoFieldName)
-		).map(
-			InfoFieldValue::getValue
-		).orElse(
-			StringPool.BLANK
-		).toString();
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue(infoFieldName);
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		Object value = infoFieldValue.getValue();
+
+		if (value == null) {
+			return StringPool.BLANK;
+		}
+
+		return value.toString();
 	}
 
 	private URL _getWebDAVURL() {
-		return Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).map(
-			ServiceContext::getLiferayPortletRequest
-		).map(
-			portletRequest -> {
-				try {
-					return new URL(
-						_dlURLHelper.getWebDavURL(
-							(ThemeDisplay)portletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY),
-							_fileEntry.getFolder(), _fileEntry));
-				}
-				catch (Exception exception) {
-					_log.error(exception);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-					return null;
-				}
-			}
-		).orElse(
-			null
-		);
+		if (serviceContext == null) {
+			return null;
+		}
+
+		LiferayPortletRequest liferayPortletRequest =
+			serviceContext.getLiferayPortletRequest();
+
+		if (liferayPortletRequest == null) {
+			return null;
+		}
+
+		URL url = null;
+
+		try {
+			url = new URL(
+				_dlURLHelper.getWebDavURL(
+					(ThemeDisplay)liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY),
+					_fileEntry.getFolder(), _fileEntry));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			url = null;
+		}
+
+		return url;
 	}
 
 	private ContentDashboardItemAction _toContentDashboardItemAction(
