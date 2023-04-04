@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LRUMap;
@@ -50,9 +51,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@Component(service = {CacheRegistryItem.class, EntityCache.class})
+@Component(
+	service = {
+		CacheRegistryItem.class, EntityCache.class,
+		IdentifiableOSGiService.class
+	}
+)
 public class EntityCacheImpl
-	implements CacheRegistryItem, EntityCache, PortalCacheManagerListener {
+	implements CacheRegistryItem, EntityCache, IdentifiableOSGiService,
+			   PortalCacheManagerListener {
 
 	@Override
 	public void clearCache() {
@@ -104,6 +111,11 @@ public class EntityCacheImpl
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getOSGiServiceIdentifier() {
+		return EntityCacheImpl.class.getName();
 	}
 
 	@Override
@@ -284,11 +296,6 @@ public class EntityCacheImpl
 		portalCacheManager.registerPortalCacheManagerListener(this);
 	}
 
-	@Reference(unbind = "-")
-	protected void setFinderCacheImpl(FinderCacheImpl finderCacheImpl) {
-		_finderCacheImpl = finderCacheImpl;
-	}
-
 	private boolean _isLocalCacheEnabled() {
 		if (_localCache == null) {
 			return false;
@@ -415,9 +422,11 @@ public class EntityCacheImpl
 	private static final String _GROUP_KEY_PREFIX =
 		EntityCache.class.getName() + StringPool.PERIOD;
 
-	private static volatile FinderCacheImpl _finderCacheImpl;
-
 	private boolean _dbPartitionEnabled;
+
+	@Reference
+	private volatile FinderCacheImpl _finderCacheImpl;
+
 	private ThreadLocal<LRUMap<Serializable, Serializable>> _localCache;
 
 	@Reference
