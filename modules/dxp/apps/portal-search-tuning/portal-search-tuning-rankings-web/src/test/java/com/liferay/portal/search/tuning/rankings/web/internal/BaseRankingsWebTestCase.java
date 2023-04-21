@@ -56,9 +56,9 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.tuning.rankings.web.internal.helper.RankingResultHelper;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
-import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingResultUtil;
 import com.liferay.portal.search.web.interpreter.SearchResultInterpreter;
 import com.liferay.portal.search.web.interpreter.SearchResultInterpreterProvider;
 
@@ -526,7 +526,7 @@ public abstract class BaseRankingsWebTestCase {
 		);
 	}
 
-	protected void setUpRankingResultUtil() {
+	protected void setUpRankingResultHelper() {
 		SearchResultInterpreterProvider searchResultInterpreterProvider =
 			Mockito.mock(SearchResultInterpreterProvider.class);
 
@@ -538,12 +538,13 @@ public abstract class BaseRankingsWebTestCase {
 			Mockito.nullable(String.class)
 		);
 
-		RankingResultUtil rankingResultUtil = new RankingResultUtil();
+		RankingResultHelper rankingResultHelper = new RankingResultHelper();
 
 		ReflectionTestUtil.setFieldValue(
-			rankingResultUtil, "_searchResultInterpreterProvider",
+			rankingResultHelper, "_searchResultInterpreterProvider",
 			searchResultInterpreterProvider);
-		ReflectionTestUtil.setFieldValue(rankingResultUtil, "_portal", portal);
+		ReflectionTestUtil.setFieldValue(
+			rankingResultHelper, "_portal", portal);
 	}
 
 	protected void setUpRenderResponse(MimeResponse mimeResponse) {
