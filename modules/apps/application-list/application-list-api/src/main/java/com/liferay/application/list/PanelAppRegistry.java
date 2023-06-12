@@ -186,6 +186,17 @@ public class PanelAppRegistry {
 		return false;
 	}
 
+	public boolean isAlwaysShow(String portletId) {
+		if (portletId.equals(_DEPOT_ADMIN) ||
+			portletId.equals(_DEPOT_SETTINGS) || isControlPanelApp(portletId) ||
+			isApplicationsMenuApp(portletId)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isApplicationsMenuApp(String portletId) {
 		return containsPortlet(portletId, PanelCategoryKeys.APPLICATIONS_MENU);
 	}
@@ -257,6 +268,12 @@ public class PanelAppRegistry {
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
+
+	private static final String _DEPOT_ADMIN =
+		"com_liferay_depot_web_portlet_DepotAdminPortlet";
+
+	private static final String _DEPOT_SETTINGS =
+		"com_liferay_depot_web_portlet_DepotSettingsPortlet";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);

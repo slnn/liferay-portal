@@ -38,7 +38,7 @@ public class DepotPanelAppController {
 	public boolean isShow(PanelApp panelApp, long groupId) {
 		String portletId = panelApp.getPortletId();
 
-		if (_isAlwaysShow(portletId)) {
+		if (_panelAppRegistry.isAlwaysShow(portletId)) {
 			return true;
 		}
 
@@ -46,7 +46,7 @@ public class DepotPanelAppController {
 	}
 
 	public boolean isShow(String portletId) {
-		if (_isAlwaysShow(portletId)) {
+		if (_panelAppRegistry.isAlwaysShow(portletId)) {
 			return true;
 		}
 
@@ -55,9 +55,6 @@ public class DepotPanelAppController {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
 		_serviceRegistration = bundleContext.registerService(
 			PanelAppShowFilter.class,
 			(panelApp, permissionChecker, group) -> {
@@ -78,29 +75,11 @@ public class DepotPanelAppController {
 		_serviceRegistration.unregister();
 	}
 
-	private boolean _isAlwaysShow(String portletId) {
-		if (portletId.equals(DepotPortletKeys.DEPOT_ADMIN) ||
-			portletId.equals(DepotPortletKeys.DEPOT_SETTINGS) ||
-			_panelCategoryHelper.isControlPanelApp(portletId) ||
-			_panelCategoryHelper.isApplicationsMenuApp(portletId)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	@Reference
 	private DepotApplicationController _depotApplicationController;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	private PanelCategoryHelper _panelCategoryHelper;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
-
 	private ServiceRegistration<?> _serviceRegistration;
 
 }
