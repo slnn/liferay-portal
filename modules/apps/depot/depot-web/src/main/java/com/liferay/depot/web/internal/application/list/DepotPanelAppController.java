@@ -14,16 +14,10 @@
 
 package com.liferay.depot.web.internal.application.list;
 
-import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelAppShowFilter;
 import com.liferay.depot.application.controller.DepotApplicationController;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -31,16 +25,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DepotPanelAppController.class)
 public class DepotPanelAppController {
-
-	public boolean isShow(PanelApp panelApp, long groupId) {
-		String portletId = panelApp.getPortletId();
-
-		if (_panelAppRegistry.isAlwaysShow(portletId)) {
-			return true;
-		}
-
-		return _depotApplicationController.isEnabled(portletId, groupId);
-	}
 
 	public boolean isShow(String portletId) {
 		if (_panelAppRegistry.isAlwaysShow(portletId)) {
@@ -50,34 +34,10 @@ public class DepotPanelAppController {
 		return _depotApplicationController.isEnabled(portletId);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			PanelAppShowFilter.class,
-			(panelApp, permissionChecker, group) -> {
-				if (group.isDepot() &&
-					!DepotPanelAppController.this.isShow(
-						panelApp, group.getGroupId())) {
-
-					return false;
-				}
-
-				return panelApp.isShow(permissionChecker, group);
-			},
-			null);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceRegistration.unregister();
-	}
-
 	@Reference
 	private DepotApplicationController _depotApplicationController;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	private ServiceRegistration<?> _serviceRegistration;
 
 }

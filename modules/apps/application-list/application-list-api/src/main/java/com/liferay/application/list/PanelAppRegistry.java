@@ -15,11 +15,11 @@
 package com.liferay.application.list;
 
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.depot.application.controller.DepotApplicationController;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -140,15 +140,13 @@ public class PanelAppRegistry {
 			panelApps,
 			panelApp -> {
 				try {
-					PanelAppShowFilter panelAppShowFilter =
-						_panelAppShowFilterSnapshot.get();
+					if (group.isDepot() &&
+						!isShow(panelApp, group.getGroupId())) {
 
-					if (panelAppShowFilter == null) {
-						return panelApp.isShow(permissionChecker, group);
+						return false;
 					}
 
-					return panelAppShowFilter.isShow(
-						panelApp, permissionChecker, group);
+					return panelApp.isShow(permissionChecker, group);
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException);
@@ -203,6 +201,16 @@ public class PanelAppRegistry {
 
 	public boolean isControlPanelApp(String portletId) {
 		return containsPortlet(portletId, PanelCategoryKeys.CONTROL_PANEL);
+	}
+
+	public boolean isShow(PanelApp panelApp, long groupId) {
+		String portletId = panelApp.getPortletId();
+
+		if (isAlwaysShow(portletId)) {
+			return true;
+		}
+
+		return _depotApplicationController.isEnabled(portletId, groupId);
 	}
 
 	@Activate
@@ -278,9 +286,8 @@ public class PanelAppRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);
 
-	private static final Snapshot<PanelAppShowFilter>
-		_panelAppShowFilterSnapshot = new Snapshot<>(
-			PanelAppRegistry.class, PanelAppShowFilter.class, null, true);
+	@Reference
+	private DepotApplicationController _depotApplicationController;
 
 	@Reference
 	private GroupProvider _groupProvider;
