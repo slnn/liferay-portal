@@ -15,8 +15,8 @@
 package com.liferay.expando.model.impl;
 
 import com.liferay.expando.exception.ValueDataException;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.model.ExpandoColumn;
+import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;

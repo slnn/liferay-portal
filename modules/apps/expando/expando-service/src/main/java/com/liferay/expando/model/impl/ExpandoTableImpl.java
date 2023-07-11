@@ -14,7 +14,7 @@
 
 package com.liferay.expando.model.impl;
 
-import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.model.constants.ExpandoTableConstants;
 
 /**
  * @author Brian Wing Shun Chan

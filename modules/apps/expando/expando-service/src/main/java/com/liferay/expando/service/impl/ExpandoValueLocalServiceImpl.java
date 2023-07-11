@@ -15,13 +15,13 @@
 package com.liferay.expando.service.impl;
 
 import com.liferay.expando.exception.ValueDataException;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.util.ExpandoValueDeleteHandler;
 import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoRow;
 import com.liferay.expando.model.ExpandoTable;
 import com.liferay.expando.model.ExpandoValue;
+import com.liferay.expando.model.constants.ExpandoColumnConstants;
+import com.liferay.expando.model.constants.ExpandoTableConstants;
 import com.liferay.expando.model.impl.ExpandoValueImpl;
 import com.liferay.expando.service.ExpandoColumnLocalService;
 import com.liferay.expando.service.ExpandoTableLocalService;

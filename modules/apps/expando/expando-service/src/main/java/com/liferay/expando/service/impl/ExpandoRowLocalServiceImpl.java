@@ -14,9 +14,9 @@
 
 package com.liferay.expando.service.impl;
 
-import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.model.ExpandoRow;
 import com.liferay.expando.model.ExpandoTable;
+import com.liferay.expando.model.constants.ExpandoTableConstants;
 import com.liferay.expando.service.ExpandoTableLocalService;
 import com.liferay.expando.service.ExpandoValueLocalService;
 import com.liferay.expando.service.base.ExpandoRowLocalServiceBaseImpl;

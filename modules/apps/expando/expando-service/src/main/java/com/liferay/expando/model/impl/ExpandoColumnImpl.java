@@ -14,8 +14,8 @@
 
 package com.liferay.expando.model.impl;
 
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.model.ExpandoValue;
+import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
