@@ -16,8 +16,8 @@ package com.liferay.expando.service.impl;
 
 import com.liferay.expando.exception.DuplicateTableNameException;
 import com.liferay.expando.exception.TableNameException;
-import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.model.ExpandoTable;
+import com.liferay.expando.model.constants.ExpandoTableConstants;
 import com.liferay.expando.service.ExpandoColumnLocalService;
 import com.liferay.expando.service.base.ExpandoTableLocalServiceBaseImpl;
 import com.liferay.expando.service.persistence.ExpandoRowPersistence;
