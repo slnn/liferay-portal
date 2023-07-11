@@ -15,6 +15,7 @@
 package com.liferay.expando.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Field;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,6 +35,14 @@ public class ColumnNameException extends PortalException {
 
 	public ColumnNameException(Throwable throwable) {
 		super(throwable);
+	}
+
+	public static class MustValidate extends ColumnNameException {
+
+		public MustValidate() {
+			super("Field name must validate with " + Field.class.getName());
+		}
+
 	}
 
 }
