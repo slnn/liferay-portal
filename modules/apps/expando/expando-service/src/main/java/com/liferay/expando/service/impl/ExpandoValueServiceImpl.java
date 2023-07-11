@@ -22,7 +22,7 @@ import com.liferay.expando.service.base.ExpandoValueServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -167,7 +167,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 		}
 
 		if (data.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-			return JSONFactoryUtil.createJSONObject(data);
+			return _jsonFactory.createJSONObject(data);
 		}
 
 		return JSONUtil.put("data", data);
@@ -175,5 +175,8 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }
