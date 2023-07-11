@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.expando.exception,\
 	com.liferay.expando.info.item.provider,\
 	com.liferay.expando.model,\
+	com.liferay.expando.model.constants,\
 	com.liferay.expando.service,\
 	com.liferay.expando.service.permission,\
 	com.liferay.expando.service.persistence,\
