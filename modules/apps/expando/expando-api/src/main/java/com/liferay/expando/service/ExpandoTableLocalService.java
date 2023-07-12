@@ -67,6 +67,11 @@ public interface ExpandoTableLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.expando.service.impl.ExpandoTableLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the expando table local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ExpandoTableLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ExpandoTable addDefaultTable(long companyId, long classNameId)
+		throws PortalException;
+
+	public ExpandoTable addDefaultTable(long companyId, String className)
+		throws PortalException;
 
 	/**
 	 * Adds the expando table to the database. Also notifies the appropriate model listeners.
@@ -80,6 +85,12 @@ public interface ExpandoTableLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ExpandoTable addExpandoTable(ExpandoTable expandoTable);
+
+	public ExpandoTable addTable(long companyId, long classNameId, String name)
+		throws PortalException;
+
+	public ExpandoTable addTable(long companyId, String className, String name)
+		throws PortalException;
 
 	/**
 	 * Creates a new expando table with the primary key. Does not add the expando table to the database.
@@ -105,9 +116,11 @@ public interface ExpandoTableLocalService
 	 *
 	 * @param expandoTable the expando table
 	 * @return the expando table that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public ExpandoTable deleteExpandoTable(ExpandoTable expandoTable);
+	public ExpandoTable deleteExpandoTable(ExpandoTable expandoTable)
+		throws PortalException;
 
 	/**
 	 * Deletes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
@@ -128,6 +141,22 @@ public interface ExpandoTableLocalService
 	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	public void deleteTable(ExpandoTable table) throws PortalException;
+
+	public void deleteTable(long tableId) throws PortalException;
+
+	public void deleteTable(long companyId, long classNameId, String name)
+		throws PortalException;
+
+	public void deleteTable(long companyId, String className, String name)
+		throws PortalException;
+
+	public void deleteTables(long companyId, long classNameId)
+		throws PortalException;
+
+	public void deleteTables(long companyId, String className)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -203,10 +232,28 @@ public interface ExpandoTableLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable fetchDefaultTable(long companyId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable fetchDefaultTable(long companyId, String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoTable fetchExpandoTable(long tableId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable fetchTable(
+		long companyId, long classNameId, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getDefaultTable(long companyId, long classNameId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getDefaultTable(long companyId, String className)
+		throws PortalException;
 
 	/**
 	 * Returns the expando table with the primary key.
@@ -258,6 +305,23 @@ public interface ExpandoTableLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getTable(long tableId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getTable(long companyId, long classNameId, String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getTable(long companyId, String className, String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExpandoTable> getTables(long companyId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExpandoTable> getTables(long companyId, String className);
+
 	/**
 	 * Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -270,6 +334,9 @@ public interface ExpandoTableLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ExpandoTable updateExpandoTable(ExpandoTable expandoTable);
+
+	public ExpandoTable updateTable(long tableId, String name)
+		throws PortalException;
 
 	@Override
 	@Transactional(enabled = false)
