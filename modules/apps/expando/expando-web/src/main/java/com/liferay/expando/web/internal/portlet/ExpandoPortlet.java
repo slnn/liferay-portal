@@ -15,11 +15,11 @@
 package com.liferay.expando.web.internal.portlet;
 
 import com.liferay.expando.constants.ExpandoPortletKeys;
-import com.liferay.expando.kernel.exception.ColumnNameException;
-import com.liferay.expando.kernel.exception.ColumnTypeException;
-import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
-import com.liferay.expando.kernel.exception.NoSuchColumnException;
-import com.liferay.expando.kernel.exception.ValueDataException;
+import com.liferay.expando.exception.ColumnNameException;
+import com.liferay.expando.exception.ColumnTypeException;
+import com.liferay.expando.exception.DuplicateColumnNameException;
+import com.liferay.expando.exception.NoSuchColumnException;
+import com.liferay.expando.exception.ValueDataException;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnService;
