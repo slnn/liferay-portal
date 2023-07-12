@@ -15,8 +15,8 @@
 package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.CustomValue;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Geo;

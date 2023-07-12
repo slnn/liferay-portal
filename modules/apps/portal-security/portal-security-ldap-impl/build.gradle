@@ -102,4 +102,5 @@ public class ${javaClass}"""
 
 liferayOSGi {
 	expandCompileInclude = true
+	compileOnly project(":apps:expando:expando-api")
 }

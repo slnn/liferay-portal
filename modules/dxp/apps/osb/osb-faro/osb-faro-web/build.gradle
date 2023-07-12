@@ -73,4 +73,5 @@ packageRunWebpack {
 
 processResources {
 	dependsOn packageRunWebpack
+	compileOnly project(":apps:expando:expando-api")
 }

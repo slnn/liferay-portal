@@ -16,9 +16,9 @@ package com.liferay.portal.search.test.util.expando;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
+import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;

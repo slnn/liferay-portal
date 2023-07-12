@@ -15,7 +15,7 @@
 package com.liferay.analytics.message.sender.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 

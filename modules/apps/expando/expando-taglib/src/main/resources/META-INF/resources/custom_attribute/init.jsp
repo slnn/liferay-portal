@@ -18,7 +18,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/map" prefix="liferay-map" %>
 
-<%@ page import="com.liferay.expando.kernel.model.ExpandoColumnConstants" %><%@
-page import="com.liferay.expando.kernel.model.ExpandoTableConstants" %><%@
-page import="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" %><%@
-page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %>
+<%@ page import="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" %><%@
+page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %><%@
+page import="com.liferay.expando.model.constants.ExpandoColumnConstants" %><%@
+page import="com.liferay.expando.model.constants.ExpandoTableConstants" %>

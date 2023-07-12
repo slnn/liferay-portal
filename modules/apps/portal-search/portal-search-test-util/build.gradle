@@ -23,4 +23,5 @@ dependencies {
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/test")
+	testIntegrationCompile project(":apps:expando:expando-api")
 }
