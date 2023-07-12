@@ -14,7 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.field.expression.handler;
 
-import com.liferay.expando.kernel.exception.ValueDataException;
+import com.liferay.expando.exception.ValueDataException;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
