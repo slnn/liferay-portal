@@ -18,9 +18,9 @@ import com.liferay.analytics.message.sender.model.listener.BaseEntityModelListen
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.model.constants.ExpandoColumnConstants;
+import com.liferay.expando.model.constants.ExpandoTableConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
