@@ -15,8 +15,8 @@
 package com.liferay.search.experiences.web.internal.power.tools.portlet.action;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
