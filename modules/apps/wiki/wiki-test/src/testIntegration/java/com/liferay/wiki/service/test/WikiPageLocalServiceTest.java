@@ -31,7 +31,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.expando.model.ExpandoValue;
 import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.petra.string.CharPool;

@@ -16,11 +16,12 @@ package com.liferay.portal.search.internal.expando;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.expando.model.ExpandoValue;
 import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.expando.model.constants.ExpandoTableConstants;
+import com.liferay.expando.model.impl.ExpandoValueImpl;
+import com.liferay.expando.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
-import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;

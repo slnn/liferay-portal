@@ -17,7 +17,7 @@ package com.liferay.portal.template.engine;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.expando.service.ExpandoValueLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;

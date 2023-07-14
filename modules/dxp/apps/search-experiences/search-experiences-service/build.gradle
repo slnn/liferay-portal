@@ -24,6 +24,7 @@ dependencies {
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:expando:expando-api")
+	compileOnly project(":apps:expando:expando-service")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:knowledge-base:knowledge-base-api")
