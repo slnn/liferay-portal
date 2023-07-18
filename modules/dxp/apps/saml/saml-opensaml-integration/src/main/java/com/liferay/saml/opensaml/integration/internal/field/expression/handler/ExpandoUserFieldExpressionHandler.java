@@ -15,13 +15,13 @@
 package com.liferay.saml.opensaml.integration.internal.field.expression.handler;
 
 import com.liferay.expando.exception.ValueDataException;
-import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.model.ExpandoColumn;
+import com.liferay.expando.model.ExpandoTable;
 import com.liferay.expando.model.ExpandoValue;
 import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.expando.model.constants.ExpandoTableConstants;
 import com.liferay.expando.service.ExpandoColumnLocalService;
+import com.liferay.expando.service.ExpandoTableLocalService;
 import com.liferay.expando.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

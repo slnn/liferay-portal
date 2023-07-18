@@ -54,7 +54,7 @@ import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalS
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.service.ExpandoTableLocalService;
 import com.liferay.expando.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -15,6 +15,7 @@ dependencies {
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:expando:expando-api")
+	testIntegrationCompile project(":apps:expando:expando-service")
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:headless:headless-delivery:headless-delivery-api")
 	testIntegrationCompile project(":apps:headless:headless-delivery:headless-delivery-client")

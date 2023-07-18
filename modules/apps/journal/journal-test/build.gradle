@@ -28,6 +28,7 @@ dependencies {
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:expando:expando-api")
+	testIntegrationCompile project(":apps:expando:expando-service")
 	testIntegrationCompile project(":apps:export-import:export-import-changeset-api")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:fragment:fragment-api")
