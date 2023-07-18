@@ -14,7 +14,7 @@
 
 package com.liferay.expando.model.adapter;
 
-import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.portal.kernel.model.StagedModel;
 
 /**
