@@ -14,7 +14,10 @@
 
 package com.liferay.exportimport.lar;
 
-import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.model.ExpandoColumn;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
