@@ -14,11 +14,11 @@
 
 package com.liferay.osb.faro.web.internal.activator;
 
-import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoTable;
 import com.liferay.expando.model.constants.ExpandoColumnConstants;
 import com.liferay.expando.model.constants.ExpandoTableConstants;
+import com.liferay.expando.service.ExpandoColumnLocalService;
 import com.liferay.expando.service.ExpandoTableLocalService;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandler;

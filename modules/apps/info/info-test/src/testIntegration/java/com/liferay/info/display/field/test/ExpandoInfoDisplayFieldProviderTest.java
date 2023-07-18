@@ -16,7 +16,7 @@ package com.liferay.info.display.field.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
-import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoTable;
 import com.liferay.expando.model.ExpandoValue;
 import com.liferay.expando.model.constants.ExpandoColumnConstants;

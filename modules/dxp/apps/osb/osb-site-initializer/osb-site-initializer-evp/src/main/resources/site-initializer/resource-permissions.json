@@ -252,7 +252,7 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"resourceName": "com.liferay.expando.model.ExpandoColumn",
 		"roleName": "User",
 		"scope": "1"
 	}

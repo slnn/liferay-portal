@@ -16,7 +16,7 @@ package com.liferay.expando.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
-import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoTable;
 import com.liferay.expando.model.ExpandoValue;
 import com.liferay.expando.model.constants.ExpandoColumnConstants;

@@ -16,9 +16,9 @@ package com.liferay.message.boards.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.model.ExpandoTable;
 import com.liferay.expando.model.constants.ExpandoColumnConstants;
+import com.liferay.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.message.boards.constants.MBCategoryConstants;

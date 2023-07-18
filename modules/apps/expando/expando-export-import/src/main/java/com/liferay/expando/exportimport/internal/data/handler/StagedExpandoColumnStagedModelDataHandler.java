@@ -14,8 +14,8 @@
 
 package com.liferay.expando.exportimport.internal.data.handler;
 
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.adapter.StagedExpandoColumn;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoTable;
 import com.liferay.expando.model.adapter.StagedExpandoTable;
 import com.liferay.expando.service.ExpandoTableLocalService;

@@ -13,7 +13,7 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"resourceName": "com.liferay.expando.model.ExpandoColumn",
 		"roleName": "User",
 		"scope": "1"
 	},
