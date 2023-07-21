@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Service Context Function
+Bundle-SymbolicName: com.liferay.portal.service.context.function
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.service.context.function
