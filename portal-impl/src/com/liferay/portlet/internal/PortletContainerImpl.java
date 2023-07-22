@@ -55,8 +55,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
@@ -506,8 +506,8 @@ public class PortletContainerImpl implements PortletContainer {
 			liferayActionRequest.defineObjects(
 				portletConfig, liferayActionResponse);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				liferayActionRequest);
+			ServiceContext serviceContext =
+				ServiceContextFactoryUtil.getInstance(liferayActionRequest);
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
@@ -1060,8 +1060,8 @@ public class PortletContainerImpl implements PortletContainer {
 			portletConfig, liferayResourceResponse);
 
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				liferayResourceRequest);
+			ServiceContext serviceContext =
+				ServiceContextFactoryUtil.getInstance(liferayResourceRequest);
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
