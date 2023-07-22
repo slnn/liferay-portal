@@ -6,6 +6,7 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:trash:trash-api")
+	compileOnly project(":core:portal-service-context-function")
 }
 
 liferay {

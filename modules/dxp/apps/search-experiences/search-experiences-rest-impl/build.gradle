@@ -23,6 +23,7 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:portal-service-context-function")
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-api")
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-rest-api")
 

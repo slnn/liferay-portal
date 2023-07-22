@@ -10,4 +10,5 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:portal-service-context-function")
 }

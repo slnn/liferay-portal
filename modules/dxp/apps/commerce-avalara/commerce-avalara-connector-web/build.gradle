@@ -15,5 +15,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:portal-service-context-function")
 	compileOnly project(":dxp:apps:commerce-avalara:commerce-avalara-connector-api")
 }

@@ -48,6 +48,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:portal-service-context-function")
 
 	testCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"

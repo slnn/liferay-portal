@@ -40,6 +40,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:portal-service-context-function")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-api")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-contacts-api")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-engine-client")

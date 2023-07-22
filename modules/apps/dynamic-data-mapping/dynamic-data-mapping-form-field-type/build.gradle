@@ -33,6 +33,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:portal-service-context-function")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
