@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -118,7 +118,7 @@ public class VerifyEmailAddressAction implements Action {
 
 		User user = themeDisplay.getUser();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(
 			httpServletRequest);
 
 		List<Ticket> tickets = TicketLocalServiceUtil.getTickets(

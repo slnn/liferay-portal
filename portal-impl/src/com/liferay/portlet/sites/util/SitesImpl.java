@@ -85,10 +85,10 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -635,7 +635,7 @@ public class SitesImpl implements Sites {
 			}
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(
 			httpServletRequest);
 
 		LayoutServiceUtil.deleteLayout(

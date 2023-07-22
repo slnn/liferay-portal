@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserServiceUtil;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -99,7 +99,7 @@ public class UpdateEmailAddressAction implements Action {
 		String emailAddress2 = ParamUtil.getString(
 			httpServletRequest, "emailAddress2");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(
 			httpServletRequest);
 
 		UserServiceUtil.updateEmailAddress(
