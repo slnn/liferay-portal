@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -229,7 +229,7 @@ public class AddressCommerceCheckoutStepDisplayContext {
 		long regionId = ParamUtil.getLong(actionRequest, "regionId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(
 			CommerceAddress.class.getName(), actionRequest);
 
 		serviceContext.setScopeGroupId(commerceOrder.getGroupId());

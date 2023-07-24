@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -52,7 +52,7 @@ public class ActionUtil {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String articleURL = ParamUtil.getString(actionRequest, "articleURL");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(
 			JournalArticle.class.getName(), actionRequest);
 
 		int pos = deleteArticleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
@@ -79,7 +79,7 @@ public class ActionUtil {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String articleURL = ParamUtil.getString(actionRequest, "articleURL");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(
 			JournalArticle.class.getName(), actionRequest);
 
 		int pos = expireArticleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);

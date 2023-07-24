@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -89,7 +89,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 	@Before
 	public void setUp() throws Exception {
 		Mockito.when(
-			ServiceContextFactory.getInstance(
+			ServiceContextFactoryUtil.getInstance(
 				Mockito.any(HttpServletRequest.class))
 		).thenReturn(
 			new ServiceContext()
@@ -976,6 +976,6 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 	private final MockedStatic<ServiceContextFactory>
 		_serviceContextFactoryMockedStatic = Mockito.mockStatic(
-			ServiceContextFactory.class);
+			ServiceContextFactoryUtil.class);
 
 }
