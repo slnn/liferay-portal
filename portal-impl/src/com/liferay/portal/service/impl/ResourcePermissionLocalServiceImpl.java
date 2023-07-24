@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.SQLStateAcceptor;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.service.permission.constants.ModelPermissionsConstants;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.spring.aop.Property;
@@ -2068,7 +2069,7 @@ public class ResourcePermissionLocalServiceImpl
 		ModelPermissions modelPermissions, String resourcePermissionName) {
 
 		if ((modelPermissions == null) ||
-			ModelPermissionsImpl.RESOURCE_NAME_UNINITIALIZED.equals(
+			ModelPermissionsConstants.RESOURCE_NAME_UNINITIALIZED.equals(
 				modelPermissions.getResourceName())) {
 
 			if (_log.isDebugEnabled()) {
@@ -2081,7 +2082,7 @@ public class ResourcePermissionLocalServiceImpl
 			return false;
 		}
 
-		if (ModelPermissionsImpl.RESOURCE_NAME_FIRST_RESOURCE.equals(
+		if (ModelPermissionsConstants.RESOURCE_NAME_FIRST_RESOURCE.equals(
 				modelPermissions.getResourceName())) {
 
 			if (!ModelPermissionsImpl.isUsed(modelPermissions)) {
@@ -2105,7 +2106,7 @@ public class ResourcePermissionLocalServiceImpl
 			return false;
 		}
 
-		if (ModelPermissionsImpl.RESOURCE_NAME_ALL_RESOURCES.equals(
+		if (ModelPermissionsConstants.RESOURCE_NAME_ALL_RESOURCES.equals(
 				modelPermissions.getResourceName())) {
 
 			if (_log.isDebugEnabled()) {
