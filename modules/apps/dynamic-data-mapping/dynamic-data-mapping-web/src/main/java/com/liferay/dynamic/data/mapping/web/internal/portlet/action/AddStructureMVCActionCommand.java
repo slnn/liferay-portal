@@ -14,7 +14,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -73,7 +73,7 @@ public class AddStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 
 		String storageType = ParamUtil.getString(actionRequest, "storageType");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
 		return _ddmStructureService.addStructure(
@@ -90,5 +90,8 @@ public class AddStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

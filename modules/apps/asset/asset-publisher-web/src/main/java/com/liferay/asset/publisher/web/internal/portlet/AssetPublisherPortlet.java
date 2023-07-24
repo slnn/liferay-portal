@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -130,7 +130,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = serviceContextFactory.getInstance(
 				resourceRequest);
 
 			String className = ParamUtil.getString(
@@ -498,6 +498,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	protected SegmentsEntryRetriever segmentsEntryRetriever;
+
+	@Reference
+	protected ServiceContextFactory serviceContextFactory;
 
 	private String _getDisplayFieldValue(Field field, ThemeDisplay themeDisplay)
 		throws Exception {

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -89,7 +89,7 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			_dlAppService.copyFileEntry(
 				fileEntryId, destinationFolderId, destinationRepositoryId,
-				ServiceContextFactory.getInstance(
+				_serviceContextFactory.getInstance(
 					DLFileShortcut.class.getName(), actionRequest));
 
 			JSONPortletResponseUtil.writeJSON(
@@ -118,5 +118,8 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

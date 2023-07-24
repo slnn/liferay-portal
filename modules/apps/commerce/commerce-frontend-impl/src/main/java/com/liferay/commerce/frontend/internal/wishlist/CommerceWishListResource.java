@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,7 +84,7 @@ public class CommerceWishListResource {
 			httpServletRequest.setAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				CommerceWishListItem.class.getName(), httpServletRequest);
 
 			serviceContext.setScopeGroupId(groupId);
@@ -204,6 +204,9 @@ public class CommerceWishListResource {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

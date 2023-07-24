@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -139,7 +139,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		boolean branchingPrivate = ParamUtil.getBoolean(
 			actionRequest, "branchingPrivate");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		boolean stagedGroup = true;
@@ -336,6 +336,9 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private Staging _staging;

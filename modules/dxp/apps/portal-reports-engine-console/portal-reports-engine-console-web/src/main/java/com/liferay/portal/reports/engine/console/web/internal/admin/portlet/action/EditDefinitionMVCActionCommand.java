@@ -8,7 +8,7 @@ package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.act
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -75,7 +75,7 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			String fileName = uploadPortletRequest.getFileName(
 				"templateReport");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				Definition.class.getName(), actionRequest);
 
 			if (definitionId <= 0) {
@@ -109,5 +109,8 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

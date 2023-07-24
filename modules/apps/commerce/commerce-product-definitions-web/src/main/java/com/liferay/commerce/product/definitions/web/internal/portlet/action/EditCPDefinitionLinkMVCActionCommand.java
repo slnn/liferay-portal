@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -113,7 +113,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getString(actionRequest, "cpDefinitionIds"), 0L);
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinitionLink.class.getName(), actionRequest);
 
 		long[] cProductIds = ListUtil.toLongArray(
@@ -177,7 +177,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinitionLink.class.getName(), actionRequest);
 
 		long cpDefinitionLinkId = ParamUtil.getLong(
@@ -234,5 +234,8 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

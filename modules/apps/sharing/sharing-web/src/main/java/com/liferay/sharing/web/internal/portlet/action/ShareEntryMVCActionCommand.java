@@ -14,8 +14,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -77,7 +77,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "expirationDate",
 			DateFormatFactoryUtil.getDate(themeDisplay.getLocale()), null);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		try {
@@ -145,6 +145,9 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private SharingEntryService _sharingEntryService;

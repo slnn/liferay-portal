@@ -11,7 +11,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -42,7 +42,7 @@ public class DeleteAssetCategoryCPDefinitionMVCActionCommand
 			actionRequest, "cpDefinitionId");
 		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinition.class.getName(), actionRequest);
 
 		_cpDefinitionService.deleteAssetCategoryCPDefinition(
@@ -51,5 +51,8 @@ public class DeleteAssetCategoryCPDefinitionMVCActionCommand
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

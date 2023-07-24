@@ -8,9 +8,9 @@ package com.liferay.site.admin.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -55,7 +55,7 @@ public class EditGroupAssignmentsMVCActionCommand extends BaseMVCActionCommand {
 
 		removeUserIds = _filterRemoveUserIds(groupId, removeUserIds);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
@@ -75,6 +75,9 @@ public class EditGroupAssignmentsMVCActionCommand extends BaseMVCActionCommand {
 
 		return ArrayUtil.toArray(filteredUserIds.toArray(new Long[0]));
 	}
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

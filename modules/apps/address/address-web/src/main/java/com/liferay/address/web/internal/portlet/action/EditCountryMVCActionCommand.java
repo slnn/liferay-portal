@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.CountryService;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -79,7 +79,7 @@ public class EditCountryMVCActionCommand
 				country = _countryService.addCountry(
 					a2, a3, active, billingAllowed, idd, name, number, position,
 					shippingAllowed, subjectToVAT, false,
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						Country.class.getName(), actionRequest));
 
 				actionRequest.setAttribute(
@@ -149,5 +149,8 @@ public class EditCountryMVCActionCommand
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

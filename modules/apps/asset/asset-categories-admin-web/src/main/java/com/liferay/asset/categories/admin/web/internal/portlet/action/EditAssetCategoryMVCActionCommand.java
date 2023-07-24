@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -63,7 +63,7 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "description");
 		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			AssetCategory.class.getName(), actionRequest);
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -165,5 +165,8 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -79,7 +79,7 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse);
 		String type = ParamUtil.getString(actionRequest, "type");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			DDMDataProviderInstance.class.getName(), actionRequest);
 
 		try {
@@ -114,5 +114,8 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected DDMFormValuesFactory ddmFormValuesFactory;
+
+	@Reference
+	protected ServiceContextFactory serviceContextFactory;
 
 }

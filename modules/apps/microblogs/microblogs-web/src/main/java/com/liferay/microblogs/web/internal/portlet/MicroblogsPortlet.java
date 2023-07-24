@@ -14,7 +14,7 @@ import com.liferay.microblogs.web.internal.util.MicroblogsWebUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -76,7 +76,7 @@ public class MicroblogsPortlet extends MVCPortlet {
 		int socialRelationType = ParamUtil.getInteger(
 			actionRequest, "socialRelationType");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			MicroblogsEntry.class.getName(), actionRequest);
 
 		serviceContext.setAssetTagNames(_getAssetTagNames(content));
@@ -131,6 +131,9 @@ public class MicroblogsPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.microblogs.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	protected Release release;
+
+	@Reference
+	protected ServiceContextFactory serviceContextFactory;
 
 	private String[] _getAssetTagNames(String content) {
 		List<String> assetTagNames = new ArrayList<>();

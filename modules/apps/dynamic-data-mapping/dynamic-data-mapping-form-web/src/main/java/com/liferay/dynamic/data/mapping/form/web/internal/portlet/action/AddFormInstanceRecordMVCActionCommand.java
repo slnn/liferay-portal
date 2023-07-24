@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -151,7 +151,7 @@ public class AddFormInstanceRecordMVCActionCommand
 			ddmForm.getDDMFormFieldsMap(true),
 			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges());
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), actionRequest);
 
 		serviceContext.setRequest(_portal.getHttpServletRequest(actionRequest));
@@ -335,5 +335,8 @@ public class AddFormInstanceRecordMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

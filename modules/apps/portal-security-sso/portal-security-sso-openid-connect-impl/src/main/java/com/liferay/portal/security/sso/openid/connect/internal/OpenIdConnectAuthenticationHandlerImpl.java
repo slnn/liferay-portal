@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -143,8 +143,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		long userId = _oidcUserInfoProcessor.processUserInfo(
 			_portal.getCompanyId(httpServletRequest),
 			String.valueOf(oidcProviderMetadata.getIssuer()),
-			ServiceContextFactory.getInstance(httpServletRequest), userInfoJSON,
-			oAuthClientEntry.getOIDCUserInfoMapperJSON());
+			_serviceContextFactory.getInstance(httpServletRequest),
+			userInfoJSON, oAuthClientEntry.getOIDCUserInfoMapperJSON());
 
 		userIdUnsafeConsumer.accept(userId);
 
@@ -472,5 +472,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

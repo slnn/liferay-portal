@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -186,7 +186,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			long[] commerceChannelIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "commerceChannelIds"), 0L);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				CommerceChannelRel.class.getName(), actionRequest);
 
 			for (long commerceChannelId : commerceChannelIds) {
@@ -230,7 +230,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 				a2, a3, active, billingAllowed, null,
 				nameMap.get(LocaleUtil.getDefault()), number, position,
 				shippingAllowed, subjectToVAT, false,
-				ServiceContextFactory.getInstance(
+				_serviceContextFactory.getInstance(
 					Country.class.getName(), actionRequest));
 		}
 		else {
@@ -273,6 +273,9 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private class CommerceCountryChannelsCallable implements Callable<Object> {
 

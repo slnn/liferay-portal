@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -212,7 +212,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 						StringPool.BLANK,
 						(CommerceContext)actionRequest.getAttribute(
 							CommerceWebKeys.COMMERCE_CONTEXT),
-						ServiceContextFactory.getInstance(
+						_serviceContextFactory.getInstance(
 							CommerceOrderItem.class.getName(), actionRequest));
 
 				try {
@@ -263,5 +263,8 @@ public class ImportCommerceOrderItemsMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

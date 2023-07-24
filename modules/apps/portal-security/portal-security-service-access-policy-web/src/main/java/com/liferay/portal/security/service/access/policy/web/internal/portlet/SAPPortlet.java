@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryService;
@@ -151,7 +151,7 @@ public class SAPPortlet extends MVCPortlet {
 		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "title");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		if (sapEntryId > 0) {
@@ -269,5 +269,8 @@ public class SAPPortlet extends MVCPortlet {
 
 	@Reference
 	private SAPEntryService _sapEntryService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

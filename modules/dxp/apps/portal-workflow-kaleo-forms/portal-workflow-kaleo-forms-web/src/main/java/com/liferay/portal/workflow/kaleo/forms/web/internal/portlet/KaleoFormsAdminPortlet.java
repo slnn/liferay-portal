@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -127,7 +127,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String version = ParamUtil.getString(actionRequest, "version");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		_kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersion(
@@ -327,7 +327,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				resourceRequest);
 
 			KaleoDefinitionVersion kaleoDefinitionVersion =
@@ -450,5 +450,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	private Language _language;
 
 	private final List<String> _parameterNames;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

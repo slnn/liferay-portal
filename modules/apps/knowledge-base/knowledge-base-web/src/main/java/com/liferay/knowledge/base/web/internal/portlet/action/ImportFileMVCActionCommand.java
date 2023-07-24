@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -83,7 +83,7 @@ public class ImportFileMVCActionCommand extends BaseMVCActionCommand {
 					"file")) {
 
 				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						AdminPortlet.class.getName(), actionRequest);
 
 				ModelPermissions modelPermissions =
@@ -143,5 +143,8 @@ public class ImportFileMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

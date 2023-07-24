@@ -10,7 +10,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.template.constants.TemplatePortletKeys;
@@ -48,7 +48,7 @@ public class CopyDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "description");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
 
 		_ddmTemplateService.copyTemplate(
@@ -60,5 +60,8 @@ public class CopyDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

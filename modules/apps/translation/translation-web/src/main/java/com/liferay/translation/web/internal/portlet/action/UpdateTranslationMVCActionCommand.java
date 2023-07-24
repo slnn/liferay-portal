@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -98,7 +98,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 							new ClassPKInfoItemIdentifier(classPK)))
 				).build();
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				actionRequest);
 
 			_translationEntryService.addOrUpdateTranslationEntry(
@@ -236,6 +236,9 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private TranslationEntryService _translationEntryService;

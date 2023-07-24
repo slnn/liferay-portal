@@ -55,9 +55,9 @@ import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManag
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -141,7 +141,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		long[] userGroupIds = null;
 		boolean sendEmail = true;
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		if (PrefsPropsUtil.getBoolean(
@@ -413,7 +413,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			sendEmail = false;
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		User user = _userService.updateIncompleteUser(
@@ -556,6 +556,9 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

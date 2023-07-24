@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -256,7 +256,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, long cpDefinitionId)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinition.class.getName(), actionRequest);
 
 		boolean shippable = ParamUtil.getBoolean(actionRequest, "shippable");
@@ -385,7 +385,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinition.class.getName(), actionRequest);
 
 		if (!cpDefinition.isDraft() &&
@@ -522,7 +522,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinition.class.getName(), actionRequest);
 
 		if (cpDefinition == null) {
@@ -602,7 +602,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String allowedOrderQuantities = ParamUtil.getString(
 			actionRequest, "allowedOrderQuantities");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinitionInventory.class.getName(), actionRequest);
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -653,7 +653,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		long[] accountGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "commerceAccountGroupIds"), 0L);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			AccountGroupRel.class.getName(), actionRequest);
 
 		for (long accountGroupId : accountGroupIds) {
@@ -723,6 +723,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private class CPDefinitionCallable implements Callable<CPDefinition> {
 

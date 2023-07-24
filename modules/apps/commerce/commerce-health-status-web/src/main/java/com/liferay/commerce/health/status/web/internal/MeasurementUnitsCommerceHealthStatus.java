@@ -12,7 +12,7 @@ import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class MeasurementUnitsCommerceHealthStatus
 	public void fixIssue(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			httpServletRequest);
 
 		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
@@ -101,5 +101,8 @@ public class MeasurementUnitsCommerceHealthStatus
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

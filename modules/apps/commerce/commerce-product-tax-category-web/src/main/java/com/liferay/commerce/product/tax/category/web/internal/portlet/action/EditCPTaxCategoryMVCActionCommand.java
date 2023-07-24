@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
@@ -109,7 +109,7 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 			String externalReferenceCode = ParamUtil.getString(
 				actionRequest, "externalReferenceCode");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				CPTaxCategory.class.getName(), actionRequest);
 
 			_cpTaxCategoryService.addCPTaxCategory(
@@ -151,5 +151,8 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

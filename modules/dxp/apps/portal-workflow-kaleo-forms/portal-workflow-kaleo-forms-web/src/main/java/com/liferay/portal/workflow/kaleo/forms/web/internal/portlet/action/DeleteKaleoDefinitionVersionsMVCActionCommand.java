@@ -7,7 +7,7 @@ package com.liferay.portal.workflow.kaleo.forms.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -48,7 +48,7 @@ public class DeleteKaleoDefinitionVersionsMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		_kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersions(
@@ -58,5 +58,8 @@ public class DeleteKaleoDefinitionVersionsMVCActionCommand
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

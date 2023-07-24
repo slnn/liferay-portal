@@ -11,7 +11,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -82,6 +82,9 @@ public class AddTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 	@Reference
 	protected Portal portal;
 
+	@Reference
+	protected ServiceContextFactory serviceContextFactory;
+
 	private DDMTemplate _addTemplate(ActionRequest actionRequest)
 		throws Exception {
 
@@ -115,7 +118,7 @@ public class AddTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 			uploadPortletRequest, "smallImageURL");
 		File smallImageFile = uploadPortletRequest.getFile("smallImageFile");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
 		return ddmTemplateService.addTemplate(

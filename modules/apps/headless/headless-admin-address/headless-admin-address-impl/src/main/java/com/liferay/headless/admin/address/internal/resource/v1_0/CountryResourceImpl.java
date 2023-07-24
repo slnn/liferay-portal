@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.CountryService;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -115,7 +115,7 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 				GetterUtil.getBoolean(country.getShippingAllowed(), true),
 				GetterUtil.getBoolean(country.getSubjectToVAT()),
 				GetterUtil.getBoolean(country.getZipRequired(), true),
-				ServiceContextFactory.getInstance(
+				_serviceContextFactory.getInstance(
 					Country.class.getName(), contextHttpServletRequest));
 
 		return _toCountry(
@@ -186,5 +186,8 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 
 	@Reference
 	private CountryService _countryService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

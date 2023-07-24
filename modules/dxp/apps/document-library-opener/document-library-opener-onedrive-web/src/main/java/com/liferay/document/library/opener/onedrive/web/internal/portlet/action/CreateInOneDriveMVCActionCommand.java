@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -136,7 +136,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				portletRequest, "title",
 				_translate(portal.getLocale(portletRequest), "untitled"));
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				portletRequest);
 
 			DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
@@ -186,6 +186,9 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	private String _translate(Locale locale, String key) {
 		return language.get(locale, key);
 	}
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

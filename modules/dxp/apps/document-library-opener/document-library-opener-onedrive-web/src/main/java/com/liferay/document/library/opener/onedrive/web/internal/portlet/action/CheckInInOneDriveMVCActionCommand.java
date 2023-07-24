@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -62,7 +62,7 @@ public class CheckInInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				DLVersionNumberIncrease.AUTOMATIC);
 		String changeLog = ParamUtil.getString(portletRequest, "changeLog");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			portletRequest);
 
 		_dlAppService.checkInFileEntry(
@@ -76,5 +76,8 @@ public class CheckInInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private OAuth2ControllerFactory _oAuth2ControllerFactory;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

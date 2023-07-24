@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -60,7 +60,7 @@ public class SplitOrderByCatalogHealthStatus implements CommerceHealthStatus {
 		}
 
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				httpServletRequest);
 
 			Callable<Object> orderSplitCallable = new OrderSplitCallable(
@@ -158,6 +158,9 @@ public class SplitOrderByCatalogHealthStatus implements CommerceHealthStatus {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private class OrderSplitCallable implements Callable<Object> {
 

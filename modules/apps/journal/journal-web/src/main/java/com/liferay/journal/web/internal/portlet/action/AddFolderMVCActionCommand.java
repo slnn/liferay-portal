@@ -11,7 +11,7 @@ import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -44,7 +44,7 @@ public class AddFolderMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			JournalFolder.class.getName(), actionRequest);
 
 		_journalFolderService.addFolder(
@@ -54,5 +54,8 @@ public class AddFolderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JournalFolderService _journalFolderService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

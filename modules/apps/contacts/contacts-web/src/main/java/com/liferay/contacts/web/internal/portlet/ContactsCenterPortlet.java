@@ -61,10 +61,10 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -762,6 +762,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 	protected RoleLocalService roleLocalService;
 
 	@Reference
+	protected ServiceContextFactory serviceContextFactory;
+
+	@Reference
 	protected SocialRelationLocalService socialRelationLocalService;
 
 	@Reference
@@ -1224,7 +1227,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		userLocalService.updateAsset(

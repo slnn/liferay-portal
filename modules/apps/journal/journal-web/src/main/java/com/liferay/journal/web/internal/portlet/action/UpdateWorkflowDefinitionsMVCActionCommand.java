@@ -12,7 +12,7 @@ import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -47,7 +47,7 @@ public class UpdateWorkflowDefinitionsMVCActionCommand
 		int restrictionType = ParamUtil.getInteger(
 			actionRequest, "restrictionType");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			JournalFolder.class.getName(), actionRequest);
 
 		_journalFolderService.updateFolder(
@@ -59,5 +59,8 @@ public class UpdateWorkflowDefinitionsMVCActionCommand
 
 	@Reference
 	private JournalFolderService _journalFolderService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

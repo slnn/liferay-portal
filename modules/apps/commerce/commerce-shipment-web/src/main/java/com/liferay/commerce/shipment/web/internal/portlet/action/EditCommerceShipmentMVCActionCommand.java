@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -112,7 +112,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 	private CommerceShipment _addCommerceShipment(ActionRequest actionRequest)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceShipment.class.getName(), actionRequest);
 
 		long groupId = ParamUtil.getLong(
@@ -138,7 +138,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		long commerceShipmentId = ParamUtil.getLong(
 			actionRequest, "commerceShipmentId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceShipmentItem.class.getName(), actionRequest);
 
 		long[] commerceOrderItemIds = ParamUtil.getLongValues(
@@ -194,7 +194,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceShipment.class.getName(), actionRequest);
 
 		return _commerceShipmentService.updateAddress(
@@ -227,7 +227,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		long commerceShipmentId = ParamUtil.getLong(
 			actionRequest, "commerceShipmentId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceShipment.class.getName(), actionRequest);
 
 		CommerceShipment commerceShipment = null;
@@ -320,7 +320,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		CommerceShipment commerceShipment =
 			_commerceShipmentService.getCommerceShipment(commerceShipmentId);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceShipment.class.getName(), actionRequest);
 
 		commerceShipment.setExpandoBridgeAttributes(serviceContext);
@@ -406,5 +406,8 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

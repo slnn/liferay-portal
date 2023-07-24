@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -174,7 +174,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				DLVersionNumberIncrease.MINOR);
 		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		fileShortcutBulkSelection.forEach(
@@ -199,7 +199,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			_fileShortcutBulkSelectionFactory.create(
 				actionRequest.getParameterMap());
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		fileShortcutBulkSelection.forEach(
@@ -329,7 +329,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
 		BulkSelection<Folder> folderBulkSelection =
@@ -392,6 +392,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private TrashEntryService _trashEntryService;

@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -93,7 +93,7 @@ public class CopyStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "description");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
 		DDMStructure structure = _ddmStructureService.copyStructure(
@@ -110,7 +110,7 @@ public class CopyStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 
 		long classNameId = _portal.getClassNameId(DDMStructure.class);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
 
 		long resourceClassNameId = ParamUtil.getLong(
@@ -145,5 +145,8 @@ public class CopyStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -147,7 +147,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		boolean readyForPropagation = ParamUtil.getBoolean(
 			actionRequest, "readyForPropagation");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			actionRequest);
 
 		LayoutSetPrototype layoutSetPrototype = null;
@@ -234,7 +234,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		_addSessionMessages(
 			actionRequest, oldReadyForPropagation, readyForPropagation);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			actionRequest);
 
 		layoutSetPrototypeService.updateLayoutSetPrototype(
@@ -305,6 +305,9 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 	@Reference
 	protected PanelCategoryRegistry panelCategoryRegistry;
+
+	@Reference
+	protected ServiceContextFactory serviceContextFactory;
 
 	@Reference
 	protected Sites sites;

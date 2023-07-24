@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
@@ -148,7 +148,7 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 		Map<Locale, String> bodyMap = _localization.getLocalizationMap(
 			actionRequest, "body");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceNotificationTemplate.class.getName(), actionRequest);
 
 		CommerceNotificationTemplate commerceNotificationTemplate = null;
@@ -191,5 +191,8 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

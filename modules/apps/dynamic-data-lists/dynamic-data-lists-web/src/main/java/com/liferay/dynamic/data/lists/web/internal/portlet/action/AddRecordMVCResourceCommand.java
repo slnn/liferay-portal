@@ -17,7 +17,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -79,7 +79,7 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 	private ServiceContext _getServiceContext(ResourceRequest resourceRequest)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			resourceRequest);
 
 		serviceContext.setAttribute(
@@ -96,5 +96,8 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

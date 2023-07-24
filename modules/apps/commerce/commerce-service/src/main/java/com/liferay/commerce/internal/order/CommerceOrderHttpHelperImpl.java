@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -549,7 +549,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				accountEntry.getAccountEntryId());
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			httpServletRequest);
 
 		_commerceOrderThreadLocal.set(userCommerceOrder);
@@ -833,5 +833,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

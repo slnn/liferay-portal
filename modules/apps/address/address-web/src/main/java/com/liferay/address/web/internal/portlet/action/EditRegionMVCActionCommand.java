@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.RegionService;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -68,7 +68,7 @@ public class EditRegionMVCActionCommand
 
 				region = _regionService.addRegion(
 					countryId, active, name, position, regionCode,
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						Region.class.getName(), actionRequest));
 
 				actionRequest.setAttribute(
@@ -131,5 +131,8 @@ public class EditRegionMVCActionCommand
 
 	@Reference
 	private RegionService _regionService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

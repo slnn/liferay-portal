@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -242,7 +242,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 					(requestedDeliveryDateYear > 0)) {
 
 					ServiceContext serviceContext =
-						ServiceContextFactory.getInstance(
+						_serviceContextFactory.getInstance(
 							CommerceOrder.class.getName(), actionRequest);
 
 					_commerceOrderService.updateInfo(
@@ -438,5 +438,8 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

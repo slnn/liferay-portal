@@ -7,7 +7,7 @@ package com.liferay.segments.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
@@ -44,10 +44,13 @@ public class UpdateSegmentsEntrySiteRolesMVCActionCommand
 
 		_segmentsEntryRoleLocalService.setSegmentsEntrySiteRoles(
 			segmentsEntryId, siteRoleIds,
-			ServiceContextFactory.getInstance(actionRequest));
+			_serviceContextFactory.getInstance(actionRequest));
 	}
 
 	@Reference
 	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

@@ -10,7 +10,7 @@ import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -58,7 +58,7 @@ public class EditOpenGraphSiteSettingsMVCActionCommand
 		_layoutSEOSiteLocalService.updateLayoutSEOSite(
 			_portal.getUserId(actionRequest), themeDisplay.getScopeGroupId(),
 			openGraphEnabled, openGraphImageAltMap, openGraphImageFileEntryId,
-			ServiceContextFactory.getInstance(
+			_serviceContextFactory.getInstance(
 				Group.class.getName(), actionRequest));
 	}
 
@@ -70,5 +70,8 @@ public class EditOpenGraphSiteSettingsMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

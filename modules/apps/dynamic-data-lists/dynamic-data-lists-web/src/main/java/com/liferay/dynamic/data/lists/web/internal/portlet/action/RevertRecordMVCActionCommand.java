@@ -11,7 +11,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -42,7 +42,7 @@ public class RevertRecordMVCActionCommand extends BaseMVCActionCommand {
 
 		String version = ParamUtil.getString(actionRequest, "version");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
 
 		_ddlRecordService.revertRecord(recordId, version, serviceContext);
@@ -50,5 +50,8 @@ public class RevertRecordMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DDLRecordService _ddlRecordService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

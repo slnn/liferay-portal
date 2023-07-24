@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -517,7 +517,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		ImageSelector smallImageImageSelector =
 			blogsEntrySmallImageSelectorHelper.getImageSelector();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
 
 		serviceContext.setAttribute(
@@ -636,6 +636,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private TrashEntryService _trashEntryService;

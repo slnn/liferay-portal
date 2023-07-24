@@ -9,7 +9,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -81,7 +80,7 @@ public class UpdateTemplateMVCActionCommand
 			uploadPortletRequest, "smallImageURL");
 		File smallImageFile = uploadPortletRequest.getFile("smallImageFile");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
 		return ddmTemplateService.updateTemplate(

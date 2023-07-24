@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -130,7 +130,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				_dlAppService.updateFileEntry(
 					fileEntryId, null, null, name, null, null, null,
 					DLVersionNumberIncrease.NONE, (byte[])null, null, null,
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						FileEntry.class.getName(), httpServletRequest));
 			}
 
@@ -139,7 +139,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 			if (folderId != 0) {
 				_dlAppService.updateFolder(
 					folderId, name, null,
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						Folder.class.getName(), httpServletRequest));
 			}
 
@@ -196,7 +196,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 					null, repositoryId, parentFolderId, sourceFileName,
 					uploadServletRequest.getContentType("file"), title, null,
 					null, null, file, null, null,
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						FileEntry.class.getName(), httpServletRequest));
 
 				SessionMessages.add(httpServletRequest, "requestProcessed");
@@ -220,7 +220,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 			_dlAppService.addFolder(
 				null, repositoryId, parentFolderId, name, StringPool.BLANK,
-				ServiceContextFactory.getInstance(
+				_serviceContextFactory.getInstance(
 					Folder.class.getName(), httpServletRequest));
 
 			SessionMessages.add(
@@ -342,5 +342,8 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

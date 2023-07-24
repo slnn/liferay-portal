@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -266,7 +266,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				groupId,
 				_language.getLanguageId(translationSnapshot.getTargetLocale()),
 				infoItemFieldValues.getInfoItemReference(), infoItemFieldValues,
-				ServiceContextFactory.getInstance(actionRequest));
+				_serviceContextFactory.getInstance(actionRequest));
 		}
 		catch (InfoItemPermissionException infoItemPermissionException) {
 			throw new XLIFFFileException.MustHaveValidModel(
@@ -423,6 +423,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private TranslationEntryService _translationEntryService;

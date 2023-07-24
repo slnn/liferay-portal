@@ -47,9 +47,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -409,7 +409,7 @@ public class EditUserMVCActionCommand
 		String jobTitle = BeanParamUtil.getString(
 			user, actionRequest, "jobTitle");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		user = _userService.updateUser(
@@ -499,7 +499,7 @@ public class EditUserMVCActionCommand
 		long[] organizationIds = _usersAdmin.getOrganizationIds(actionRequest);
 		boolean sendEmail = true;
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		User user = _userService.addUser(
@@ -574,7 +574,7 @@ public class EditUserMVCActionCommand
 		for (long accountUserId : accountUserIds) {
 			_userService.updateStatus(
 				accountUserId, status,
-				ServiceContextFactory.getInstance(
+				_serviceContextFactory.getInstance(
 					User.class.getName(), actionRequest));
 		}
 	}
@@ -613,6 +613,9 @@ public class EditUserMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

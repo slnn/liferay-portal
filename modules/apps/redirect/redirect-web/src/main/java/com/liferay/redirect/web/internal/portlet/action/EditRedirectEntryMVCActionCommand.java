@@ -7,7 +7,7 @@ package com.liferay.redirect.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -74,7 +74,7 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getScopeGroupId(), destinationURL,
 					expirationDate, RedirectUtil.getGroupBaseURL(themeDisplay),
 					permanent, sourceURL, updateChainedRedirectEntries,
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						RedirectEntry.class.getName(), actionRequest));
 			}
 			else {
@@ -113,5 +113,8 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private RedirectEntryService _redirectEntryService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

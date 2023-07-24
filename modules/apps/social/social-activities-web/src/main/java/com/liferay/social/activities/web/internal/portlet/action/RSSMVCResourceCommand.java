@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseRSSMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -91,7 +91,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 			_socialActivitiesQueryHelper.getSocialActivitySets(
 				group, themeDisplay.getLayout(), scope, 0, max);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			resourceRequest);
 
 		String rss = _exportToRSS(
@@ -222,6 +222,9 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 
 	@Reference
 	private RSSExporter _rssExporter;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private SocialActivitiesQueryHelper _socialActivitiesQueryHelper;

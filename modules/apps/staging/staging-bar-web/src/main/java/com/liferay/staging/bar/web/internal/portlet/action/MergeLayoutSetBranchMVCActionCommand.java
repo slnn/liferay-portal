@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutSetBranchService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -44,7 +44,7 @@ public class MergeLayoutSetBranchMVCActionCommand extends BaseMVCActionCommand {
 		long mergeLayoutSetBranchId = ParamUtil.getLong(
 			actionRequest, "mergeLayoutSetBranchId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		try {
@@ -66,5 +66,8 @@ public class MergeLayoutSetBranchMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutSetBranchService _layoutSetBranchService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

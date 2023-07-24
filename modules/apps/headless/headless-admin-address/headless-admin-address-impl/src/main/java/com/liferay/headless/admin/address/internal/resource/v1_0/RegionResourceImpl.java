@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -116,7 +116,7 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 				countryId, GetterUtil.get(region.getActive(), true),
 				region.getName(), GetterUtil.getDouble(region.getPosition()),
 				region.getRegionCode(),
-				ServiceContextFactory.getInstance(
+				_serviceContextFactory.getInstance(
 					Region.class.getName(), contextHttpServletRequest)));
 	}
 
@@ -169,5 +169,8 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 	@Reference
 	private RegionService _regionService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

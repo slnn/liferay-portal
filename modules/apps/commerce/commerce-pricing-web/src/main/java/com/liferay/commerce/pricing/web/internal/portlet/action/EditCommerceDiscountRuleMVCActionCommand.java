@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -105,7 +105,7 @@ public class EditCommerceDiscountRuleMVCActionCommand
 			long commerceDiscountId = ParamUtil.getLong(
 				actionRequest, "commerceDiscountId");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				CommerceDiscountRule.class.getName(), actionRequest);
 
 			_commerceDiscountRuleService.addCommerceDiscountRule(
@@ -115,5 +115,8 @@ public class EditCommerceDiscountRuleMVCActionCommand
 
 	@Reference
 	private CommerceDiscountRuleService _commerceDiscountRuleService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

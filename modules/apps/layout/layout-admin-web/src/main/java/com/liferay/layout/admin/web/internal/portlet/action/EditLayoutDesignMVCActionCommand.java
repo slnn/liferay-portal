@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -100,7 +100,7 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 				uploadPortletRequest, "masterLayoutPlid",
 				layout.getMasterLayoutPlid());
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
 			if (layout.fetchDraftLayout() == null) {
@@ -252,7 +252,7 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 		String themeFaviconCETExternalReferenceCode = ParamUtil.getString(
 			actionRequest, "themeFaviconCETExternalReferenceCode");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		_addClientExtensionEntryRel(
@@ -342,5 +342,8 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

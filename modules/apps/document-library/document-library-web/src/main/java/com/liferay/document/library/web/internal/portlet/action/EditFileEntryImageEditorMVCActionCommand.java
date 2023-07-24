@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -155,7 +155,7 @@ public class EditFileEntryImageEditorMVCActionCommand
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (!cmd.equals(Constants.ADD_DYNAMIC)) {
-			return ServiceContextFactory.getInstance(
+			return _serviceContextFactory.getInstance(
 				DLFileEntry.class.getName(), httpServletRequest);
 		}
 
@@ -169,11 +169,11 @@ public class EditFileEntryImageEditorMVCActionCommand
 		if (layout.isPublicLayout() ||
 			(layout.isTypeControlPanel() && !group.hasPrivateLayouts())) {
 
-			return ServiceContextFactory.getInstance(
+			return _serviceContextFactory.getInstance(
 				DLFileEntry.class.getName(), httpServletRequest);
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DLFileEntry.class.getName(), httpServletRequest);
 
 		ModelPermissions modelPermissions =
@@ -407,5 +407,8 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

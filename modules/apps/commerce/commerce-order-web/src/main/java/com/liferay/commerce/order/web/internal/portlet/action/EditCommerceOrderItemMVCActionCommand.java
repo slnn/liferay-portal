@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -115,7 +115,7 @@ public class EditCommerceOrderItemMVCActionCommand
 		long commerceOrderItemId = ParamUtil.getLong(
 			actionRequest, "commerceOrderItemId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceOrderItem.class.getName(), actionRequest);
 
 		_commerceOrderItemService.updateCustomFields(
@@ -132,7 +132,7 @@ public class EditCommerceOrderItemMVCActionCommand
 			(CommerceContext)actionRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceOrderItem.class.getName(), actionRequest);
 
 		long[] cpInstanceIds = ParamUtil.getLongValues(
@@ -187,7 +187,7 @@ public class EditCommerceOrderItemMVCActionCommand
 		BigDecimal decimalQuantity = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "decimalQuantity");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceOrderItem.class.getName(), actionRequest);
 
 		serviceContext.setAttribute("validateOrder", Boolean.FALSE);
@@ -246,6 +246,9 @@ public class EditCommerceOrderItemMVCActionCommand
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private class CommerceOrderItemCallable implements Callable<Object> {
 

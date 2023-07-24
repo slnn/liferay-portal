@@ -11,7 +11,7 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -70,7 +70,7 @@ public class AssetDisplayPageFormProcessorImpl
 		}
 
 		if (assetDisplayPageEntry == null) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				portletRequest);
 
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
@@ -92,5 +92,8 @@ public class AssetDisplayPageFormProcessorImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

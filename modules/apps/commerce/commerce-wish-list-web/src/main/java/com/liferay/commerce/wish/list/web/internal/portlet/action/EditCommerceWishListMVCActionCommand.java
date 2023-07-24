@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -119,7 +119,7 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 
 		String name = _language.get(resourceBundle, "new-wish-list");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceWishList.class.getName(), actionRequest);
 
 		CommerceWishList commerceWishList =
@@ -146,7 +146,7 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 				commerceWishListId, name, defaultWishList);
 		}
 		else {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				CommerceWishList.class.getName(), actionRequest);
 
 			_commerceWishListService.addCommerceWishList(
@@ -162,5 +162,8 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

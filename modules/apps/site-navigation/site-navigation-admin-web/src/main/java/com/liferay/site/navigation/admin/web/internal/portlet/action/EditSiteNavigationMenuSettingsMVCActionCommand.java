@@ -8,7 +8,7 @@ package com.liferay.site.navigation.admin.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
@@ -43,12 +43,15 @@ public class EditSiteNavigationMenuSettingsMVCActionCommand
 		int type = ParamUtil.getInteger(actionRequest, "type");
 		boolean auto = ParamUtil.getBoolean(actionRequest, "auto");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenuId, type, auto, serviceContext);
 	}
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private SiteNavigationMenuService _siteNavigationMenuService;

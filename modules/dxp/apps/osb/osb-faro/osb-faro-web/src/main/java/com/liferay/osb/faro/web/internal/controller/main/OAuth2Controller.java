@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Arrays;
@@ -225,7 +225,7 @@ public class OAuth2Controller extends BaseFaroController {
 			return oAuth2Application;
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			OAuth2Application.class.getName(), httpServletRequest);
 
 		ClientProfile clientProfile = ClientProfile.HEADLESS_SERVER;
@@ -329,5 +329,8 @@ public class OAuth2Controller extends BaseFaroController {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

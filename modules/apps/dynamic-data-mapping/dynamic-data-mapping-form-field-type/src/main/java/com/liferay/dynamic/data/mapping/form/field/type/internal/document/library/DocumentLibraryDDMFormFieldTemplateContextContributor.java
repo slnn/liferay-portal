@@ -48,8 +48,8 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -271,7 +271,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 					getResourceBundle(user.getLocale()),
 					"this-folder-was-automatically-created-by-forms-to-store-" +
 						"all-your-uploaded-files"),
-				ServiceContextFactory.getInstance(httpServletRequest));
+				_serviceContextFactory.getInstance(httpServletRequest));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -613,7 +613,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			httpServletRequest);
 
 		serviceContext.setAddGroupPermissions(true);
@@ -765,6 +765,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

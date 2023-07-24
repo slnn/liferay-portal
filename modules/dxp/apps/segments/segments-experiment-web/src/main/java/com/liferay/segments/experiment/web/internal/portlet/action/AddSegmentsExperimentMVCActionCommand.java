@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -103,7 +103,7 @@ public class AddSegmentsExperimentMVCActionCommand
 				ParamUtil.getString(actionRequest, "description"),
 				ParamUtil.getString(actionRequest, "goal"),
 				ParamUtil.getString(actionRequest, "goalTarget"),
-				ServiceContextFactory.getInstance(actionRequest));
+				_serviceContextFactory.getInstance(actionRequest));
 
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelService.getSegmentsExperimentRel(
@@ -144,6 +144,9 @@ public class AddSegmentsExperimentMVCActionCommand
 
 	@Reference
 	private SegmentsExperimentService _segmentsExperimentService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private class AddSegmentsExperimentCallable
 		implements Callable<JSONObject> {

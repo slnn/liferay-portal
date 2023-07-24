@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -122,7 +122,7 @@ public class EditAccountEntryAddressMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		return _addressLocalService.addAddress(
@@ -184,5 +184,8 @@ public class EditAccountEntryAddressMVCActionCommand
 
 	@Reference
 	private AddressLocalService _addressLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

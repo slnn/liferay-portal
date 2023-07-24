@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -80,7 +80,7 @@ public class UpdateRecordMVCResourceCommand extends BaseMVCResourceCommand {
 	private ServiceContext _getServiceContext(ResourceRequest resourceRequest)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			resourceRequest);
 
 		serviceContext.setAttribute(
@@ -197,5 +197,8 @@ public class UpdateRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

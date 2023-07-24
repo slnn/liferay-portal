@@ -11,7 +11,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -40,7 +40,7 @@ public class RevertStructureMVCActionCommand extends BaseMVCActionCommand {
 		long structureId = ParamUtil.getLong(actionRequest, "structureId");
 		String version = ParamUtil.getString(actionRequest, "version");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
 		_ddmStructureService.revertStructure(
@@ -49,5 +49,8 @@ public class RevertStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

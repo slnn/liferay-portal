@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Localization;
@@ -82,7 +82,7 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 			smallImageFile = uploadPortletRequest.getFile("smallImageFile");
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
 		DDMTemplate ddmTemplate = _ddmTemplateService.updateTemplate(
@@ -117,5 +117,8 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }
