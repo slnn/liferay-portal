@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.internal.service.permission;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.constants.ModelPermissionsConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Collection;
@@ -21,15 +22,6 @@ import java.util.Set;
  * @author Preston Crary
  */
 public class ModelPermissionsImpl implements ModelPermissions {
-
-	public static final String RESOURCE_NAME_ALL_RESOURCES =
-		ModelPermissions.class.getName() + "#ALL_RESOURCES";
-
-	public static final String RESOURCE_NAME_FIRST_RESOURCE =
-		ModelPermissions.class.getName() + "#FIRST_RESOURCE";
-
-	public static final String RESOURCE_NAME_UNINITIALIZED =
-		ModelPermissions.class.getName() + "#UNINITIALIZED";
 
 	public static boolean isUsed(ModelPermissions modelPermissions) {
 		if (modelPermissions instanceof ModelPermissionsImpl) {
@@ -116,7 +108,8 @@ public class ModelPermissionsImpl implements ModelPermissions {
 	}
 
 	private final Map<String, Set<String>> _actionIdsMap = new HashMap<>();
-	private String _resourceName = RESOURCE_NAME_UNINITIALIZED;
+	private String _resourceName =
+		ModelPermissionsConstants.RESOURCE_NAME_UNINITIALIZED;
 	private boolean _used;
 
 }

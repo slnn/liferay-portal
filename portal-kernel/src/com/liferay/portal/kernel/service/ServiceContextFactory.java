@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.service;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.internal.service.permission.ModelPermissionsImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -16,6 +15,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.service.permission.constants.ModelPermissionsConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -146,7 +146,7 @@ public class ServiceContextFactory {
 		if (serviceContext.getModelPermissions() == null) {
 			serviceContext.setModelPermissions(
 				ModelPermissionsFactory.create(
-					ModelPermissionsImpl.RESOURCE_NAME_UNINITIALIZED));
+					ModelPermissionsConstants.RESOURCE_NAME_UNINITIALIZED));
 		}
 	}
 

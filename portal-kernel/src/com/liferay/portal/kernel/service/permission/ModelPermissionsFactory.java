@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.constants.ModelPermissionsConstants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -51,7 +52,7 @@ public class ModelPermissionsFactory {
 		Map<String, String[]> modelPermissionsParameterMap, String className) {
 
 		if (className == null) {
-			className = ModelPermissionsImpl.RESOURCE_NAME_FIRST_RESOURCE;
+			className = ModelPermissionsConstants.RESOURCE_NAME_FIRST_RESOURCE;
 		}
 
 		ModelPermissions modelPermissions = null;
@@ -112,7 +113,7 @@ public class ModelPermissionsFactory {
 		String className) {
 
 		if (className == null) {
-			className = ModelPermissionsImpl.RESOURCE_NAME_FIRST_RESOURCE;
+			className = ModelPermissionsConstants.RESOURCE_NAME_FIRST_RESOURCE;
 		}
 
 		ModelPermissions modelPermissions = new ModelPermissionsImpl(className);
@@ -127,7 +128,7 @@ public class ModelPermissionsFactory {
 
 	public static ModelPermissions createForAllResources() {
 		return new ModelPermissionsImpl(
-			ModelPermissionsImpl.RESOURCE_NAME_ALL_RESOURCES);
+			ModelPermissionsConstants.RESOURCE_NAME_ALL_RESOURCES);
 	}
 
 	public static ModelPermissions createWithDefaultPermissions(
