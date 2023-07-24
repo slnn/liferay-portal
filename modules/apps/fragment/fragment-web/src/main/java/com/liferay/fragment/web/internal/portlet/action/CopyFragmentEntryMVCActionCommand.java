@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -96,7 +96,7 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				"fragmentCollectionId",
 				() -> {
 					ServiceContext serviceContext =
-						ServiceContextFactory.getInstance(actionRequest);
+						_serviceContextFactory.getInstance(actionRequest);
 
 					ThemeDisplay themeDisplay =
 						(ThemeDisplay)actionRequest.getAttribute(
@@ -285,5 +285,8 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

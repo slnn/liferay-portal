@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -91,7 +91,7 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 						DepotEntry depotEntry =
 							_depotEntryService.addDepotEntry(
 								nameMap, descriptionMap,
-								ServiceContextFactory.getInstance(
+								_serviceContextFactory.getInstance(
 									DepotEntry.class.getName(), actionRequest));
 
 						return String.valueOf(
@@ -188,5 +188,8 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

@@ -22,7 +22,7 @@ import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -61,7 +61,7 @@ public class ExpireArticlesAndFoldersMVCActionCommand
 		long[] expireFolderIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsJournalFolder");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
 
 		for (long expireFolderId : expireFolderIds) {
@@ -103,5 +103,8 @@ public class ExpireArticlesAndFoldersMVCActionCommand
 
 	@Reference
 	private JournalFolderService _journalFolderService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

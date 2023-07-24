@@ -30,13 +30,13 @@ import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyExcep
 import com.liferay.portal.kernel.service.MembershipRequestService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -135,7 +135,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		addUserIds = _filterAddUserIds(groupId, addUserIds);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
@@ -225,7 +225,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		long[] filteredRemoveUserIds = _filterRemoveUserIds(
 			groupId, removeUserIds);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		_userService.unsetGroupUsers(
@@ -362,7 +362,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		String replyComments = ParamUtil.getString(
 			actionRequest, "replyComments");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		_membershipRequestService.updateStatus(
@@ -479,6 +479,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserGroupGroupRoleService _userGroupGroupRoleService;

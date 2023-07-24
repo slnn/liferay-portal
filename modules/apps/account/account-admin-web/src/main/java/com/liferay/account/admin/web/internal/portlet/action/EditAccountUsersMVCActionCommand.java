@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -118,10 +118,13 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 		for (long accountUserId : accountUserIds) {
 			_userService.updateStatus(
 				accountUserId, status,
-				ServiceContextFactory.getInstance(
+				_serviceContextFactory.getInstance(
 					User.class.getName(), actionRequest));
 		}
 	}
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

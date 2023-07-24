@@ -61,7 +61,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -1116,7 +1116,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			String className, WebDAVRequest webDAVRequest)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			className, webDAVRequest.getHttpServletRequest());
 
 		serviceContext.setModelPermissions(null);
@@ -1290,5 +1290,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	@Reference
 	private DLTrashService _dlTrashService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

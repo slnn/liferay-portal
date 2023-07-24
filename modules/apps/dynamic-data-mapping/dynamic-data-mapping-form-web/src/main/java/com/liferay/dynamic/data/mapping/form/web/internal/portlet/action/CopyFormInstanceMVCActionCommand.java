@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -91,7 +91,7 @@ public class CopyFormInstanceMVCActionCommand
 		DDMFormValues settingsDDMFormValues =
 			createFormInstanceSettingsDDMFormValues(formInstance);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMFormInstance.class.getName(), actionRequest);
 
 		ddmFormInstanceService.copyFormInstance(
@@ -149,5 +149,8 @@ public class CopyFormInstanceMVCActionCommand
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

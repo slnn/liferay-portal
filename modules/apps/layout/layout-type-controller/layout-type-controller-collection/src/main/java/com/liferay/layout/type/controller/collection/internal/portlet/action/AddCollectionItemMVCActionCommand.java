@@ -22,7 +22,7 @@ import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -79,7 +79,7 @@ public class AddCollectionItemMVCActionCommand extends BaseMVCActionCommand {
 			AssetEntry assetEntry = _assetEntryService.getEntry(
 				className, classPK);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				actionRequest);
 
 			long[] segmentsEntryIds = GetterUtil.getLongValues(
@@ -121,5 +121,8 @@ public class AddCollectionItemMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private SegmentsEntryRetriever _segmentsEntryRetriever;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

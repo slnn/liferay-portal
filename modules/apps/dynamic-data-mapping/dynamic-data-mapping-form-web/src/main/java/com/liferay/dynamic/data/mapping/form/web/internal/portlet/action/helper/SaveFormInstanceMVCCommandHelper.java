@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.redirect.RedirectURLSettings;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -173,7 +173,7 @@ public class SaveFormInstanceMVCCommandHelper {
 			PortletRequest portletRequest, boolean validateFormFieldsSettings)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMFormInstance.class.getName(), portletRequest);
 
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
@@ -331,7 +331,7 @@ public class SaveFormInstanceMVCCommandHelper {
 			boolean validateFormFieldsSettings)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMFormInstance.class.getName(), portletRequest);
 
 		String name = ParamUtil.getString(portletRequest, "name");
@@ -535,5 +535,8 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	@Reference
 	private RedirectURLSettings _redirectURLSettings;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

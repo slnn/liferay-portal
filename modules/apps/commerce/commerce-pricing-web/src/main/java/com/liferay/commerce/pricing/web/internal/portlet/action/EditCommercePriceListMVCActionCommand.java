@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -232,7 +232,7 @@ public class EditCommercePriceListMVCActionCommand
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire", true);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommercePriceList.class.getName(), actionRequest);
 
 		CommercePriceList commercePriceList;
@@ -266,5 +266,8 @@ public class EditCommercePriceListMVCActionCommand
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

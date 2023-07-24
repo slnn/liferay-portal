@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -96,7 +96,7 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		_userService.addOrganizationUsers(organizationId, addUserIds);
 		_userService.unsetOrganizationUsers(organizationId, removeUserIds);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			Organization.class.getName(), actionRequest);
 
 		long[] removeOrganizationIds = StringUtil.split(
@@ -120,6 +120,9 @@ public class EditOrganizationAssignmentsMVCActionCommand
 
 	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserService _userService;

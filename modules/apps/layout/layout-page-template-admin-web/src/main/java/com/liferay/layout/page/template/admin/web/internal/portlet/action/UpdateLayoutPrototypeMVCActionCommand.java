@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -70,7 +70,7 @@ public class UpdateLayoutPrototypeMVCActionCommand
 				ParamUtil.getString(actionRequest, "name")
 			).build();
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				LayoutPrototype.class.getName(), actionRequest);
 
 			_layoutPrototypeService.updateLayoutPrototype(
@@ -128,5 +128,8 @@ public class UpdateLayoutPrototypeMVCActionCommand
 
 	@Reference
 	private LayoutPrototypeService _layoutPrototypeService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

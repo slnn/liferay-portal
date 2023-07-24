@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,7 +53,7 @@ public class UpdateRecordMVCActionCommand extends AddRecordMVCActionCommand {
 		boolean majorVersion = ParamUtil.getBoolean(
 			actionRequest, "majorVersion");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
 
 		ddlRecordService.updateRecord(

@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -140,7 +140,7 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 					DLOpenerMimeTypes.APPLICATION_VND_DOCX);
 
 				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(actionRequest);
+					_serviceContextFactory.getInstance(actionRequest);
 
 				_saveDLOpenerGoogleDriveFileReference(
 					actionRequest,
@@ -170,7 +170,7 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 
 			String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				actionRequest);
 
 			boolean hasGoogleDriveFile =
@@ -198,7 +198,7 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals(Constants.CHECKOUT)) {
 			try {
 				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(actionRequest);
+					_serviceContextFactory.getInstance(actionRequest);
 
 				_saveDLOpenerGoogleDriveFileReference(
 					actionRequest,
@@ -249,6 +249,9 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private GoogleDrivePortletRequestAuthorizationHelper
 		_googleDrivePortletRequestAuthorizationHelper;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

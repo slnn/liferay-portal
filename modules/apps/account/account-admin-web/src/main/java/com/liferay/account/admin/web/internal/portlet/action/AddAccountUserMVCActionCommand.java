@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.File;
@@ -108,7 +108,7 @@ public class AddAccountUserMVCActionCommand
 							LocaleUtil.fromLanguageId(languageId), firstName,
 							middleName, lastName, prefixListTypeId,
 							suffixListTypeId, jobTitle,
-							ServiceContextFactory.getInstance(
+							_serviceContextFactory.getInstance(
 								AccountEntryUserRel.class.getName(),
 								actionRequest));
 			}
@@ -119,7 +119,7 @@ public class AddAccountUserMVCActionCommand
 						emailAddress, LocaleUtil.fromLanguageId(languageId),
 						firstName, middleName, lastName, prefixListTypeId,
 						suffixListTypeId, jobTitle,
-						ServiceContextFactory.getInstance(
+						_serviceContextFactory.getInstance(
 							AccountEntryUserRel.class.getName(),
 							actionRequest));
 			}
@@ -204,6 +204,9 @@ public class AddAccountUserMVCActionCommand
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -214,7 +214,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		long[] commerceChannelIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "commerceChannelIds"), 0L);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceInventoryWarehouse.class.getName(), actionRequest);
 
 		_commerceChannelRelService.deleteCommerceChannelRels(
@@ -256,7 +256,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		double longitude = ParamUtil.getDouble(actionRequest, "longitude");
 		long mvccVersion = ParamUtil.getLong(actionRequest, "mvccVersion");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CommerceInventoryWarehouse.class.getName(), actionRequest);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse = null;
@@ -312,6 +312,9 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 
 	@Reference
 	private RegionLocalService _regionLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private class CommerceInventoryWarehouseCallable
 		implements Callable<Object> {

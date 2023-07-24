@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -252,7 +252,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getTitle(), sxpElement.getTitle_i18n()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+				_serviceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Override
@@ -275,7 +275,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getTitle(), sxpElement.getTitle_i18n()),
 				GetterUtil.getInteger(sxpElement.getType()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+				_serviceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Override
@@ -296,7 +296,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				sxpElement.getSchemaVersion(),
 				TitleMapUtil.copy(sxpElement.getTitleMap()),
 				sxpElement.getType(),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+				_serviceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Override
@@ -422,6 +422,9 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference(
 		target = "(component.name=com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPElementDTOConverter)"

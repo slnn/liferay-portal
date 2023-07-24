@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -66,7 +66,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 		DDMFormValues ddmFormValues = getDDMFormValues(actionRequest);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
 
 		ddlRecordService.addRecord(
@@ -99,6 +99,9 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	protected DDMFormValuesDeserializer jsonDDMFormValuesDeserializer;
+
+	@Reference
+	protected ServiceContextFactory serviceContextFactory;
 
 	private DDMFormValues _deserialize(String content, DDMForm ddmForm) {
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =

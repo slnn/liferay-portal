@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -80,7 +80,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long plid = ParamUtil.getLong(actionRequest, "plid");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		SegmentsExperience segmentsExperience = _addSegmentsExperience(
@@ -175,7 +175,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		return _segmentsExperimentRelService.addSegmentsExperimentRel(
 			segmentsExperiment.getSegmentsExperimentId(),
 			segmentsExperience.getSegmentsExperienceId(),
-			ServiceContextFactory.getInstance(actionRequest));
+			_serviceContextFactory.getInstance(actionRequest));
 	}
 
 	private long _getBaseSegmentsExperienceId(
@@ -321,5 +321,8 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private SegmentsExperimentService _segmentsExperimentService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

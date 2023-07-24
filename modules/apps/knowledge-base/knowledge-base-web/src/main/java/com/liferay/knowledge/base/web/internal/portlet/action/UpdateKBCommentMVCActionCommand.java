@@ -22,7 +22,7 @@ import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -69,7 +69,7 @@ public class UpdateKBCommentMVCActionCommand extends BaseMVCActionCommand {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String content = ParamUtil.getString(actionRequest, "content");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			KBComment.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
@@ -103,5 +103,8 @@ public class UpdateKBCommentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private KBCommentService _kbCommentService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

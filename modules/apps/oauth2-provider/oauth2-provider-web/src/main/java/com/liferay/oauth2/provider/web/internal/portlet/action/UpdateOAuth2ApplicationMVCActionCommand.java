@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -169,7 +169,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 				}
 
 				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						OAuth2Application.class.getName(), request);
 
 				OAuth2Application oAuth2Application =
@@ -270,5 +270,8 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 	private OAuth2ApplicationService _oAuth2ApplicationService;
 
 	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

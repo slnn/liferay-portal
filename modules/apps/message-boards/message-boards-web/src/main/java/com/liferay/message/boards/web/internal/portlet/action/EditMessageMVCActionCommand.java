@@ -66,7 +66,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -503,7 +503,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			boolean allowPingbacks = ParamUtil.getBoolean(
 				actionRequest, "allowPingbacks");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				MBMessage.class.getName(), actionRequest);
 
 			boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
@@ -674,6 +674,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

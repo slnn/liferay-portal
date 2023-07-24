@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -179,7 +179,7 @@ public class AddFormInstanceRecordMVCResourceCommand
 			ResourceRequest resourceRequest)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), resourceRequest);
 
 		serviceContext.setAttribute("status", WorkflowConstants.STATUS_DRAFT);
@@ -214,5 +214,8 @@ public class AddFormInstanceRecordMVCResourceCommand
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

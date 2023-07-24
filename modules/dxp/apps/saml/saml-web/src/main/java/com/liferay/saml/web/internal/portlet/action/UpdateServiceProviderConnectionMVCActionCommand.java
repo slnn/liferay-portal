@@ -17,7 +17,7 @@ package com.liferay.saml.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -96,7 +96,7 @@ public class UpdateServiceProviderConnectionMVCActionCommand
 		String samlSpEntityId = ParamUtil.getString(
 			uploadPortletRequest, "samlSpEntityId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			SamlIdpSpConnection.class.getName(), uploadPortletRequest);
 
 		if (samlIdpSpConnectionId <= 0) {
@@ -120,5 +120,8 @@ public class UpdateServiceProviderConnectionMVCActionCommand
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

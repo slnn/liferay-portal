@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
@@ -88,7 +88,7 @@ public class AddTemplateEntryMVCActionCommand
 			},
 			new String[] {ParamUtil.getString(actionRequest, "name")});
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
 
 		try {
@@ -100,7 +100,7 @@ public class AddTemplateEntryMVCActionCommand
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
 				TemplateConstants.LANG_TYPE_FTL, _getScript(), serviceContext);
 
-			serviceContext = ServiceContextFactory.getInstance(
+			serviceContext = _serviceContextFactory.getInstance(
 				TemplateEntry.class.getName(), actionRequest);
 
 			TemplateEntry templateEntry =
@@ -189,6 +189,9 @@ public class AddTemplateEntryMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private TemplateEntryLocalService _templateEntryLocalService;

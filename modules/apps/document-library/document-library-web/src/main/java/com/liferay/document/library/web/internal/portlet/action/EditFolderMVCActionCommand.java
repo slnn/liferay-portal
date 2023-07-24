@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -220,7 +220,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DLFolder.class.getName(), actionRequest);
 
 		if (folderId <= 0) {
@@ -248,7 +248,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 	private void _updateWorkflowDefinitions(ActionRequest actionRequest)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
 		_dlAppService.updateFolder(
@@ -261,5 +261,8 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLTrashService _dlTrashService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

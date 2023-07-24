@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -249,7 +249,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+				_serviceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Override
@@ -276,7 +276,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+				_serviceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Override
@@ -299,7 +299,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				sxpBlueprint.getElementInstancesJSON(),
 				sxpBlueprint.getSchemaVersion(),
 				TitleMapUtil.copy(sxpBlueprint.getTitleMap()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+				_serviceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Override
@@ -357,6 +357,9 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference(
 		target = "(component.name=com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPBlueprintDTOConverter)"

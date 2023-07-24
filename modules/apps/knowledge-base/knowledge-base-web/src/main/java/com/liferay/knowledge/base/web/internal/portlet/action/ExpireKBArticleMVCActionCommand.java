@@ -19,7 +19,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -50,11 +50,14 @@ public class ExpireKBArticleMVCActionCommand extends BaseMVCActionCommand {
 
 		_kbArticleService.expireKBArticle(
 			resourcePrimKey,
-			ServiceContextFactory.getInstance(
+			_serviceContextFactory.getInstance(
 				KBArticle.class.getName(), actionRequest));
 	}
 
 	@Reference
 	private KBArticleService _kbArticleService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

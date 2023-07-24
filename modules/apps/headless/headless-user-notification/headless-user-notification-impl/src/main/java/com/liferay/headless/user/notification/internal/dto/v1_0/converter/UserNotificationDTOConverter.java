@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -121,7 +121,7 @@ public class UserNotificationDTOConverter
 			return null;
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			dtoConverterContext.getHttpServletRequest());
 
 		serviceContext.setLanguageId(
@@ -143,6 +143,9 @@ public class UserNotificationDTOConverter
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private ServiceTrackerMap<String, UserNotificationHandler>
 		_serviceTrackerMap;

@@ -22,7 +22,7 @@ import com.liferay.account.service.AccountGroupService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -112,7 +112,7 @@ public class EditAccountGroupMVCActionCommand
 
 		AccountGroup accountGroup = _accountGroupService.addAccountGroup(
 			themeDisplay.getUserId(), description, name,
-			ServiceContextFactory.getInstance(
+			_serviceContextFactory.getInstance(
 				AccountGroup.class.getName(), actionRequest));
 
 		return _accountGroupLocalService.updateExternalReferenceCode(
@@ -131,7 +131,7 @@ public class EditAccountGroupMVCActionCommand
 
 		AccountGroup accountGroup = _accountGroupService.updateAccountGroup(
 			accountGroupId, description, name,
-			ServiceContextFactory.getInstance(
+			_serviceContextFactory.getInstance(
 				AccountGroup.class.getName(), actionRequest));
 
 		_accountGroupService.updateExternalReferenceCode(
@@ -144,5 +144,8 @@ public class EditAccountGroupMVCActionCommand
 
 	@Reference
 	private AccountGroupService _accountGroupService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

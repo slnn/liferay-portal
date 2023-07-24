@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -576,7 +576,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		samlPeerEndpointContext.setEndpoint(singleSignOnService);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			httpServletRequest);
 
 		_samlSpAuthRequestLocalService.addSamlSpAuthRequest(
@@ -998,7 +998,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SamlSsoRequestContext samlSsoRequestContext, NameID nameID)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			httpServletRequest);
 
 		SamlIdpSsoSession samlIdpSsoSession =
@@ -1657,7 +1657,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			throw new AuthnAgeException();
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			httpServletRequest);
 
 		User user = _userResolver.resolveUser(
@@ -2030,7 +2030,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SamlSsoRequestContext samlSsoRequestContext, NameID nameID)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			httpServletRequest);
 
 		SamlIdpSsoSession samlIdpSsoSession =
@@ -2148,6 +2148,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Reference
 	private SamlSpMessageLocalService _samlSpMessageLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

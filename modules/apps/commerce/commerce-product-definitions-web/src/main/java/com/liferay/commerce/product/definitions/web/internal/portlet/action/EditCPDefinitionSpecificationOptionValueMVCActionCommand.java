@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
@@ -109,7 +109,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 				0L);
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinitionSpecificationOptionValue.class.getName(),
 			actionRequest);
 
@@ -173,7 +173,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 			actionRequest, "value");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinitionSpecificationOptionValue.class.getName(),
 			actionRequest);
 
@@ -192,5 +192,8 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -78,7 +78,7 @@ public class EditCommerceOrderItemMVCActionCommand
 						commerceOrderItemId);
 
 				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						CommerceOrderItem.class.getName(), actionRequest);
 
 				_commerceOrderItemService.updateCommerceOrderItem(
@@ -139,5 +139,8 @@ public class EditCommerceOrderItemMVCActionCommand
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

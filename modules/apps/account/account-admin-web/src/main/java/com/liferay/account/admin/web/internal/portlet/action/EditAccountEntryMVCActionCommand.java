@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -143,7 +143,7 @@ public class EditAccountEntryMVCActionCommand
 			accountEntryId, accountEntry.getParentAccountEntryId(), name,
 			description, deleteLogo, domains, emailAddress,
 			_getLogoBytes(actionRequest), taxIdNumber, accountEntry.getStatus(),
-			ServiceContextFactory.getInstance(
+			_serviceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
 
 		accountEntry = _accountEntryService.updateExternalReferenceCode(
@@ -197,7 +197,7 @@ public class EditAccountEntryMVCActionCommand
 			name, description, domains, emailAddress,
 			_getLogoBytes(actionRequest), taxIdNumber, type,
 			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextFactory.getInstance(
+			_serviceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
 
 		return _accountEntryService.updateExternalReferenceCode(
@@ -244,5 +244,8 @@ public class EditAccountEntryMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

@@ -20,7 +20,7 @@ import com.liferay.journal.service.JournalFeedService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.rss.util.RSSUtil;
 
@@ -75,7 +75,7 @@ public class UpdateFeedMVCActionCommand extends BaseMVCActionCommand {
 		String feedFormat = RSSUtil.getFeedTypeFormat(feedType);
 		double feedVersion = RSSUtil.getFeedTypeVersion(feedType);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			JournalFeed.class.getName(), actionRequest);
 
 		_journalFeedService.updateFeed(
@@ -87,5 +87,8 @@ public class UpdateFeedMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JournalFeedService _journalFeedService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

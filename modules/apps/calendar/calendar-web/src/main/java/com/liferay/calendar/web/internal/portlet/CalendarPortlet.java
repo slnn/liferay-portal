@@ -94,8 +94,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -279,7 +279,7 @@ public class CalendarPortlet extends MVCPortlet {
 		boolean allFollowing = ParamUtil.getBoolean(
 			actionRequest, "allFollowing");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CalendarBooking.class.getName(), actionRequest);
 
 		CalendarBooking calendarBooking =
@@ -400,7 +400,7 @@ public class CalendarPortlet extends MVCPortlet {
 		boolean enableRatings = ParamUtil.getBoolean(
 			actionRequest, "enableRatings");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			Calendar.class.getName(), actionRequest);
 
 		Calendar calendar = null;
@@ -442,7 +442,7 @@ public class CalendarPortlet extends MVCPortlet {
 		String subject = ParamUtil.getString(actionRequest, "subject");
 		String body = ParamUtil.getString(actionRequest, "body");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CalendarNotificationTemplate.class.getName(), actionRequest);
 
 		if (calendarNotificationTemplateId <= 0) {
@@ -482,7 +482,7 @@ public class CalendarPortlet extends MVCPortlet {
 			actionRequest, "description");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CalendarResource.class.getName(), actionRequest);
 
 		if (calendarResourceId <= 0) {
@@ -543,7 +543,7 @@ public class CalendarPortlet extends MVCPortlet {
 		boolean allFollowing = ParamUtil.getBoolean(
 			actionRequest, "allFollowing");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CalendarBooking.class.getName(), actionRequest);
 
 		CalendarBooking calendarBooking = _updateCalendarBooking(
@@ -616,7 +616,7 @@ public class CalendarPortlet extends MVCPortlet {
 		boolean allFollowing = ParamUtil.getBoolean(
 			actionRequest, "allFollowing");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CalendarBooking.class.getName(), actionRequest);
 
 		if (calendarBooking != null) {
@@ -1877,6 +1877,9 @@ public class CalendarPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.calendar.web)(&(release.schema.version>=1.1.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

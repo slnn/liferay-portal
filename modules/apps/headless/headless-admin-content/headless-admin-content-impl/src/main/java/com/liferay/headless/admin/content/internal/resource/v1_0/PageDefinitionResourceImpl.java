@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -113,7 +113,7 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			contextAcceptLanguage.getPreferredLocale(), StringUtil.randomId());
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			contextHttpServletRequest);
 
 		Layout layout = _layoutLocalService.addLayout(
@@ -268,5 +268,8 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 
 	@Context
 	private Providers _providers;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

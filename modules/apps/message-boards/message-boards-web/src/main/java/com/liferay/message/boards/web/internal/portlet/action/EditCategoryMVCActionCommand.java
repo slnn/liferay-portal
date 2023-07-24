@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -239,7 +239,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		boolean mailingListActive = ParamUtil.getBoolean(
 			actionRequest, "mailingListActive");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			MBCategory.class.getName(), actionRequest);
 
 		if (categoryId <= 0) {
@@ -281,6 +281,9 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private MBCategoryService _mbCategoryService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private TrashEntryService _trashEntryService;

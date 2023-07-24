@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PasswordPolicyService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -150,7 +150,7 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 		long resetTicketMaxAge = ParamUtil.getLong(
 			actionRequest, "resetTicketMaxAge");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			PasswordPolicy.class.getName(), actionRequest);
 
 		if (passwordPolicyId <= 0) {
@@ -292,6 +292,9 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserService _userService;

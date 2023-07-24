@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -55,7 +55,7 @@ public class EditContentSharingMVCActionCommand
 
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			Group.class.getName(), actionRequest);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
@@ -105,5 +105,8 @@ public class EditContentSharingMVCActionCommand
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -114,6 +114,9 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 	protected Localization localization;
 
 	@Reference
+	protected ServiceContextFactory serviceContextFactory;
+
+	@Reference
 	protected WorkflowDefinitionLinkLocalService
 		workflowDefinitionLinkLocalService;
 
@@ -128,7 +131,7 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap = localization.getLocalizationMap(
 			actionRequest, "description");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = serviceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
 
 		return ddlRecordSetService.addRecordSet(

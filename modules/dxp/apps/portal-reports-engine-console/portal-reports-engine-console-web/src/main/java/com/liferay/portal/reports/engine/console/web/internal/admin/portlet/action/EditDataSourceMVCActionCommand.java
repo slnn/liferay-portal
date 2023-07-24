@@ -17,7 +17,7 @@ package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.act
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -64,7 +64,7 @@ public class EditDataSourceMVCActionCommand extends BaseMVCActionCommand {
 		String driverPassword = ParamUtil.getString(
 			actionRequest, "driverPassword");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			Source.class.getName(), actionRequest);
 
 		if (sourceId <= 0) {
@@ -84,6 +84,9 @@ public class EditDataSourceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private SourceService _sourceService;

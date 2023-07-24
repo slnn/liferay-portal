@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -84,7 +84,7 @@ public class AddFragmentCompositionMVCActionCommand
 			_fragmentCollectionService.fetchFragmentCollection(
 				fragmentCollectionId);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			actionRequest);
 
 		if (fragmentCollection == null) {
@@ -242,5 +242,8 @@ public class AddFragmentCompositionMVCActionCommand
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

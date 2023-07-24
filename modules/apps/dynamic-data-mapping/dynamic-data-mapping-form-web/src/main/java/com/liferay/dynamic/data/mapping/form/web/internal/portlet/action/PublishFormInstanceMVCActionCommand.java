@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -79,7 +79,7 @@ public class PublishFormInstanceMVCActionCommand
 
 		_updatePublishedDDMFormFieldValue(settingsDDMFormValues, published);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			DDMFormInstance.class.getName(), actionRequest);
 
 		if (published) {
@@ -193,5 +193,8 @@ public class PublishFormInstanceMVCActionCommand
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

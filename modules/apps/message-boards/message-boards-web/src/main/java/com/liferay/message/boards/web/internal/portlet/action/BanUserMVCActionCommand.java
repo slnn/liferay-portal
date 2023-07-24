@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -71,7 +71,7 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 	private void _banUser(ActionRequest actionRequest) throws Exception {
 		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			MBBan.class.getName(), actionRequest);
 
 		_mbBanService.addBan(banUserId, serviceContext);
@@ -89,7 +89,7 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 			banUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			MBBan.class.getName(), actionRequest);
 
 		for (long curBanUserId : banUserIds) {
@@ -99,5 +99,8 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private MBBanService _mbBanService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

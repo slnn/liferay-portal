@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -334,7 +334,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
 
 		if (cpInstanceId > 0) {
@@ -407,7 +407,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			_updateCommercePriceEntries(
 				cpInstance, price,
 				ParamUtil.getBoolean(actionRequest, "priceOnApplication"),
-				promoPrice, ServiceContextFactory.getInstance(actionRequest));
+				promoPrice, _serviceContextFactory.getInstance(actionRequest));
 		}
 
 		return cpInstance;
@@ -419,7 +419,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
 
 		List<CPInstance> cpInstances = _cpInstanceService.buildCPInstances(
@@ -438,7 +438,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				_updateCommercePriceEntries(
 					cpInstance, cpInstance.getPrice(), false,
 					cpInstance.getPromoPrice(),
-					ServiceContextFactory.getInstance(actionRequest));
+					_serviceContextFactory.getInstance(actionRequest));
 			}
 		}
 	}
@@ -541,6 +541,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private class CPInstanceCallable implements Callable<CPInstance> {
 

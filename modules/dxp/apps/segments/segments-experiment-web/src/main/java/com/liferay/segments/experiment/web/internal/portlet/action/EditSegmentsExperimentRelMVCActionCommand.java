@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -69,7 +69,7 @@ public class EditSegmentsExperimentRelMVCActionCommand
 				_segmentsExperimentRelService.updateSegmentsExperimentRel(
 					ParamUtil.getLong(actionRequest, "segmentsExperimentRelId"),
 					ParamUtil.getString(actionRequest, "name"),
-					ServiceContextFactory.getInstance(actionRequest));
+					_serviceContextFactory.getInstance(actionRequest));
 
 			jsonObject = JSONUtil.put(
 				"segmentsExperimentRel",
@@ -107,5 +107,8 @@ public class EditSegmentsExperimentRelMVCActionCommand
 
 	@Reference
 	private SegmentsExperimentRelService _segmentsExperimentRelService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

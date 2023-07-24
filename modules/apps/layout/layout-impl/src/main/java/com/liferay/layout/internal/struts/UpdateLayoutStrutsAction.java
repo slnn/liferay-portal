@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -179,7 +179,7 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 			long layoutSetBranchId = ParamUtil.getLong(
 				httpServletRequest, "layoutSetBranchId");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				httpServletRequest);
 
 			_layoutRevisionLocalService.updateStatus(
@@ -221,7 +221,7 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 			long layoutSetBranchId = ParamUtil.getLong(
 				httpServletRequest, "layoutSetBranchId");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				httpServletRequest);
 
 			LayoutRevision layoutRevision =
@@ -406,6 +406,9 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private ServiceTrackerMap<String, PortletPreferencesUpdater>
 		_serviceTrackerMap;

@@ -21,7 +21,7 @@ import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,7 +57,7 @@ public class EditAssetCategoryPropertiesMVCActionCommand
 
 		String[] categoryProperties = _getCategoryProperties(actionRequest);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			AssetCategory.class.getName(), actionRequest);
 
 		_assetCategoryService.updateCategory(
@@ -96,5 +96,8 @@ public class EditAssetCategoryPropertiesMVCActionCommand
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

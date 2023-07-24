@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -57,7 +57,7 @@ public class AccountsCommerceHealthStatus implements CommerceHealthStatus {
 		throws PortalException {
 
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				httpServletRequest);
 
 			Callable<Object> accountRoleCallable = new AccountRoleCallable(
@@ -139,6 +139,9 @@ public class AccountsCommerceHealthStatus implements CommerceHealthStatus {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	private class AccountRoleCallable implements Callable<Object> {
 

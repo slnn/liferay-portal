@@ -20,7 +20,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
@@ -103,7 +103,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 				ParamUtil.getString(actionRequest, "cpOptionIds"), 0L);
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinitionOptionRel.class.getName(), actionRequest);
 
 		for (long addCPOptionId : addCPOptionIds) {
@@ -156,7 +156,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			actionRequest, "skuContributor");
 		String priceType = ParamUtil.getString(actionRequest, "priceType");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinitionOptionRel.class.getName(), actionRequest);
 
 		return _cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
@@ -170,5 +170,8 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

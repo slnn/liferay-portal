@@ -47,8 +47,8 @@ import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.RolePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -218,7 +218,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "description");
 		String subtype = ParamUtil.getString(actionRequest, "subtype");
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			Role.class.getName(), actionRequest);
 
 		if (roleId <= 0) {
@@ -325,7 +325,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 			for (long segmentsEntryId : addSegmentsEntryIds) {
 				_segmentsEntryRoleLocalService.addSegmentsEntryRole(
 					segmentsEntryId, roleId,
-					ServiceContextFactory.getInstance(
+					_serviceContextFactory.getInstance(
 						Role.class.getName(), actionRequest));
 			}
 		}
@@ -849,6 +849,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private UserService _userService;

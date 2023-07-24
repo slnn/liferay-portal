@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RepositoryService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -127,7 +127,7 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 			UnicodeProperties typeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(actionRequest, "settings--");
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ServiceContext serviceContext = _serviceContextFactory.getInstance(
 				DLFolder.class.getName(), actionRequest);
 
 			_repositoryService.addRepository(
@@ -152,5 +152,8 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private RepositoryService _repositoryService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }

@@ -63,8 +63,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -193,7 +193,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 				}
 
 				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(renderRequest);
+					_serviceContextFactory.getInstance(renderRequest);
 
 				ServiceContextThreadLocal.pushServiceContext(serviceContext);
 			}
@@ -330,6 +330,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

@@ -20,7 +20,7 @@ import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntr
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -70,7 +70,7 @@ public class EditCPDefinitionGroupedEntryMVCActionCommand
 		long[] entryCPDefinitionIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "entryCPDefinitionIds"), 0L);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = _serviceContextFactory.getInstance(
 			CPDefinitionGroupedEntry.class.getName(), actionRequest);
 
 		_cpDefinitionGroupedEntryService.addCPDefinitionGroupedEntries(
@@ -119,5 +119,8 @@ public class EditCPDefinitionGroupedEntryMVCActionCommand
 
 	@Reference
 	private CPDefinitionGroupedEntryService _cpDefinitionGroupedEntryService;
+
+	@Reference
+	private ServiceContextFactory _serviceContextFactory;
 
 }
