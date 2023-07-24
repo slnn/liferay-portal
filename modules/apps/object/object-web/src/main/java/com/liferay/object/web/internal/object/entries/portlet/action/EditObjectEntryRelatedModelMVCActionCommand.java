@@ -20,7 +20,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -83,7 +83,7 @@ public class EditObjectEntryRelatedModelMVCActionCommand
 				addObjectRelationshipMappingTableValues(
 					_portal.getUserId(actionRequest), objectRelationshipId,
 					objectEntryId, objectRelationshipPrimaryKey2,
-					ServiceContextFactory.getInstance(
+					ServiceContextFactoryUtil.getInstance(
 						objectDefinition.getClassName(), actionRequest));
 		}
 		catch (Exception exception) {

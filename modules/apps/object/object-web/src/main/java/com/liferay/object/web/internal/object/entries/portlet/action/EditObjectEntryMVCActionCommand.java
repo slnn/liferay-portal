@@ -29,7 +29,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -117,13 +117,13 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 					_getGroupId(actionRequest, objectDefinition),
 					objectDefinition.getObjectDefinitionId(),
 					_getValues(actionRequest),
-					ServiceContextFactory.getInstance(
+					ServiceContextFactoryUtil.getInstance(
 						objectDefinition.getClassName(), actionRequest));
 			}
 			else {
 				_objectEntryService.updateObjectEntry(
 					objectEntryId, _getValues(actionRequest),
-					ServiceContextFactory.getInstance(
+					ServiceContextFactoryUtil.getInstance(
 						objectDefinition.getClassName(), actionRequest));
 			}
 		}

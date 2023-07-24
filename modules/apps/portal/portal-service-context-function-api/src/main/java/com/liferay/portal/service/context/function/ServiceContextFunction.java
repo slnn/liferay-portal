@@ -16,7 +16,7 @@ package com.liferay.portal.service.context.function;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 
 import java.util.function.Function;
 
@@ -46,11 +46,11 @@ public class ServiceContextFunction
 	public ServiceContext apply(String className) {
 		try {
 			if (_portletRequest != null) {
-				return ServiceContextFactory.getInstance(
+				return ServiceContextFactoryUtil.getInstance(
 					className, _portletRequest);
 			}
 
-			return ServiceContextFactory.getInstance(
+			return ServiceContextFactoryUtil.getInstance(
 				className, _httpServletRequest);
 		}
 		catch (PortalException portalException) {

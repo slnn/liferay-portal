@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
@@ -56,7 +56,7 @@ public class CalendarResourceUtil
 			PortletRequest portletRequest, long groupId)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(
 			portletRequest);
 
 		return getGroupCalendarResource(groupId, serviceContext);
@@ -79,7 +79,7 @@ public class CalendarResourceUtil
 			PortletRequest portletRequest, long groupId)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(
 			portletRequest);
 
 		return getScopeGroupCalendarResource(groupId, serviceContext);
@@ -89,7 +89,7 @@ public class CalendarResourceUtil
 			PortletRequest portletRequest, long userId)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(
 			portletRequest);
 
 		serviceContext.setUserId(userId);

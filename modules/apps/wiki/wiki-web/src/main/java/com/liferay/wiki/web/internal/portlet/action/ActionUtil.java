@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -154,8 +154,9 @@ public class ActionUtil {
 		if (nodesCount == 0) {
 			Layout layout = themeDisplay.getLayout();
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				WikiNode.class.getName(), portletRequest);
+			ServiceContext serviceContext =
+				ServiceContextFactoryUtil.getInstance(
+					WikiNode.class.getName(), portletRequest);
 
 			serviceContext.setAddGroupPermissions(true);
 
@@ -207,8 +208,9 @@ public class ActionUtil {
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				WikiPage.class.getName(), portletRequest);
+			ServiceContext serviceContext =
+				ServiceContextFactoryUtil.getInstance(
+					WikiPage.class.getName(), portletRequest);
 
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);

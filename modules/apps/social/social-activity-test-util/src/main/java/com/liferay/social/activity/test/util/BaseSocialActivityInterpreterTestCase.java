@@ -18,7 +18,7 @@ import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -75,7 +75,8 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 		servicePreAction.run(httpServletRequest, new MockHttpServletResponse());
 
-		serviceContext = ServiceContextFactory.getInstance(httpServletRequest);
+		serviceContext = ServiceContextFactoryUtil.getInstance(
+			httpServletRequest);
 	}
 
 	@Test

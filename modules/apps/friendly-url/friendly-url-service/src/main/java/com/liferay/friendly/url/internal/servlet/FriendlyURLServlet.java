@@ -49,9 +49,9 @@ import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.context.factory.util.ServiceContextFactoryUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
@@ -884,7 +884,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext == null) {
-			serviceContext = ServiceContextFactory.getInstance(
+			serviceContext = ServiceContextFactoryUtil.getInstance(
 				httpServletRequest);
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
