@@ -117,7 +117,7 @@ if (Validator.isNotNull(backURL)) {
 				>
 
 					<%
-					UserNotificationFeedEntry userNotificationFeedEntry = UserNotificationManagerUtil.interpret(StringPool.BLANK, userNotificationEvent, ServiceContextFactory.getInstance(request));
+					UserNotificationFeedEntry userNotificationFeedEntry = UserNotificationManagerUtil.interpret(StringPool.BLANK, userNotificationEvent, ServiceContextFactoryUtil.getInstance(request));
 
 					row.setData(
 						HashMapBuilder.<String, Object>put(

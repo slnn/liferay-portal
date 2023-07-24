@@ -64,7 +64,7 @@ WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
 		}
 
 	},
-	sb.toString(), ServiceContextFactory.getInstance(request));
+	sb.toString(), ServiceContextFactoryUtil.getInstance(request));
 %>
 
 <%= pageDisplay.getFormattedContent() %>

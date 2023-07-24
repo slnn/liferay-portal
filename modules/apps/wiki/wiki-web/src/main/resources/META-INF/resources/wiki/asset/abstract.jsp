@@ -66,7 +66,7 @@ WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
 		}
 
 	},
-	sb.toString(), ServiceContextFactory.getInstance(request));
+	sb.toString(), ServiceContextFactoryUtil.getInstance(request));
 %>
 
 <%= StringUtil.shorten(HtmlUtil.stripHtml(pageDisplay.getFormattedContent()), abstractLength) %>

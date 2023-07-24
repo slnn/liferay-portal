@@ -14,7 +14,7 @@
 <div class="taglib-social-activities">
 
 	<%
-	ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
+	ServiceContext serviceContext = ServiceContextFactoryUtil.getInstance(request);
 
 	boolean hasActivities = false;
 
