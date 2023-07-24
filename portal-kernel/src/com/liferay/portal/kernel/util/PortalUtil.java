@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Locale;
@@ -710,22 +708,6 @@ public class PortalUtil {
 		PortletPreferences preferences, long companyId, String defaultValue) {
 
 		return _portal.getEmailFromName(preferences, companyId, defaultValue);
-	}
-
-	public static Map<String, Serializable> getExpandoBridgeAttributes(
-			ExpandoBridge expandoBridge, HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		return _portal.getExpandoBridgeAttributes(
-			expandoBridge, httpServletRequest);
-	}
-
-	public static Map<String, Serializable> getExpandoBridgeAttributes(
-			ExpandoBridge expandoBridge, PortletRequest portletRequest)
-		throws PortalException {
-
-		return _portal.getExpandoBridgeAttributes(
-			expandoBridge, portletRequest);
 	}
 
 	public static String getForwardedHost(
