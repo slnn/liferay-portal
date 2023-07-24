@@ -15,6 +15,7 @@
 package com.liferay.portal.service.context.factory.impl;
 
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.expando.util.ExpandoAttributesUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -113,7 +114,7 @@ public class ServiceContextFactoryImpl implements ServiceContextFactory {
 		// Expando
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoAttributesUtil.getExpandoBridgeAttributes(
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
 					serviceContext.getCompanyId(), className),
 				httpServletRequest);
@@ -150,7 +151,7 @@ public class ServiceContextFactoryImpl implements ServiceContextFactory {
 		// Expando
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoAttributesUtil.getExpandoBridgeAttributes(
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
 					serviceContext.getCompanyId(), className),
 				portletRequest);
