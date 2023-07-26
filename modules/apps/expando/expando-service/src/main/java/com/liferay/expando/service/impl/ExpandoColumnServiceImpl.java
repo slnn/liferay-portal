@@ -5,9 +5,9 @@
 
 package com.liferay.expando.service.impl;
 
-import com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil;
 import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.service.base.ExpandoColumnServiceBaseImpl;
+import com.liferay.expando.service.permission.ExpandoColumnPermission;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -54,7 +54,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 
 	@Override
 	public void deleteColumn(long columnId) throws PortalException {
-		ExpandoColumnPermissionUtil.check(
+		_expandoColumnPermission.check(
 			getPermissionChecker(), columnId, ActionKeys.DELETE);
 
 		expandoColumnLocalService.deleteColumn(columnId);
@@ -64,7 +64,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 	public ExpandoColumn fetchExpandoColumn(long columnId)
 		throws PortalException {
 
-		ExpandoColumnPermissionUtil.check(
+		_expandoColumnPermission.check(
 			getPermissionChecker(), columnId, ActionKeys.VIEW);
 
 		return expandoColumnLocalService.fetchExpandoColumn(columnId);
@@ -74,7 +74,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 	public ExpandoColumn updateColumn(long columnId, String name, int type)
 		throws PortalException {
 
-		ExpandoColumnPermissionUtil.check(
+		_expandoColumnPermission.check(
 			getPermissionChecker(), columnId, ActionKeys.UPDATE);
 
 		return expandoColumnLocalService.updateColumn(columnId, name, type);
@@ -85,7 +85,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 			long columnId, String name, int type, Object defaultData)
 		throws PortalException {
 
-		ExpandoColumnPermissionUtil.check(
+		_expandoColumnPermission.check(
 			getPermissionChecker(), columnId, ActionKeys.UPDATE);
 
 		return expandoColumnLocalService.updateColumn(
@@ -96,11 +96,14 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 	public ExpandoColumn updateTypeSettings(long columnId, String typeSettings)
 		throws PortalException {
 
-		ExpandoColumnPermissionUtil.check(
+		_expandoColumnPermission.check(
 			getPermissionChecker(), columnId, ActionKeys.UPDATE);
 
 		return expandoColumnLocalService.updateTypeSettings(
 			columnId, typeSettings);
 	}
+
+	@Reference
+	private ExpandoColumnPermission _expandoColumnPermission;
 
 }
