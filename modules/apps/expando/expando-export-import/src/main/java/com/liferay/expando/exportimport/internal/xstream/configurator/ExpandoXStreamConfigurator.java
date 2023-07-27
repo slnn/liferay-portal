@@ -7,12 +7,12 @@ package com.liferay.expando.exportimport.internal.xstream.configurator;
 
 import com.liferay.expando.exportimport.internal.model.adapter.StagedExpandoColumnImpl;
 import com.liferay.expando.exportimport.internal.model.adapter.StagedExpandoTableImpl;
+import com.liferay.expando.model.impl.ExpandoColumnImpl;
+import com.liferay.expando.model.impl.ExpandoTableImpl;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portlet.expando.model.impl.ExpandoColumnImpl;
-import com.liferay.portlet.expando.model.impl.ExpandoTableImpl;
 import com.liferay.xstream.configurator.XStreamConfigurator;
 
 import java.util.List;

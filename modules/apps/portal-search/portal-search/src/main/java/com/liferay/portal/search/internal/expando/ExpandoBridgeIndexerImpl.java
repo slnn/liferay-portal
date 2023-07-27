@@ -10,6 +10,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoValue;
+import com.liferay.expando.model.impl.ExpandoValueImpl;
 import com.liferay.expando.service.ExpandoColumnLocalService;
 import com.liferay.expando.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
-import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
