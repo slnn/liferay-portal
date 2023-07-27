@@ -9,7 +9,7 @@ import com.liferay.change.tracking.internal.reference.TableReferenceAppender;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.expando.kernel.model.ExpandoColumnTable;
-import com.liferay.expando.kernel.model.ExpandoRowTable;
+import com.liferay.expando.model.ExpandoRowTable;
 import com.liferay.expando.model.ExpandoTableTable;
 import com.liferay.expando.model.ExpandoValueTable;
 import com.liferay.petra.sql.dsl.Column;

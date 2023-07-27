@@ -11,8 +11,8 @@ import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalServic
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
-import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.model.ExpandoRow;
 import com.liferay.expando.model.ExpandoTable;
 import com.liferay.expando.service.ExpandoTableLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
