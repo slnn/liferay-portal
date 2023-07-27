@@ -6,11 +6,11 @@
 package com.liferay.portal.search.internal.expando;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoValue;
+import com.liferay.expando.service.ExpandoColumnLocalService;
 import com.liferay.expando.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

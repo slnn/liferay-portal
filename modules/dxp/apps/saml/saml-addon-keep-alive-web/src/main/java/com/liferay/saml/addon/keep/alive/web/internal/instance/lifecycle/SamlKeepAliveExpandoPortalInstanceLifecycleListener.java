@@ -5,10 +5,10 @@
 
 package com.liferay.saml.addon.keep.alive.web.internal.instance.lifecycle;
 
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoTable;
+import com.liferay.expando.service.ExpandoColumnLocalService;
 import com.liferay.expando.service.ExpandoTableLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;

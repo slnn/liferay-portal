@@ -50,7 +50,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldName;
-import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoRow;
 import com.liferay.expando.model.ExpandoValue;
 import com.liferay.expando.service.ExpandoRowLocalService;

@@ -6,11 +6,11 @@
 package com.liferay.expando.test.util;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoTable;
 import com.liferay.expando.model.ExpandoValue;
+import com.liferay.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

@@ -6,12 +6,12 @@
 package com.liferay.expando.internal;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
-import com.liferay.expando.kernel.service.ExpandoColumnServiceUtil;
+import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoTable;
+import com.liferay.expando.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.service.ExpandoColumnServiceUtil;
 import com.liferay.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.expando.service.ExpandoValueServiceUtil;
