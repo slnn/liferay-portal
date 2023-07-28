@@ -6,7 +6,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.expando.kernel.util.ExpandoLocalServiceBridgeUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -504,7 +504,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		// Expando
 
-		_expandoRowLocalService.deleteRows(role.getRoleId());
+		ExpandoLocalServiceBridgeUtil.deleteRows(role.getRoleId());
 
 		return role;
 	}
@@ -2128,9 +2128,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	@BeanReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;
-
-	@BeanReference(type = ExpandoRowLocalService.class)
-	private ExpandoRowLocalService _expandoRowLocalService;
 
 	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;

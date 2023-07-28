@@ -6,7 +6,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.expando.kernel.util.ExpandoLocalServiceBridgeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -544,7 +544,8 @@ public class OrganizationLocalServiceImpl
 
 		// Expando
 
-		_expandoRowLocalService.deleteRows(organization.getOrganizationId());
+		ExpandoLocalServiceBridgeUtil.deleteRows(
+			organization.getOrganizationId());
 
 		// Password policy relation
 
@@ -2644,9 +2645,6 @@ public class OrganizationLocalServiceImpl
 
 	@BeanReference(type = EmailAddressLocalService.class)
 	private EmailAddressLocalService _emailAddressLocalService;
-
-	@BeanReference(type = ExpandoRowLocalService.class)
-	private ExpandoRowLocalService _expandoRowLocalService;
 
 	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
