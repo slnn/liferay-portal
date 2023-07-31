@@ -10,6 +10,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoValue;
+import com.liferay.expando.model.helper.ExpandoModelHelper;
 import com.liferay.expando.service.ExpandoColumnLocalService;
 import com.liferay.expando.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
-import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,7 +121,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		boolean hasValue = true;
 
 		if (expandoValue == null) {
-			expandoValue = new ExpandoValueImpl();
+			expandoValue = _expandoModelHelper.getExpandoValueInstance();
 
 			expandoValue.setColumnId(expandoColumn.getColumnId());
 			expandoValue.setData(expandoColumn.getDefaultData());
@@ -377,6 +377,9 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoModelHelper _expandoModelHelper;
 
 	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;

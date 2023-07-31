@@ -13,9 +13,11 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.model.ExpandoColumn;
 import com.liferay.expando.model.ExpandoValue;
+import com.liferay.expando.model.helper.ExpandoModelHelper;
 import com.liferay.expando.service.ExpandoColumnLocalService;
 import com.liferay.expando.service.ExpandoValueLocalService;
 import com.liferay.expando.service.permission.ExpandoColumnPermissionUtil;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -45,7 +47,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.internal.blueprint.parameter.BooleanArraySXPParameter;
@@ -263,7 +264,10 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				expandoColumn.getColumnId());
 
 			if (expandoValue == null) {
-				expandoValue = new ExpandoValueImpl();
+				ExpandoModelHelper expandoModelHelper =
+					_expandoModelHelperSnapshot.get();
+
+				expandoValue = expandoModelHelper.getExpandoValueInstance();
 
 				expandoValue.setData(expandoColumn.getDefaultData());
 			}
@@ -806,6 +810,10 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserSXPParameterContributor.class);
+
+	private static final Snapshot<ExpandoModelHelper>
+		_expandoModelHelperSnapshot = new Snapshot<>(
+			UserSXPParameterContributor.class, ExpandoModelHelper.class);
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetTagLocalService _assetTagLocalService;
