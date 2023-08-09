@@ -597,9 +597,6 @@ public interface Portal {
 			String displayType)
 		throws PortalException;
 
-	public String getFirstPageLayoutTypes(
-		HttpServletRequest httpServletRequest);
-
 	public String getForwardedHost(HttpServletRequest httpServletRequest);
 
 	public int getForwardedPort(HttpServletRequest httpServletRequest);
