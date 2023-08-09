@@ -1714,14 +1714,6 @@ public class PortalUtil {
 		return _portal.isLoginRedirectRequired(httpServletRequest);
 	}
 
-	public static boolean isMethodGet(PortletRequest portletRequest) {
-		return _portal.isMethodGet(portletRequest);
-	}
-
-	public static boolean isMethodPost(PortletRequest portletRequest) {
-		return _portal.isMethodPost(portletRequest);
-	}
-
 	public static boolean isMultipartRequest(
 		HttpServletRequest httpServletRequest) {
 
