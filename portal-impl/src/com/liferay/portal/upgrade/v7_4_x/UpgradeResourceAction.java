@@ -17,6 +17,11 @@ public class UpgradeResourceAction extends UpgradeProcess {
 		runSQL(
 			"update ResourceAction set actionId = 'MANAGE_COUNTRIES' where " +
 				"name='90' and actionId = 'MANAGE_COMMERCE_COUNTRIES'");
+
+		runSQL(
+			"update ResourceAction set name='com.liferay.expando.model." +
+				"ExpandoColumn' where name='com.liferay.expando.kernel.model." +
+					"ExpandoColumn'");
 	}
 
 }

@@ -74,9 +74,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(12, 0, 0), new UpgradePortalPreferences());
 
 		upgradeVersionTreeMap.put(
-			new Version(12, 0, 1), new UpgradeResourceAction());
-
-		upgradeVersionTreeMap.put(
 			new Version(12, 0, 2), new UpgradeDLFileEntryType());
 
 		upgradeVersionTreeMap.put(
@@ -310,6 +307,15 @@ public class PortalUpgradeProcessRegistryImpl
 				}
 
 			});
+
+		upgradeVersionTreeMap.put(
+			new Version(26, 4, 1), new UpgradeResourceAction());
+
+		upgradeVersionTreeMap.put(
+			new Version(26, 4, 2), new UpgradeResourcePermission());
+
+		upgradeVersionTreeMap.put(
+			new Version(26, 4, 3), new UpgradeClassName());
 	}
 
 }
