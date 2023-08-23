@@ -312,10 +312,8 @@ public class PortalUpgradeProcessRegistryImpl
 			});
 
 		upgradeVersionTreeMap.put(
-			new Version(26, 4, 1), new UpgradeClassName(),
-			new UpgradeResourceActionName(), new UpgradeResourcePermission(),
-			UpgradeModulesFactory.create(
-				new String[] {"com.liferay.expando.service"}, null));
+			new Version(26, 4, 1), new UpgradeClassName(), new UpgradeRelease(),
+			new UpgradeResourceActionName(), new UpgradeResourcePermission());
 	}
 
 }
