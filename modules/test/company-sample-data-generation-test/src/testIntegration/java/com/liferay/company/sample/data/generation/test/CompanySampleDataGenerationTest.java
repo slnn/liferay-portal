@@ -41,8 +41,10 @@ import java.io.File;
 import java.net.InetSocketAddress;
 
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -233,6 +235,15 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
+	private void _exportCompanyData(String hostName) throws Exception {
+		try (BufferedWriter companyBufferedWriter = Files.newBufferedWriter(
+				_outputDirPath.resolve(_COMPANY_CSV), _openOptions)) {
+
+			companyBufferedWriter.append(hostName);
+			companyBufferedWriter.newLine();
+		}
+	}
+
 	private void _exportCSVs() throws Exception {
 		String outputDir = PropsUtil.get("sample.data.output.dir");
 
@@ -240,10 +251,10 @@ public class CompanySampleDataGenerationTest {
 			return;
 		}
 
-		Path outputDirPath = Paths.get(
+		_outputDirPath = Paths.get(
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), outputDir);
 
-		File outputDirFile = outputDirPath.toFile();
+		File outputDirFile = _outputDirPath.toFile();
 
 		if (outputDirFile.exists()) {
 			FileUtil.deltree(outputDirFile);
@@ -252,42 +263,47 @@ public class CompanySampleDataGenerationTest {
 		outputDirFile.mkdir();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
-				outputDirFile.getAbsolutePath());
-			BufferedWriter companyBufferedWriter = Files.newBufferedWriter(
-				outputDirPath.resolve(_COMPANY_CSV));
-			BufferedWriter hostBufferedWriter = Files.newBufferedWriter(
-				outputDirPath.resolve(_HOST_CSV));
-			BufferedWriter userBufferedWriter = Files.newBufferedWriter(
-				outputDirPath.resolve(_USER_CSV))) {
+				outputDirFile.getAbsolutePath())) {
 
 			List<String> keys = new ArrayList<>(_csvMap.keySet());
 
 			Collections.sort(keys);
 
 			for (String key : keys) {
-				companyBufferedWriter.append(key);
-				companyBufferedWriter.newLine();
+				_exportCompanyData(key);
 
-				hostBufferedWriter.append(_PORTAL_SERVER_IP_ADDRESS);
-				hostBufferedWriter.append(StringPool.SPACE);
-				hostBufferedWriter.append(key);
-				hostBufferedWriter.newLine();
+				_exportHost(key);
 
-				List<String> screenNames = _csvMap.get(key);
-
-				Collections.sort(screenNames);
-
-				for (String screenName : screenNames) {
-					userBufferedWriter.append(key);
-					userBufferedWriter.append(StringPool.COMMA);
-					userBufferedWriter.append(screenName);
-					userBufferedWriter.newLine();
-				}
+				_exportUserData(key);
 			}
+		}
+	}
 
-			companyBufferedWriter.flush();
-			hostBufferedWriter.flush();
-			userBufferedWriter.flush();
+	private void _exportHost(String hostName) throws Exception {
+		try (BufferedWriter hostBufferedWriter = Files.newBufferedWriter(
+				_outputDirPath.resolve(_HOST_CSV), _openOptions)) {
+
+			hostBufferedWriter.append(_PORTAL_SERVER_IP_ADDRESS);
+			hostBufferedWriter.append(StringPool.SPACE);
+			hostBufferedWriter.append(hostName);
+			hostBufferedWriter.newLine();
+		}
+	}
+
+	private void _exportUserData(String hostName) throws Exception {
+		List<String> screenNames = _csvMap.get(hostName);
+
+		Collections.sort(screenNames);
+
+		try (BufferedWriter userBufferedWriter = Files.newBufferedWriter(
+				_outputDirPath.resolve(_USER_CSV), _openOptions)) {
+
+			for (String screenName : screenNames) {
+				userBufferedWriter.append(hostName);
+				userBufferedWriter.append(StringPool.COMMA);
+				userBufferedWriter.append(screenName);
+				userBufferedWriter.newLine();
+			}
 		}
 	}
 
@@ -324,12 +340,17 @@ public class CompanySampleDataGenerationTest {
 	private static final int _USER_PER_COMPANY_COUNT = GetterUtil.get(
 		PropsUtil.get("sample.data.user.per.company.count"), 2);
 
+	private static final OpenOption[] _openOptions = {
+		StandardOpenOption.CREATE, StandardOpenOption.APPEND
+	};
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	private final Map<String, List<String>> _csvMap = new ConcurrentHashMap<>();
 	private ExecutorService _executorService;
 	private AtomicReference<InetSocketAddress> _originalAtomicReference;
+	private Path _outputDirPath;
 
 	@Inject
 	private Portal _portal;
