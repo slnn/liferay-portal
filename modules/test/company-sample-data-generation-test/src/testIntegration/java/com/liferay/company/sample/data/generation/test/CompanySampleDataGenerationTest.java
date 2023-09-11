@@ -235,11 +235,14 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
-	private void _exportCompanyData(String hostName) throws Exception {
+	private void _exportCompanyData(Company company) throws Exception {
 		try (BufferedWriter companyBufferedWriter = Files.newBufferedWriter(
 				_outputDirPath.resolve(_COMPANY_CSV), _openOptions)) {
 
-			companyBufferedWriter.append(hostName);
+			companyBufferedWriter.append(
+				String.valueOf(company.getCompanyId()));
+			companyBufferedWriter.append(StringPool.COMMA);
+			companyBufferedWriter.append(company.getWebId());
 			companyBufferedWriter.newLine();
 		}
 	}
@@ -270,7 +273,7 @@ public class CompanySampleDataGenerationTest {
 			Collections.sort(keys);
 
 			for (String key : keys) {
-				_exportCompanyData(key);
+				_exportCompanyData(_companyLocalService.getCompanyByWebId(key));
 
 				_exportHost(key);
 
