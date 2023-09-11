@@ -268,6 +268,9 @@ public class CompanySampleDataGenerationTest {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				outputDirFile.getAbsolutePath())) {
 
+			_exportCompanyData(
+				_companyLocalService.getCompanyByWebId(_DEFAULT_COMPANY_WEBID));
+
 			List<String> keys = new ArrayList<>(_csvMap.keySet());
 
 			Collections.sort(keys);
@@ -332,6 +335,8 @@ public class CompanySampleDataGenerationTest {
 		PropsUtil.get("sample.data.company.count"), 2);
 
 	private static final String _COMPANY_CSV = "company.csv";
+
+	private static final String _DEFAULT_COMPANY_WEBID = "liferay.com";
 
 	private static final String _HOST_CSV = "host.csv";
 
