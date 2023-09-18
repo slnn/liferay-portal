@@ -5,10 +5,31 @@
 
 package com.liferay.expando.service.impl;
 
+import com.liferay.expando.exception.NoSuchColumnException;
+import com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil;
+import com.liferay.expando.model.ExpandoColumn;
+import com.liferay.expando.model.ExpandoValue;
+import com.liferay.expando.service.ExpandoColumnLocalService;
 import com.liferay.expando.service.base.ExpandoValueServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
+
+import java.util.Collection;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -21,4 +42,179 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
+
+	@Override
+	public ExpandoValue addValue(
+			long companyId, String className, String tableName,
+			String columnName, long classPK, Object data)
+		throws PortalException {
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+			companyId, className, tableName, columnName);
+
+		if (expandoColumn == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("No ExpandoColumn exists with the key {");
+
+			sb.append("tableName=");
+			sb.append(tableName);
+
+			sb.append(", name=");
+			sb.append(columnName);
+
+			sb.append("}");
+
+			throw new NoSuchColumnException(sb.toString());
+		}
+
+		ExpandoColumnPermissionUtil.check(
+			getPermissionChecker(), expandoColumn, ActionKeys.UPDATE);
+
+		return expandoValueLocalService.addValue(
+			companyId, className, tableName, columnName, classPK, data);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public ExpandoValue addValue(
+			long companyId, String className, String tableName,
+			String columnName, long classPK, String data)
+		throws PortalException {
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+			companyId, className, tableName, columnName);
+
+		if (expandoColumn == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("No ExpandoColumn exists with the key {");
+
+			sb.append("tableName=");
+			sb.append(tableName);
+
+			sb.append(", name=");
+			sb.append(columnName);
+
+			sb.append("}");
+
+			throw new NoSuchColumnException(sb.toString());
+		}
+
+		ExpandoColumnPermissionUtil.check(
+			getPermissionChecker(), expandoColumn, ActionKeys.UPDATE);
+
+		return expandoValueLocalService.addValue(
+			companyId, className, tableName, columnName, classPK, data);
+	}
+
+	@Override
+	public void addValues(
+			long companyId, String className, String tableName, long classPK,
+			Map<String, Serializable> attributeValues)
+		throws PortalException {
+
+		for (Map.Entry<String, Serializable> entry :
+				attributeValues.entrySet()) {
+
+			addValue(
+				companyId, className, tableName, entry.getKey(), classPK,
+				entry.getValue());
+		}
+	}
+
+	@Override
+	public Map<String, Serializable> getData(
+			long companyId, String className, String tableName,
+			Collection<String> columnNames, long classPK)
+		throws PortalException {
+
+		Map<String, Serializable> attributeValues =
+			expandoValueLocalService.getData(
+				companyId, className, tableName, columnNames, classPK);
+
+		for (String columnName : columnNames) {
+			ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+				companyId, className, tableName, columnName);
+
+			if (expandoColumn == null) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("No ExpandoColumn exists with the key {");
+
+				sb.append("tableName=");
+				sb.append(tableName);
+
+				sb.append(", name=");
+				sb.append(columnName);
+
+				sb.append("}");
+
+				throw new NoSuchColumnException(sb.toString());
+			}
+
+			if (!ExpandoColumnPermissionUtil.contains(
+					getPermissionChecker(), expandoColumn, ActionKeys.VIEW)) {
+
+				attributeValues.remove(columnName);
+			}
+		}
+
+		return attributeValues;
+	}
+
+	@Override
+	public Serializable getData(
+			long companyId, String className, String tableName,
+			String columnName, long classPK)
+		throws PortalException {
+
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
+			companyId, className, tableName, columnName);
+
+		if ((column != null) &&
+			ExpandoColumnPermissionUtil.contains(
+				getPermissionChecker(), column, ActionKeys.VIEW)) {
+
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK);
+		}
+
+		return null;
+	}
+
+	@Override
+	public JSONObject getJSONData(
+			long companyId, String className, String tableName,
+			String columnName, long classPK)
+		throws PortalException {
+
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
+			companyId, className, tableName, columnName);
+
+		if ((column == null) ||
+			!ExpandoColumnPermissionUtil.contains(
+				getPermissionChecker(), column, ActionKeys.VIEW)) {
+
+			return null;
+		}
+
+		String data = String.valueOf(
+			expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK));
+
+		if (Validator.isNull(data)) {
+			return null;
+		}
+
+		if (data.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+			return JSONFactoryUtil.createJSONObject(data);
+		}
+
+		return JSONUtil.put("data", data);
+	}
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
 }
