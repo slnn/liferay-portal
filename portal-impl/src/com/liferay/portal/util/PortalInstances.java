@@ -331,16 +331,6 @@ public class PortalInstances {
 				_log.debug("Process application startup events");
 			}
 
-			try {
-				EventsProcessorUtil.process(
-					PropsKeys.APPLICATION_STARTUP_EVENTS,
-					PropsValues.APPLICATION_STARTUP_EVENTS,
-					new String[] {String.valueOf(company.getCompanyId())});
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
-
 			// End initializing company
 
 			if (_log.isDebugEnabled()) {
