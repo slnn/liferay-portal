@@ -1,0 +1,43 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.expando.internal;
+
+import com.liferay.expando.kernel.model.ExpandoRow;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.manager.ExpandoManager;
+import com.liferay.expando.model.ExpandoRow;
+import com.liferay.expando.model.ExpandoTable;
+import com.liferay.expando.service.ExpandoRowLocalService;
+import com.liferay.expando.service.ExpandoTableLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Lily Chi
+ */
+@Component(service = ExpandoManager.class)
+public class ExpandoManagerImpl implements ExpandoManager {
+
+	@Override
+	public ExpandoTable fetchDefaultTable(long companyId, String className) {
+		return new ExpandoTableImpl(
+			_expandoTableLocalService.fetchDefaultTable(companyId, className));
+	}
+
+	@Override
+	public ExpandoRow fetchRow(long tableId, long classPK) {
+		return new ExpandoRowImpl(
+			_expandoRowLocalService.fetchRow(tableId, classPK));
+	}
+
+	@Reference
+	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+}
