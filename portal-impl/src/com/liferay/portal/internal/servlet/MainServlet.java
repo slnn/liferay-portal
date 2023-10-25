@@ -792,6 +792,17 @@ public class MainServlet extends HttpServlet {
 				else {
 					PortalInstances.initCompany(company, false);
 				}
+
+				// Process application startup events
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Process application startup events");
+				}
+
+				EventsProcessorUtil.process(
+					PropsKeys.APPLICATION_STARTUP_EVENTS,
+					PropsValues.APPLICATION_STARTUP_EVENTS,
+					new String[] {String.valueOf(company.getCompanyId())});
 			});
 	}
 
