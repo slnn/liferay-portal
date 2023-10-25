@@ -99,7 +99,7 @@ public class PortalInstancesLocalServiceImpl
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		PortalInstances.initCompany(company, true);
+		PortalInstances.initCompany(company);
 
 		if (Validator.isNull(siteInitializerKey)) {
 			return;
@@ -178,7 +178,7 @@ public class PortalInstancesLocalServiceImpl
 						return;
 					}
 
-					PortalInstances.initCompany(company, true);
+					PortalInstances.initCompany(company);
 				});
 
 			_companyLocalService.forEachCompanyId(

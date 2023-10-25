@@ -134,7 +134,7 @@ public class PanelAppMyAccountPermissionsTest {
 	protected Company addCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(company, true);
+		PortalInstances.initCompany(company);
 
 		return company;
 	}

@@ -69,7 +69,7 @@ public class OpenAPIResourceTest {
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(_company, true);
+		PortalInstances.initCompany(_company);
 	}
 
 	@Before

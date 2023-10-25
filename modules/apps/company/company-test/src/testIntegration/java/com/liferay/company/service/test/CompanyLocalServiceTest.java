@@ -978,7 +978,7 @@ public class CompanyLocalServiceTest {
 			null, webId, webId, "test.com", 0, true, null, null, null, null,
 			null, null);
 
-		PortalInstances.initCompany(company, true);
+		PortalInstances.initCompany(company);
 
 		CompanyThreadLocal.setCompanyId(company.getCompanyId());
 

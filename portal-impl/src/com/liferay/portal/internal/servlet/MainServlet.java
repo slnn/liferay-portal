@@ -789,10 +789,11 @@ public class MainServlet extends HttpServlet {
 						PropsValues.COMPANY_DEFAULT_WEB_ID,
 						company.getWebId())) {
 
-					PortalInstances.initCompany(company, true);
+					PortalInstances.initCompany(company);
 				}
 				else {
-					PortalInstances.initCompany(company, false);
+					PortalInstances.initCompany(
+						company, CompanyLocalServiceUtil::checkCompany);
 				}
 			});
 	}
