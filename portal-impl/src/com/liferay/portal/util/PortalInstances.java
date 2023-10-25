@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalFunction;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -245,7 +246,8 @@ public class PortalInstances {
 		return PortalInstancePool.getWebIds();
 	}
 
-	public static long initCompany(Company company, boolean skipCheck) {
+	public static long initCompany(
+		Company company, PortalFunction<String, Company>... functions) {
 
 		// Begin initializing company
 
@@ -261,13 +263,15 @@ public class PortalInstances {
 		try {
 			CompanyThreadLocal.setCompanyId(company.getCompanyId());
 
-			if (!skipCheck) {
+			for (PortalFunction<String, Company> function : functions) {
 				try {
-					CompanyLocalServiceUtil.checkCompany(company.getWebId());
+					function.apply(company.getWebId());
 				}
 				catch (Exception exception) {
 					_log.error(exception);
 				}
+
+				break;
 			}
 
 			String principalName = null;
