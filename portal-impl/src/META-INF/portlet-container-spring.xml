@@ -29,11 +29,7 @@
 		<property name="portletPreferencesFactory" ref="com.liferay.portal.kernel.portlet.PortletPreferencesFactory" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletQNameUtil" id="com.liferay.portal.kernel.portlet.PortletQNameUtil">
-		<property name="portletQName">
-			<bean class="com.liferay.portlet.internal.PortletQNameImpl" />
-		</property>
-	</bean>
-	<bean class="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil">
+		<bean class="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" />
 		<property name="portletURLFactory" ref="com.liferay.portlet.PortletURLFactory" />
 	</bean>
 	<bean class="com.liferay.portlet.internal.PortletURLFactoryImpl" id="com.liferay.portlet.PortletURLFactory" />
