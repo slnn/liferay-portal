@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
-import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -783,8 +782,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 						entry.getKey(), entry.getValue(), portletNamespace);
 
 					String publicRenderParameterName =
-						PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE.concat(
-							privateRenderParameter.getName());
+						PortletQNameUtil.PUBLIC_RENDER_PARAMETER_NAMESPACE.
+							concat(privateRenderParameter.getName());
 
 					if (publicRenderParametersMap.containsKey(
 							publicRenderParameterName)) {
@@ -975,7 +974,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 					if (_portletSpecMajorVersion >= 3) {
 						String publicRenderParameterName =
-							PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE;
+							PortletQNameUtil.PUBLIC_RENDER_PARAMETER_NAMESPACE;
 
 						publicRenderParameterName =
 							publicRenderParameterName.concat(
@@ -1344,9 +1343,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 			if (Validator.isNull(name) ||
 				name.startsWith(
-					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
+					PortletQNameUtil.PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
 				name.startsWith(
-					PortletQName.REMOVE_PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
+					PortletQNameUtil.
+						REMOVE_PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
 				PortalUtil.isReservedParameter(name)) {
 
 				return true;
@@ -1366,11 +1366,11 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		private static String _getName(String name) {
 			if (name != null) {
 				int pos = name.indexOf(
-					PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE);
+					PortletQNameUtil.PRIVATE_RENDER_PARAMETER_NAMESPACE);
 
 				if (pos >= 0) {
 					int privateRenderParameterNamespaceLength =
-						PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE.
+						PortletQNameUtil.PRIVATE_RENDER_PARAMETER_NAMESPACE.
 							length();
 
 					String privateRenderParameterName = name.substring(0, pos);
@@ -1395,7 +1395,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 			if ((name != null) &&
 				name.contains(
-					PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE)) {
+					PortletQNameUtil.PRIVATE_RENDER_PARAMETER_NAMESPACE)) {
 
 				_privateRenderNamespaced = true;
 			}

@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletQName;
+import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -112,11 +112,11 @@ public class CommerceOrganizationDisplayContext {
 
 		String backURL = ParamUtil.getString(
 			httpServletRequest,
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL");
+			PortletQNameUtil.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL");
 
 		if (Validator.isNotNull(backURL)) {
 			portletURL.setParameter(
-				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
+				PortletQNameUtil.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
 				backURL);
 		}
 
