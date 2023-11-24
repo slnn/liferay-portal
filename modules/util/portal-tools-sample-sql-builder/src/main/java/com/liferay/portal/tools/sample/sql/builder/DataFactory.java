@@ -6594,9 +6594,14 @@ public class DataFactory {
 			}
 		}
 
-		if (privateLayout) {
-			typeSettingsUnicodeProperties.setProperty(
-				"privateLayout", String.valueOf(privateLayout));
+		if (name.equals("search")) {
+			typeSettingsUnicodeProperties.setProperty("privateLayout", "true");
+		}
+		else {
+			if (privateLayout) {
+				typeSettingsUnicodeProperties.setProperty(
+					"privateLayout", String.valueOf(privateLayout));
+			}
 		}
 
 		layoutModel.setTypeSettings(
