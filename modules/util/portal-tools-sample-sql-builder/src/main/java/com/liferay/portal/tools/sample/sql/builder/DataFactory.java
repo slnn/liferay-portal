@@ -4207,7 +4207,7 @@ public class DataFactory {
 		}
 
 		if (BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
-			layoutModels.add(newSearchLayoutModel(groupId));
+			layoutModels.add(newSearchLayoutModel(groupId, false));
 		}
 
 		return layoutModels;
@@ -5447,9 +5447,9 @@ public class DataFactory {
 			_SAMPLE_USER_NAME, UserConstants.TYPE_REGULAR);
 	}
 
-	public LayoutModel newSearchLayoutModel(long groupId) {
+	public LayoutModel newSearchLayoutModel(long groupId, boolean hidden) {
 		return newLayoutModel(
-			groupId, "search", false, "1_2_columns_i",
+			groupId, 0, "search", false, hidden, "1_2_columns_i",
 			new String[] {
 				StringBundler.concat(
 					SearchBarPortletKeys.SEARCH_BAR, StringPool.COMMA,
