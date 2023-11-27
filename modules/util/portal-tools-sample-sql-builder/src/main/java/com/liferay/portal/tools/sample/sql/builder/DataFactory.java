@@ -4207,31 +4207,7 @@ public class DataFactory {
 		}
 
 		if (BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
-			layoutModels.add(
-				newLayoutModel(
-					groupId, "search", false, "1_2_columns_i",
-					new String[] {
-						StringBundler.concat(
-							SearchBarPortletKeys.SEARCH_BAR, StringPool.COMMA,
-							SuggestionsPortletKeys.SUGGESTIONS,
-							StringPool.COMMA),
-						StringBundler.concat(
-							SiteFacetPortletKeys.SITE_FACET, StringPool.COMMA,
-							TypeFacetPortletKeys.TYPE_FACET, StringPool.COMMA,
-							TagFacetPortletKeys.TAG_FACET, StringPool.COMMA,
-							CategoryFacetPortletKeys.CATEGORY_FACET,
-							StringPool.COMMA,
-							FolderFacetPortletKeys.FOLDER_FACET,
-							StringPool.COMMA, UserFacetPortletKeys.USER_FACET,
-							StringPool.COMMA,
-							ModifiedFacetPortletKeys.MODIFIED_FACET,
-							StringPool.COMMA),
-						StringBundler.concat(
-							SearchResultsPortletKeys.SEARCH_RESULTS,
-							StringPool.COMMA,
-							SearchOptionsPortletKeys.SEARCH_OPTIONS,
-							StringPool.COMMA)
-					}));
+			layoutModels.add(newSearchLayoutModel(groupId));
 		}
 
 		return layoutModels;
@@ -4262,15 +4238,9 @@ public class DataFactory {
 	public GroupModel newGuestGroupModel() {
 		_guestGroupId = _counter.get();
 
-		String typeSettings = StringPool.BLANK;
-
-		if (!BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
-			typeSettings = "searchLayoutCreated=true";
-		}
-
 		return newGroupModel(
 			_guestGroupId, getClassNameId(Group.class), _guestGroupId,
-			GroupConstants.GUEST, 0, typeSettings, true);
+			GroupConstants.GUEST, 0, "searchLayoutCreated=true", true);
 	}
 
 	public UserModel newGuestUserModel() {
@@ -5475,6 +5445,27 @@ public class DataFactory {
 		return newUserModel(
 			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
 			_SAMPLE_USER_NAME, UserConstants.TYPE_REGULAR);
+	}
+
+	public LayoutModel newSearchLayoutModel(long groupId) {
+		newLayoutModel(
+			groupId, "search", false, "1_2_columns_i",
+			new String[] {
+				StringBundler.concat(
+					SearchBarPortletKeys.SEARCH_BAR, StringPool.COMMA,
+					SuggestionsPortletKeys.SUGGESTIONS, StringPool.COMMA),
+				StringBundler.concat(
+					SiteFacetPortletKeys.SITE_FACET, StringPool.COMMA,
+					TypeFacetPortletKeys.TYPE_FACET, StringPool.COMMA,
+					TagFacetPortletKeys.TAG_FACET, StringPool.COMMA,
+					CategoryFacetPortletKeys.CATEGORY_FACET, StringPool.COMMA,
+					FolderFacetPortletKeys.FOLDER_FACET, StringPool.COMMA,
+					UserFacetPortletKeys.USER_FACET, StringPool.COMMA,
+					ModifiedFacetPortletKeys.MODIFIED_FACET, StringPool.COMMA),
+				StringBundler.concat(
+					SearchResultsPortletKeys.SEARCH_RESULTS, StringPool.COMMA,
+					SearchOptionsPortletKeys.SEARCH_OPTIONS, StringPool.COMMA)
+			})
 	}
 
 	public SegmentsEntry newSegmentsEntry(long groupId, int index) {
