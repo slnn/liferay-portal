@@ -77,8 +77,11 @@
 <#assign
 	searchLayoutModel = dataFactory.newSearchLayoutModel(guestGroupModel.groupId, true)
 	layoutPrototypeModel = dataFactory.newLayoutPrototypeModel(defaultAdminUserModel.userId)
+	searchTemplateGroupModel = dataFactory.newSearchTemplateGroupModel(defaultAdminUserModel.userId, layoutPrototypeModel.layoutPrototypeId)
 />
 
 <@insertLayout _layoutModel=searchLayoutModel />
 
 ${dataFactory.toInsertSQL(layoutPrototypeModel)}
+
+<@insertGroup _groupModel=searchTemplateGroupModel />
