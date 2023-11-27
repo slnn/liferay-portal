@@ -5010,6 +5010,40 @@ public class DataFactory {
 	}
 
 	public List<PortletPreferencesModel> newPortletPreferencesModels(
+		LayoutModel searchLayoutModel, LayoutModel searchGroupLayoutModel) {
+
+		return ListUtil.fromArray(
+			newPortletPreferencesModel(
+				0, searchLayoutModel.getPlid(),
+				ProductNavigationProductMenuPortletKeys.
+					PRODUCT_NAVIGATION_PRODUCT_MENU),
+			newPortletPreferencesModel(
+				0, searchGroupLayoutModel.getPlid(),
+				ProductNavigationProductMenuPortletKeys.
+					PRODUCT_NAVIGATION_PRODUCT_MENU),
+			newPortletPreferencesModel(
+				0, searchLayoutModel.getPlid(),
+				SearchBarPortletKeys.SEARCH_BAR + "_INSTANCE_templateSearch"),
+			newPortletPreferencesModel(
+				0, searchGroupLayoutModel.getPlid(),
+				SearchBarPortletKeys.SEARCH_BAR + "_INSTANCE_templateSearch"),
+			newPortletPreferencesModel(
+				0, searchLayoutModel.getPlid(),
+				ProductNavigationUserPersonalBarPortletKeys.
+					PRODUCT_NAVIGATION_USER_PERSONAL_BAR),
+			newPortletPreferencesModel(
+				0, searchGroupLayoutModel.getPlid(),
+				ProductNavigationUserPersonalBarPortletKeys.
+					PRODUCT_NAVIGATION_USER_PERSONAL_BAR),
+			newPortletPreferencesModel(
+				0, searchLayoutModel.getPlid(),
+				SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU),
+			newPortletPreferencesModel(
+				0, searchGroupLayoutModel.getPlid(),
+				SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU));
+	}
+
+	public List<PortletPreferencesModel> newPortletPreferencesModels(
 		List<LayoutModel> layoutModels) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
