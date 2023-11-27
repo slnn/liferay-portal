@@ -88,3 +88,7 @@
 ${dataFactory.toInsertSQL(layoutPrototypeModel)}
 
 <@insertGroup _groupModel=searchTemplateGroupModel />
+
+<#list dataFactory.newPortletPreferencesModels(searchLayoutModel, searchGroupLayoutModel) as portletPreferencesModel>
+		${dataFactory.toInsertSQL(portletPreferencesModel)}
+</#list>
