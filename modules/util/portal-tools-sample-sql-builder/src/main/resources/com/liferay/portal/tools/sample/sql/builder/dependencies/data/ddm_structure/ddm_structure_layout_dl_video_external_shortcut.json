@@ -1,0 +1,45 @@
+{
+	"defaultLanguageId": "en_US",
+	"fields": [
+	],
+	"pages": [
+		{
+			"rows": [
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"HTML"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"THUMBNAIL_URL"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"URL"
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {
+				"en_US": "External Video Metadata"
+			}
+		}
+	],
+	"paginationMode": "wizard"
+}

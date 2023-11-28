@@ -1,0 +1,135 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "DESCRIPTION",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "DESCRIPTION"
+			},
+			"localizable": true,
+			"name": "DESCRIPTION",
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "EMBEDDABLE_URL",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "EMBEDDABLE_URL"
+			},
+			"localizable": true,
+			"name": "EMBEDDABLE_URL",
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "ICON_URL",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "ICON_URL"
+			},
+			"localizable": true,
+			"name": "ICON_URL",
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "ID",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "ID"
+			},
+			"localizable": true,
+			"name": "ID",
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "NAME",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "NAME"
+			},
+			"localizable": true,
+			"name": "NAME",
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "URL",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "URL"
+			},
+			"localizable": true,
+			"name": "URL",
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "text"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

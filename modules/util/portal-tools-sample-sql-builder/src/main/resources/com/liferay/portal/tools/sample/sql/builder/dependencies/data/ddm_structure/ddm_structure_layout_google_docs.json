@@ -1,0 +1,75 @@
+{
+	"defaultLanguageId": "en_US",
+	"fields": [
+	],
+	"pages": [
+		{
+			"rows": [
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"DESCRIPTION"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"EMBEDDABLE_URL"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"ICON_URL"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"ID"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"NAME"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"URL"
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {
+				"en_US": "Google Docs Metadata"
+			}
+		}
+	],
+	"paginationMode": "wizard"
+}

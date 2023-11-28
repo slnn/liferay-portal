@@ -1,0 +1,75 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "html",
+			"fieldNamespace": "",
+			"fieldReference": "HTML",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "HTML"
+			},
+			"localizable": true,
+			"name": "HTML",
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "THUMBNAIL_URL",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "THUMBNAIL_URL"
+			},
+			"localizable": true,
+			"name": "THUMBNAIL_URL",
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "URL",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "URL"
+			},
+			"localizable": true,
+			"name": "URL",
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "text"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

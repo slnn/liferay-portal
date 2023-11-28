@@ -432,6 +432,25 @@ public class DataFactory {
 		_layoutPageTemplateStructureRelData = _readFile(
 			"layout_page_template_structure_rel.json");
 
+		_ddmStructureContentMap.put(
+			"DL_VIDEO_EXTERNAL_SHORTCUT",
+			_readFile(
+				"ddm_structure/ddm_structure_dl_video_external_shortcut.json"));
+
+		_ddmStructureContentMap.put(
+			"GOOGLE_DOCS",
+			_readFile("ddm_structure/ddm_structure_google_docs.json"));
+
+		_ddmStructureLayoutContentMap.put(
+			"DL_VIDEO_EXTERNAL_SHORTCUT",
+			_readFile(
+				"ddm_structure" +
+					"/ddm_structure_layout_dl_video_external_shortcut.json"));
+
+		_ddmStructureLayoutContentMap.put(
+			"GOOGLE_DOCS",
+			_readFile("ddm_structure/ddm_structure_layout_google_docs.json"));
+
 		_defaultAssetPublisherPortletPreferencesImpl =
 			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
 				_readFile("default_asset_publisher_preference.xml"));
@@ -3490,6 +3509,19 @@ public class DataFactory {
 		return ddmStorageLinkModel;
 	}
 
+	public DDMStructureLayoutModel newDDMStructureLayoutModel(
+		DDMStructureModel ddmStructureModel,
+		DDMStructureVersionModel ddmStructureVersionModel) {
+
+		return newDDMStructureLayoutModel(
+			ddmStructureModel.getGroupId(), ddmStructureModel.getUserId(),
+			ddmStructureVersionModel.getStructureVersionId(),
+			_ddmStructureLayoutContentMap.get(
+				ddmStructureModel.getStructureKey()),
+			ddmStructureModel.getClassNameId(),
+			ddmStructureModel.getStructureKey());
+	}
+
 	public DDMStructureLinkModel newDDMStructureLinkModel(
 		DDLRecordSetModel ddlRecordSetModel) {
 
@@ -3506,6 +3538,22 @@ public class DataFactory {
 			getClassNameId(DLFileEntryMetadata.class),
 			dlFileEntryMetadataModel.getFileEntryMetadataId(),
 			dlFileEntryMetadataModel.getDDMStructureId());
+	}
+
+	public List<DDMStructureModel> newDDMStructureModels(long groupId) {
+		List<DDMStructureModel> ddmStructureModels = new ArrayList<>();
+
+		for (Map.Entry<String, String> entry :
+				_ddmStructureContentMap.entrySet()) {
+
+			ddmStructureModels.add(
+				newDDMStructureModel(
+					groupId, _guestUserId,
+					getClassNameId(DLFileEntryMetadata.class), entry.getKey(),
+					entry.getValue(), _counter.get()));
+		}
+
+		return ddmStructureModels;
 	}
 
 	public DDMStructureVersionModel newDDMStructureVersionModel(
@@ -7645,6 +7693,10 @@ public class DataFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(DataFactory.class);
 
+	private static final Map<String, String> _ddmStructureContentMap =
+		new HashMap<>();
+	private static final Map<String, String> _ddmStructureLayoutContentMap =
+		new HashMap<>();
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 

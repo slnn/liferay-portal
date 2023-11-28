@@ -22,6 +22,16 @@
 <#list dataFactory.newGroupModels() as groupModel>
 	<#assign groupId = groupModel.groupId />
 
+	<#list dataFactory.newDDMStructureModels(groupId) as ddmStructureModel>
+		<#assign ddmStructureVersionModel = dataFactory.newDDMStructureVersionModel(ddmStructureModel) />
+
+		<@insertDDMStructure
+			_ddmStructureLayoutModel=dataFactory.newDDMStructureLayoutModel(ddmStructureModel, ddmStructureVersionModel)
+			_ddmStructureModel=ddmStructureModel
+			_ddmStructureVersionModel=ddmStructureVersionModel
+		/>
+	</#list>
+
 	<#include "asset_publisher.ftl">
 
 	<#include "blogs.ftl">
