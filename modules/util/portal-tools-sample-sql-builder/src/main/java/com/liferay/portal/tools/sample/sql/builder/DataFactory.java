@@ -3829,8 +3829,10 @@ public class DataFactory {
 
 	public DLFileEntryTypeModel newDLFileEntryTypeModel() {
 		return newDLFileEntryTypeModel(
-			0, 0, _DEFAULT_DL_FILE_ENTRY_TYPE_ID,
-			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT, 0, 0, 0);
+			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT, 0,
+			_DEFAULT_DL_FILE_ENTRY_TYPE_ID,
+			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT, 0,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT, 0);
 	}
 
 	public DLFileVersionModel newDLFileVersionModel(
