@@ -5176,6 +5176,18 @@ public class DataFactory {
 		return releases;
 	}
 
+	public List<ResourcePermissionModel> newResourcePermissionModels() {
+		return ListUtil.fromArray(
+			newResourcePermissionModel(
+				DLFileEntryType.class.getName(), String.valueOf(_companyId),
+				_companyId, _powerUserRoleModel.getRoleId(), 0,
+				ResourceConstants.SCOPE_COMPANY),
+			newResourcePermissionModel(
+				DLFileEntryType.class.getName(),
+				DLFileEntryType.class.getName(), 0, _ownerRoleModel.getRoleId(),
+				0, ResourceConstants.SCOPE_INDIVIDUAL));
+	}
+
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AccountEntryModel accountEntryModel) {
 

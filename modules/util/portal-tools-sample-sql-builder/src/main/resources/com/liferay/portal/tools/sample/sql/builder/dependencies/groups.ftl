@@ -17,6 +17,10 @@
 
 <#include "ddm.ftl">
 
+<#list dataFactory.newResourcePermissionModels() as resourcePermissionModel>
+	${dataFactory.toInsertSQL(resourcePermissionModel)}
+</#list>
+
 <#include "segments.ftl">
 
 <#list dataFactory.newGroupModels() as groupModel>
