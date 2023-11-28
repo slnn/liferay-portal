@@ -91,6 +91,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadataModel;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
 import com.liferay.document.library.kernel.model.DLFileVersionModel;
@@ -5347,6 +5348,24 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
+		DLFileEntryTypeModel dlFileEntryTypeModel) {
+
+		if (dlFileEntryTypeModel.getCompanyId() ==
+				DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT) {
+
+			return Collections.emptyList();
+		}
+
+		return Collections.singletonList(
+			newResourcePermissionModel(
+				DLFileEntryType.class.getName(),
+				String.valueOf(dlFileEntryTypeModel.getFileEntryTypeId()),
+				dlFileEntryTypeModel.getFileEntryTypeId(),
+				_ownerRoleModel.getRoleId(), _guestUserId,
+				ResourceConstants.SCOPE_INDIVIDUAL));
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
 		DLFolderModel dlFolderModel) {
 
 		return newResourcePermissionModels(
@@ -7042,6 +7061,15 @@ public class DataFactory {
 	protected ResourcePermissionModel newResourcePermissionModel(
 		String name, String primKey, long roleId, long ownerId) {
 
+		return newResourcePermissionModel(
+			name, primKey, GetterUtil.getLong(primKey), roleId, ownerId,
+			ResourceConstants.SCOPE_INDIVIDUAL);
+	}
+
+	protected ResourcePermissionModel newResourcePermissionModel(
+		String name, String primKey, long primKeyId, long roleId, long ownerId,
+		int scope) {
+
 		ResourcePermissionModel resourcePermissionModel =
 			new ResourcePermissionModelImpl();
 
@@ -7057,9 +7085,9 @@ public class DataFactory {
 		// Other fields
 
 		resourcePermissionModel.setName(name);
-		resourcePermissionModel.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermissionModel.setScope(scope);
 		resourcePermissionModel.setPrimKey(primKey);
-		resourcePermissionModel.setPrimKeyId(GetterUtil.getLong(primKey));
+		resourcePermissionModel.setPrimKeyId(primKeyId);
 		resourcePermissionModel.setRoleId(roleId);
 		resourcePermissionModel.setOwnerId(ownerId);
 		resourcePermissionModel.setActionIds(1);
