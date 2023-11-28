@@ -3835,6 +3835,16 @@ public class DataFactory {
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT, 0);
 	}
 
+	public DLFileEntryTypeModel newDLFileEntryTypeModel(
+		DDMStructureModel ddmStructureModel) {
+
+		return newDLFileEntryTypeModel(
+			_companyId, ddmStructureModel.getStructureId(), _counter.get(),
+			ddmStructureModel.getStructureKey(), ddmStructureModel.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM,
+			ddmStructureModel.getUserId());
+	}
+
 	public DLFileVersionModel newDLFileVersionModel(
 		DLFileEntryModel dlFileEntryModel) {
 

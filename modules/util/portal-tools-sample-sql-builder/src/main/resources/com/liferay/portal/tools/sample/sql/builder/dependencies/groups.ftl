@@ -30,6 +30,8 @@
 			_ddmStructureModel=ddmStructureModel
 			_ddmStructureVersionModel=ddmStructureVersionModel
 		/>
+
+		${dataFactory.toInsertSQL(dataFactory.newDLFileEntryTypeModel(ddmStructureModel))}
 	</#list>
 
 	<#include "asset_publisher.ftl">
