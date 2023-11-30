@@ -6886,8 +6886,13 @@ public class DataFactory {
 		PortletPreferenceValueModel portletPreferenceValueModel =
 			new PortletPreferenceValueModelImpl();
 
+		// PK fields
+
 		portletPreferenceValueModel.setPortletPreferenceValueId(
 			_portletPreferenceValueIdCounter.get());
+
+		// Other fields
+
 		portletPreferenceValueModel.setPortletPreferencesId(
 			portletPreferencesModel.getPortletPreferencesId());
 		portletPreferenceValueModel.setName(name);
