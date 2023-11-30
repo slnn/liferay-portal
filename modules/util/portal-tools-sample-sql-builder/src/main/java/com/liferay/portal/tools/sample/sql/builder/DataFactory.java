@@ -5085,32 +5085,6 @@ public class DataFactory {
 		return portletPreferencesModels;
 	}
 
-	public PortletPreferenceValueModel newPortletPreferenceValueModel(
-		PortletPreferencesModel portletPreferencesModel, String name, int index,
-		String value) {
-
-		PortletPreferenceValueModel portletPreferenceValueModel =
-			new PortletPreferenceValueModelImpl();
-
-		portletPreferenceValueModel.setPortletPreferenceValueId(
-			_portletPreferenceValueIdCounter.get());
-		portletPreferenceValueModel.setPortletPreferencesId(
-			portletPreferencesModel.getPortletPreferencesId());
-		portletPreferenceValueModel.setName(name);
-		portletPreferenceValueModel.setIndex(index);
-
-		if (value.length() >
-				PortletPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {
-
-			portletPreferenceValueModel.setLargeValue(value);
-		}
-		else {
-			portletPreferenceValueModel.setSmallValue(value);
-		}
-
-		return portletPreferenceValueModel;
-	}
-
 	public List<ReleaseModel> newReleaseModels() throws Exception {
 		List<ReleaseModel> releases = new ArrayList<>();
 
@@ -6926,6 +6900,32 @@ public class DataFactory {
 		portletPreferencesModel.setPortletId(portletId);
 
 		return portletPreferencesModel;
+	}
+
+	protected PortletPreferenceValueModel newPortletPreferenceValueModel(
+		PortletPreferencesModel portletPreferencesModel, String name, int index,
+		String value) {
+
+		PortletPreferenceValueModel portletPreferenceValueModel =
+			new PortletPreferenceValueModelImpl();
+
+		portletPreferenceValueModel.setPortletPreferenceValueId(
+			_portletPreferenceValueIdCounter.get());
+		portletPreferenceValueModel.setPortletPreferencesId(
+			portletPreferencesModel.getPortletPreferencesId());
+		portletPreferenceValueModel.setName(name);
+		portletPreferenceValueModel.setIndex(index);
+
+		if (value.length() >
+				PortletPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {
+
+			portletPreferenceValueModel.setLargeValue(value);
+		}
+		else {
+			portletPreferenceValueModel.setSmallValue(value);
+		}
+
+		return portletPreferenceValueModel;
 	}
 
 	protected ReleaseModelImpl newReleaseModel(
