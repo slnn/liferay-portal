@@ -6891,6 +6891,10 @@ public class DataFactory {
 		portletPreferenceValueModel.setPortletPreferenceValueId(
 			_portletPreferenceValueIdCounter.get());
 
+		// Audit fields
+
+		portletPreferenceValueModel.setCompanyId(_companyId);
+
 		// Other fields
 
 		portletPreferenceValueModel.setPortletPreferencesId(
