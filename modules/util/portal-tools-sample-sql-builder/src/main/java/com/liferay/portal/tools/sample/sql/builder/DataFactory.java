@@ -4764,7 +4764,7 @@ public class DataFactory {
 		mbMailingListModel.setInProtocol("pop3");
 		mbMailingListModel.setInServerPort(110);
 		mbMailingListModel.setInUserName(sampleUserModel.getEmailAddress());
-		mbMailingListModel.setInPassword(sampleUserModel.getPassword());
+		mbMailingListModel.setInPassword(_USER_PASSWORD);
 		mbMailingListModel.setInReadInterval(5);
 		mbMailingListModel.setOutServerPort(25);
 
