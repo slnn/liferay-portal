@@ -6754,8 +6754,6 @@ public class DataFactory {
 		// Audit fields
 
 		mbThreadModel.setCompanyId(_companyId);
-		mbThreadModel.setUserId(_sampleUserId);
-		mbThreadModel.setUserName(_SAMPLE_USER_NAME);
 		mbThreadModel.setCreateDate(new Date());
 		mbThreadModel.setModifiedDate(new Date());
 
@@ -6763,8 +6761,6 @@ public class DataFactory {
 
 		mbThreadModel.setCategoryId(categoryId);
 		mbThreadModel.setRootMessageId(rootMessageId);
-		mbThreadModel.setRootMessageUserId(_sampleUserId);
-		mbThreadModel.setLastPostByUserId(_sampleUserId);
 		mbThreadModel.setLastPostDate(new Date());
 		mbThreadModel.setLastPublishDate(new Date());
 		mbThreadModel.setStatusDate(new Date());
