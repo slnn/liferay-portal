@@ -11,7 +11,7 @@ package com.liferay.portal.tools.sample.sql.builder;
 public interface BenchmarksPropsKeys {
 
 	public static final String COMMERCE_LAYOUT_EXCLUDED_PORTLETS =
-		"sample.sql.commerce.layout.excluded.portlets";
+		"sample.sql.passwords.encryption.algorithm";
 
 	public static final String DB_TYPE = "sample.sql.db.type";
 
@@ -171,6 +171,9 @@ public interface BenchmarksPropsKeys {
 		"sample.sql.output.csv.file.names";
 
 	public static final String OUTPUT_MERGE = "sample.sql.output.merge";
+
+	public static final String PASSWORDS_ENCRYPTION_ALGORITHM =
+		"sample.sql.passwords.encryption.algorithm";
 
 	public static final String SCRIPT = "sample.sql.script";
 

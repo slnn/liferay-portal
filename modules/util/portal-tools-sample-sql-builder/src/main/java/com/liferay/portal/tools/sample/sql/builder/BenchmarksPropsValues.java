@@ -236,6 +236,10 @@ public class BenchmarksPropsValues {
 	public static final boolean OUTPUT_MERGE = GetterUtil.getBoolean(
 		PropertiesHolder._get(BenchmarksPropsKeys.OUTPUT_MERGE));
 
+	public static final String PASSWORDS_ENCRYPTION_ALGORITHM =
+		PropertiesHolder._get(
+			BenchmarksPropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM);
+
 	public static final String SCRIPT = PropertiesHolder._get(
 		BenchmarksPropsKeys.SCRIPT);
 
