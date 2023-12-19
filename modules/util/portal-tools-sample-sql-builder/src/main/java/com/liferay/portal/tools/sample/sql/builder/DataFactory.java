@@ -196,6 +196,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -247,6 +248,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.NavItem;
@@ -297,6 +299,12 @@ import com.liferay.portal.search.web.internal.suggestions.constants.SuggestionsP
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
+import com.liferay.portal.security.password.encryptor.internal.BCryptPasswordEncryptor;
+import com.liferay.portal.security.password.encryptor.internal.CryptPasswordEncryptor;
+import com.liferay.portal.security.password.encryptor.internal.DefaultPasswordEncryptor;
+import com.liferay.portal.security.password.encryptor.internal.NullPasswordEncryptor;
+import com.liferay.portal.security.password.encryptor.internal.PBKDF2PasswordEncryptor;
+import com.liferay.portal.security.password.encryptor.internal.SSHAPasswordEncryptor;
 import com.liferay.portal.service.impl.LayoutLocalServiceImpl;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
@@ -444,6 +452,9 @@ public class DataFactory {
 			FriendlyURLNormalizerImpl.class, "_normalizer");
 
 		field.set(_friendlyURLNormalizer, (Normalizer)s -> s);
+
+		_passwordEncryptor = _getPasswordEncryptor(
+			_PASSWORDS_ENCRYPTION_ALGORITHM);
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -6999,7 +7010,14 @@ public class DataFactory {
 		// Other fields
 
 		userModel.setContactId(_counter.get());
-		userModel.setPassword("test");
+
+		try {
+			userModel.setPassword(_getEncryptedPassword("test"));
+		}
+		catch (PwdEncryptorException pwdEncryptorException) {
+			throw new RuntimeException(pwdEncryptorException);
+		}
+
 		userModel.setPasswordEncrypted(true);
 		userModel.setPasswordModifiedDate(new Date());
 		userModel.setReminderQueryQuestion("What is your screen name?");
@@ -7345,6 +7363,25 @@ public class DataFactory {
 		return data;
 	}
 
+	private String _getEncryptedPassword(String plainTextPassword)
+		throws PwdEncryptorException {
+
+		String algorithmName = _PASSWORDS_ENCRYPTION_ALGORITHM;
+
+		int index = _PASSWORDS_ENCRYPTION_ALGORITHM.indexOf(CharPool.SLASH);
+
+		if (index > 0) {
+			algorithmName = algorithmName.substring(0, index);
+		}
+
+		return StringBundler.concat(
+			StringPool.OPEN_CURLY_BRACE, algorithmName,
+			StringPool.CLOSE_CURLY_BRACE,
+			_passwordEncryptor.encrypt(
+				_PASSWORDS_ENCRYPTION_ALGORITHM, plainTextPassword, null,
+				false));
+	}
+
 	private InputStream _getFragmentComponentInputStream(
 			String fragmentName, String suffix)
 		throws Exception {
@@ -7353,6 +7390,27 @@ public class DataFactory {
 			StringBundler.concat(
 				"/com/liferay/fragment/collection/contributor/basic/component",
 				"/dependencies/", fragmentName, "/index.", suffix));
+	}
+
+	private PasswordEncryptor _getPasswordEncryptor(String algorithm) {
+		if (algorithm.startsWith(PasswordEncryptor.TYPE_BCRYPT)) {
+			return new BCryptPasswordEncryptor();
+		}
+
+		if (algorithm.startsWith(PasswordEncryptor.TYPE_UFC_CRYPT)) {
+			return new CryptPasswordEncryptor();
+		}
+		else if (algorithm.startsWith(PasswordEncryptor.TYPE_NONE)) {
+			return new NullPasswordEncryptor();
+		}
+		else if (algorithm.startsWith(PasswordEncryptor.TYPE_PBKDF2)) {
+			return new PBKDF2PasswordEncryptor();
+		}
+		else if (algorithm.startsWith(PasswordEncryptor.TYPE_SSHA)) {
+			return new SSHAPasswordEncryptor();
+		}
+
+		return new DefaultPasswordEncryptor();
 	}
 
 	private String _getResourcePermissionModelName(String... classNames) {
@@ -7527,6 +7585,10 @@ public class DataFactory {
 
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
 
+	private static final String _PASSWORDS_ENCRYPTION_ALGORITHM =
+		StringUtil.toUpperCase(
+			BenchmarksPropsValues.PASSWORDS_ENCRYPTION_ALGORITHM);
+
 	private static final String _SAMPLE_USER_NAME = "Sample";
 
 	private static final Log _log = LogFactoryUtil.getLog(DataFactory.class);
@@ -7588,6 +7650,7 @@ public class DataFactory {
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
 	private RoleModel _ownerRoleModel;
+	private final PasswordEncryptor _passwordEncryptor;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionIdCounter;
