@@ -47,6 +47,10 @@
 
 	<#assign homePageContentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, "welcome") />
 
+	<#list dataFactory.newPortletPreferencesModels(homePageContentLayoutModels) as portletPreferencesModel>
+		${dataFactory.toInsertSQL(portletPreferencesModel)}
+	</#list>
+
 	<@insertContentPageLayout
 		_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(homePageContentLayoutModels)
 		_layoutModels=homePageContentLayoutModels
@@ -63,6 +67,10 @@
 </#list>
 
 <#assign defaultSiteHomePageContentLayoutModels = dataFactory.newContentPageLayoutModels(guestGroupModel.groupId, "welcome") />
+
+<#list dataFactory.newPortletPreferencesModels(defaultSiteHomePageContentLayoutModels) as portletPreferencesModel>
+	${dataFactory.toInsertSQL(portletPreferencesModel)}
+</#list>
 
 <@insertContentPageLayout
 	_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(defaultSiteHomePageContentLayoutModels)
