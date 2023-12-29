@@ -49,6 +49,9 @@
 
 	<#list dataFactory.newPortletPreferencesModels(homePageContentLayoutModels) as portletPreferencesModel>
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
+		<#list dataFactory.newPortletPreferenceValueModels(portletPreferencesModel) as portletPreferenceValueModel>
+			${dataFactory.toInsertSQL(portletPreferenceValueModel)}
+		</#list>
 	</#list>
 
 	<@insertContentPageLayout
@@ -70,6 +73,9 @@
 
 <#list dataFactory.newPortletPreferencesModels(defaultSiteHomePageContentLayoutModels) as portletPreferencesModel>
 	${dataFactory.toInsertSQL(portletPreferencesModel)}
+	<#list dataFactory.newPortletPreferenceValueModels(portletPreferencesModel) as portletPreferenceValueModel>
+			${dataFactory.toInsertSQL(portletPreferenceValueModel)}
+	</#list>
 </#list>
 
 <@insertContentPageLayout
@@ -95,4 +101,7 @@ ${dataFactory.toInsertSQL(layoutPrototypeModel)}
 
 <#list dataFactory.newPortletPreferencesModels(dataFactory.getSearchLayoutModels(searchLayoutModel)) as portletPreferencesModel>
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
+		<#list dataFactory.newPortletPreferenceValueModels(portletPreferencesModel) as portletPreferenceValueModel>
+				${dataFactory.toInsertSQL(portletPreferenceValueModel)}
+		</#list>
 </#list>
