@@ -5293,6 +5293,33 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
+		long primKey) {
+
+		List<ResourcePermissionModel> resourcePermissionModels =
+			new ArrayList<>();
+
+		resourcePermissionModels.addAll(
+			newResourcePermissionModels(
+				"com.liferay.blogs", String.valueOf(primKey), _sampleUserId));
+
+		resourcePermissionModels.addAll(
+			newResourcePermissionModels(
+				"com.liferay.document.library", String.valueOf(primKey),
+				_sampleUserId));
+
+		resourcePermissionModels.addAll(
+			newResourcePermissionModels(
+				"com.liferay.message.boards", String.valueOf(primKey),
+				_sampleUserId));
+
+		resourcePermissionModels.addAll(
+			newResourcePermissionModels(
+				"com.liferay.wiki", String.valueOf(primKey), _sampleUserId));
+
+		return resourcePermissionModels;
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
 		MBCategoryModel mbCategoryModel) {
 
 		return newResourcePermissionModels(

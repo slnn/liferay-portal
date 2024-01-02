@@ -70,6 +70,10 @@
 		</#list>
 	</#list>
 
+	<#list dataFactory.newResourcePermissionModels(groupId) as resourcePermissionModel>
+		${dataFactory.toInsertSQL(resourcePermissionModel)}
+	</#list>
+
 	<@insertGroup _groupModel=groupModel />
 
 	${csvFileWriter.write("repository", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + groupId + ", " + groupModel.name + "\n")}
