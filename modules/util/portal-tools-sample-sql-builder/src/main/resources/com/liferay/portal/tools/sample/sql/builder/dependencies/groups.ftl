@@ -62,6 +62,11 @@
 
 		<#list dataFactory.newPortletPreferencesModels(groupLayoutModel) as portletPreferencesModel>
 				${dataFactory.toInsertSQL(portletPreferencesModel)}
+				<#if portletPreferencesModel.portletId = "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet_INSTANCE_templateSearch">
+					<#list dataFactory.newPortletPreferenceValueModels(portletPreferencesModel) as portletPreferenceValueModel>
+						${dataFactory.toInsertSQL(portletPreferenceValueModel)}
+					</#list>
+				</#if>
 		</#list>
 	</#list>
 
@@ -93,6 +98,11 @@
 
 <#list dataFactory.newPortletPreferencesModels(searchLayoutModel) as portletPreferencesModel>
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
+		<#if portletPreferencesModel.portletId = "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet_INSTANCE_templateSearch">
+			  <#list dataFactory.newPortletPreferenceValueModels(portletPreferencesModel) as portletPreferenceValueModel>
+			  	  ${dataFactory.toInsertSQL(portletPreferenceValueModel)}
+			  </#list>
+		</#if>
 </#list>
 
 <@insertLayout _layoutModel=searchGroupLayoutModel />
