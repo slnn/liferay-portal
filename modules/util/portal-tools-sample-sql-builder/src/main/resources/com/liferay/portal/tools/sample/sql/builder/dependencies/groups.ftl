@@ -91,6 +91,10 @@
 
 <@insertLayout _layoutModel=searchLayoutModel />
 
+<#list dataFactory.newPortletPreferencesModels(searchLayoutModel) as portletPreferencesModel>
+		${dataFactory.toInsertSQL(portletPreferencesModel)}
+</#list>
+
 <@insertLayout _layoutModel=searchGroupLayoutModel />
 
 ${dataFactory.toInsertSQL(layoutPrototypeModel)}
