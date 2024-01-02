@@ -742,6 +742,17 @@ public class DataFactory {
 		return random.nextInt(count);
 	}
 
+	public List<LayoutModel> getSearchLayoutModels(LayoutModel layoutModel) {
+		_searchLayoutModels.add(layoutModel);
+
+		List<LayoutModel> searchLayoutModels = ListUtil.copy(
+			_searchLayoutModels);
+
+		_searchLayoutModels.clear();
+
+		return searchLayoutModels;
+	}
+
 	public List<Integer> getSequence(int size) {
 		List<Integer> sequence = new ArrayList<>(size);
 
@@ -4210,7 +4221,10 @@ public class DataFactory {
 		}
 
 		if (BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
-			layoutModels.add(newSearchLayoutModel(groupId, false));
+			LayoutModel layoutModel = newSearchLayoutModel(groupId, false);
+
+			_searchLayoutModels.add(layoutModel);
+			layoutModels.add(layoutModel);
 		}
 
 		return layoutModels;
@@ -7663,6 +7677,7 @@ public class DataFactory {
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionIdCounter;
 	private long _sampleUserId;
+	private final List<LayoutModel> _searchLayoutModels = new ArrayList<>();
 	private final Format _simpleDateFormat;
 	private RoleModel _siteMemberRoleModel;
 	private final SimpleCounter _socialActivityIdCounter;
