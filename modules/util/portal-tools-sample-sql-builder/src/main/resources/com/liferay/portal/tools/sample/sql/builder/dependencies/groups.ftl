@@ -59,6 +59,10 @@
 
 	<#list dataFactory.newGroupLayoutModels(groupId) as groupLayoutModel>
 		<@insertLayout _layoutModel=groupLayoutModel />
+
+		<#list dataFactory.newPortletPreferencesModels(groupLayoutModel) as portletPreferencesModel>
+				${dataFactory.toInsertSQL(portletPreferencesModel)}
+		</#list>
 	</#list>
 
 	<@insertGroup _groupModel=groupModel />

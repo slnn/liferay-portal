@@ -5010,26 +5010,36 @@ public class DataFactory {
 	}
 
 	public List<PortletPreferencesModel> newPortletPreferencesModels(
+		LayoutModel layoutModel) {
+
+		List<PortletPreferencesModel> portletPreferencesModels =
+			new ArrayList<>();
+
+		long classPK = layoutModel.getClassPK();
+
+		if (classPK == 0) {
+			portletPreferencesModels.addAll(
+				newPortletPreferencesModels(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT, layoutModel.getPlid()));
+		}
+		else {
+			portletPreferencesModels.addAll(
+				newPortletPreferencesModels(
+					layoutModel.getGroupId(), PortletKeys.PREFS_PLID_SHARED));
+		}
+
+		return portletPreferencesModels;
+	}
+
+	public List<PortletPreferencesModel> newPortletPreferencesModels(
 		List<LayoutModel> layoutModels) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
 			new ArrayList<>();
 
 		for (LayoutModel layoutModel : layoutModels) {
-			long classPK = layoutModel.getClassPK();
-
-			if (classPK == 0) {
-				portletPreferencesModels.addAll(
-					newPortletPreferencesModels(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						layoutModel.getPlid()));
-			}
-			else {
-				portletPreferencesModels.addAll(
-					newPortletPreferencesModels(
-						layoutModel.getGroupId(),
-						PortletKeys.PREFS_PLID_SHARED));
-			}
+			portletPreferencesModels.addAll(
+				newPortletPreferencesModels(layoutModel));
 		}
 
 		return portletPreferencesModels;
