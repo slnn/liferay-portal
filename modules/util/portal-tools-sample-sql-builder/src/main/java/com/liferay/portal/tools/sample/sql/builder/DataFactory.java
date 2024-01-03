@@ -5028,6 +5028,15 @@ public class DataFactory {
 					layoutModel.getGroupId(), PortletKeys.PREFS_PLID_SHARED));
 		}
 
+		String friendlyURL = layoutModel.getFriendlyURL();
+
+		if (friendlyURL.endsWith("document_library")) {
+			portletPreferencesModels.add(
+				newPortletPreferencesModel(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT, layoutModel.getPlid(),
+					DLPortletKeys.DOCUMENT_LIBRARY));
+		}
+
 		return portletPreferencesModels;
 	}
 
