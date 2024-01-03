@@ -26,6 +26,10 @@
 
 	<@insertLayout _layoutModel=layoutModel />
 
+	<#list dataFactory.newPortletPreferencesModels(layoutModel) as portletPreferencesModel>
+			${dataFactory.toInsertSQL(portletPreferencesModel)}
+	</#list>
+
 	<#assign portletPreferencesModels = dataFactory.newAssetPublisherPortletPreferencesModels(layoutModel.plid) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
