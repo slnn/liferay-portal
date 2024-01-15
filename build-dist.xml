@@ -1208,6 +1208,13 @@ org.apache.level=WARNING]]>
 		</replace>
 
 		<replace
+				file="${app.server.tomcat.dir}/conf/server.xml"
+		>
+			<replacetoken><![CDATA[<Engine name="Catalina" defaultHost="localhost">]]></replacetoken>
+			<replacevalue><![CDATA[<Engine name="Catalina" defaultHost="localhost" backgroundProcessorDelay="600">]]></replacevalue>
+		</replace>
+
+		<replace
 			file="${app.server.tomcat.dir}/conf/web.xml"
 		>
 			<replacetoken><![CDATA[<web-app]]></replacetoken>
