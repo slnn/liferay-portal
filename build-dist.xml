@@ -1201,6 +1201,13 @@ org.apache.level=WARNING]]>
 		</replace>
 
 		<replace
+				file="${app.server.tomcat.dir}/conf/server.xml"
+		>
+			<replacetoken><![CDATA[connectionTimeout="20000"]]></replacetoken>
+			<replacevalue><![CDATA[connectionTimeout="-1"]]></replacevalue>
+		</replace>
+
+		<replace
 			file="${app.server.tomcat.dir}/conf/web.xml"
 		>
 			<replacetoken><![CDATA[<web-app]]></replacetoken>
