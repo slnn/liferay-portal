@@ -1197,7 +1197,7 @@ org.apache.level=WARNING]]>
 			file="${app.server.tomcat.dir}/conf/server.xml"
 		>
 			<replacetoken><![CDATA[<Connector port="8080" protocol="HTTP/1.1"]]></replacetoken>
-			<replacevalue><![CDATA[<Connector maxThreads="75" port="8080" protocol="HTTP/1.1"]]></replacevalue>
+			<replacevalue><![CDATA[<Connector maxThreads="75" maxKeepAliveRequests="-1" port="8080" protocol="HTTP/1.1"]]></replacevalue>
 		</replace>
 
 		<replace
