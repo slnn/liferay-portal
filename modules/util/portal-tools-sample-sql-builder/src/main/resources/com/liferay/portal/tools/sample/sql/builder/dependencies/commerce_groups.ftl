@@ -1,3 +1,5 @@
+<#assign commonGroupModel = dataFactory.groupModel />
+
 <#if dataFactory.maxCommerceGroupCount != 0>
 	<#assign
 		accountEntryModels = dataFactory.newAccountEntryModels()
@@ -168,7 +170,7 @@
 
 						${dataFactory.toInsertSQL(commerceInventoryWarehouseItemModel)}
 
-						${csvFileWriter.write("commerceInventoryWarehouseItem", virtualHostModel.hostname + "," + commerceInventoryWarehouseItemModel.commerceInventoryWarehouseItemId + ", " + commerceInventoryWarehouseItemModel.commerceInventoryWarehouseId + ", " + cpInstanceModel.CPInstanceId + "\n")}
+						${csvFileWriter.write("commerceInventoryWarehouseItem", virtualHostModel.hostname + "," + commonGroupModel.friendlyURL + "," +  commerceInventoryWarehouseItemModel.commerceInventoryWarehouseItemId + ", " + commerceInventoryWarehouseItemModel.commerceInventoryWarehouseId + ", " + cpInstanceModel.CPInstanceId + "\n")}
 					</#list>
 
 					<#list commercePriceListModels as commercePriceListModel>
@@ -177,10 +179,10 @@
 
 					${dataFactory.toInsertSQL(dataFactory.newCommercePriceEntryModel(promotionCommercePriceListModel.commercePriceListId, cpInstanceModel.CPInstanceUuid, cpDefinitionModel.CProductId))}
 
-					${csvFileWriter.write("commerceProduct", virtualHostModel.hostname + "," + friendlyURLEntryLocalizationModel.urlTitle + ", " + cpInstanceModel.CPInstanceId + ", " + cpInstanceModel.gtin + ", " + cpInstanceModel.manufacturerPartNumber + ", " + cpInstanceModel.sku + ", " + cpDefinitionModel.CPDefinitionId + ", " + cpDefinitionLocalizationModel.name + ", " + cpDefinitionLocalizationModel.description + ", " + commerceChannelGroupModels[0].groupId + ", " + commerceCatalogModel.commerceCatalogId + ", " + commerceCatalogGroupModel.groupId + ", " + commerceCurrencyModel.commerceCurrencyId + "\n")}
+					${csvFileWriter.write("commerceProduct", virtualHostModel.hostname + "," +  commonGroupModel.friendlyURL + "," + friendlyURLEntryLocalizationModel.urlTitle + ", " + cpInstanceModel.CPInstanceId + ", " + cpInstanceModel.gtin + ", " + cpInstanceModel.manufacturerPartNumber + ", " + cpInstanceModel.sku + ", " + cpDefinitionModel.CPDefinitionId + ", " + cpDefinitionLocalizationModel.name + ", " + cpDefinitionLocalizationModel.description + ", " + commerceChannelGroupModels[0].groupId + ", " + commerceCatalogModel.commerceCatalogId + ", " + commerceCatalogGroupModel.groupId + ", " + commerceCurrencyModel.commerceCurrencyId + "\n")}
 				</#list>
 
-				${csvFileWriter.write("cpDefinition", virtualHostModel.hostname + "," + cpDefinitionModel.CPDefinitionId + "\n")}
+				${csvFileWriter.write("cpDefinition", virtualHostModel.hostname + "," + commonGroupModel.friendlyURL + "," + cpDefinitionModel.CPDefinitionId + "\n")}
 
 				<#if (dataFactory.maxCPDefinitionAttachmentTypeImageCount != 0) || (dataFactory.maxCPDefinitionAttachmentTypePDFCount != 0)>
 					<#include "commerce_product_attachment_file_entries.ftl">
@@ -215,7 +217,7 @@
 			accountEntryCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(accountEntryCommerceOrderModels[0], commercePriceListModels[0].commercePriceListId, cProductModels[dataFactory.getRandomCProductModelIndex()])
 			/>
 
-			${csvFileWriter.write("commerceDeliveryAPI", virtualHostModel.hostname + "," + accountEntryModel.accountEntryId + "," + commerceChannelModels[0].commerceChannelId + "," + addressModel.addressId + "," + addressModel.countryId + "," + commerceCurrencyModel.code + "," + commerceShippingMethodModels[0].engineKey + "," + accountEntryCommerceOrderItemModel.CProductId + "," + accountEntryCommerceOrderItemModel.CPInstanceId + "," + accountEntryCommerceOrderModels[0].commerceOrderId + "\n")}
+			${csvFileWriter.write("commerceDeliveryAPI", virtualHostModel.hostname + "," + commonGroupModel.friendlyURL + "," +  accountEntryModel.accountEntryId + "," + commerceChannelModels[0].commerceChannelId + "," + addressModel.addressId + "," + addressModel.countryId + "," + commerceCurrencyModel.code + "," + commerceShippingMethodModels[0].engineKey + "," + accountEntryCommerceOrderItemModel.CProductId + "," + accountEntryCommerceOrderItemModel.CPInstanceId + "," + accountEntryCommerceOrderModels[0].commerceOrderId + "\n")}
 		</#if>
 	</#list>
 
@@ -253,7 +255,7 @@
 
 			${dataFactory.toInsertSQL(pendingCommerceOrderItemModel)}
 
-			${csvFileWriter.write("commerceOrder", virtualHostModel.hostname + "," + pendingCommerceOrderModel.commerceOrderId + ", " + pendingCommerceOrderItemModel.commerceOrderItemId + ", " + pendingCommerceOrderItemModel.quantity + ", " + dataFactory.getCPInstanceId(randomCProductModel.publishedCPDefinitionId) + ", " + countryModel.countryId + ", " + pendingCommerceOrderModel.uuid + ", " + commerceInventoryWarehouseModels[0].commerceInventoryWarehouseId + ", " + commerceGroupModels[0].groupId + "\n")}
+			${csvFileWriter.write("commerceOrder", virtualHostModel.hostname + "," + commonGroupModel.friendlyURL + "," +  pendingCommerceOrderModel.commerceOrderId + ", " + pendingCommerceOrderItemModel.commerceOrderItemId + ", " + pendingCommerceOrderItemModel.quantity + ", " + dataFactory.getCPInstanceId(randomCProductModel.publishedCPDefinitionId) + ", " + countryModel.countryId + ", " + pendingCommerceOrderModel.uuid + ", " + commerceInventoryWarehouseModels[0].commerceInventoryWarehouseId + ", " + commerceGroupModels[0].groupId + "\n")}
 		</#list>
 	</#list>
 

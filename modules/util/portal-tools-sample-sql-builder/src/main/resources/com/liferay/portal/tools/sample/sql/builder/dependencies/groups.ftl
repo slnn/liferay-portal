@@ -1,7 +1,5 @@
 <#include "sample_user.ftl">
 
-<#include "commerce_groups.ftl">
-
 <#include "asset.ftl">
 
 <#include "ddm.ftl">
@@ -50,6 +48,8 @@
 
 	${csvFileWriter.write("repository", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + groupId + ", " + groupModel.name + "\n")}
 </#list>
+
+<#include "commerce_groups.ftl">
 
 <#assign defaultSiteHomePageContentLayoutModels = dataFactory.newContentPageLayoutModels(guestGroupModel.groupId, "home") />
 

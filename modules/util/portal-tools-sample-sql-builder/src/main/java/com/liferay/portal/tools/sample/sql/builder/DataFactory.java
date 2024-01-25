@@ -4221,6 +4221,10 @@ public class DataFactory {
 			userModel.getScreenName(), false);
 	}
 
+	public GroupModel getGroupModel(){
+		return _groupModel;
+	}
+
 	public List<GroupModel> newGroupModels() {
 		List<GroupModel> groupModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_GROUP_COUNT);
@@ -4228,10 +4232,15 @@ public class DataFactory {
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
 			long groupId = _groupCounter.get();
 
-			groupModels.add(
-				newGroupModel(
+			GroupModel groupModel = newGroupModel(
 					getClassNameId(Group.class), groupId, groupId, "Site " + i,
-					true));
+					true);
+
+			if(_groupModel == null){
+				_groupModel = groupModel;
+			}
+
+			groupModels.add(groupModel);
 		}
 
 		return groupModels;
@@ -7533,6 +7542,8 @@ public class DataFactory {
 		new PortletPreferencesFactoryImpl();
 
 	private RoleModel _administratorRoleModel;
+
+	private GroupModel _groupModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private final Map<Long, List<AssetCategoryModel>>[]
 		_assetCategoryModelsMaps =
