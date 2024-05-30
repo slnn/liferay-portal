@@ -249,6 +249,7 @@ import com.liferay.portal.kernel.model.VirtualHostModel;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -370,6 +371,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.UUID;
 
 import javax.portlet.PortletPreferences;
 
@@ -2389,13 +2391,19 @@ public class DataFactory {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
 		LayoutModel publicLayoutModel = _newContentPageLayoutModel(
-			0, 0, groupId, name);
+			0, 0, groupId, name, name);
 
 		layoutModels.add(publicLayoutModel);
+
 		layoutModels.add(
 			_newContentPageLayoutModel(
 				getClassNameId(Layout.class), publicLayoutModel.getPlid(),
-				groupId, name + "1"));
+				groupId,
+				String.valueOf(
+					new UUID(
+						SecureRandomUtil.nextLong(),
+						SecureRandomUtil.nextLong())),
+				name));
 
 		return layoutModels;
 	}
@@ -7581,7 +7589,8 @@ public class DataFactory {
 	}
 
 	private LayoutModel _newContentPageLayoutModel(
-		long classNameId, long classPK, long groupId, String name) {
+		long classNameId, long classPK, long groupId, String friendlyURL,
+		String name) {
 
 		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, false),
@@ -7611,7 +7620,7 @@ public class DataFactory {
 		layoutModel.setName(
 			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
 		layoutModel.setType(LayoutConstants.TYPE_CONTENT);
-		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
+		layoutModel.setFriendlyURL(StringPool.SLASH + friendlyURL);
 		layoutModel.setClassNameId(classNameId);
 		layoutModel.setClassPK(classPK);
 
