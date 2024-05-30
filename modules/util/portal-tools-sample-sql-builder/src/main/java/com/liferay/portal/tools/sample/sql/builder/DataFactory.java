@@ -3998,60 +3998,79 @@ public class DataFactory {
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
 			new ArrayList<>();
 
+		List<FragmentEntryLinkModel> originalFragmentEntryLinkModels =
+			new ArrayList<>();
+
 		String headingRenderNamespace = StringUtil.randomId();
 		String imageRenderNamespace = StringUtil.randomId();
 		String paragraphRenderNamespace = StringUtil.randomId();
 
 		for (LayoutModel layoutModel : layoutModels) {
-			fragmentEntryLinkModels.add(
-				newFragmentEntryLinkModel(
-					layoutModel,
-					_readFile(
-						"fragment_component" +
-							"/fragment_component_heading_configuration.json"),
-					_readFile(
-						_getFragmentComponentInputStream("heading", "css")),
-					_readFile(
-						"fragment_component" +
-							"/fragment_component_heading_editValue.json"),
-					_readFile(
-						_getFragmentComponentInputStream("heading", "html")),
-					headingRenderNamespace, 0,
-					_FRAGMENT_COMPONENT_RENDER_KEY_HEADING,
-					segmentsExperienceId));
-			fragmentEntryLinkModels.add(
-				newFragmentEntryLinkModel(
-					layoutModel,
-					_readFile(
-						"fragment_component" +
-							"/fragment_component_paragraph_configuration.json"),
-					_readFile(
-						_getFragmentComponentInputStream("paragraph", "css")),
-					_replaceReleaseInfo(
+			if (layoutModel.getHidden()) {
+				originalFragmentEntryLinkModels.add(
+					newFragmentEntryLinkModel(
+						layoutModel,
 						_readFile(
 							"fragment_component" +
-								"/fragment_component_paragraph_editValue." +
-									"json")),
-					_readFile(
-						_getFragmentComponentInputStream("paragraph", "html")),
-					paragraphRenderNamespace, 0,
-					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH,
-					segmentsExperienceId));
-			fragmentEntryLinkModels.add(
-				newFragmentEntryLinkModel(
-					layoutModel,
-					_readFile(
-						"fragment_component" +
-							"/fragment_component_image_configuration.json"),
-					"",
-					_readFile(
-						"fragment_component" +
-							"/fragment_component_image_editValue.json"),
-					_readFile(
-						_getFragmentComponentInputStream("image", "html")),
-					imageRenderNamespace, 0,
-					_FRAGMENT_COMPONENT_RENDER_KEY_IMAGE,
-					segmentsExperienceId));
+								"/fragment_component_heading_configuration.json"),
+						_readFile(
+							_getFragmentComponentInputStream("heading", "css")),
+						_readFile(
+							"fragment_component" +
+								"/fragment_component_heading_editValue.json"),
+						_readFile(
+							_getFragmentComponentInputStream(
+								"heading", "html")),
+						headingRenderNamespace, 0, 0,
+						_FRAGMENT_COMPONENT_RENDER_KEY_HEADING,
+						segmentsExperienceId));
+				originalFragmentEntryLinkModels.add(
+					newFragmentEntryLinkModel(
+						layoutModel,
+						_readFile(
+							"fragment_component" +
+								"/fragment_component_paragraph_configuration.json"),
+						_readFile(
+							_getFragmentComponentInputStream(
+								"paragraph", "css")),
+						_replaceReleaseInfo(
+							_readFile(
+								"fragment_component" +
+									"/fragment_component_paragraph_editValue." +
+										"json")),
+						_readFile(
+							_getFragmentComponentInputStream(
+								"paragraph", "html")),
+						paragraphRenderNamespace, 0, 0,
+						_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH,
+						segmentsExperienceId));
+				originalFragmentEntryLinkModels.add(
+					newFragmentEntryLinkModel(
+						layoutModel,
+						_readFile(
+							"fragment_component" +
+								"/fragment_component_image_configuration.json"),
+						"",
+						_readFile(
+							"fragment_component" +
+								"/fragment_component_image_editValue.json"),
+						_readFile(
+							_getFragmentComponentInputStream("image", "html")),
+						imageRenderNamespace, 0, 0,
+						_FRAGMENT_COMPONENT_RENDER_KEY_IMAGE,
+						segmentsExperienceId));
+
+				fragmentEntryLinkModels.addAll(originalFragmentEntryLinkModels);
+			}
+			else {
+				for (FragmentEntryLinkModel originalFragmentEntryLinkModel :
+						originalFragmentEntryLinkModels) {
+
+					fragmentEntryLinkModels.add(
+						newFragmentEntryLinkModel(
+							layoutModel, originalFragmentEntryLinkModel));
+				}
+			}
 		}
 
 		return fragmentEntryLinkModels;
@@ -6580,9 +6599,26 @@ public class DataFactory {
 	}
 
 	protected FragmentEntryLinkModel newFragmentEntryLinkModel(
+		LayoutModel layoutModel,
+		FragmentEntryLinkModel originalFragmentEntryLinkModel) {
+
+		return newFragmentEntryLinkModel(
+			layoutModel, originalFragmentEntryLinkModel.getConfiguration(),
+			originalFragmentEntryLinkModel.getCss(),
+			originalFragmentEntryLinkModel.getEditableValues(),
+			originalFragmentEntryLinkModel.getHtml(),
+			originalFragmentEntryLinkModel.getNamespace(),
+			originalFragmentEntryLinkModel.getFragmentEntryLinkId(),
+			originalFragmentEntryLinkModel.getPosition(),
+			originalFragmentEntryLinkModel.getRendererKey(),
+			originalFragmentEntryLinkModel.getSegmentsExperienceId());
+	}
+
+	protected FragmentEntryLinkModel newFragmentEntryLinkModel(
 		LayoutModel layoutModel, String configuration, String css,
-		String editValue, String html, String nameSpace, int position,
-		String renderKey, long segmentsExperienceId) {
+		String editValue, String html, String nameSpace,
+		long originalFragmentEntryLinkId, int position, String renderKey,
+		long segmentsExperienceId) {
 
 		FragmentEntryLinkModel fragmentEntryLinkModel =
 			new FragmentEntryLinkModelImpl();
@@ -6605,6 +6641,8 @@ public class DataFactory {
 
 		// Other fields
 
+		fragmentEntryLinkModel.setOriginalFragmentEntryLinkId(
+			originalFragmentEntryLinkId);
 		fragmentEntryLinkModel.setFragmentEntryId(0);
 		fragmentEntryLinkModel.setSegmentsExperienceId(segmentsExperienceId);
 		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
