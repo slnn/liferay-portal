@@ -2389,13 +2389,13 @@ public class DataFactory {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
 		LayoutModel publicLayoutModel = _newContentPageLayoutModel(
-			groupId, name, 0, 0);
+			0, 0, groupId, name);
 
 		layoutModels.add(publicLayoutModel);
 		layoutModels.add(
 			_newContentPageLayoutModel(
-				groupId, name + "1", getClassNameId(Layout.class),
-				publicLayoutModel.getPlid()));
+				getClassNameId(Layout.class), publicLayoutModel.getPlid(),
+				groupId, name + "1"));
 
 		return layoutModels;
 	}
@@ -7581,7 +7581,7 @@ public class DataFactory {
 	}
 
 	private LayoutModel _newContentPageLayoutModel(
-		long groupId, String name, long classNameId, long classPK) {
+		long classNameId, long classPK, long groupId, String name) {
 
 		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, false),
