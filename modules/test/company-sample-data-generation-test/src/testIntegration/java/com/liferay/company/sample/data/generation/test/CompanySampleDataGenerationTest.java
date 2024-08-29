@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -114,6 +115,8 @@ public class CompanySampleDataGenerationTest {
 				futures.add(
 					_executorService.submit(
 						() -> {
+							ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
+
 							BufferedIncrementThreadLocal.setWithSafeCloseable(
 								true);
 
