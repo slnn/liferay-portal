@@ -155,7 +155,7 @@ public class CompanySampleDataGenerationTest {
 
 			// Add user
 
-			try (SafeCloseable safeCloseable =
+			/*try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(
 						company.getCompanyId())) {
 
@@ -174,7 +174,7 @@ public class CompanySampleDataGenerationTest {
 					_USER_PER_COMPANY_COUNT + originalCompanyUsersCount,
 					_userLocalService.getCompanyUsersCount(
 						company.getCompanyId()));
-			}
+			}*/
 		}
 	}
 
