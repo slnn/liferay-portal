@@ -312,7 +312,7 @@ public class CompanySampleDataGenerationTest {
 	}
 
 	private static final int _COMPANY_COUNT = GetterUtil.get(
-		PropsUtil.get("sample.data.company.count"), 2000);
+		PropsUtil.get("sample.data.company.count"), 10);
 
 	private static final int _USER_PER_COMPANY_COUNT = GetterUtil.get(
 		PropsUtil.get("sample.data.user.per.company.count"), 100);
