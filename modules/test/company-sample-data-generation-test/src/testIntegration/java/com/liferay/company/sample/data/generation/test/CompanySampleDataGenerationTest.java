@@ -89,8 +89,7 @@ public class CompanySampleDataGenerationTest {
 
 		Runtime runtime = Runtime.getRuntime();
 
-		_executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors());
+		_executorService = Executors.newFixedThreadPool(1);
 	}
 
 	@After
