@@ -1,13 +1,13 @@
 <#assign
+	listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel()
+
+	listTypeEntryModels = dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId())
+
 	objectDefinitionModel = dataFactory.newObjectDefinitionModel(objectFolderModel.getObjectFolderId())
 
 	relationshipObjectFieldModel = dataFactory.newObjectFieldModel(0, objectDefinitionModel.getObjectDefinitionId(), "Relationship", "r_userTicket_userId", objectDefinitionModel.getDBTableName(), "Long", "Assignee", "r_userTicket_userId", false, false, false)
 
 	objectFieldSettingModel = dataFactory.newObjectFieldSettingModel(relationshipObjectFieldModel.getObjectFieldId(), "objectRelationshipERCObjectFieldName", "r_userTicket_userERC")
-
-	listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel()
-
-	listTypeEntryModels = dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId())
 
 	objectFieldModels = dataFactory.newObjectFieldModels(listTypeDefinitionModel.getListTypeDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName())
 />
