@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Glowroot Proxy Test Utilities
+Bundle-SymbolicName: com.liferay.glowroot.proxy.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.glowroot.proxy.test.util
