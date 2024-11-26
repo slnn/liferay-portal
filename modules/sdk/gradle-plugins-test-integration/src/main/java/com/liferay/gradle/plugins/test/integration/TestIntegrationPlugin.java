@@ -23,6 +23,7 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -419,7 +420,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			"Starts the local Liferay Tomcat bundle.");
 		startTestableTomcatTask.setExecutable(
 			_getTomcatExecutableFileName("catalina"));
-		startTestableTomcatTask.setExecutableArgs(Collections.singleton("run"));
+		startTestableTomcatTask.setExecutableArgs(Arrays.asList("glowroot", "run"));
 		startTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		startTestableTomcatTask.setLiferayHome(
