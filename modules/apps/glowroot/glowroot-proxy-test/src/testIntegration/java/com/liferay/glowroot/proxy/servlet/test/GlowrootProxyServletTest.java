@@ -55,7 +55,8 @@ public class GlowrootProxyServletTest {
 
 	@Test
 	public void testVisitGlowrootPageWithRootContext() throws Exception {
-		_deployBundle(System.getProperty("liferay.home"), "root", "7080", "7005");
+		_deployBundle(
+			System.getProperty("liferay.home"), "root", "7080", "7005");
 		_loginWithAdminUser();
 		_visitGlowrootPage(_ROOT_CONTEXT_GLOWROOT_PAGE_PATH);
 	}
@@ -102,6 +103,25 @@ public class GlowrootProxyServletTest {
 		}
 
 		return directory.delete();
+	}
+
+	private URL _createURL(String... strings) throws Exception {
+		return new URL(
+			"http", "localhost", _tomcatStartupPort,
+			StringBundler.concat(strings));
+	}
+
+	private void _deleteTestJars(File targetRootFile, String... jarNames) {
+		for (String jarName : jarNames) {
+			File jarFile = new File(
+				StringBundler.concat(
+					targetRootFile, File.separator, "osgi", File.separator,
+					"modules", File.separator, jarName));
+
+			if (jarFile.exists()) {
+				jarFile.delete();
+			}
+		}
 	}
 
 	private void _deployBundle(
@@ -154,6 +174,11 @@ public class GlowrootProxyServletTest {
 						targetFile = Paths.get(
 							StringUtil.replace(
 								pathString, "ROOT.xml", "myportal.xml"));
+					}
+
+					if (targetFile.endsWith("catalina.sh")) {
+						_tomcatBin = pathString.substring(
+							0, pathString.lastIndexOf(File.separator));
 					}
 
 					if (targetFile.endsWith("server.xml")) {
@@ -315,31 +340,13 @@ public class GlowrootProxyServletTest {
 			}
 
 			_deleteTestJars(
+				targetRootFile,
 				"com.liferay.arquillian.extension.junit.bridge.connector.jar",
 				"com.liferay.data.guard.connector.jar");
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(ioException.getCause());
-			}
-		}
-	}
-
-	private URL _createURL(String... strings) throws Exception {
-		return new URL(
-			"http", "localhost", _tomcatStartupPort,
-			StringBundler.concat(strings));
-	}
-
-	private void _deleteTestJars(String... jarNames) {
-		for (String jarName : jarNames) {
-			File jarFile = new File(
-				StringBundler.concat(
-					targetRootFile, File.separator, "osgi", File.separator,
-					"modules", File.separator, jarName));
-
-			if (jarFile.exists()) {
-				jarFile.delete();
 			}
 		}
 	}
@@ -410,6 +417,7 @@ public class GlowrootProxyServletTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GlowrootProxyServletTest.class);
 
+	private static String _tomcatBin;
 	private static int _tomcatShutdownPort;
 	private static int _tomcatStartupPort;
 
