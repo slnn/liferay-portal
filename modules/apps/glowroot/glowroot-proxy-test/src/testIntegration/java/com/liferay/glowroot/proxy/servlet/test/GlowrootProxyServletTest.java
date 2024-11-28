@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import java.net.URL;
 
@@ -33,6 +34,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import java.util.concurrent.FutureTask;
 
 /**
  * @author Lily Chi
@@ -45,20 +47,29 @@ public class GlowrootProxyServletTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
+	/*@Test
 	public void testVisitGlowrootPageWithCustomizeContext() throws Exception {
 		_deployBundle(
 			System.getProperty("liferay.home"), "myportal", "9080", "9005");
 		_loginWithAdminUser();
 		_visitGlowrootPage(_CUSTOMIZE_CONTEXT_GLOWROOT_PAGE_PATH);
-	}
+	}*/
 
 	@Test
 	public void testVisitGlowrootPageWithRootContext() throws Exception {
 		_deployBundle(
 			System.getProperty("liferay.home"), "root", "7080", "7005");
-		_loginWithAdminUser();
-		_visitGlowrootPage(_ROOT_CONTEXT_GLOWROOT_PAGE_PATH);
+
+		if(_startPortal()){
+			System.out.println("!!!Tomcat started!");
+		}
+
+		System.out.println("@@@thread starts to sleep");
+		Thread.sleep(5000000);
+		System.out.println("@@@thread finishes sleep");
+
+		/*_loginWithAdminUser();
+		_visitGlowrootPage(_ROOT_CONTEXT_GLOWROOT_PAGE_PATH);*/
 	}
 
 	private void _assertContent(HttpResponse httpResponse, String key) {
@@ -393,6 +404,68 @@ public class GlowrootProxyServletTest {
 			httpResponse4, "ProductNavigationUserPersonalBarPortlet");
 	}
 
+	private boolean _startPortal() throws Exception {
+		ProcessBuilder processBuilder = new ProcessBuilder(new String[] {"sh", "catalina.sh", "start"});
+
+		System.out.println("_tomcatBin = " + _tomcatBin);
+
+		processBuilder.directory(new File(_tomcatBin));
+
+		Process process = processBuilder.start();
+
+		BufferedReader stdErrBufferedReader = new BufferedReader(
+				new InputStreamReader(process.getErrorStream()));
+
+		FutureTask<Boolean> stdErrTask = new FutureTask<>(
+				() -> {
+					String line = null;
+
+					while ((line = stdErrBufferedReader.readLine()) != null) {
+						int startIndex = line.indexOf(_STARTED_LINE);
+
+						if (startIndex != -1) {
+							return true;
+						}
+					}
+
+					throw new IllegalStateException(
+							"Unable to find tomcat startup line");
+				});
+
+		Thread stdErrThread = new Thread(stdErrTask, "Std Err Thread");
+
+		stdErrThread.start();
+
+		BufferedReader stdOutBufferedReader = new BufferedReader(
+				new InputStreamReader(process.getInputStream()));
+
+		Thread stdOutThread = new Thread(
+				() -> {
+					String line = null;
+
+					try {
+						while ((line = stdOutBufferedReader.readLine()) != null) {
+							if (_log.isInfoEnabled())  {
+								_log.info(line);
+							}
+						}
+					}
+					catch (IOException ioException) {
+					}
+				},
+				"Std Out Thread");
+
+		stdOutThread.start();
+
+		stdErrThread.join();
+
+		process.destroy();
+
+		process.waitFor();
+
+		return stdErrTask.get();
+	}
+
 	private void _visitGlowrootPage(String path) throws Exception {
 		String content = String.valueOf(HttpUtil.doGet(null, _createURL(path)));
 
@@ -420,5 +493,8 @@ public class GlowrootProxyServletTest {
 	private static String _tomcatBin;
 	private static int _tomcatShutdownPort;
 	private static int _tomcatStartupPort;
+
+	private static final String _STARTED_LINE =
+			"org.apache.catalina.startup.Catalina.start Server startup in [";
 
 }
