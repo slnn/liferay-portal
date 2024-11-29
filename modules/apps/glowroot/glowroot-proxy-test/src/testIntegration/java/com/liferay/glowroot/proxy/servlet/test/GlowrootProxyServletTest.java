@@ -29,12 +29,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import java.util.concurrent.FutureTask;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import java.util.concurrent.FutureTask;
 
 /**
  * @author Lily Chi
@@ -47,29 +48,36 @@ public class GlowrootProxyServletTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	/*@Test
+	@Test
 	public void testVisitGlowrootPageWithCustomizeContext() throws Exception {
 		_deployBundle(
 			System.getProperty("liferay.home"), "myportal", "9080", "9005");
-		_loginWithAdminUser();
-		_visitGlowrootPage(_CUSTOMIZE_CONTEXT_GLOWROOT_PAGE_PATH);
-	}*/
+
+		if (_startPortalWithGlowroot()) {
+			_loginWithAdminUser();
+			_visitGlowrootPage(_CUSTOMIZE_CONTEXT_GLOWROOT_PAGE_PATH);
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Failed to start portal with customiz context!");
+			}
+		}
+	}
 
 	@Test
 	public void testVisitGlowrootPageWithRootContext() throws Exception {
 		_deployBundle(
 			System.getProperty("liferay.home"), "root", "7080", "7005");
 
-		if(_startPortal()){
-			System.out.println("!!!Tomcat started!");
+		if (_startPortalWithGlowroot()) {
+			_loginWithAdminUser();
+			_visitGlowrootPage(_ROOT_CONTEXT_GLOWROOT_PAGE_PATH);
 		}
-
-		System.out.println("@@@thread starts to sleep");
-		Thread.sleep(5000000);
-		System.out.println("@@@thread finishes sleep");
-
-		/*_loginWithAdminUser();
-		_visitGlowrootPage(_ROOT_CONTEXT_GLOWROOT_PAGE_PATH);*/
+		else {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Failed to start portal with root context!");
+			}
+		}
 	}
 
 	private void _assertContent(HttpResponse httpResponse, String key) {
@@ -404,8 +412,9 @@ public class GlowrootProxyServletTest {
 			httpResponse4, "ProductNavigationUserPersonalBarPortlet");
 	}
 
-	private boolean _startPortal() throws Exception {
-		ProcessBuilder processBuilder = new ProcessBuilder(new String[] {"sh", "catalina.sh", "start"});
+	private boolean _startPortalWithGlowroot() throws Exception {
+		ProcessBuilder processBuilder = new ProcessBuilder(
+			new String[] {"sh", "catalina.sh", "glowroot", "run"});
 
 		System.out.println("_tomcatBin = " + _tomcatBin);
 
@@ -414,46 +423,46 @@ public class GlowrootProxyServletTest {
 		Process process = processBuilder.start();
 
 		BufferedReader stdErrBufferedReader = new BufferedReader(
-				new InputStreamReader(process.getErrorStream()));
+			new InputStreamReader(process.getErrorStream()));
 
 		FutureTask<Boolean> stdErrTask = new FutureTask<>(
-				() -> {
-					String line = null;
+			() -> {
+				String line = null;
 
-					while ((line = stdErrBufferedReader.readLine()) != null) {
-						int startIndex = line.indexOf(_STARTED_LINE);
+				while ((line = stdErrBufferedReader.readLine()) != null) {
+					int startIndex = line.indexOf(_STARTED_LINE);
 
-						if (startIndex != -1) {
-							return true;
-						}
+					if (startIndex != -1) {
+						return true;
 					}
+				}
 
-					throw new IllegalStateException(
-							"Unable to find tomcat startup line");
-				});
+				throw new IllegalStateException(
+					"Unable to find tomcat startup line");
+			});
 
 		Thread stdErrThread = new Thread(stdErrTask, "Std Err Thread");
 
 		stdErrThread.start();
 
 		BufferedReader stdOutBufferedReader = new BufferedReader(
-				new InputStreamReader(process.getInputStream()));
+			new InputStreamReader(process.getInputStream()));
 
 		Thread stdOutThread = new Thread(
-				() -> {
-					String line = null;
+			() -> {
+				String line = null;
 
-					try {
-						while ((line = stdOutBufferedReader.readLine()) != null) {
-							if (_log.isInfoEnabled())  {
-								_log.info(line);
-							}
+				try {
+					while ((line = stdOutBufferedReader.readLine()) != null) {
+						if (_log.isInfoEnabled()) {
+							_log.info(line);
 						}
 					}
-					catch (IOException ioException) {
-					}
-				},
-				"Std Out Thread");
+				}
+				catch (IOException ioException) {
+				}
+			},
+			"Std Out Thread");
 
 		stdOutThread.start();
 
@@ -487,14 +496,14 @@ public class GlowrootProxyServletTest {
 	private static final String _ROOT_CONTEXT_GLOWROOT_PAGE_PATH =
 		"/o/glowroot";
 
+	private static final String _STARTED_LINE =
+		"org.apache.catalina.startup.Catalina.start Server startup in [";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GlowrootProxyServletTest.class);
 
 	private static String _tomcatBin;
 	private static int _tomcatShutdownPort;
 	private static int _tomcatStartupPort;
-
-	private static final String _STARTED_LINE =
-			"org.apache.catalina.startup.Catalina.start Server startup in [";
 
 }
