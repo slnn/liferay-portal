@@ -59,8 +59,12 @@ public class GlowrootProxyServletTest {
 		}
 		else {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Failed to start portal with customiz context!");
+				_log.warn("Failed to start portal with customize context!");
 			}
+		}
+
+		if (!_stopPortal() && _log.isWarnEnabled()) {
+			_log.warn("Failed to stop portal with customize context!");
 		}
 	}
 
@@ -77,6 +81,10 @@ public class GlowrootProxyServletTest {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Failed to start portal with root context!");
 			}
+		}
+
+		if (!_stopPortal() && _log.isWarnEnabled()) {
+			_log.warn("Failed to stop portal with root context!");
 		}
 	}
 
@@ -238,9 +246,6 @@ public class GlowrootProxyServletTest {
 											"<Server port=\"",
 											tomcatShutdownPort, "\" shutdown=",
 											"\"SHUTDOWN\">"));
-
-									_tomcatShutdownPort = Integer.valueOf(
-										tomcatShutdownPort);
 								}
 
 								writer.write(line);
@@ -416,8 +421,6 @@ public class GlowrootProxyServletTest {
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			new String[] {"sh", "catalina.sh", "glowroot", "run"});
 
-		System.out.println("_tomcatBin = " + _tomcatBin);
-
 		processBuilder.directory(new File(_tomcatBin));
 
 		Process process = processBuilder.start();
@@ -475,6 +478,25 @@ public class GlowrootProxyServletTest {
 		return stdErrTask.get();
 	}
 
+	private boolean _stopPortal() throws Exception {
+		ProcessBuilder processBuilder = new ProcessBuilder(
+			new String[] {"sh", "shutdown.sh"});
+
+		processBuilder.directory(new File(_tomcatBin));
+
+		Process process = processBuilder.start();
+
+		if (process.exitValue() == 0) {
+			process.destroy();
+
+			process.waitFor();
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _visitGlowrootPage(String path) throws Exception {
 		String content = String.valueOf(HttpUtil.doGet(null, _createURL(path)));
 
@@ -503,7 +525,6 @@ public class GlowrootProxyServletTest {
 		GlowrootProxyServletTest.class);
 
 	private static String _tomcatBin;
-	private static int _tomcatShutdownPort;
 	private static int _tomcatStartupPort;
 
 }
