@@ -736,23 +736,9 @@ java -jar ${app.server.weblogic.dir}/${app.server.weblogic.jar.name} -ignoreSysP
 			</not>
 			<then>
 				<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-					<![CDATA[
-if [ "$1" = "glowroot" ]
-then
-	GLOWROOT_OPTS="${glowroot.agent} -Dglowroot.enabled=true"
+GLOWROOT_OPTS="-javaagent:${CATALINA_HOME}/../glowroot/glowroot.jar -Dglowroot.enabled=true"
 
-	CATALINA_OPTS="${CATALINA_OPTS} ${GLOWROOT_OPTS}"
-
-	shift
-fi
-
-if [ "$GLOWROOT_ENABLED" = "true" ]
-then
-	GLOWROOT_OPTS="${glowroot.agent} -Dglowroot.enabled=true"
-
-	CATALINA_OPTS="${CATALINA_OPTS} ${GLOWROOT_OPTS}"
-fi
-					]]>
+CATALINA_OPTS="${CATALINA_OPTS} ${GLOWROOT_OPTS}"
 				</echo>
 			</then>
 		</if>
