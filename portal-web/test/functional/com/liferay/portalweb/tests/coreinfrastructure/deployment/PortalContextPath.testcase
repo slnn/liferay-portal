@@ -133,7 +133,7 @@ definition {
 
 		task ("Visit Glowroot page with non root context") {
 			Navigator.gotoSpecificURLPage(
-			      pageName = "Glowroot page",
+			      pageName = "Glowroot",
 			      url = "http://localhost:8080/liferay/o/glowroot");
 		}
 	}
