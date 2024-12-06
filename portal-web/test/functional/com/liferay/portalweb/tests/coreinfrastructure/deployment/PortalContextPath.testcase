@@ -18,6 +18,7 @@ definition {
     	task ("Visit Glowroot page with non root context") {
     	    AntCommands.runCommand("build-test.xml", "stop-app-server");
     	    AntCommands.runCommand("build-test.xml", "enable-glowroot-for-tomcat");
+    	    AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false");
     		SignIn.signInSpecificURL(userPassword = "test", userEmailAddress = "test@liferay.com", url = "http://localhost:8080/liferay");
     		Navigator.openSpecificURL(url = "http://localhost:8080/liferay/o/glowroot");
     		AssertElementPresent(locator1 = "Home#GLOWROOT");
