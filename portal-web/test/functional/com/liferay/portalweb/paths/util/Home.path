@@ -215,6 +215,11 @@
 	<td>Page</td>
 </tr>
 <tr>
+	<td>GLOWROOT</td>
+	<td>//script[contains(text(), '/liferay/o/glowroot')]/text()</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_HREF</td>
 	<td>//div[contains(@id,'navbar')]/ul/li/a[contains(.,'${key_pageName}')][@href='${key_href}']</td>
 	<td>Page</td>
