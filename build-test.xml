@@ -538,6 +538,21 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="enable-glowroot-for-tomcat">
+		<sequential>
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+GLOWROOT_OPTS="-javaagent:${CATALINA_HOME}/../glowroot/glowroot.jar -Dglowroot.enabled=true"
+
+CATALINA_OPTS="${CATALINA_OPTS} ${GLOWROOT_OPTS}"
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="export-database-mysql-compact">
 		<attribute default="mysql" name="database.file.prefix" />
 		<attribute default="lportal" name="database.schema.name" />
