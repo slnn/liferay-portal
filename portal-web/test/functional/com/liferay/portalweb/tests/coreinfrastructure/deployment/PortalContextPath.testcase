@@ -134,9 +134,7 @@ definition {
 		task ("Visit Glowroot page with non root context") {
 			AntCommands.runCommand("build-test.xml", "stop-app-server");
 
-			Tomcat.addJVMArguments(arguments = "GLOWROOT_OPTS=-javaagent:${CATALINA_HOME}/../glowroot/glowroot.jar -Dglowroot.enabled=true");
-			Tomcat.addJVMArguments(arguments = "CATALINA_OPTS=${CATALINA_OPTS} ${GLOWROOT_OPTS}");
-
+			Tomcat.addJVMArguments(arguments = "-javaagent:${CATALINA_HOME}/../glowroot/glowroot.jar -Dglowroot.enabled=true");
 			AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false");
 
 			SignIn.signInSpecificURL(
