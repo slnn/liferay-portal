@@ -538,7 +538,7 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="enable-glowroot-for-tomcat">
+	<macrodef name="setup-testable-tomcat-glowroot-agent">
 		<sequential>
 			<if>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -7277,6 +7277,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<setup-testable-tomcat-aspectj-agent />
 
 			<setup-testable-tomcat-jpda-address />
+
+			<setup-testable-tomcat-glowroot-agent />
 		</sequential>
 	</macrodef>
 
