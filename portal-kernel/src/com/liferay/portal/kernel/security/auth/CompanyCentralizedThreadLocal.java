@@ -11,6 +11,7 @@ import com.liferay.petra.lang.SafeCloseable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -64,6 +65,6 @@ public class CompanyCentralizedThreadLocal<T>
 	}
 
 	private static final List<CompanyCentralizedThreadLocal<?>>
-		_companyCentralizedThreadLocals = new ArrayList<>();
+		_companyCentralizedThreadLocals = new CopyOnWriteArrayList<>();
 
 }
