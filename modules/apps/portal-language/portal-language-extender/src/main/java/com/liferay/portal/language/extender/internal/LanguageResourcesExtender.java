@@ -94,10 +94,10 @@ public class LanguageResourcesExtender
 					"(&(!(javax.portlet.name=*))(language.id=*)(objectClass=" +
 						ResourceBundle.class.getName() + "))");
 
+				_bundleTracker.open();
+
 				return null;
 			});
-
-		_bundleTracker.open();
 	}
 
 	@Deactivate
