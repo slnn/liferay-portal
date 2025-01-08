@@ -1,7 +1,12 @@
 <#assign
+	assetListEntryModel = dataFactory.newAssetListEntryModel(groupId)
 	assetVocabularyModels = dataFactory.newAssetVocabularyModels(groupId)
 	pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount)
 />
+
+${dataFactory.toInsertSQL(assetListEntryModel)}
+
+${dataFactory.toInsertSQL(dataFactory.newAssetListEntrySegmentsEntryRelModel(assetListEntryModel, defaultJournalDDMStructureModel))}
 
 <#list assetVocabularyModels as assetVocabularyModel>
 	${dataFactory.toInsertSQL(assetVocabularyModel)}
