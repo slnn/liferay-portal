@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryModel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRelModel;
 import com.liferay.asset.list.model.impl.AssetListEntryModelImpl;
@@ -6152,6 +6153,15 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			AssetCategory.class.getName(),
 			String.valueOf(assetCategoryModel.getCategoryId()), _sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		AssetListEntryModel assetListEntryModel) {
+
+		return newResourcePermissionModels(
+			AssetListEntry.class.getName(),
+			String.valueOf(assetListEntryModel.getAssetListEntryId()),
+			_sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
