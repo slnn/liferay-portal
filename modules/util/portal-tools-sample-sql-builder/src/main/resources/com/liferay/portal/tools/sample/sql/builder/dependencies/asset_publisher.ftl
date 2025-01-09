@@ -43,7 +43,7 @@ ${dataFactory.toInsertSQL(dataFactory.newAssetListEntrySegmentsEntryRelModel(ass
 
 	${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
 
-	<#assign assetPublisherPortletPreferencesModels = dataFactory.newAssetPublisherPortletPreferenceValueModels(assetPublisherPortletPreferencesModel, groupId, pageCount) />
+	<#assign assetPublisherPortletPreferencesModels = dataFactory.newAssetPublisherPortletPreferenceValueModels(assetListEntryModel, assetPublisherPortletPreferencesModel, groupId, pageCount) />
 
 	<#list assetPublisherPortletPreferencesModels as assetPublisherPortletPreferencesModel>
 		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
