@@ -305,6 +305,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -1244,7 +1245,7 @@ public class DataFactory {
 	public AssetListEntrySegmentsEntryRelModel
 		newAssetListEntrySegmentsEntryRelModel(
 			AssetListEntryModel assetListEntryModel,
-			DDMStructureModel ddmStructureModel) {
+			DDMStructureModel ddmStructureModel, int currentIndex) {
 
 		AssetListEntrySegmentsEntryRelModel
 			assetListEntrySegmentsEntryRelModel =
@@ -1257,8 +1258,9 @@ public class DataFactory {
 
 		// Group instance
 
-		assetListEntrySegmentsEntryRelModel.setGroupId(
-			assetListEntryModel.getGroupId());
+		long groupId = assetListEntryModel.getGroupId();
+
+		assetListEntrySegmentsEntryRelModel.setGroupId(groupId);
 
 		// Audit fields
 
@@ -1276,8 +1278,8 @@ public class DataFactory {
 		assetListEntrySegmentsEntryRelModel.setSegmentsEntryId(
 			SegmentsEntryConstants.ID_DEFAULT);
 
-		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
-			true
+		Map<String, String> map = HashMapBuilder.<String, String>create(
+			13
 		).put(
 			"anyAssetType", Boolean.FALSE.toString()
 		).put(
@@ -1290,7 +1292,7 @@ public class DataFactory {
 			"classTypeIdsJournalArticleAssetRendererFactory",
 			String.valueOf(ddmStructureModel.getStructureId())
 		).put(
-			"groupIds", String.valueOf(assetListEntryModel.getGroupId())
+			"groupIds", String.valueOf(groupId)
 		).put(
 			"orderByColumn1", "modifiedDate"
 		).put(
@@ -1304,13 +1306,68 @@ public class DataFactory {
 		).put(
 			"queryContains0", Boolean.TRUE.toString()
 		).put(
-			"queryName0", "assetTags"
-		).put(
 			"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory",
 			Boolean.FALSE.toString()
 		).put(
 			"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory",
 			Boolean.FALSE.toString()
+		).build();
+
+		if (currentIndex == 1) {
+			map.put("queryName0", "assetTags");
+		}
+		else {
+			String assetPublisherQueryName = "assetCategories";
+
+			if ((currentIndex % 2) == 0) {
+				assetPublisherQueryName = "assetTags";
+			}
+
+			ObjectValuePair<String[], Integer> objectValuePair = null;
+
+			Integer startIndex = _assetPublisherQueryStartIndexes.get(groupId);
+
+			if (startIndex == null) {
+				startIndex = 0;
+			}
+
+			if (assetPublisherQueryName.equals("assetCategories")) {
+				Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
+					_assetCategoryModelsMaps[(int)groupId - 1];
+
+				List<AssetCategoryModel> assetCategoryModels =
+					assetCategoryModelsMap.get(
+						getNextAssetClassNameId(groupId));
+
+				objectValuePair = getAssetPublisherAssetCategoriesQueryValues(
+					assetCategoryModels, startIndex);
+			}
+			else {
+				Map<Long, List<AssetTagModel>> assetTagModelsMap =
+					_assetTagModelsMaps[(int)groupId - 1];
+
+				List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
+					getNextAssetClassNameId(groupId));
+
+				objectValuePair = getAssetPublisherAssetTagsQueryValues(
+					assetTagModels, startIndex);
+			}
+
+			String[] assetPublisherQueryValues = objectValuePair.getKey();
+
+			map.put("queryName0", assetPublisherQueryName);
+			map.put("queryName1", assetPublisherQueryName);
+			map.put(
+				"queryValues0",
+				StringBundler.concat(
+					assetPublisherQueryValues[0], StringPool.COMMA,
+					assetPublisherQueryValues[1], StringPool.COMMA,
+					assetPublisherQueryValues[2]));
+			map.put("queryValues1", assetPublisherQueryValues[3]);
+		}
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			map, true
 		).build();
 
 		assetListEntrySegmentsEntryRelModel.setTypeSettings(
