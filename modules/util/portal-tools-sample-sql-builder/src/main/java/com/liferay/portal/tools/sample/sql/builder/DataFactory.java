@@ -1302,10 +1302,6 @@ public class DataFactory {
 		).put(
 			"orderByType2", "ASC"
 		).put(
-			"queryAndOperator0", Boolean.TRUE.toString()
-		).put(
-			"queryContains0", Boolean.TRUE.toString()
-		).put(
 			"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory",
 			Boolean.FALSE.toString()
 		).put(
@@ -1314,6 +1310,8 @@ public class DataFactory {
 		).build();
 
 		if (currentIndex == 1) {
+			map.put("queryAndOperator0", Boolean.TRUE.toString());
+			map.put("queryContains0", Boolean.TRUE.toString());
 			map.put("queryName0", "assetTags");
 		}
 		else {
@@ -1355,6 +1353,10 @@ public class DataFactory {
 
 			String[] assetPublisherQueryValues = objectValuePair.getKey();
 
+			map.put("queryAndOperator0", Boolean.FALSE.toString());
+			map.put("queryAndOperator1", Boolean.FALSE.toString());
+			map.put("queryContains0", Boolean.TRUE.toString());
+			map.put("queryContains1", Boolean.FALSE.toString());
 			map.put("queryName0", assetPublisherQueryName);
 			map.put("queryName1", assetPublisherQueryName);
 			map.put(
