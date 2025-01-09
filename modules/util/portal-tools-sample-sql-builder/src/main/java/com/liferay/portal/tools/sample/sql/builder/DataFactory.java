@@ -1198,7 +1198,7 @@ public class DataFactory {
 			journalArticleLocalizationModel.getTitle());
 	}
 
-	public AssetListEntryModel newAssetListEntryModel(long groupId) {
+	public AssetListEntryModel newAssetListEntryModel(long groupId, int index) {
 		AssetListEntryModel assetListEntryModel = new AssetListEntryModelImpl();
 
 		// PK fields
@@ -1219,7 +1219,7 @@ public class DataFactory {
 
 		// Other fields
 
-		String title = "dynamic-collection-" + groupId;
+		String title = "dynamic-collection-" + groupId + index;
 
 		Class<?> clazz = AssetEntry.class;
 

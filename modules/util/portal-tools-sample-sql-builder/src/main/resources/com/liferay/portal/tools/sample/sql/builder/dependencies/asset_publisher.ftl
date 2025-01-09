@@ -1,12 +1,7 @@
 <#assign
-	assetListEntryModel = dataFactory.newAssetListEntryModel(groupId)
 	assetVocabularyModels = dataFactory.newAssetVocabularyModels(groupId)
 	pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount)
 />
-
-${dataFactory.toInsertSQL(assetListEntryModel)}
-
-${dataFactory.toInsertSQL(dataFactory.newAssetListEntrySegmentsEntryRelModel(assetListEntryModel, defaultJournalDDMStructureModel))}
 
 <#list assetVocabularyModels as assetVocabularyModel>
 	${dataFactory.toInsertSQL(assetVocabularyModel)}
@@ -24,8 +19,13 @@ ${dataFactory.toInsertSQL(dataFactory.newAssetListEntrySegmentsEntryRelModel(ass
 	<#assign
 		portletId = dataFactory.getPortletId("com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_")
 
+		assetListEntryModel = dataFactory.newAssetListEntryModel(groupId, pageCount)
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)
 	/>
+
+	${dataFactory.toInsertSQL(assetListEntryModel)}
+
+	${dataFactory.toInsertSQL(dataFactory.newAssetListEntrySegmentsEntryRelModel(assetListEntryModel, defaultJournalDDMStructureModel))}
 
 	${dataFactory.toInsertSQL(dataFactory.newAssetListEntryUsageModel(assetListEntryModel, portletId, layoutModel))}
 
