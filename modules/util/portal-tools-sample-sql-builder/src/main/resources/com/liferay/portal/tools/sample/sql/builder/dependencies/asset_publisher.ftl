@@ -27,6 +27,8 @@ ${dataFactory.toInsertSQL(dataFactory.newAssetListEntrySegmentsEntryRelModel(ass
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)
 	/>
 
+	${dataFactory.toInsertSQL(dataFactory.newAssetListEntryUsageModel(assetListEntryModel, portletId, layoutModel))}
+
 	${csvFileWriter.write("assetPublisher", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout _layoutModel = layoutModel />
