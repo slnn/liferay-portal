@@ -1434,17 +1434,14 @@ public class DataFactory {
 			newPortletPreferencesModel(plid, JournalPortletKeys.JOURNAL));
 	}
 
-	public List<PortletPreferenceValueModel>
-			newAssetPublisherPortletPreferenceValueModels(
-				AssetListEntryModel assetListEntryModel,
-				PortletPreferencesModel portletPreferencesModel, long groupId,
-				int currentIndex)
-		throws Exception {
+	public PortletPreferenceValueModel
+		newAssetPublisherPortletPreferenceValueModels(
+			AssetListEntryModel assetListEntryModel,
+			PortletPreferencesModel portletPreferencesModel) {
 
-		return Collections.singletonList(
-			newPortletPreferenceValueModel(
-				portletPreferencesModel, "assetListEntryExternalReferenceCode",
-				0, assetListEntryModel.getUuid()));
+		return newPortletPreferenceValueModel(
+			portletPreferencesModel, "assetListEntryExternalReferenceCode", 0,
+			assetListEntryModel.getUuid());
 	}
 
 	public List<AssetTagModel> newAssetTagModels(long groupId) {

@@ -18,14 +18,13 @@
 <#list pageCounts as pageCount>
 	<#assign
 		portletId = dataFactory.getPortletId("com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_")
-
 		assetListEntryModel = dataFactory.newAssetListEntryModel(groupId, pageCount)
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)
 	/>
 
 	${dataFactory.toInsertSQL(assetListEntryModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newAssetListEntrySegmentsEntryRelModel(assetListEntryModel, defaultJournalDDMStructureModel))}
+	${dataFactory.toInsertSQL(dataFactory.newAssetListEntrySegmentsEntryRelModel(assetListEntryModel, defaultJournalDDMStructureModel, pageCount))}
 
 	${dataFactory.toInsertSQL(dataFactory.newAssetListEntryUsageModel(assetListEntryModel, portletId, layoutModel))}
 
@@ -43,9 +42,5 @@
 
 	${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
 
-	<#assign assetPublisherPortletPreferencesModels = dataFactory.newAssetPublisherPortletPreferenceValueModels(assetListEntryModel, assetPublisherPortletPreferencesModel, groupId, pageCount) />
-
-	<#list assetPublisherPortletPreferencesModels as assetPublisherPortletPreferencesModel>
-		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
-	</#list>
+	${dataFactory.toInsertSQL(dataFactory.newAssetPublisherPortletPreferenceValueModels(assetListEntryModel, assetPublisherPortletPreferencesModel))}
 </#list>
