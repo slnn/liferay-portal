@@ -1219,7 +1219,8 @@ public class DataFactory {
 
 		// Other fields
 
-		String title = "dynamic-collection-" + groupId + index;
+		String title = StringBundler.concat(
+			"dynamic-collection-", groupId, "-", index);
 
 		Class<?> clazz = AssetEntry.class;
 
