@@ -54,7 +54,7 @@ public class SampleSQLBuilderTest {
 				"/sample.ftl");
 
 		String fileContent = new String(
-			Files.readAllBytes(Paths.get(url.toURI())), StringPool.UTF8);
+			Files.readAllBytes(Paths.get(url.toURI())), StringPool.UTF8);S
 
 		Assert.assertTrue(
 			"sample.ftl must end with " + _SAMPLE_FTL_END,
@@ -155,7 +155,7 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_DL_FILE_ENTRY_SIZE, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DL_FOLDER_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DL_FOLDER_DEPTH, "1");
-		properties.put(BenchmarksPropsKeys.MAX_FRAGMENTS_PER_LAYOUT_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_FRAGMENTS_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_GROUP_COUNT, "2");
 		properties.put(BenchmarksPropsKeys.MAX_JOURNAL_ARTICLE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_JOURNAL_ARTICLE_PAGE_COUNT, "1");
