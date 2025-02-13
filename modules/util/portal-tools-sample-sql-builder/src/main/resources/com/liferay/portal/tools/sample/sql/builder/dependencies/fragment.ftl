@@ -1,4 +1,4 @@
-<#if (dataFactory.maxContentLayoutCount > 0) && (dataFactory.maxFragmentsCount == 0)>
+<#if (dataFactory.maxContentLayoutCount > 0) >
 	<#assign
 		journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId)
 
@@ -14,68 +14,55 @@
 		_journalDDMTemplateModel = defaultJournalDDMTemplateModel
 	/>
 
-	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
+	<#if dataFactory.maxFragmentsCount == 0>
+		<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
 
-	${dataFactory.toInsertSQL(fragmentCollectionModel)}
+		${dataFactory.toInsertSQL(fragmentCollectionModel)}
 
-	<#assign fragmentEntryModel = dataFactory.newFragmentEntryModel(groupId, fragmentCollectionModel) />
+		<#assign fragmentEntryModel = dataFactory.newFragmentEntryModel(groupId, fragmentCollectionModel) />
 
-	${dataFactory.toInsertSQL(fragmentEntryModel)}
+		${dataFactory.toInsertSQL(fragmentEntryModel)}
 
-	<#list dataFactory.newContentLayoutModels(groupId) as contentLayoutModel>
-		<@insertContentLayout
-			_fragmentEntryModel = fragmentEntryModel
-			_journalArticleModel = journalArticleModel
-			_layoutModel = contentLayoutModel
-		/>
+		<#list dataFactory.newContentLayoutModels(groupId) as contentLayoutModel>
+			<@insertContentLayout
+				_fragmentEntryModel = fragmentEntryModel
+				_journalArticleModel = journalArticleModel
+				_layoutModel = contentLayoutModel
+			/>
 
-		${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.friendlyURL + "\n")}
-	</#list>
-</#if>
-
-<#if (dataFactory.maxContentLayoutCount > 0) && (dataFactory.maxFragmentsCount > 0)>
-	<#assign
-		journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId)
-
-		journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, 0, 1)
-	/>
-
-	${dataFactory.toInsertSQL(journalArticleResourceModel)}
-
-	<@insertJournalArticle
-		_insertAssetEntry = true
-		_journalArticleModel = journalArticleModel
-		_journalDDMStructureModel = defaultJournalDDMStructureModel
-		_journalDDMTemplateModel = defaultJournalDDMTemplateModel
-	/>
-
-	<#list dataFactory.newContentLayoutModels(groupId) as contentLayoutModel>
-		${dataFactory.toInsertSQL(contentLayoutModel)}
-
-		${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
-
-		<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel) />
-
-		${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
-
-		<#assign
-			segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(groupId, 0, contentLayoutModel.plid)
-		/>
-
-	 	${dataFactory.toInsertSQL(segmentsExperienceModel)}
-
-		<#assign fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(journalArticleModel, contentLayoutModel, segmentsExperienceModel.getSegmentsExperienceId()) />
-
-		<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
-			${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
-
-			${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, contentLayoutModel.plid, "${fragmentEntryLinkModel.fragmentEntryLinkId}", journalArticleResourceModel))}
+			${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.friendlyURL + "\n")}
 		</#list>
+	</#if>
 
-		<#assign layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(contentLayoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels) />
+	<#if (dataFactory.maxFragmentsCount > 0)>
+		<#list dataFactory.newContentLayoutModels(groupId) as contentLayoutModel>
+			${dataFactory.toInsertSQL(contentLayoutModel)}
 
-		${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
+			${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
 
-		${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.friendlyURL + "\n")}
-	</#list>
+			<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel) />
+
+			${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
+
+			<#assign
+				segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(groupId, 0, contentLayoutModel.plid)
+			/>
+
+		 	${dataFactory.toInsertSQL(segmentsExperienceModel)}
+
+			<#assign fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(journalArticleModel, contentLayoutModel, segmentsExperienceModel.getSegmentsExperienceId()) />
+
+			<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
+				${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+
+				${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, contentLayoutModel.plid, "${fragmentEntryLinkModel.fragmentEntryLinkId}", journalArticleResourceModel))}
+			</#list>
+
+			<#assign layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(contentLayoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels) />
+
+			${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
+
+			${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.friendlyURL + "\n")}
+		</#list>
+	</#if>
 </#if>
