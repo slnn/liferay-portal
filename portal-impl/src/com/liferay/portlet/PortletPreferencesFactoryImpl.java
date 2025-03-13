@@ -331,6 +331,10 @@ public class PortletPreferencesFactoryImpl
 			}
 		}
 
+		if(user != null){
+			System.out.println("##########PortletPreferencesFactoryImpl: user.getEmailAddress() = " + user.getEmailAddress() + ", themeDisplay.getUserId() = " + themeDisplay.getUserId() + ", doAsUserId = " + doAsUserId + ", userId = " + userId);
+		}
+
 		return getPortalPreferences(
 			httpServletRequest.getSession(), userId, themeDisplay.isSignedIn());
 	}
