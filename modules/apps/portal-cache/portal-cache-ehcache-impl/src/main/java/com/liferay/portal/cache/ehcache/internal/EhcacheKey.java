@@ -19,7 +19,7 @@ public class EhcacheKey implements Serializable {
 
 		// See https://github.com/spring-projects/spring-framework/issues/34483
 
-		int hashCode = _key.hashCode();
+		int hashCode = 31 + _key.hashCode();
 
 		hashCode = (hashCode ^ (hashCode >>> 16)) * 0x85ebca6b;
 		hashCode = (hashCode ^ (hashCode >>> 13)) * 0xc2b2ae35;
