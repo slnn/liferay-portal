@@ -77,6 +77,12 @@
 	</cache>
 
 	<!-- FinderCache -->
+	<cache
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.UserImpl"
+		uses-template="default"
+	>
+		<heap>1000000</heap>
+	</cache>
 
 	<cache
 		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferencesImpl"
