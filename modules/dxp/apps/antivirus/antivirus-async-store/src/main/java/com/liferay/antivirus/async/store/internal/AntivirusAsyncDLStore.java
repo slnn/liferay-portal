@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,20 +50,22 @@ public class AntivirusAsyncDLStore implements DLStore {
 	public void addFile(DLStoreRequest dlStoreRequest, byte[] bytes)
 		throws PortalException {
 
-		_validate(
-			dlStoreRequest.getFileName(), null, null,
-			dlStoreRequest.isValidateFileExtension(), null);
+		try (LoggingTimer loggingTimerl = new LoggingTimer("1-addFile(DLStoreRequest dlStoreRequest, byte[] bytes)")) {
 
-		try {
-			_store.addFile(
-				dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
-				dlStoreRequest.getFileName(), dlStoreRequest.getVersionLabel(),
-				new UnsyncByteArrayInputStream(bytes));
+			_validate(
+					dlStoreRequest.getFileName(), null, null,
+					dlStoreRequest.isValidateFileExtension(), null);
 
-			_registerCallback(dlStoreRequest);
-		}
-		catch (AccessDeniedException accessDeniedException) {
-			throw new PrincipalException(accessDeniedException);
+			try {
+				_store.addFile(
+						dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+						dlStoreRequest.getFileName(), dlStoreRequest.getVersionLabel(),
+						new UnsyncByteArrayInputStream(bytes));
+
+				_registerCallback(dlStoreRequest);
+			} catch (AccessDeniedException accessDeniedException) {
+				throw new PrincipalException(accessDeniedException);
+			}
 		}
 	}
 
@@ -70,23 +73,24 @@ public class AntivirusAsyncDLStore implements DLStore {
 	public void addFile(DLStoreRequest dlStoreRequest, File file)
 		throws PortalException {
 
-		_validate(
-			dlStoreRequest.getFileName(), null, null,
-			dlStoreRequest.isValidateFileExtension(), null);
+		try (LoggingTimer loggingTimerl = new LoggingTimer("2-addFile(DLStoreRequest dlStoreRequest, File file)")) {
 
-		try (InputStream inputStream = new FileInputStream(file)) {
-			_store.addFile(
-				dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
-				dlStoreRequest.getFileName(), dlStoreRequest.getVersionLabel(),
-				inputStream);
+			_validate(
+					dlStoreRequest.getFileName(), null, null,
+					dlStoreRequest.isValidateFileExtension(), null);
 
-			_registerCallback(dlStoreRequest);
-		}
-		catch (AccessDeniedException accessDeniedException) {
-			throw new PrincipalException(accessDeniedException);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
+			try (InputStream inputStream = new FileInputStream(file)) {
+				_store.addFile(
+						dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+						dlStoreRequest.getFileName(), dlStoreRequest.getVersionLabel(),
+						inputStream);
+
+				_registerCallback(dlStoreRequest);
+			} catch (AccessDeniedException accessDeniedException) {
+				throw new PrincipalException(accessDeniedException);
+			} catch (IOException ioException) {
+				throw new SystemException(ioException);
+			}
 		}
 	}
 
@@ -94,47 +98,47 @@ public class AntivirusAsyncDLStore implements DLStore {
 	public void addFile(DLStoreRequest dlStoreRequest, InputStream inputStream1)
 		throws PortalException {
 
-		if (inputStream1 instanceof ByteArrayFileInputStream) {
-			ByteArrayFileInputStream byteArrayFileInputStream =
-				(ByteArrayFileInputStream)inputStream1;
+		try (LoggingTimer loggingTimerl = new LoggingTimer("3-addFile(DLStoreRequest dlStoreRequest, File file)")) {
 
-			addFile(dlStoreRequest, byteArrayFileInputStream.getFile());
+			if (inputStream1 instanceof ByteArrayFileInputStream) {
+				ByteArrayFileInputStream byteArrayFileInputStream =
+						(ByteArrayFileInputStream) inputStream1;
 
-			return;
-		}
+				addFile(dlStoreRequest, byteArrayFileInputStream.getFile());
 
-		_validate(
-			dlStoreRequest.getFileName(), null, null,
-			dlStoreRequest.isValidateFileExtension(), null);
-
-		File tempFile = null;
-
-		try {
-			tempFile = _file.createTempFile();
-
-			_file.write(tempFile, inputStream1);
-
-			try (InputStream inputStream2 = new FileInputStream(tempFile)) {
-				_store.addFile(
-					dlStoreRequest.getCompanyId(),
-					dlStoreRequest.getRepositoryId(),
-					dlStoreRequest.getFileName(),
-					dlStoreRequest.getVersionLabel(), inputStream2);
+				return;
 			}
 
-			_registerCallback(dlStoreRequest);
-		}
-		catch (AccessDeniedException accessDeniedException) {
-			throw new PrincipalException(accessDeniedException);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(
-				"Unable to scan file " + dlStoreRequest.getFileName(),
-				ioException);
-		}
-		finally {
-			if (tempFile != null) {
-				tempFile.delete();
+			_validate(
+					dlStoreRequest.getFileName(), null, null,
+					dlStoreRequest.isValidateFileExtension(), null);
+
+			File tempFile = null;
+
+			try {
+				tempFile = _file.createTempFile();
+
+				_file.write(tempFile, inputStream1);
+
+				try (InputStream inputStream2 = new FileInputStream(tempFile)) {
+					_store.addFile(
+							dlStoreRequest.getCompanyId(),
+							dlStoreRequest.getRepositoryId(),
+							dlStoreRequest.getFileName(),
+							dlStoreRequest.getVersionLabel(), inputStream2);
+				}
+
+				_registerCallback(dlStoreRequest);
+			} catch (AccessDeniedException accessDeniedException) {
+				throw new PrincipalException(accessDeniedException);
+			} catch (IOException ioException) {
+				throw new SystemException(
+						"Unable to scan file " + dlStoreRequest.getFileName(),
+						ioException);
+			} finally {
+				if (tempFile != null) {
+					tempFile.delete();
+				}
 			}
 		}
 	}
