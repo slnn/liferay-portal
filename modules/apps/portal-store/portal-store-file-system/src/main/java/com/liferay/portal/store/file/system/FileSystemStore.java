@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -226,15 +227,17 @@ public class FileSystemStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		if (Validator.isNull(versionLabel)) {
-			versionLabel = getHeadVersionLabel(
-				companyId, repositoryId, fileName);
+		try(LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (Validator.isNull(versionLabel)) {
+				versionLabel = getHeadVersionLabel(
+						companyId, repositoryId, fileName);
+			}
+
+			File fileNameVersionFile = getFileNameVersionFile(
+					companyId, repositoryId, fileName, versionLabel);
+
+			return fileNameVersionFile.exists();
 		}
-
-		File fileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, versionLabel);
-
-		return fileNameVersionFile.exists();
 	}
 
 	protected File getDirNameDir(
