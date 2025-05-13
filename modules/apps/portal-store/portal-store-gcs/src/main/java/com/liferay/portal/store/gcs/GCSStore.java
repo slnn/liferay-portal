@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -89,23 +90,25 @@ public class GCSStore implements Store {
 			String versionLabel, InputStream inputStream)
 		throws PortalException {
 
-		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
-			deleteFile(companyId, repositoryId, fileName, versionLabel);
-		}
+		try(LoggingTimer loggingTimer = new LoggingTimer()) {
 
-		String path = _getFileVersionKey(
-			companyId, repositoryId, fileName, versionLabel);
+			if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
+				deleteFile(companyId, repositoryId, fileName, versionLabel);
+			}
 
-		BlobInfo blobInfo = BlobInfo.newBuilder(
-			_getBucketInfo(), path
-		).build();
+			String path = _getFileVersionKey(
+					companyId, repositoryId, fileName, versionLabel);
 
-		try (WriteChannel writeChannel = _getWriteChannel(blobInfo)) {
-			StreamUtil.transfer(
-				inputStream, Channels.newOutputStream(writeChannel));
-		}
-		catch (IOException ioException) {
-			throw new PortalException("Unable to add file", ioException);
+			BlobInfo blobInfo = BlobInfo.newBuilder(
+					_getBucketInfo(), path
+			).build();
+
+			try (WriteChannel writeChannel = _getWriteChannel(blobInfo)) {
+				StreamUtil.transfer(
+						inputStream, Channels.newOutputStream(writeChannel));
+			} catch (IOException ioException) {
+				throw new PortalException("Unable to add file", ioException);
+			}
 		}
 	}
 
