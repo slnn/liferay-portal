@@ -44,7 +44,7 @@ definition {
 		var secondCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
 
 		PortalCache.putCache(
-			cacheValue = "test.value",
+			cacheValue = "test.value.new",
 			companyId = ${secondCompanyId});
 
 		PortalInstances.openVirtualInstancesAdmin();
@@ -73,7 +73,7 @@ definition {
 		ServerAdministration.openServerAdmin();
 
 		PortalCache.putCache(
-			cacheValue = "test.value",
+			cacheValue = "test.value.new",
 			portalInstanceName = "www.able.com");
 
 		PortalCache.getCache(cacheValue = "null");
@@ -95,10 +95,10 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		PortalCache.putCache(cacheValue = "test.value.node.1.company.1");
+		PortalCache.putCache(cacheValue = "test.value.node.1.company.1.new");
 
 		PortalCache.putCache(
-			cacheValue = "test.value.node.1.company.2",
+			cacheValue = "test.value.node.1.company.2.new",
 			portalInstanceName = "www.able.com");
 
 		User.logoutPG();
@@ -121,7 +121,7 @@ definition {
 			portalInstanceName = "www.able.com");
 
 		PortalCache.putCache(
-			cacheValue = "test.value.node.2.company.2",
+			cacheValue = "test.value.node.2.company.2.new",
 			portalInstanceName = "www.able.com");
 
 		User.logoutPG();
@@ -136,7 +136,7 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		PortalCache.getCache(cacheValue = "test.value.node.1.company.1");
+		PortalCache.getCache(cacheValue = "test.value.node.1.company.1.new");
 
 		PortalCache.getCache(
 			cacheValue = "null",
@@ -185,7 +185,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "No Group exists with the primary key");
+			value1 = "No Group exists with the primary key new");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -204,7 +204,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "No Group exists with the primary key");
+			value1 = "No Group exists with the primary key new");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
