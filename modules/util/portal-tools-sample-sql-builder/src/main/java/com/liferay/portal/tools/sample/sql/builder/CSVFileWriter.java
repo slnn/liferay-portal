@@ -51,7 +51,12 @@ public class CSVFileWriter implements AutoCloseable {
 				"Unknown CSV file name: " + csvFileName);
 		}
 
-		writer.write(content);
+		if (csvFileName.contains("company")) {
+			writer.append(content);
+		}
+		else {
+			writer.write(content);
+		}
 	}
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
