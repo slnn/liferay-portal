@@ -19,4 +19,6 @@
 		_roleIds = roleIds
 		_userModel = userModel
 	/>
+
+	${dataFactory.toInsertSQL(dataFactory.newPortalPreferencesModel(userModel.userId))}
 </#list>
