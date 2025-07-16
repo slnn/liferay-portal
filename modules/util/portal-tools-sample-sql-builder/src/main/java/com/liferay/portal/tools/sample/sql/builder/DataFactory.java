@@ -277,6 +277,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.PortalPreferenceValueModel;
 import com.liferay.portal.kernel.model.PortalPreferencesModel;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
@@ -314,6 +315,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
@@ -331,6 +333,7 @@ import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutPrototypeModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
+import com.liferay.portal.model.impl.PortalPreferenceValueModelImpl;
 import com.liferay.portal.model.impl.PortalPreferencesModelImpl;
 import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
 import com.liferay.portal.model.impl.PortletPreferenceValueModelImpl;
@@ -4614,6 +4617,8 @@ public class DataFactory {
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
 			long groupId = _groupCounter.get();
 
+			_customGroupIds.add(groupId);
+
 			groupModels.add(
 				newGroupModel(
 					getClassNameId(Group.class), groupId, groupId, "Site " + i,
@@ -6167,6 +6172,25 @@ public class DataFactory {
 	public PortalPreferencesModel newPortalPreferencesModel(long ownerId) {
 		return newPortalPreferencesModel(
 			ownerId, PortletKeys.PREFS_OWNER_TYPE_USER);
+	}
+
+	public List<PortalPreferenceValueModel> newPortalPreferenceValueModels(
+		long portalPreferencesId) {
+
+		List<PortalPreferenceValueModel> portalPreferenceValueModels =
+			new ArrayList<>();
+
+		portalPreferenceValueModels.add(
+			newPortalPreferenceValueModel(
+				portalPreferencesId, Arrays.asList(_guestGroupId)));
+
+		_customGroupIds.add(_guestGroupId);
+
+		portalPreferenceValueModels.add(
+			newPortalPreferenceValueModel(
+				portalPreferencesId, _customGroupIds));
+
+		return portalPreferenceValueModels;
 	}
 
 	public PortletPreferencesModel newPortletPreferencesModel(
@@ -8339,6 +8363,48 @@ public class DataFactory {
 		return portalPreferencesModel;
 	}
 
+	protected PortalPreferenceValueModel newPortalPreferenceValueModel(
+		long portalPreferencesId, List<Long> groupIds) {
+
+		PortalPreferenceValueModel portalPreferenceValueModel =
+			new PortalPreferenceValueModelImpl();
+
+		// PK fields
+
+		portalPreferenceValueModel.setPortalPreferenceValueId(_counter.get());
+
+		// Audit fields
+
+		portalPreferenceValueModel.setCompanyId(_companyId);
+
+		// Other fields
+
+		portalPreferenceValueModel.setPortalPreferencesId(portalPreferencesId);
+		portalPreferenceValueModel.setIndex(0);
+
+		String key = "com.liferay.site.util_recentGroups";
+
+		portalPreferenceValueModel.setKey(key);
+
+		portalPreferenceValueModel.setLargeValue("");
+		portalPreferenceValueModel.setNamespace(
+			StringBundler.concat(
+				SessionClicks.class.getName(), StringPool.COLON, key));
+
+		StringBundler sb = new StringBundler(_customGroupIds.size() * 2);
+
+		for (Long groupId : groupIds) {
+			sb.append(groupId);
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		portalPreferenceValueModel.setSmallValue(sb.toString());
+
+		return portalPreferenceValueModel;
+	}
+
 	protected PortletPreferenceValueModel newPortletPreferenceValueModel(
 		PortletPreferencesModel portletPreferencesModel, String name, int index,
 		String value) {
@@ -9199,6 +9265,7 @@ public class DataFactory {
 	private final SimpleCounter _counter;
 	private final Map<Long, CPInstanceModel> _cpInstanceModels =
 		new HashMap<>();
+	private final List<Long> _customGroupIds = new ArrayList<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
 	private long _defaultDLDDMStructureId;
