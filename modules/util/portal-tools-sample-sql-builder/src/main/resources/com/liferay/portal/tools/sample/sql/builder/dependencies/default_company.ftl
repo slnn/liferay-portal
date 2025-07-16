@@ -11,7 +11,6 @@ ${dataFactory.toInsertSQL(defaultCompanyModel)}
 ${dataFactory.toInsertSQL(defaultVirtualHostModel)}
 
 ${dataFactory.toInsertSQL(dataFactory.newPortalPreferencesModel(defaultCompanyModel.companyId))}
-${dataFactory.toInsertSQL(dataFactory.newPortalPreferencesModel(0))}
 
 ${csvFileWriter.write("company", defaultVirtualHostModel.hostname + "," + defaultCompanyModel.companyId + "\n")}
 
