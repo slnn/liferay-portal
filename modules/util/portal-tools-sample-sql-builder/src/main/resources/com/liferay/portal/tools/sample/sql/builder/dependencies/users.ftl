@@ -4,7 +4,10 @@
 />
 
 <#list dataFactory.newUserModels() as userModel>
-	<#assign userGroupModel = dataFactory.newGroupModel(userModel) />
+	<#assign
+		portalPreferencesModel = dataFactory.newPortalPreferencesModel(userModel.userId)
+		userGroupModel = dataFactory.newGroupModel(userModel)
+	/>
 
 	${csvFileWriter.write("user", virtualHostModel.hostname + "," + userModel.screenName + "\n")}
 
@@ -20,5 +23,8 @@
 		_userModel = userModel
 	/>
 
-	${dataFactory.toInsertSQL(dataFactory.newPortalPreferencesModel(userModel.userId))}
+	${dataFactory.toInsertSQL(portalPreferencesModel)}
+
+	${dataFactory.toInsertSQL(dataFactory.newPortalPreferenceValueModel(portalPreferencesModel.portalPreferencesId))}
+
 </#list>
