@@ -9,7 +9,7 @@
 
 	${dataFactory.toInsertSQL(virtualHostModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newPortalPreferencesModel(companyModel.companyId))}
+	${dataFactory.toInsertSQL(dataFactory.newPortalPreferencesModel())}
 
 	${csvFileWriter.write("company", virtualHostModel.hostname + "," + companyModel.companyId + "\n")}
 
