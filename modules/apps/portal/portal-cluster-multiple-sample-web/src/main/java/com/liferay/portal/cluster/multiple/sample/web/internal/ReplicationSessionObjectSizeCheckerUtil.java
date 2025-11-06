@@ -1,0 +1,85 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.cluster.multiple.sample.web.internal;
+
+import jakarta.portlet.PortletSession;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author Lily Chi
+ */
+public class ReplicationSessionObjectSizeCheckerUtil{
+
+	public static long getSerializedSizes(PortletSession portletSession) {
+		Map<String, Long> sizeMap = new HashMap<>();
+		long totalSize = 0;
+
+		totalSize += _processScope(portletSession, PortletSession.PORTLET_SCOPE, "PORTLET_SCOPE", sizeMap);
+
+		totalSize += _processScope(portletSession, PortletSession.APPLICATION_SCOPE, "APPLICATION_SCOPE", sizeMap);
+
+		_logSessionDetails(sizeMap, totalSize);
+
+		return totalSize;
+	}
+
+	private static long _processScope(
+			PortletSession portletSession, int scope, String scopeName, Map<String, Long> sizeMap) {
+
+		long scopeTotalSize = 0;
+		Enumeration<String> names = portletSession.getAttributeNames(scope);
+
+		while (names.hasMoreElements()) {
+			String name = names.nextElement();
+			Object object = portletSession.getAttribute(name, scope);
+
+			try {
+				Serializable serializableObject = (Serializable) object;
+
+				long size = getSerializedSize(serializableObject);
+				sizeMap.put(scopeName + "::" + name, size);
+				scopeTotalSize += size;
+
+			} catch (ClassCastException e) {
+				sizeMap.put(scopeName + "::" + name, 0L);
+			}
+		}
+		return scopeTotalSize;
+	}
+
+	private static void _logSessionDetails(Map<String, Long> sizeMap, long totalSize) {
+		System.out.println("--- SESSION REPLICATION SIZE DIAGNOSTICS (Total: " + totalSize + " bytes) ---");
+
+		sizeMap.entrySet().stream()
+				.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) // Sort by largest size
+				.forEach(entry -> {
+					System.out.println("Size: " + entry.getValue() + " bytes | Attribute: " + entry.getKey());
+				});
+		System.out.println("-------------------------------------------------------------------------");
+	}
+
+	public static long getSerializedSize(Serializable object) {
+		try (
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)
+		) {
+			objectOutputStream.writeObject(object);
+			objectOutputStream.flush();
+			return byteArrayOutputStream.toByteArray().length;
+		} catch (IOException ioException) {
+			System.err.println("ERROR: Failed to serialize object of type " + object.getClass().getName());
+			return -1;
+		}
+	}
+}

@@ -9,6 +9,7 @@
 
 <%@ page import="com.liferay.portal.cluster.multiple.sample.web.internal.ClusterSampleData" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalSessionContext" %>
+<%@ page import="com.liferay.portal.cluster.multiple.sample.web.internal.ReplicationSessionObjectSizeCheckerUtil" %>
 
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 
@@ -91,4 +92,7 @@ else {
 	<li>
 		<b>Liferay Home:</b> <%= portletSessionClusterSampleData.getLiferayHome() %>
 	</li>
+	<li>
+    	<b>Total Object Size (Bytes):</b> <%= ReplicationSessionObjectSizeCheckerUtil.getSerializedSizes(portletSession) %> Bytes
+    </li>
 </ul>
