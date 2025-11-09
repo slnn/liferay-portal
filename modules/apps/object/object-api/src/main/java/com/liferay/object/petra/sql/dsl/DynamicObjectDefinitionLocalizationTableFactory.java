@@ -21,6 +21,10 @@ public class DynamicObjectDefinitionLocalizationTableFactory {
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService) {
 
+		if (!objectDefinition.isEnableLocalization()) {
+			return null;
+		}
+
 		List<ObjectField> localizedObjectFields = null;
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
@@ -38,10 +42,9 @@ public class DynamicObjectDefinitionLocalizationTableFactory {
 					objectDefinition.getObjectDefinitionId());
 		}
 
-		if (!objectDefinition.isEnableLocalization() ||
-			(FeatureFlagManagerUtil.isEnabled(
+		if (FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPD-32050") &&
-			 localizedObjectFields.isEmpty())) {
+			localizedObjectFields.isEmpty()) {
 
 			return null;
 		}
