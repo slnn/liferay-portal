@@ -11,9 +11,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Map;
 public class ReplicationSessionObjectSizeCheckerUtil{
 
 	public static long getSerializedSizes(PortletSession portletSession) {
-		Map<String, Long> sizeMap = new HashMap<>();
+		Map<String, List<Long>> sizeMap = new HashMap<>();
 		long totalSize = 0;
 
 		totalSize += _processScope(portletSession, PortletSession.PORTLET_SCOPE, "PORTLET_SCOPE", sizeMap);
@@ -35,7 +37,7 @@ public class ReplicationSessionObjectSizeCheckerUtil{
 	}
 
 	private static long _processScope(
-			PortletSession portletSession, int scope, String scopeName, Map<String, Long> sizeMap) {
+			PortletSession portletSession, int scope, String scopeName, Map<String, List<Long>> sizeMap) {
 
 		long scopeTotalSize = 0;
 		Enumeration<String> names = portletSession.getAttributeNames(scope);
@@ -48,23 +50,36 @@ public class ReplicationSessionObjectSizeCheckerUtil{
 				Serializable serializableObject = (Serializable) object;
 
 				long size = getSerializedSize(serializableObject);
-				sizeMap.put(scopeName + "::" + name, size);
+
+				String key = scopeName + "::" + name;
+
+				sizeMap.computeIfAbsent(key, k -> new ArrayList<>()).add(size);
+
 				scopeTotalSize += size;
 
 			} catch (ClassCastException e) {
-				sizeMap.put(scopeName + "::" + name, 0L);
+				sizeMap.put(scopeName + "::" + name, new ArrayList<>());
 			}
 		}
 		return scopeTotalSize;
 	}
 
-	private static void _logSessionDetails(Map<String, Long> sizeMap, long totalSize) {
+	private static void _logSessionDetails(Map<String, List<Long>> sizeMap, long totalSize) {
+		Map<String, Long> totalSizeMap = new HashMap<>();
+		Map<String, Integer> countMap = new HashMap<>();
+
+		sizeMap.forEach((key, values) -> {
+			totalSizeMap.put(key, values.stream().mapToLong(Long::longValue).sum());
+
+			countMap.put(key, values.size());
+		});
+
 		System.out.println("--- SESSION REPLICATION SIZE DIAGNOSTICS (Total: " + totalSize + " bytes) ---");
 
-		sizeMap.entrySet().stream()
+		totalSizeMap.entrySet().stream()
 				.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) // Sort by largest size
 				.forEach(entry -> {
-					System.out.println("Size: " + entry.getValue() + " bytes | Attribute: " + entry.getKey());
+					System.out.println("Attribute: " + entry.getKey() + " | Total Objects Count: " + countMap.get(entry.getKey()) + " | Objects Size Sum: " + entry.getValue());
 				});
 		System.out.println("-------------------------------------------------------------------------");
 	}
