@@ -93,6 +93,9 @@ else {
 		<b>Liferay Home:</b> <%= portletSessionClusterSampleData.getLiferayHome() %>
 	</li>
 	<li>
-    	<b>Total Object Size (Bytes):</b> <%= ReplicationSessionObjectSizeCheckerUtil.getSerializedSizes(portletSession) %> Bytes
+    	<b>Total Object Size (PortletSession)(Bytes):</b> <%= ReplicationSessionObjectSizeCheckerUtil.getSerializedSizes(portletSession) %> Bytes
+    </li>
+    <li>
+        <b>Total Object Size (HttpServletRequest)(Bytes):</b> <%= ReplicationSessionObjectSizeCheckerUtil.getSerializedSizes(request) %> Bytes
     </li>
 </ul>
