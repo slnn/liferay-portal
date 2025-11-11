@@ -26,9 +26,7 @@ public class ReplicationSessionObjectSizeCheckerUtil{
 	public static long getSerializedSizes(PortletSession portletSession) {
 		Map<String, List<Long>> sizeMap = new HashMap<>();
 		long totalSize = 0;
-
-		totalSize += _processScope(portletSession, PortletSession.PORTLET_SCOPE, "PORTLET_SCOPE", sizeMap);
-
+		
 		totalSize += _processScope(portletSession, PortletSession.APPLICATION_SCOPE, "APPLICATION_SCOPE", sizeMap);
 
 		_logSessionDetails(sizeMap, totalSize);
