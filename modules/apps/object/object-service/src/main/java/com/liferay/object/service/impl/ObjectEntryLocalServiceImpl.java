@@ -2652,6 +2652,10 @@ public class ObjectEntryLocalServiceImpl
 			long primaryKey = GetterUtil.getLong(
 				values.get(objectField.getName()));
 
+			if (primaryKey == 0) {
+				continue;
+			}
+
 			String objectRelationshipERCObjectFieldName =
 				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.
@@ -6825,10 +6829,8 @@ public class ObjectEntryLocalServiceImpl
 			_objectScopeProviderRegistry.getObjectScopeProvider(scope);
 
 		if (!objectScopeProvider.isValidGroupId(groupId)) {
-			throw new ObjectEntryGroupIdException(
-				StringBundler.concat(
-					"Group ID ", groupId, " is not valid for scope \"", scope,
-					"\""));
+			throw new ObjectEntryGroupIdException.InvalidGroupIdForScope(
+				groupId, scope);
 		}
 
 		if (!StringUtil.equals(scope, ObjectDefinitionConstants.SCOPE_DEPOT) ||
