@@ -398,6 +398,8 @@ public class MainServlet extends HttpServlet {
 
 		_checkBuildDate();
 
+		System.out.println("###########Tis is reindex-21-b4ae7e01c-output!");
+
 		if (StartupHelperUtil.isDBNew() &&
 			PropsValues.SETUP_WIZARD_ADD_SAMPLE_DATA) {
 
