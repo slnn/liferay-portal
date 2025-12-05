@@ -425,8 +425,7 @@ public class MainServlet extends HttpServlet {
 			() -> {
 				try {
 					HttpUtil.URLtoByteArray(
-						"http://admin-j8k9-preprod.lxc.liferay.com.localhost:" +
-							"8080");
+						"http://localhost:8080");
 				}
 				catch (IOException ioException) {
 					throw new RuntimeException(ioException);
