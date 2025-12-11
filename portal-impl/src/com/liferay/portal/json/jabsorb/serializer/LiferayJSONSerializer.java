@@ -10,13 +10,21 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Set;
 
 import org.jabsorb.JSONSerializer;
 import org.jabsorb.serializer.Serializer;
 import org.jabsorb.serializer.UnmarshallException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -105,8 +113,78 @@ public class LiferayJSONSerializer extends JSONSerializer {
 					"Unable to get class " + className, exception);
 			}
 		}
+		else if (object instanceof JSONArray) {
+			JSONArray jsonArray = (JSONArray)object;
+
+			if (jsonArray.length() == 0) {
+				return Object[].class;
+			}
+
+			Class<?> compClazz;
+
+			try {
+				Object jsonArrayFirstItem = jsonArray.get(0);
+
+				compClazz = getClassFromHint(jsonArrayFirstItem);
+
+				if (Objects.equals(compClazz, Integer.class) &&
+					((Integer)jsonArrayFirstItem == 0)) {
+
+					Set<Class<?>> clazzSet = new HashSet<>();
+
+					clazzSet.add(compClazz);
+
+					for (int i = 1; i < jsonArray.length(); i++) {
+						clazzSet.add(getClassFromHint(jsonArray.get(i)));
+					}
+
+					compClazz = _getWidestType(clazzSet);
+				}
+
+				if (compClazz.isArray()) {
+					return Class.forName("[" + compClazz.getName());
+				}
+
+				return Class.forName("[L" + compClazz.getName() + ";");
+			}
+			catch (JSONException jsonException) {
+				throw (NoSuchElementException)new NoSuchElementException(
+					jsonException.getMessage()
+				).initCause(
+					jsonException
+				);
+			}
+			catch (ClassNotFoundException classNotFoundException) {
+				throw new UnmarshallException(
+					"problem getting array type", classNotFoundException);
+			}
+		}
 
 		return super.getClassFromHint(object);
+	}
+
+	private Class<?> _getWidestType(Set<Class<?>> clazzSet) {
+		Map<Class<?>, Integer> typeHierarchy =
+			HashMapBuilder.<Class<?>, Integer>put(
+				Integer.class, 1
+			).put(
+				Long.class, 2
+			).build();
+
+		Class<?> widestClass = null;
+
+		int maxRank = -1;
+
+		for (Class<?> currentClass : clazzSet) {
+			int currentRank = typeHierarchy.getOrDefault(currentClass, -1);
+
+			if (currentRank > maxRank) {
+				maxRank = currentRank;
+				widestClass = currentClass;
+			}
+		}
+
+		return widestClass;
 	}
 
 	private String[] _toClassNames(Class<?>[] classes) {
