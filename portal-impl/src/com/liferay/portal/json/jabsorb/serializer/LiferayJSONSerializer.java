@@ -12,11 +12,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.HashMap;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.jabsorb.JSONSerializer;
 import org.jabsorb.serializer.Serializer;
 import org.jabsorb.serializer.UnmarshallException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -103,6 +107,41 @@ public class LiferayJSONSerializer extends JSONSerializer {
 			catch (Exception exception) {
 				throw new UnmarshallException(
 					"Unable to get class " + className, exception);
+			}
+		}
+		else if (object instanceof JSONArray jsonArray) {
+			if (jsonArray.isEmpty()) {
+				return super.getClassFromHint(object);
+			}
+
+			try {
+				Object firstItem = jsonArray.get(0);
+
+				Class<?> itemClass = getClassFromHint(firstItem);
+
+				if (!Objects.equals(itemClass, Integer.class)) {
+					return super.getClassFromHint(object);
+				}
+
+				for (int i = 1; i < jsonArray.length(); i++) {
+					Class<?> clazz = getClassFromHint(jsonArray.get(i));
+
+					if (Objects.equals(clazz, Long.class)) {
+						itemClass = clazz;
+
+						break;
+					}
+				}
+
+				return Class.forName("[L" + itemClass.getName() + ";");
+			}
+			catch (JSONException jsonException) {
+				throw new NoSuchElementException(
+					jsonException.getMessage(), jsonException);
+			}
+			catch (ClassNotFoundException classNotFoundException) {
+				throw new UnmarshallException(
+					"problem getting array type", classNotFoundException);
 			}
 		}
 
