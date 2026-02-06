@@ -112,15 +112,6 @@ public class BaseDisplayContextProvider<T extends DisplayContextFactory>
 		@Override
 		public void modifiedService(
 			ServiceReference<T> serviceReference, T displayContextFactory) {
-
-			DisplayContextFactoryReference<T> displayContextFactoryReference =
-				_displayContextFactoryReferencesMap.get(displayContextFactory);
-
-			removedService(
-				displayContextFactoryReference.getServiceReference(),
-				displayContextFactoryReference.getDisplayContextFactory());
-
-			addingService(serviceReference);
 		}
 
 		@Override
