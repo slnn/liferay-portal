@@ -8,6 +8,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ page import="com.liferay.portal.cluster.multiple.sample.web.internal.ClusterSampleData" %><%@
+page import="com.liferay.portal.cluster.multiple.sample.web.internal.ReplicationSessionObjectSizeCheckerUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalSessionContext" %>
 
 <%@ page import="jakarta.servlet.http.HttpSession" %>
@@ -90,5 +91,8 @@ else {
 	</li>
 	<li>
 		<b>Liferay Home:</b> <%= portletSessionClusterSampleData.getLiferayHome() %>
+	</li>
+	<li>
+		<b>Total Object Size (HttpServletRequest)(Bytes):</b> <%= ReplicationSessionObjectSizeCheckerUtil.getSerializedSizes(request) %> Bytes
 	</li>
 </ul>
