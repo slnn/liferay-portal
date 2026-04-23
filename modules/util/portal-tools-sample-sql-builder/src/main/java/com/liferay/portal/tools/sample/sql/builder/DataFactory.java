@@ -561,11 +561,23 @@ public class DataFactory {
 
 		sb.append(");");
 
-		return ListUtil.fromArray(
-			sb.toString(),
-			StringBundler.concat(
-				"insert into ", dbTableName, "_x values (", objectEntryId,
-				");"));
+		List<String> list = ListUtil.fromArray(
+				sb.toString(),
+				StringBundler.concat(
+						"insert into ", dbTableName, "_x values (", objectEntryId,
+						");"));
+
+
+
+		if(BenchmarksPropsValues.MAX_RELATED_OBJECT_ENTRY_COUNT > 0){
+			System.out.println("####################start#######################");
+			for(String entry : list){
+				System.out.println("###########" + entry);
+			}
+			System.out.println("####################end#######################");
+		}
+
+		return list;
 	}
 
 	public RoleModel getAdministratorRoleModel() {

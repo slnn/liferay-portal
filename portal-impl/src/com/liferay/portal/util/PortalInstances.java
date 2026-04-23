@@ -108,8 +108,20 @@ public class PortalInstances {
 			else if ((companyId != currentCompanyId) &&
 					 (companyId != PortalInstancePool.getDefaultCompanyId())) {
 
+				if(Thread.currentThread().getName().startsWith("http-nio-8080-exec")) {
+					StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+					StringBundler sb3 = new StringBundler();
+					for (int i = 0; i < elements.length; i++) {
+						sb3.append("\n" + elements[i].getClassName() + "." + elements[i].getMethodName() + "(" + elements[i].getFileName() + ":" + elements[i].getLineNumber() + ")");
+					}
+
+					System.out.println("0###########PortalInstances  start############# companyId = " + companyId + ", currentCompanyId = " + currentCompanyId + ", thread = " + Thread.currentThread().getName());
+					System.out.println(sb3.toString());
+					System.out.println("0###########PortalInstances setCompanyIdWithSafeCloseable end#############");
+				}
+
 				throw new UnsupportedOperationException(
-					"Unable to set company ID on locked company thread local");
+					"Unable to set company ID on locked company thread local companyId= " + companyId + ", currentCompanyId = " + currentCompanyId + ", PortalInstancePool.getDefaultCompanyId() = " + PortalInstancePool.getDefaultCompanyId() + ", thread = " + Thread.currentThread().getName());
 			}
 
 			return companyId;
