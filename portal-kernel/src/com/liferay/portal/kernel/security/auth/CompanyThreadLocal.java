@@ -121,6 +121,18 @@ public class CompanyThreadLocal {
 	public static SafeCloseable lock(long companyId) {
 		long currentCompanyId = _companyId.get();
 
+		if(Thread.currentThread().getName().startsWith("http-nio-8080-exec")) {
+			StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+			StringBundler sb3 = new StringBundler();
+			for (int i = 0; i < elements.length; i++) {
+				sb3.append("\n" + elements[i].getClassName() + "." + elements[i].getMethodName() + "(" + elements[i].getFileName() + ":" + elements[i].getLineNumber() + ")");
+			}
+
+			System.out.println("4###########CompanyThreadLocal lock start############# companyId = " + companyId + ", currentCompanyId = " + currentCompanyId + ", thread = " + Thread.currentThread().getName());
+			System.out.println(sb3.toString());
+			System.out.println("4###########CompanyThreadLocal lock end#############");
+		}
+
 		if (companyId == currentCompanyId) {
 			if (isLocked()) {
 				return () -> {
@@ -156,7 +168,19 @@ public class CompanyThreadLocal {
 	}
 
 	public static void setCompanyId(Long companyId) {
-		if (companyId.equals(_companyId.get())) {
+		long currentCompanyId = _companyId.get();
+		if(Thread.currentThread().getName().startsWith("http-nio-8080-exec")) {
+			StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+			StringBundler sb3 = new StringBundler();
+			for (int i = 0; i < elements.length; i++) {
+				sb3.append("\n" + elements[i].getClassName() + "." + elements[i].getMethodName() + "(" + elements[i].getFileName() + ":" + elements[i].getLineNumber() + ")");
+			}
+
+			System.out.println("1###########CompanyThreadLocal setCompanyId start############# companyId = " + companyId + ", currentCompanyId = " + currentCompanyId + ", thread = " + Thread.currentThread().getName());
+			System.out.println(sb3.toString());
+			System.out.println("1###########CompanyThreadLocal setCompanyId end#############");
+		}
+		if (companyId.equals(currentCompanyId)) {
 			return;
 		}
 
@@ -196,9 +220,22 @@ public class CompanyThreadLocal {
 	public static SafeCloseable setCompanyIdWithSafeCloseable(
 		Long companyId, Long ctCollectionId) {
 
+		long currentCompanyId = _companyId.get();
+		if(Thread.currentThread().getName().startsWith("http-nio-8080-exec")) {
+			StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+			StringBundler sb3 = new StringBundler();
+			for (int i = 0; i < elements.length; i++) {
+				sb3.append("\n" + elements[i].getClassName() + "." + elements[i].getMethodName() + "(" + elements[i].getFileName() + ":" + elements[i].getLineNumber() + ")");
+			}
+
+			System.out.println("2###########CompanyThreadLocal setCompanyIdWithSafeCloseable start############# companyId = " + companyId + ", currentCompanyId = " + currentCompanyId + ", thread = " + Thread.currentThread().getName());
+			System.out.println(sb3.toString());
+			System.out.println("2###########CompanyThreadLocal setCompanyIdWithSafeCloseable end#############");
+		}
+
 		List<SafeCloseable> safeCloseables = new ArrayList<>();
 
-		if (!companyId.equals(_companyId.get())) {
+		if (!companyId.equals(currentCompanyId)) {
 			if (isLocked()) {
 				throw new UnsupportedOperationException(
 					"Unable to set company ID on locked company thread local");
@@ -247,6 +284,19 @@ public class CompanyThreadLocal {
 
 	public static SafeCloseable setInitializingCompanyIdWithSafeCloseable(
 		long companyId) {
+
+		long currentCompanyId = _companyId.get();
+		if(Thread.currentThread().getName().startsWith("http-nio-8080-exec")) {
+			StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+			StringBundler sb3 = new StringBundler();
+			for (int i = 0; i < elements.length; i++) {
+				sb3.append("\n" + elements[i].getClassName() + "." + elements[i].getMethodName() + "(" + elements[i].getFileName() + ":" + elements[i].getLineNumber() + ")");
+			}
+
+			System.out.println("3###########CompanyThreadLocal setInitializingCompanyIdWithSafeCloseable start############# companyId = " + companyId + ", currentCompanyId = " + currentCompanyId + ", thread = " + Thread.currentThread().getName());
+			System.out.println(sb3.toString());
+			System.out.println("3###########CompanyThreadLocal setInitializingCompanyIdWithSafeCloseable end#############");
+		}
 
 		if (companyId > 0) {
 			return _companyId.setWithSafeCloseable(companyId);

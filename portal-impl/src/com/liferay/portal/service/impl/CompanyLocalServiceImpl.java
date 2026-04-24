@@ -885,11 +885,18 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		for (Company company : companies) {
+			if(Thread.currentThread().getName().startsWith("http-nio-8080-exec")){
+				System.out.println("@@@@@@@@@@@@@@@CompanyLocalServiceImpl.forEachCompany before currentCompanyId = " + CompanyThreadLocal.getCompanyId());
+			}
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						company.getCompanyId())) {
 
 				unsafeConsumer.accept(company);
+			}
+
+			if(Thread.currentThread().getName().startsWith("http-nio-8080-exec")){
+				System.out.println("@@@@@@@@@@@@@@@CompanyLocalServiceImpl.forEachCompany after currentCompanyId = " + CompanyThreadLocal.getCompanyId());
 			}
 		}
 	}

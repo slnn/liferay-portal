@@ -89,6 +89,9 @@ public abstract class InitialRequestPortalInstanceLifecycleListener
 
 		InitialRequestSyncUtil.registerSyncCallable(
 			() -> {
+				if(Thread.currentThread().getName().startsWith("http-nio-8080-exec")){
+					System.out.println("@@@@@@@@@@@@@@@InitialRequestPortalInstanceLifecycleListener._registerPortalInstanceRegisteredSyncCallable before currentCompanyId = " + CompanyThreadLocal.getCompanyId());
+				}
 				try (SafeCloseable safeCloseable =
 						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 							companyId)) {
@@ -102,6 +105,9 @@ public abstract class InitialRequestPortalInstanceLifecycleListener
 
 					_portalInstanceRegisteredUnsafeConsumer =
 						this::doPortalInstanceRegistered;
+				}
+				if(Thread.currentThread().getName().startsWith("http-nio-8080-exec")){
+					System.out.println("@@@@@@@@@@@@@@@InitialRequestPortalInstanceLifecycleListener._registerPortalInstanceRegisteredSyncCallable after currentCompanyId = " + CompanyThreadLocal.getCompanyId());
 				}
 
 				return null;
