@@ -10,6 +10,7 @@ import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -29,6 +30,7 @@ import java.nio.ByteBuffer;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -92,17 +94,32 @@ public abstract class InitialRequestPortalInstanceLifecycleListener
 
 		InitialRequestSyncUtil.registerSyncCallable(
 			() -> {
-				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-							companyId)) {
-
-					TransactionInvokerUtil.invoke(
-						_transactionConfig,
+				try {
+					CompletableFuture.runAsync(
 						() -> {
-							doPortalInstanceRegistered(companyId);
+							try {
+								TransactionInvokerUtil.invoke(
+									_transactionConfig,
+									() -> {
+										try (SafeCloseable safeCloseable =
+												CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+													companyId)) {
 
-							return null;
-						});
+											doPortalInstanceRegistered(companyId);
+										}
+
+										return null;
+									});
+							}
+							catch (Throwable throwable) {
+								if (_log.isErrorEnabled()) {
+									_log.error(throwable, throwable);
+								}
+
+								throw new RuntimeException(throwable);
+							}
+						},
+						SystemExecutorServiceUtil.getExecutorService()).get();
 				}
 				catch (Throwable throwable) {
 					throw new Exception(throwable);
