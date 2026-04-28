@@ -15,6 +15,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.File;
@@ -93,7 +96,16 @@ public abstract class InitialRequestPortalInstanceLifecycleListener
 						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 							companyId)) {
 
-					doPortalInstanceRegistered(companyId);
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> {
+							doPortalInstanceRegistered(companyId);
+
+							return null;
+						});
+				}
+				catch (Throwable throwable) {
+					throw new Exception(throwable);
 				}
 				finally {
 					if (_companyIds.remove(companyId)) {
@@ -146,5 +158,9 @@ public abstract class InitialRequestPortalInstanceLifecycleListener
 	private volatile UnsafeConsumer<Long, Exception>
 		_portalInstanceRegisteredUnsafeConsumer =
 			this::_registerPortalInstanceRegisteredSyncCallable;
+
+	private static final TransactionConfig _transactionConfig =
+			TransactionConfig.Factory.create(
+					Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 }
