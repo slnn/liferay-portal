@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Production Readiness Rules Implementation
+Bundle-SymbolicName: com.liferay.production.readiness.rules.impl
+Bundle-Version: 1.0.0
+-dsannotations-options: inherit
