@@ -31,7 +31,10 @@ public class KeyLocalizedLabelPairCommaSeparatedLabelsInfoTextFormatter
 
 		return StringUtil.merge(
 			TransformUtil.transform(
-				keyLocalizedLabelPairs,
+				keyLocalizedLabelPairs.stream(
+				).limit(
+					100
+				).toList(),
 				keyLocalizedLabelPair -> {
 					String title = keyLocalizedLabelPair.getLabel(locale);
 

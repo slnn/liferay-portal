@@ -24,7 +24,10 @@ public class CommaSeparatedInfoCollectionTextFormatter
 	public String format(Collection<Object> collection, Locale locale) {
 		return StringUtil.merge(
 			TransformUtil.transform(
-				collection,
+				collection.stream(
+				).limit(
+					100
+				).toList(),
 				collectionItem -> {
 					if (!(collectionItem instanceof Labeled)) {
 						return collectionItem.toString();
