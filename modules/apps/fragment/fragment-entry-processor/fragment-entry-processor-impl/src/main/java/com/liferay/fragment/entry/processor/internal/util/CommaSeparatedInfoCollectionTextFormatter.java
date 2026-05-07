@@ -10,6 +10,7 @@ import com.liferay.info.type.Labeled;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -24,7 +25,8 @@ public class CommaSeparatedInfoCollectionTextFormatter
 	public String format(Collection<Object> collection, Locale locale) {
 		return StringUtil.merge(
 			TransformUtil.transform(
-				collection,
+				ListUtil.fromCollection(collection).subList(
+					0, Math.min(collection.size(), 100)),
 				collectionItem -> {
 					if (!(collectionItem instanceof Labeled)) {
 						return collectionItem.toString();

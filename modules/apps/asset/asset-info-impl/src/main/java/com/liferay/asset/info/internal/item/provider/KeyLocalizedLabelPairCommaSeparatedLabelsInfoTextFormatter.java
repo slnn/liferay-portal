@@ -10,6 +10,7 @@ import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
@@ -31,7 +32,8 @@ public class KeyLocalizedLabelPairCommaSeparatedLabelsInfoTextFormatter
 
 		return StringUtil.merge(
 			TransformUtil.transform(
-				keyLocalizedLabelPairs,
+				ListUtil.fromCollection(keyLocalizedLabelPairs).subList(
+					0, Math.min(keyLocalizedLabelPairs.size(), 100)),
 				keyLocalizedLabelPair -> {
 					String title = keyLocalizedLabelPair.getLabel(locale);
 
