@@ -291,6 +291,7 @@ public class FragmentEntryProcessorRegistryImpl
 
 		System.out.println("DEBUG: Number of child nodes: " + bodyElement.childNodeSize());
 		System.out.println("DEBUG: All elements count: " + document.getAllElements().size());
+		System.out.println("DEBUG: FragmentEntryLinkId: " + fragmentEntryLink.getFragmentEntryLinkId());
 
 		return bodyElement.html();
 	}
