@@ -20,8 +20,18 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.util.JS;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -272,6 +282,87 @@ public class PortletRegistryImplTest {
 					RandomTestUtil.randomString(), "</div>"),
 				namespace),
 			expectedPortletId);
+	}
+
+	@Test
+	public void testJsoupProcessHTMLConcurrency() throws Exception {
+		String html = _readFile(
+				"fragment_entry_heading.html");
+
+		int threadsCount = 500;
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+				threadsCount);
+
+		CountDownLatch countDownLatch = new CountDownLatch(threadsCount);
+
+		List<Future<?>> futures = new ArrayList<>();
+
+		List<Throwable> throwables = Collections.synchronizedList(
+				new ArrayList<>());
+
+		for (int i = 0; i < threadsCount; i++) {
+			futures.add(
+					executorService.submit(
+							() -> {
+								try {
+									for (int j = 0; j < 500000; j++) {
+										Document document = Jsoup.parseBodyFragment(html);
+
+										Document.OutputSettings outputSettings =
+												new Document.OutputSettings();
+
+										outputSettings.prettyPrint(false);
+
+										document.outputSettings(outputSettings);
+
+										Document cloneDocument = document.clone();
+
+										Element bodyElement = cloneDocument.body();
+
+										bodyElement.html();
+									}
+								}
+								catch (Throwable throwable) {
+									throwables.add(throwable);
+								}
+								finally {
+									countDownLatch.countDown();
+								}
+							}));
+		}
+
+		countDownLatch.await();
+
+		for (Throwable throwable : throwables) {
+			Assert.assertFalse(
+					"OutOfMemoryError", throwable instanceof OutOfMemoryError);
+
+			throw (OutOfMemoryError)throwable;
+		}
+
+		if (!throwables.isEmpty()) {
+			throw new RuntimeException(throwables.get(0));
+		}
+
+		for (Future<?> future : futures) {
+			future.get();
+		}
+
+		executorService.shutdown();
+	}
+
+	private String _readFile(String resourceName) throws Exception {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+				"/com/liferay/fragment/dependencies/" + resourceName);
+
+		List<String> lines = new ArrayList<>();
+
+		StringUtil.readLines(inputStream, lines);
+
+		return StringUtil.merge(lines, StringPool.SPACE);
 	}
 
 	private void _assertGetFragmentEntryLinkPortletIds(
