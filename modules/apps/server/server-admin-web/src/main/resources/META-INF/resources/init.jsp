@@ -70,6 +70,7 @@ page import="com.liferay.portal.util.ShutdownUtil" %><%@
 page import="com.liferay.server.admin.web.internal.constants.ImageMagickResourceLimitConstants" %><%@
 page import="com.liferay.server.admin.web.internal.constants.ServerAdminNavigationEntryConstants" %><%@
 page import="com.liferay.server.admin.web.internal.display.context.LogLevelsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.server.admin.web.internal.display.context.ProductionReadinessDisplayContext" %><%@
 page import="com.liferay.server.admin.web.internal.display.context.ServerDisplayContext" %><%@
 page import="com.liferay.server.admin.web.internal.display.context.ViewPortalPropertiesDisplayContext" %><%@
 page import="com.liferay.server.admin.web.internal.display.context.ViewPortalPropertiesManagementToolbarDisplayContext" %><%@
