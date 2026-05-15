@@ -63,19 +63,21 @@ public class ProductionReadinessDisplayContext {
 		List<RuleResult> filteredResults = new ArrayList<>();
 
 		for (RuleResult ruleResult : _ruleResults) {
-			if (ruleResult.ignored) {
+			if (ruleResult.isIgnored()) {
 				if (status.equals("ignored")) {
 					filteredResults.add(ruleResult);
 				}
 			}
 			else {
+				Result result = ruleResult.getResult();
+
 				if (status.equals("passed") &&
-					(ruleResult.result.getStatus() == Result.Status.PASS)) {
+					(result.getStatus() == Result.Status.PASS)) {
 
 					filteredResults.add(ruleResult);
 				}
 				else if (status.equals("failed") &&
-						 (ruleResult.result.getStatus() == Result.Status.FAIL)) {
+						 (result.getStatus() == Result.Status.FAIL)) {
 
 					filteredResults.add(ruleResult);
 				}
@@ -164,14 +166,26 @@ public class ProductionReadinessDisplayContext {
 		public RuleResult(
 			ProductionReadinessRule rule, Result result, boolean ignored) {
 
-			this.rule = rule;
-			this.result = result;
-			this.ignored = ignored;
+			_rule = rule;
+			_result = result;
+			_ignored = ignored;
 		}
 
-		public final boolean ignored;
-		public final Result result;
-		public final ProductionReadinessRule rule;
+		public Result getResult() {
+			return _result;
+		}
+
+		public ProductionReadinessRule getRule() {
+			return _rule;
+		}
+
+		public boolean isIgnored() {
+			return _ignored;
+		}
+
+		private final boolean _ignored;
+		private final Result _result;
+		private final ProductionReadinessRule _rule;
 
 	}
 
