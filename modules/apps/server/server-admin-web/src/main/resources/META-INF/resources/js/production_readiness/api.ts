@@ -14,8 +14,13 @@ const RESOURCE_ID_IGNORE_RULE =
 const RESOURCE_ID_UNIGNORE_RULE =
 	'/server_admin/unignore_production_readiness_rule';
 
-function buildURL(baseResourceURL: string, resourceId: string): string {
+function buildURL(
+	baseResourceURL: string,
+	resourceId: string,
+	parameters: Record<string, string> = {}
+): string {
 	return createResourceURL(baseResourceURL, {
+		...parameters,
 		p_p_resource_id: resourceId,
 	}).toString();
 }
@@ -39,15 +44,12 @@ export async function ignoreRule(
 	ruleKey: string,
 	reason: string
 ): Promise<void> {
-	const formData = new FormData();
-
-	formData.append('reason', reason);
-	formData.append('ruleKey', ruleKey);
-
 	const response = await fetch(
-		buildURL(baseResourceURL, RESOURCE_ID_IGNORE_RULE),
+		buildURL(baseResourceURL, RESOURCE_ID_IGNORE_RULE, {
+			reason,
+			ruleKey,
+		}),
 		{
-			body: formData,
 			method: 'POST',
 		}
 	);
@@ -61,14 +63,11 @@ export async function unignoreRule(
 	baseResourceURL: string,
 	ruleKey: string
 ): Promise<void> {
-	const formData = new FormData();
-
-	formData.append('ruleKey', ruleKey);
-
 	const response = await fetch(
-		buildURL(baseResourceURL, RESOURCE_ID_UNIGNORE_RULE),
+		buildURL(baseResourceURL, RESOURCE_ID_UNIGNORE_RULE, {
+			ruleKey,
+		}),
 		{
-			body: formData,
 			method: 'POST',
 		}
 	);
