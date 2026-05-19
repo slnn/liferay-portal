@@ -31,10 +31,9 @@ public class DLPreviewForkingRuleImpl implements ProductionReadinessRule {
 						PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED,
 					PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED +
 						"=true",
-					getKey(),
+					"production-readiness-rule-dl-preview-forking-pass",
 					new Object[] {
-						PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED +
-							"has been set to true"
+						PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED
 					},
 					null));
 		}
@@ -45,11 +44,9 @@ public class DLPreviewForkingRuleImpl implements ProductionReadinessRule {
 				PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED + "=" +
 					PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED,
 				PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED + "=true",
-				getKey(),
+				"production-readiness-rule-dl-preview-forking-fail",
 				new Object[] {
-					PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED +
-						"should be set to true as in-process generation can " +
-							"starve the thread pool."
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED
 				},
 				null));
 	}

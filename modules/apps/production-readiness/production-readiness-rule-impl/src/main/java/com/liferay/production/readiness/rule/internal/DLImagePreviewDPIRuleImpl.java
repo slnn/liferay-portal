@@ -29,21 +29,17 @@ public class DLImagePreviewDPIRuleImpl implements ProductionReadinessRule {
 			return Collections.singletonList(
 				new Result(
 					Result.Status.FAIL, Result.Severity.LOW, getCategory(),
-					String.valueOf(dpi), null, getKey(),
-					new Object[] {
-						StringBundler.concat(
-							"Sizes greater than 75 increase the load on the ",
-							"background task that generates previews and make ",
-							"the preview images larger.")
-					},
-					null));
+					String.valueOf(dpi), null,
+					"production-readiness-rule-dl-image-preview-dpi-fail",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.PASS, Result.Severity.LOW, getCategory(),
-				String.valueOf(dpi), null, getKey(),
-				new Object[] {"Appropriate size"}, null));
+				String.valueOf(dpi), null,
+				"production-readiness-rule-dl-image-preview-dpi-pass",
+				new Object[0], null));
 	}
 
 	@Override

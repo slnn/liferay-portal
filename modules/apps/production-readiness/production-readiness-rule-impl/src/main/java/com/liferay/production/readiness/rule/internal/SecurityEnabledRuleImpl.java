@@ -35,8 +35,7 @@ public class SecurityEnabledRuleImpl implements ProductionReadinessRule {
 				"ElasticsearchConfiguration.config");
 
 		if (!elasticsearchConfigurationFile.exists()) {
-			return _fail(
-				elasticsearchConfigurationFile.getName() + " is missing.");
+			return _failFileMissing(elasticsearchConfigurationFile.getName());
 		}
 
 		String elasticsearchConfigurationContent = _read(
@@ -60,7 +59,7 @@ public class SecurityEnabledRuleImpl implements ProductionReadinessRule {
 				".config"));
 
 		if (!connectionIdFile.exists()) {
-			return _fail(connectionIdFile.getName() + " is missing.");
+			return _failFileMissing(connectionIdFile.getName());
 		}
 
 		Result connectionIdResult = _checkSecurity(
@@ -73,12 +72,8 @@ public class SecurityEnabledRuleImpl implements ProductionReadinessRule {
 		return Collections.singletonList(
 			new Result(
 				Result.Status.PASS, Result.Severity.HIGH, getCategory(), null,
-				null, getKey(),
-				new Object[] {
-					"Authentication and SSL are enabled for the " +
-						"Elasticsearch connection."
-				},
-				null));
+				null, "production-readiness-rule-security-enabled-pass",
+				new Object[0], null));
 	}
 
 	@Override
@@ -96,21 +91,18 @@ public class SecurityEnabledRuleImpl implements ProductionReadinessRule {
 			return new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
 				"authenticationEnabled=false",
-				"authenticationEnabled=true", getKey(),
-				new Object[] {
-					"authenticationEnabled is disabled in " + fileName + "."
-				},
-				null);
+				"authenticationEnabled=true",
+				"production-readiness-rule-security-enabled-authentication-" +
+					"disabled-fail",
+				new Object[] {fileName}, null);
 		}
 
 		if (content.contains("httpSSLEnabled=B\"false\"")) {
 			return new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
-				"httpSSLEnabled=false", "httpSSLEnabled=true", getKey(),
-				new Object[] {
-					"httpSSLEnabled is disabled in " + fileName + "."
-				},
-				null);
+				"httpSSLEnabled=false", "httpSSLEnabled=true",
+				"production-readiness-rule-security-enabled-ssl-disabled-fail",
+				new Object[] {fileName}, null);
 		}
 
 		return null;
@@ -126,11 +118,13 @@ public class SecurityEnabledRuleImpl implements ProductionReadinessRule {
 		return "__REMOTE__";
 	}
 
-	private Collection<Result> _fail(String message) {
+	private Collection<Result> _failFileMissing(String fileName) {
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(), null,
-				null, getKey(), new Object[] {message}, null));
+				null,
+				"production-readiness-rule-security-enabled-file-missing-fail",
+				new Object[] {fileName}, null));
 	}
 
 	private File _getFile(String fileName) {

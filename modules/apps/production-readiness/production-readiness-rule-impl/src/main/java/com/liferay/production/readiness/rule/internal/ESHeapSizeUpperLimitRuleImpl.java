@@ -25,16 +25,9 @@ public class ESHeapSizeUpperLimitRuleImpl implements ProductionReadinessRule {
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(), null,
-				"ES_JAVA_OPTS -Xmx<=30g and <=50% of system memory", getKey(),
-				new Object[] {
-					StringBundler.concat(
-						"The heap size of Elasticsearch should not exceed 30 ",
-						"GB and it also should not exceed 50% of the ",
-						"available system memory. Ignore this warning if the ",
-						"heap size of Elasticsearch has been set ",
-						"appropriately.")
-				},
-				null));
+				"ES_JAVA_OPTS -Xmx<=30g and <=50% of system memory",
+				"production-readiness-rule-es-heap-size-upper-limit-message",
+				new Object[0], null));
 	}
 
 	@Override

@@ -31,7 +31,13 @@ const CategoryTable: React.FC<Props> = ({
 		(result) => result.status === 'FAIL' && !result.ignored
 	).length;
 
-	const title = failedCount ? `${category} (${failedCount})` : category;
+	const categoryLabel = Liferay.Language.get(
+		'production-readiness-category-' + category
+	);
+
+	const title = failedCount
+		? `${categoryLabel} (${failedCount})`
+		: categoryLabel;
 
 	return (
 		<ClayPanel
@@ -42,7 +48,7 @@ const CategoryTable: React.FC<Props> = ({
 		>
 			<ClayPanel.Body>
 				<table className="table table-autofit table-list">
-					<caption className="sr-only">{category}</caption>
+					<caption className="sr-only">{categoryLabel}</caption>
 
 					<thead>
 						<tr>
@@ -75,7 +81,12 @@ const CategoryTable: React.FC<Props> = ({
 					<tbody>
 						{results.map((result) => (
 							<tr key={result.ruleKey}>
-								<td>{result.ruleKey}</td>
+								<td>
+									{Liferay.Language.get(
+										'production-readiness-rule-' +
+											result.ruleKey
+									)}
+								</td>
 
 								<td>{result.currentValue || '—'}</td>
 

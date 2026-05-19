@@ -96,12 +96,9 @@ public class JSPEngineSettingsRuleImpl implements ProductionReadinessRule {
 						StringBundler.concat(
 							"development=", development, ", mappedfile=",
 							mappedFile),
-						"development=false, mappedfile=false", getKey(),
-						new Object[] {
-							"Development Mode and Mapped File have been " +
-								"disabled"
-						},
-						null));
+						"development=false, mappedfile=false",
+						"production-readiness-rule-jsp-engine-settings-pass",
+						new Object[0], null));
 			}
 
 			return Collections.singletonList(
@@ -110,15 +107,9 @@ public class JSPEngineSettingsRuleImpl implements ProductionReadinessRule {
 					StringBundler.concat(
 						"development=", development, ", mappedfile=",
 						mappedFile),
-					"development=false, mappedfile=false", getKey(),
-					new Object[] {
-						StringBundler.concat(
-							"Disable Development Mode will stop the server ",
-							"from polling for JSP file changes, that disable ",
-							"mappedFile will reduces the amount of generated ",
-							"servlet code")
-					},
-					null));
+					"development=false, mappedfile=false",
+					"production-readiness-rule-jsp-engine-settings-fail",
+					new Object[0], null));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

@@ -47,8 +47,10 @@ public class HugePagesConfigurationRuleImpl implements ProductionReadinessRule {
 			return Collections.singletonList(
 				new Result(
 					Result.Status.PASS, Result.Severity.LOW, getCategory(),
-					null, null, getKey(),
-					new Object[] {"The heap size is less than 4 GB"}, null));
+					null, null,
+					"production-readiness-rule-huge-pages-configuration-" +
+						"heap-under-4gb-pass",
+					new Object[0], null));
 		}
 
 		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
@@ -71,27 +73,20 @@ public class HugePagesConfigurationRuleImpl implements ProductionReadinessRule {
 			return Collections.singletonList(
 				new Result(
 					Result.Status.FAIL, Result.Severity.MEDIUM, getCategory(),
-					null, "-XX:+UseLargePages", getKey(),
-					new Object[] {
-						"Please apply -XX:+UseLargePages and " +
-							"-XX:LargePageSizeInBytes and make " +
-								"-XX:LargePageSizeInBytes equal to the OS’s " +
-									"huge page size."
-					},
-					null));
+					null, "-XX:+UseLargePages",
+					"production-readiness-rule-huge-pages-configuration-" +
+						"no-large-pages-fail",
+					new Object[0], null));
 		}
 
 		if (largePageSizeArg == null) {
 			return Collections.singletonList(
 				new Result(
 					Result.Status.FAIL, Result.Severity.MEDIUM, getCategory(),
-					null, null, getKey(),
-					new Object[] {
-						"Please apply -XX:LargePageSizeInBytes and make it " +
-							"equal to the OS’s huge page size, as " +
-								"-XX:+UseLargePages has been set."
-					},
-					null));
+					null, null,
+					"production-readiness-rule-huge-pages-configuration-" +
+						"missing-large-page-size-fail",
+					new Object[0], null));
 		}
 
 		long osHugePageSize = _getOSHugePageSize();
@@ -108,25 +103,20 @@ public class HugePagesConfigurationRuleImpl implements ProductionReadinessRule {
 							"-XX:LargePageSizeInBytes = ", largePageSizeArg,
 							", OS’s huge page size = ", osHugePageSize / 1024,
 							"kB"),
-						null, getKey(),
-						new Object[] {
-							"-XX:LargePageSizeInBytes should match the " +
-								"OS’s huge page size"
-						},
-						null));
+						null,
+						"production-readiness-rule-huge-pages-configuration-" +
+							"size-mismatch-fail",
+						new Object[0], null));
 			}
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.PASS, Result.Severity.LOW, getCategory(), null,
-				null, getKey(),
-				new Object[] {
-					"The heap size is more than 4 GB, but -XX:+UseLargePages " +
-						"has been set and -XX:LargePageSizeInBytes equals " +
-							"the OS’s huge page size."
-				},
-				null));
+				null,
+				"production-readiness-rule-huge-pages-configuration-" +
+					"configured-pass",
+				new Object[0], null));
 	}
 
 	@Override

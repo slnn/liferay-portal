@@ -30,21 +30,17 @@ public class CounterIncrementRuleImpl implements ProductionReadinessRule {
 			return Collections.singletonList(
 				new Result(
 					Result.Status.FAIL, Result.Severity.LOW, getCategory(),
-					String.valueOf(counterIncrement), null, getKey(),
-					new Object[] {
-						"Please increase the value of counter.increment to " +
-							"make it >= 2000 as lower values cause excessive " +
-								"database write locks"
-					},
-					null));
+					String.valueOf(counterIncrement), null,
+					"production-readiness-rule-counter-increment-fail",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.PASS, Result.Severity.LOW, getCategory(),
-				String.valueOf(counterIncrement), null, getKey(),
-				new Object[] {"The current value of counter.increment >= 2000"},
-				null));
+				String.valueOf(counterIncrement), null,
+				"production-readiness-rule-counter-increment-pass",
+				new Object[0], null));
 	}
 
 	@Override

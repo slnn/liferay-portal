@@ -37,23 +37,17 @@ public class HeapSizeUpperLimitRuleImpl implements ProductionReadinessRule {
 			return Collections.singletonList(
 				new Result(
 					Result.Status.PASS, Result.Severity.LOW, getCategory(),
-					maxMemoryGB + "GB", null, getKey(),
-					new Object[] {
-						"The maximum heap size (-Xmx) does not exceed 32GB"
-					},
-					null));
+					maxMemoryGB + "GB", null,
+					"production-readiness-rule-heap-size-upper-limit-pass",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.LOW, getCategory(),
-				maxMemoryGB + "GB", null, getKey(),
-				new Object[] {
-					"The maximum heap size (-Xmx) should not exceed 32GB to " +
-						"avoid performance penalties associated with large " +
-							"heaps without Huge Pages"
-				},
-				null));
+				maxMemoryGB + "GB", null,
+				"production-readiness-rule-heap-size-upper-limit-fail",
+				new Object[0], null));
 	}
 
 	@Override

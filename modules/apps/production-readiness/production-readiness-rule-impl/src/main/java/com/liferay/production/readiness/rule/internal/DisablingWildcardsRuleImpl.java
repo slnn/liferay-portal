@@ -25,15 +25,9 @@ public class DisablingWildcardsRuleImpl implements ProductionReadinessRule {
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(), null,
-				"action.destructive_requires_name: true", getKey(),
-				new Object[] {
-					StringBundler.concat(
-						"In order to prevent accidental deletion of all ",
-						"indices, please set ",
-						"action.destructive_requires_name to true. Ignore ",
-						"this warning if action.destructive_requires_name ",
-						"has been set to true.")
-				},
+				"action.destructive_requires_name: true",
+				"production-readiness-rule-disable-wildcards-message",
+				new Object[0],
 				"https://www.elastic.co/docs/api/doc/elasticsearch-serverless" +
 					"/operation/operation-indices-delete"));
 	}

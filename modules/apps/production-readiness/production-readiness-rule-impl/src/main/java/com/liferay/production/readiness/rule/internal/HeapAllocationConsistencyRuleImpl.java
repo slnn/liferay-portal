@@ -41,12 +41,10 @@ public class HeapAllocationConsistencyRuleImpl
 					StringBundler.concat(
 						"Xms=", xmsBytes / 1024 / 1024, "MB, Xmx=",
 						xmxBytes / 1024 / 1024, "MB"),
-					null, getKey(),
-					new Object[] {
-						"The initial heap size (-Xms) is equal to the " +
-							"maximum heap size (-Xmx)"
-					},
-					null));
+					null,
+					"production-readiness-rule-heap-allocation-consistency-" +
+						"pass",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
@@ -55,13 +53,9 @@ public class HeapAllocationConsistencyRuleImpl
 				StringBundler.concat(
 					"Xms=", xmsBytes / 1024 / 1024, "MB, Xmx=",
 					xmxBytes / 1024 / 1024, "MB"),
-				null, getKey(),
-				new Object[] {
-					"The initial heap size (-Xms) should be equal to the " +
-						"maximum heap size (-Xmx) to prevent runtime " +
-							"resizing overhead"
-				},
-				null));
+				null,
+				"production-readiness-rule-heap-allocation-consistency-fail",
+				new Object[0], null));
 	}
 
 	@Override

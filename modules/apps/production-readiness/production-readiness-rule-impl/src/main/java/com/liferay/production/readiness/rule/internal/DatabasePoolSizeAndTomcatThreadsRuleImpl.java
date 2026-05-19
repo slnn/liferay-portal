@@ -63,23 +63,17 @@ public class DatabasePoolSizeAndTomcatThreadsRuleImpl
 			return Collections.singletonList(
 				new Result(
 					Result.Status.PASS, Result.Severity.LOW, getCategory(),
-					String.valueOf(ratio), null, getKey(),
-					new Object[] {
-						"The Ratio (jdbc max pool size/ tomcat max thread " +
-							"size) is between 0.30 and 0.40"
-					},
-					null));
+					String.valueOf(ratio), null,
+					"production-readiness-rule-pool-vs-thread-ratio-pass",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.LOW, getCategory(),
-				currentValue, null, getKey(),
-				new Object[] {
-					"The Ratio (jdbc max pool size/ tomcat max thread size) " +
-						"should between 0.30 and 0.40"
-				},
-				null));
+				currentValue, null,
+				"production-readiness-rule-pool-vs-thread-ratio-fail",
+				new Object[0], null));
 	}
 
 	@Override

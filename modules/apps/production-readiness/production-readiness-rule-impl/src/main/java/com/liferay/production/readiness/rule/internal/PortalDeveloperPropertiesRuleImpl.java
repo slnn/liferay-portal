@@ -40,23 +40,18 @@ public class PortalDeveloperPropertiesRuleImpl
 			return Collections.singletonList(
 				new Result(
 					Result.Status.FAIL, Result.Severity.MEDIUM, getCategory(),
-					"portal-developer.properties included", null, getKey(),
-					new Object[] {
-						"Do not include portal-developer.properties in " +
-							"product environment."
-					},
-					null));
+					"portal-developer.properties included", null,
+					"production-readiness-rule-portal-developer-properties-" +
+						"fail",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.PASS, Result.Severity.LOW, getCategory(),
-				"portal-developer.properties is not included", null, getKey(),
-				new Object[] {
-					"portal-developer.properties is not included in product " +
-						"environment."
-				},
-				null));
+				"portal-developer.properties is not included", null,
+				"production-readiness-rule-portal-developer-properties-pass",
+				new Object[0], null));
 	}
 
 	@Override

@@ -53,20 +53,17 @@ public class GarbageCollectorTypeRuleImpl implements ProductionReadinessRule {
 			return Collections.singletonList(
 				new Result(
 					Result.Status.PASS, Result.Severity.LOW, getCategory(),
-					currentGCs, "G1, Shenandoah, or ZGC", getKey(),
-					new Object[] {"Current GC algorithm is recommanded"},
-					null));
+					currentGCs, "G1, Shenandoah, or ZGC",
+					"production-readiness-rule-garbage-collector-type-pass",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.LOW, getCategory(),
-				currentGCs, "G1, Shenandoah, or ZGC", getKey(),
-				new Object[] {
-					"Please use recommanded GC algorithm: G1, Shenandoah, or " +
-						"ZGC"
-				},
-				null));
+				currentGCs, "G1, Shenandoah, or ZGC",
+				"production-readiness-rule-garbage-collector-type-fail",
+				new Object[0], null));
 	}
 
 	@Override

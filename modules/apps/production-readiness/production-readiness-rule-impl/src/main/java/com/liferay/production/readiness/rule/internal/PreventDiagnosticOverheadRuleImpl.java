@@ -44,19 +44,18 @@ public class PreventDiagnosticOverheadRuleImpl
 			return Collections.singletonList(
 				new Result(
 					Result.Status.FAIL, Result.Severity.LOW, getCategory(),
-					"-XX:+UnlockDiagnosticVMOptions", null, getKey(),
-					new Object[] {
-						"Please do not set -XX:+UnlockDiagnosticVMOptions"
-					},
-					null));
+					"-XX:+UnlockDiagnosticVMOptions", null,
+					"production-readiness-rule-prevent-diagnostic-overhead-" +
+						"fail",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.PASS, Result.Severity.LOW, getCategory(), null,
-				null, getKey(),
-				new Object[] {"-XX:+UnlockDiagnosticVMOptions is not set"},
-				null));
+				null,
+				"production-readiness-rule-prevent-diagnostic-overhead-pass",
+				new Object[0], null));
 	}
 
 	@Override

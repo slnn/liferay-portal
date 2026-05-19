@@ -36,18 +36,16 @@ public class SidecarDetectionRuleImpl implements ProductionReadinessRule {
 			return Collections.singletonList(
 				new Result(
 					Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
-					null, null, getKey(),
-					new Object[] {
-						"Please do not use Sidecar mode in production " +
-							"environment."
-					},
-					null));
+					null, null,
+					"production-readiness-rule-sidecar-detection-fail",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.PASS, Result.Severity.HIGH, getCategory(), null,
-				null, getKey(), new Object[] {"Produce model enabled."}, null));
+				null, "production-readiness-rule-sidecar-detection-pass",
+				new Object[0], null));
 	}
 
 	@Override

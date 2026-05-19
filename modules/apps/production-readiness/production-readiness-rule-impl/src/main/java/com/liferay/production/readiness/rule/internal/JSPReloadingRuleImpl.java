@@ -32,24 +32,18 @@ public class JSPReloadingRuleImpl implements ProductionReadinessRule {
 					Result.Status.FAIL, Result.Severity.MEDIUM, getCategory(),
 					"direct.servlet.context.reload=" +
 						directServletContextReload,
-					"direct.servlet.context.reload=false", getKey(),
-					new Object[] {
-						"Please set direct.servlet.context.reload=false, " +
-							"direct.servlet.context.reload=true should be " +
-								"only used in a dev environment"
-					},
-					null));
+					"direct.servlet.context.reload=false",
+					"production-readiness-rule-jsp-reloading-fail",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.PASS, Result.Severity.LOW, getCategory(),
 				"direct.servlet.context.reload=" + directServletContextReload,
-				"direct.servlet.context.reload=false", getKey(),
-				new Object[] {
-					"direct.servlet.context.reload=false has been set"
-				},
-				null));
+				"direct.servlet.context.reload=false",
+				"production-readiness-rule-jsp-reloading-pass",
+				new Object[0], null));
 	}
 
 	@Override

@@ -27,17 +27,8 @@ public class AnalyzerPluginsRuleImpl implements ProductionReadinessRule {
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(), null,
 				"analysis-icu, analysis-kuromoji, analysis-smartcn, " +
 					"analysis-stempel",
-				getKey(),
-				new Object[] {
-					StringBundler.concat(
-						"Elasticsearch (and OpenSearch) must have the ",
-						"following analyzer plugins installed to operate ",
-						"Liferay DXP properly: analysis-icu, ",
-						"analysis-kuromoji, analysis-smartcn, ",
-						"analysis-stempel. Ignore this warning if these ",
-						"plugins have been installed.")
-				},
-				null));
+				"production-readiness-rule-analyzer-plugins-message",
+				new Object[0], null));
 	}
 
 	@Override

@@ -30,19 +30,16 @@ public class PasswordEncryptionRuleImpl implements ProductionReadinessRule {
 				new Result(
 					Result.Status.PASS, Result.Severity.LOW, getCategory(),
 					algorithm, "PBKDF2WithHmacSHA1/160/1300000 (or stronger)",
-					getKey(), null, null));
+					"production-readiness-rule-password-encryption-pass",
+					new Object[0], null));
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
 				algorithm, "PBKDF2WithHmacSHA1/160/1300000 (or stronger)",
-				getKey(),
-				new Object[] {
-					"If you are using External IdP provider, this can be " +
-						"safely ignored."
-				},
-				null));
+				"production-readiness-rule-password-encryption-fail",
+				new Object[0], null));
 	}
 
 	@Override
