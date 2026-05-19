@@ -24,11 +24,11 @@ public class ESHeapSizeRuleImpl implements ProductionReadinessRule {
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(), null,
-				null, getKey(),
+				"ES_JAVA_OPTS -Xms16g", getKey(),
 				new Object[] {
 					"The heap size of Elasticsearch should be at least 16GB. " +
-						"Igone this warn if the heap size of Elasticsearch " +
-							"has been set appropriatly"
+						"Ignore this warning if the heap size of " +
+							"Elasticsearch has been set appropriately."
 				},
 				null));
 	}

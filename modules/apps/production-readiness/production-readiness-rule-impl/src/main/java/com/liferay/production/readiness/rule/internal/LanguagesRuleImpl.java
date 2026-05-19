@@ -25,36 +25,65 @@ public class LanguagesRuleImpl implements ProductionReadinessRule {
 
 	@Override
 	public Collection<Result> check(long companyId) {
-		List<String> enabledLocales = List.of(PropsValues.LOCALES_ENABLED);
+		List<String> availableLocales = List.of(PropsValues.LOCALES);
 		List<String> betaLocales = List.of(PropsValues.LOCALES_BETA);
+		List<String> enabledLocales = List.of(PropsValues.LOCALES_ENABLED);
 
 		List<String> enabledBetaLocales = new ArrayList<>();
 
-		boolean pass = true;
-
 		for (String locale : enabledLocales) {
 			if (betaLocales.contains(locale)) {
-				pass = false;
+				enabledBetaLocales.add(locale);
 			}
 		}
 
-		if (!pass) {
+		List<String> unusedLocales = new ArrayList<>();
+
+		for (String locale : availableLocales) {
+			if (!enabledLocales.contains(locale)) {
+				unusedLocales.add(locale);
+			}
+		}
+
+		if (enabledBetaLocales.isEmpty() && unusedLocales.isEmpty()) {
 			return Collections.singletonList(
 				new Result(
+					Result.Status.PASS, Result.Severity.LOW, getCategory(),
+					null, null, getKey(),
+					new Object[] {
+						"No beta locale is enabled and no available locale " +
+							"is unused."
+					},
+					null));
+		}
+
+		List<Result> results = new ArrayList<>(2);
+
+		if (!enabledBetaLocales.isEmpty()) {
+			results.add(
+				new Result(
 					Result.Status.FAIL, Result.Severity.LOW, getCategory(),
-					"Enabled beta locales: " +
-						StringUtil.merge(enabledBetaLocales),
-					null, getKey(),
+					StringUtil.merge(enabledBetaLocales), null, getKey(),
 					new Object[] {"You are using Beta locale in production."},
 					null));
 		}
 
-		return Collections.singletonList(
-			new Result(
-				Result.Status.PASS, Result.Severity.LOW, getCategory(),
-				"Enabled beta locales: " + StringUtil.merge(enabledBetaLocales),
-				null, getKey(), new Object[] {"No Beta locale is used."},
-				null));
+		if (!unusedLocales.isEmpty()) {
+			results.add(
+				new Result(
+					Result.Status.FAIL, Result.Severity.LOW, getCategory(),
+					StringUtil.merge(unusedLocales),
+					"Remove unused locales from LOCALES " +
+						"(portal-ext.properties)",
+					getKey(),
+					new Object[] {
+						"Unused languages add overhead to the XMLs stored " +
+							"in the database."
+					},
+					null));
+		}
+
+		return results;
 	}
 
 	@Override

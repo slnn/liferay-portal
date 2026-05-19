@@ -73,9 +73,10 @@ public class HugePagesConfigurationRuleImpl implements ProductionReadinessRule {
 					Result.Status.FAIL, Result.Severity.MEDIUM, getCategory(),
 					null, "-XX:+UseLargePages", getKey(),
 					new Object[] {
-						"Please apply -XX:+UseLargePages and -XX:LargePages" +
-							"SizeInBytes and make -XX:LargePages" +
-								"SizeInBytes equals OS’s huge page size"
+						"Please apply -XX:+UseLargePages and " +
+							"-XX:LargePageSizeInBytes and make " +
+								"-XX:LargePageSizeInBytes equal to the OS’s " +
+									"huge page size."
 					},
 					null));
 		}
@@ -86,9 +87,9 @@ public class HugePagesConfigurationRuleImpl implements ProductionReadinessRule {
 					Result.Status.FAIL, Result.Severity.MEDIUM, getCategory(),
 					null, null, getKey(),
 					new Object[] {
-						"Please apply -XX:LargePagesSizeInBytes and make it " +
-							"equal OS’s huge page size as -XX:+UseLarge" +
-								"Pages has been set"
+						"Please apply -XX:LargePageSizeInBytes and make it " +
+							"equal to the OS’s huge page size, as " +
+								"-XX:+UseLargePages has been set."
 					},
 					null));
 		}
@@ -104,12 +105,12 @@ public class HugePagesConfigurationRuleImpl implements ProductionReadinessRule {
 						Result.Status.FAIL, Result.Severity.MEDIUM,
 						getCategory(),
 						StringBundler.concat(
-							"-XX:LargePagesSizeInBytes = ", largePageSizeArg,
+							"-XX:LargePageSizeInBytes = ", largePageSizeArg,
 							", OS’s huge page size = ", osHugePageSize / 1024,
 							"kB"),
 						null, getKey(),
 						new Object[] {
-							"-XX:LargePagesSizeInBytes should matche the " +
+							"-XX:LargePageSizeInBytes should match the " +
 								"OS’s huge page size"
 						},
 						null));
@@ -122,8 +123,8 @@ public class HugePagesConfigurationRuleImpl implements ProductionReadinessRule {
 				null, getKey(),
 				new Object[] {
 					"The heap size is more than 4 GB, but -XX:+UseLargePages " +
-						"has been set and -XX:LargePagesSizeInBytes equals " +
-							"OS’s huge page size"
+						"has been set and -XX:LargePageSizeInBytes equals " +
+							"the OS’s huge page size."
 				},
 				null));
 	}

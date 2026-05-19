@@ -26,14 +26,14 @@ public class OpenFileDescriptorLimitRuleImpl
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(), null,
-				null, getKey(),
+				"ulimit -n >= 65536", getKey(),
 				new Object[] {
 					StringBundler.concat(
-						"Please Increase the file descriptor limit for ",
+						"Please increase the file descriptor limit for ",
 						"Elasticsearch in Linux by ulimit, make sure the ",
-						"value of ulimit -n is not less than 65536. Igone ",
-						"this warn if the file descriptor limit has been set ",
-						"with an appropriate value.")
+						"value of ulimit -n is not less than 65536. Ignore ",
+						"this warning if the file descriptor limit has been ",
+						"set with an appropriate value.")
 				},
 				"https://www.elastic.co/docs/deploy-manage/deploy/self-" +
 					"managed/file-descriptors"));

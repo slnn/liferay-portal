@@ -26,14 +26,14 @@ public class ESVirtualMemorySizeUpperLimitRuleImpl
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(), null,
-				null, getKey(),
+				"vm.max_map_count >= 262144", getKey(),
 				new Object[] {
 					StringBundler.concat(
 						"The value of vm.max_map_count for the Elasticsearch ",
-						"server should be not less than 262144 to avoid the ",
-						"Out of Memory issue in Linux. Igone this warn if the ",
-						"virtual memory of Elasticsearch has been set ",
-						"appropriatly")
+						"server should not be less than 262144 to avoid the ",
+						"Out of Memory issue in Linux. Ignore this warning ",
+						"if the virtual memory of Elasticsearch has been set ",
+						"appropriately.")
 				},
 				"https://www.elastic.co/docs/deploy-manage/deploy/self-" +
 					"managed/vm-max-map-count"));

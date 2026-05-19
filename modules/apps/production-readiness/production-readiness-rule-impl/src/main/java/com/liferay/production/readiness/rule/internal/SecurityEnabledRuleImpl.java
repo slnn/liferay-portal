@@ -35,66 +35,19 @@ public class SecurityEnabledRuleImpl implements ProductionReadinessRule {
 				"ElasticsearchConfiguration.config");
 
 		if (!elasticsearchConfigurationFile.exists()) {
-			return Collections.singletonList(
-				new Result(
-					Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
-					null, null, getKey(),
-					new Object[] {
-						elasticsearchConfigurationFile.getName() + " is missing"
-					},
-					null));
+			return _fail(
+				elasticsearchConfigurationFile.getName() + " is missing.");
 		}
 
 		String elasticsearchConfigurationContent = _read(
 			elasticsearchConfigurationFile);
 
-		if (elasticsearchConfigurationContent.contains(
-				"authenticationEnabled=B\"false\"") ||
-			elasticsearchConfigurationContent.contains(
-				"httpSSLEnabled=B\"false\"")) {
+		Result elasticsearchConfigurationResult = _checkSecurity(
+			elasticsearchConfigurationContent,
+			elasticsearchConfigurationFile.getName());
 
-			return Collections.singletonList(
-				new Result(
-					Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
-					null, null, getKey(),
-					new Object[] {
-						"Authentication or SSL is disabled in " +
-							elasticsearchConfigurationFile.getName()
-					},
-					null));
-		}
-
-		File elasticsearchConnectionConfigurationFile = _getFile(
-			"com.liferay.portal.search.elasticsearch8.configuration." +
-				"ElasticsearchConnectionConfiguration.config");
-
-		if (!elasticsearchConnectionConfigurationFile.exists()) {
-			return Collections.singletonList(
-				new Result(
-					Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
-					null, null, getKey(),
-					new Object[] {
-						elasticsearchConnectionConfigurationFile.getName() +
-							" is missing"
-					},
-					null));
-		}
-
-		String elasticsearchConnectionConfigurationContent = _read(
-			elasticsearchConnectionConfigurationFile);
-
-		if (elasticsearchConnectionConfigurationContent.contains(
-				"authenticationEnabled=B\"false\"")) {
-
-			return Collections.singletonList(
-				new Result(
-					Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
-					null, null, getKey(),
-					new Object[] {
-						"Authentication is disabled in " +
-							elasticsearchConnectionConfigurationFile.getName()
-					},
-					null));
+		if (elasticsearchConfigurationResult != null) {
+			return Collections.singletonList(elasticsearchConfigurationResult);
 		}
 
 		String connectionId = _extractConnectionId(
@@ -107,31 +60,25 @@ public class SecurityEnabledRuleImpl implements ProductionReadinessRule {
 				".config"));
 
 		if (!connectionIdFile.exists()) {
-			return Collections.singletonList(
-				new Result(
-					Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
-					null, null, getKey(),
-					new Object[] {connectionIdFile.getName() + " is missing"},
-					null));
+			return _fail(connectionIdFile.getName() + " is missing.");
 		}
 
-		String connectionIdContent = _read(connectionIdFile);
+		Result connectionIdResult = _checkSecurity(
+			_read(connectionIdFile), connectionIdFile.getName());
 
-		if (connectionIdContent.contains("httpSSLEnabled=B\"false\"")) {
-			return Collections.singletonList(
-				new Result(
-					Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
-					null, null, getKey(),
-					new Object[] {
-						"SSL is disabled in " + connectionIdFile.getName()
-					},
-					null));
+		if (connectionIdResult != null) {
+			return Collections.singletonList(connectionIdResult);
 		}
 
 		return Collections.singletonList(
 			new Result(
 				Result.Status.PASS, Result.Severity.HIGH, getCategory(), null,
-				null, getKey(), new Object[] {"Security Enabled"}, null));
+				null, getKey(),
+				new Object[] {
+					"Authentication and SSL are enabled for the " +
+						"Elasticsearch connection."
+				},
+				null));
 	}
 
 	@Override
@@ -144,6 +91,31 @@ public class SecurityEnabledRuleImpl implements ProductionReadinessRule {
 		return "security-enabled";
 	}
 
+	private Result _checkSecurity(String content, String fileName) {
+		if (content.contains("authenticationEnabled=B\"false\"")) {
+			return new Result(
+				Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
+				"authenticationEnabled=false",
+				"authenticationEnabled=true", getKey(),
+				new Object[] {
+					"authenticationEnabled is disabled in " + fileName + "."
+				},
+				null);
+		}
+
+		if (content.contains("httpSSLEnabled=B\"false\"")) {
+			return new Result(
+				Result.Status.FAIL, Result.Severity.HIGH, getCategory(),
+				"httpSSLEnabled=false", "httpSSLEnabled=true", getKey(),
+				new Object[] {
+					"httpSSLEnabled is disabled in " + fileName + "."
+				},
+				null);
+		}
+
+		return null;
+	}
+
 	private String _extractConnectionId(String content) {
 		Matcher matcher = _connectionIdPattern.matcher(content);
 
@@ -152,6 +124,13 @@ public class SecurityEnabledRuleImpl implements ProductionReadinessRule {
 		}
 
 		return "__REMOTE__";
+	}
+
+	private Collection<Result> _fail(String message) {
+		return Collections.singletonList(
+			new Result(
+				Result.Status.FAIL, Result.Severity.HIGH, getCategory(), null,
+				null, getKey(), new Object[] {message}, null));
 	}
 
 	private File _getFile(String fileName) {

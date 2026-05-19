@@ -25,14 +25,15 @@ public class DisablingSwapRuleImpl implements ProductionReadinessRule {
 		return Collections.singletonList(
 			new Result(
 				Result.Status.FAIL, Result.Severity.HIGH, getCategory(), null,
-				null, getKey(),
+				"bootstrap.memory_lock: true and LimitMEMLOCK=infinity",
+				getKey(),
 				new Object[] {
 					StringBundler.concat(
 						"Please enable a memory lock for Elasticsearch by ",
 						"setting bootstrap.memory_lock to true in ",
-						"elasticsearch.yml to disable swapping. Igone this ",
-						"warn if the swapping has been disabled for ",
-						"Elasticsearch.")
+						"elasticsearch.yml and LimitMEMLOCK=infinity in ",
+						"systemd to disable swapping. Ignore this warning if ",
+						"swapping has been disabled for Elasticsearch.")
 				},
 				"https://www.elastic.co/docs/deploy-manage/deploy/self-" +
 					"managed/setup-configuration-memory"));
