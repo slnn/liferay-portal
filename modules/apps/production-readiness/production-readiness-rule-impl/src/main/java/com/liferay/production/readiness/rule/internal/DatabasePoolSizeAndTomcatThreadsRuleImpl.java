@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Lily Chi
  */
 @Component(service = ProductionReadinessRule.class)
-public class DatabasePoolSizeAndTomatThreadsRuleImpl
+public class DatabasePoolSizeAndTomcatThreadsRuleImpl
 	implements ProductionReadinessRule {
 
 	@Override
@@ -128,6 +128,6 @@ public class DatabasePoolSizeAndTomatThreadsRuleImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DatabasePoolSizeAndTomatThreadsRuleImpl.class);
+		DatabasePoolSizeAndTomcatThreadsRuleImpl.class);
 
 }

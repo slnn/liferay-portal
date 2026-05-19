@@ -66,7 +66,7 @@ public class HeapAllocationConsistencyRuleImpl
 
 	@Override
 	public String getCategory() {
-		return "jvm-&-infrastructure-validation";
+		return "jvm-and-infrastructure-validation";
 	}
 
 	@Override

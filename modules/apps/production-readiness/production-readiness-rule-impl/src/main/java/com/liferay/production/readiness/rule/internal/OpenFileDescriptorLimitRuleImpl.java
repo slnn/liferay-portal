@@ -46,7 +46,7 @@ public class OpenFileDescriptorLimitRuleImpl
 
 	@Override
 	public String getKey() {
-		return "open=file-descriptior-limit";
+		return "open-file-descriptor-limit";
 	}
 
 }

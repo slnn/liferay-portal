@@ -59,7 +59,7 @@ public class JSPReloadingRuleImpl implements ProductionReadinessRule {
 
 	@Override
 	public String getKey() {
-		return "jsp-reloading-rule";
+		return "jsp-reloading";
 	}
 
 }

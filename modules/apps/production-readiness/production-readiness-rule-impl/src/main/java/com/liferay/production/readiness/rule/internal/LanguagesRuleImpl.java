@@ -64,7 +64,7 @@ public class LanguagesRuleImpl implements ProductionReadinessRule {
 
 	@Override
 	public String getKey() {
-		return "Languages";
+		return "languages";
 	}
 
 }
