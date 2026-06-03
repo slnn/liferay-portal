@@ -10,10 +10,6 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * Backs the production readiness ignore status. The ignored rules are persisted
- * to a configuration file in <code>${liferay.home}/osgi/configs</code> rather
- * than to the database.
- *
  * @author Lily Chi
  */
 @ExtendedObjectClassDefinition(
@@ -27,11 +23,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ProductionReadinessConfiguration {
 
-	/**
-	 * Each entry is a JSON object describing an ignored rule, with the keys
-	 * <code>ignoredAt</code>, <code>ignoredBy</code>, <code>reason</code>, and
-	 * <code>ruleKey</code>.
-	 */
 	@Meta.AD(name = "ignored-rules", required = false)
 	public String[] ignoredRules();
 

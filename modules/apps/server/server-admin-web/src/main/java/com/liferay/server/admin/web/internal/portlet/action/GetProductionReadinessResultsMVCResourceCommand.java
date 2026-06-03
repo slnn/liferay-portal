@@ -5,6 +5,7 @@
 
 package com.liferay.server.admin.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -13,18 +14,22 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.server.admin.web.internal.production.readiness.IgnoredRule;
-import com.liferay.server.admin.web.internal.production.readiness.IgnoredRuleStore;
 import com.liferay.server.admin.web.internal.production.readiness.ProductionReadinessRuleUtil;
 import com.liferay.server.admin.web.internal.production.readiness.Result;
 
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
+import java.io.File;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -57,27 +62,26 @@ public class GetProductionReadinessResultsMVCResourceCommand
 
 		int passed = 0;
 		int failed = 0;
-		int ignored = 0;
+
+		_ignoreRules = _getIgnoreRules();
+
+		int ignored = _ignoreRules.size();
 
 		for (Result result : ProductionReadinessRuleUtil.check()) {
 			if (result == null) {
 				continue;
 			}
 
-			IgnoredRule ignoredRule = _ignoredRuleStore.fetchIgnoredRule(
-				result.getKey());
-
-			if (ignoredRule != null) {
-				ignored++;
-			}
-			else if (result.getStatus() == Result.Status.PASS) {
-				passed++;
-			}
-			else {
-				failed++;
+			if (!_ignoreRules.contains(result.getKey())) {
+				if (result.getStatus() == Result.Status.PASS) {
+					passed++;
+				}
+				else {
+					failed++;
+				}
 			}
 
-			resultsJSONArray.put(_toJSONObject(ignoredRule, locale, result));
+			resultsJSONArray.put(_toJSONObject(locale, result));
 		}
 
 		JSONObject summaryJSONObject = _jsonFactory.createJSONObject(
@@ -103,14 +107,32 @@ public class GetProductionReadinessResultsMVCResourceCommand
 		printWriter.write(responseJSONObject.toString());
 	}
 
-	private JSONObject _toJSONObject(
-		IgnoredRule ignoredRule, Locale locale, Result result) {
+	private List<String> _getIgnoreRules() throws Exception {
+		File configsDir = new File(PropsValues.LIFERAY_HOME, "osgi/configs");
 
+		File configFile = new File(configsDir, _PID + ".config");
+
+		if (!FileUtil.exists(configFile)) {
+			return new ArrayList<>();
+		}
+
+		String configFileContent = FileUtil.read(configFile);
+
+		String configValue = configFileContent.split(StringPool.EQUAL)[1];
+
+		configValue = configValue.substring(1, configValue.length() - 1);
+
+		String[] ignoreRules = configValue.split(StringPool.COMMA);
+
+		return new ArrayList<>(Arrays.asList(ignoreRules));
+	}
+
+	private JSONObject _toJSONObject(Locale locale, Result result) {
 		String message = LanguageUtil.format(
 			locale, result.getMessageKey(), result.getMessageParameters(),
 			false);
 
-		JSONObject resultJSONObject = _jsonFactory.createJSONObject(
+		return _jsonFactory.createJSONObject(
 		).put(
 			"category", result.getCategory()
 		).put(
@@ -118,7 +140,7 @@ public class GetProductionReadinessResultsMVCResourceCommand
 		).put(
 			"docsLink", result.getDocsLink()
 		).put(
-			"ignored", ignoredRule != null
+			"ignored", _ignoreRules.contains(result.getKey())
 		).put(
 			"message", message
 		).put(
@@ -130,22 +152,13 @@ public class GetProductionReadinessResultsMVCResourceCommand
 		).put(
 			"status", String.valueOf(result.getStatus())
 		);
-
-		if (ignoredRule != null) {
-			resultJSONObject.put(
-				"ignoredAt", ignoredRule.getIgnoredAt()
-			).put(
-				"ignoredBy", ignoredRule.getIgnoredBy()
-			).put(
-				"ignoreReason", ignoredRule.getReason()
-			);
-		}
-
-		return resultJSONObject;
 	}
 
-	@Reference
-	private IgnoredRuleStore _ignoredRuleStore;
+	private static final String _PID =
+		"com.liferay.server.admin.web.internal.configuration." +
+			"ProductionReadinessConfiguration";
+
+	private volatile List<String> _ignoreRules;
 
 	@Reference
 	private JSONFactory _jsonFactory;

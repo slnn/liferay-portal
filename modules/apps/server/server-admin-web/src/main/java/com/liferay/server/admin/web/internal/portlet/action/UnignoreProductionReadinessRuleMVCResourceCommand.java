@@ -5,24 +5,28 @@
 
 package com.liferay.server.admin.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.server.admin.web.internal.production.readiness.IgnoredRuleStore;
 
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
-import java.io.PrintWriter;
+import java.io.File;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,20 +54,43 @@ public class UnignoreProductionReadinessRuleMVCResourceCommand
 
 		_checkAdmin(themeDisplay);
 
-		String ruleKey = ParamUtil.getString(resourceRequest, "ruleKey");
+		File configsDir = new File(PropsValues.LIFERAY_HOME, "osgi/configs");
 
-		_ignoredRuleStore.deleteIgnoredRule(ruleKey);
+		File configFile = new File(configsDir, _PID + ".config");
 
-		JSONObject responseJSONObject = _jsonFactory.createJSONObject(
-		).put(
-			"success", true
-		);
+		String configFileContent = FileUtil.read(configFile);
 
-		resourceResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		String configValue = configFileContent.split(StringPool.EQUAL)[1];
 
-		PrintWriter printWriter = resourceResponse.getWriter();
+		configValue = configValue.substring(1, configValue.length() - 1);
 
-		printWriter.write(responseJSONObject.toString());
+		String[] ignoreRules = configValue.split(StringPool.COMMA);
+
+		if (ignoreRules.length == 1) {
+			FileUtil.delete(configFile);
+		}
+		else {
+			List<String> ignoreRuleList = new ArrayList<>(
+				Arrays.asList(ignoreRules));
+
+			ignoreRuleList.remove(
+				ParamUtil.getString(resourceRequest, "ruleKey"));
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("ignoreRules=\"");
+
+			for (String ignoreRule : ignoreRuleList) {
+				sb.append(ignoreRule);
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append(StringPool.QUOTE);
+
+			FileUtil.write(configFile, sb.toString());
+		}
 	}
 
 	private void _checkAdmin(ThemeDisplay themeDisplay) throws Exception {
@@ -76,11 +103,9 @@ public class UnignoreProductionReadinessRuleMVCResourceCommand
 		}
 	}
 
-	@Reference
-	private IgnoredRuleStore _ignoredRuleStore;
-
-	@Reference
-	private JSONFactory _jsonFactory;
+	private static final String _PID =
+		"com.liferay.server.admin.web.internal.configuration." +
+			"ProductionReadinessConfiguration";
 
 	@Reference
 	private RoleLocalService _roleLocalService;
