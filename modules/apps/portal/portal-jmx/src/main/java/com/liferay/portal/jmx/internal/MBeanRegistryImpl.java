@@ -5,7 +5,9 @@
 
 package com.liferay.portal.jmx.internal;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.jmx.MBeanRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,7 +33,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -118,14 +119,16 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 
 		_mBeanServer = ManagementFactory.getPlatformMBeanServer();
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext, "(&(jmx.objectname=*)(objectClass=*MBean))",
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, Object.class,
+			"(&(jmx.objectname=*)(objectClass=*MBean))",
+			new PropertyServiceReferenceMapper<>("jmx.objectname"),
 			new MBeanServiceTrackerCustomizer());
 	}
 
 	@Deactivate
 	protected void deactivate() throws Exception {
-		_serviceTracker.close();
+		_serviceTrackerMap.close();
 
 		synchronized (_objectNameCache) {
 			for (ObjectName objectName : _objectNameCache.values()) {
@@ -153,13 +156,15 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 	private MBeanServer _mBeanServer;
 	private final Map<String, ObjectName> _objectNameCache =
 		new ConcurrentHashMap<>();
-	private ServiceTracker<Object, Object> _serviceTracker;
+	private ServiceTrackerMap<String, ObjectInstance> _serviceTrackerMap;
 
 	private class MBeanServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, Object> {
+		implements ServiceTrackerCustomizer<Object, ObjectInstance> {
 
 		@Override
-		public Object addingService(ServiceReference<Object> serviceReference) {
+		public ObjectInstance addingService(
+			ServiceReference<Object> serviceReference) {
+
 			String objectName = GetterUtil.getString(
 				serviceReference.getProperty("jmx.objectname"));
 
@@ -187,12 +192,14 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> serviceReference, Object service) {
+			ServiceReference<Object> serviceReference,
+			ObjectInstance objectInstance) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> serviceReference, Object service) {
+			ServiceReference<Object> serviceReference,
+			ObjectInstance objectInstance) {
 
 			String objectName = GetterUtil.getString(
 				serviceReference.getProperty("jmx.objectname"));
