@@ -64,6 +64,17 @@ const SummaryHeader: React.FC<Props> = ({failed, ignored, passed, total}) => {
 					{Liferay.Language.get('ignored')}
 				</span>
 			</div>
+
+			<div className="mt-2">
+				<a
+					className="text-primary"
+					href="https://docs.google.com/document/d/1hlsjG1y7oZz27OjDj_g7OXa4fOHFfQ3xFWtmmLLLtAg/edit?tab=t.0#heading=h.cx1snzuu21pk"
+					rel="noopener noreferrer"
+					target="_blank"
+				>
+					{Liferay.Language.get('learn-more-abour-liferay-settings')}
+				</a>
+			</div>
 		</div>
 	);
 };
